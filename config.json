@@ -33,6 +33,7 @@
     "src/list",
     "src/types",
     "src/user",
+    "src/user_list",
     "src/login"
   ],
   "links": {

@@ -1,9 +1,12 @@
 User = {
     listURL: '',
     slotsEventId: '',
+    cancelURL: '',
+    userListURL: '',
     record: {},
     init: function () {
-        $("#appointments").dataTable();
+        //$("#appointments").dataTable();
+        User.loadUserVisits();
 
         /**
          * list view in modal
@@ -33,10 +36,7 @@ User = {
                         data: data.data,
                         pageLength: 50,
                         "bDestroy": true,
-                        "aaSorting": [[0, "asc"]],
-                        buttons: [
-                            'copy', 'csv', 'excel', 'pdf', 'print'
-                        ]
+                        "aaSorting": [[0, "asc"]]
                     });
                     $('#generic-modal').modal('show');
 
@@ -44,7 +44,8 @@ User = {
                     jQuery(".calendar-view").removeClass('calendar-view').addClass('survey-calendar-view');
                 },
                 'error': function (request, error) {
-                    alert("Request: " + JSON.stringify(request));
+                    var data = JSON.parse(request.responseText)
+                    alert(data.message);
                 }
             });
         });
@@ -78,18 +79,6 @@ User = {
                         alert(response.message);
                         $('#booking').modal('hide');
                         record = {};
-                        if (currentView != '') {
-                            currentView.trigger('click');
-                        }
-
-                        /**
-                         * when this book came from survey page lets return the reservation id back to the survey.
-                         */
-                        var survey_record_id_field = jQuery("#survey-record-id-field").val();
-                        if (jQuery("input[name=" + survey_record_id_field + "]").length) {
-                            completeSurveyReservation(response);
-                        }
-
                     } else {
                         alert(response.message);
                     }
@@ -97,10 +86,74 @@ User = {
                 error: function (request, error) {
                     var data = JSON.parse(request.responseText)
                     alert(data.message);
+                },
+                'complete': function () {
+                    User.loadUserVisits()
                 }
             });
         });
 
+        /**
+         * Cancel appointment
+         */
+        jQuery(document).on('click', '.cancel-appointment', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (confirm("Are you sure you want to cancel this appointment?")) {
+                var record_id = jQuery(this).data('record-id');
+                var event_id = jQuery(this).data('key');
+                /**
+                 * Get Manage modal to let user manage their saved appointments
+                 */
+                jQuery.ajax({
+                    url: User.cancelURL + '&record_id=' + record_id + '&event_id=' + event_id,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        alert(data.message);
+                        jQuery('.manage').trigger('click');
+                    },
+                    error: function (request, error) {
+                        var data = JSON.parse(request.responseText)
+                        alert(data.message);
+                    },
+                    'complete': function () {
+                        User.loadUserVisits()
+                    }
+                });
+            }
+        });
+
+    },
+    loadUserVisits: function () {
+        jQuery.ajax({
+            'url': User.userListURL,
+            'type': 'GET',
+            'beforeSend': function () {
+                /**
+                 * remove any displayed calendar
+                 */
+                jQuery('.slots-container').html('');
+            },
+            'success': function (data) {
+                $('#appointments').DataTable({
+                    dom: 'Bfrtip',
+                    data: data.data,
+                    pageLength: 50,
+                    "bDestroy": true,
+                    "aaSorting": [[0, "asc"]],
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            },
+            'error': function (request, error) {
+                var data = JSON.parse(request.responseText)
+                alert(data.message);
+            }
+        });
     }
 }
 window.onload = function () {

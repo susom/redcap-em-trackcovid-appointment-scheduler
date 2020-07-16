@@ -12,10 +12,11 @@ try {
     if ($data[$primary] == '') {
         throw new \LogicException('Participation ID is missing');
     } else {
-
-        $data['participant_status' . $module->getSuffix()] = CANCELED;
+        $data['slot_id'] = false;
+        $data['reservation_participant_id'] = false;
+        $data['participant_status'] = CANCELED;
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
-        $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
+        $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 
         if (empty($response['errors'])) {
             //TODO notify instructor about the cancellation
@@ -26,5 +27,7 @@ try {
 
     }
 } catch (\LogicException $e) {
+    $module->emError($e->getMessage());
+    http_response_code(404);
     echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
 }

@@ -20,6 +20,9 @@ try {
             User.slotsEventId = "<?php echo $module->getSlotsEventId() ?>"
             User.submitURL = "<?php echo $module->getUrl('src/book.php', false,
                     true) . '&pid=' . $module->getProjectId() . '&NOAUTH' ?>"
+            User.cancelURL = "<?php echo $module->getUrl('src/cancel.php', false,
+                    true) . '&pid=' . $module->getProjectId() . '&NOAUTH'?>"
+            User.userListURL = "<?php echo $module->getUrl('src/user_list.php', false, true) . '&NOAUTH'?>"
         </script>
         <div id="brandbar">
             <div class="container">
@@ -65,43 +68,7 @@ try {
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                $events = $module->getProject()->events['1']['events'];
 
-                foreach ($events as $eventId => $event) {
-                    $location = '';
-                    //if we did not define reservation for this event skip it.
-                    if (!in_array('reservation', $module->getProject()->eventsForms[$eventId])) {
-                        continue;
-                    }
-                    // check if user has record for this event
-
-                    if (isset($user['record'][$eventId])) {
-                        $reservation = $module->getReservationArray($user['record'][$eventId]);
-                        if (empty($reservation)) {
-                            $time = 'Not Scheduled';
-                            $action = '<button data-url="' . $url . '" data-record-id="' . $recordId . '" data-key="' . $eventId . '" class="survey-type btn btn-success">Schedule</button>';
-                        } else {
-                            $time = date('m/d/Y H:i', strtotime($reservation['start']));
-                            $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
-                            $location = $locations[$reservation['location']];
-                            $action = '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
-                        }
-
-                    } else {
-                        $time = 'Not Scheduled';
-                        $action = '<button data-url="' . $url . '" data-record-id="' . $recordId . '" data-key="' . $eventId . '"  class="survey-type btn btn-success">Schedule</button>';
-                    }
-                    ?>
-                    <tr>
-                        <td><?php echo $event['descrip'] ?></td>
-                        <td><?php echo $time ?></td>
-                        <td><?php echo $location ?></td>
-                        <td><?php echo $action ?></td>
-                    </tr>
-                    <?php
-                }
-                ?>
                 </tbody>
             </table>
         </div>
