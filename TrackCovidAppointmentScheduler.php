@@ -784,13 +784,13 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function sanitizeInput()
     {
         $data = array();
-        $data['email' . $this->getSuffix()] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-        $data['name' . $this->getSuffix()] = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-        $data['mobile' . $this->getSuffix()] = filter_var($_POST['mobile'], FILTER_SANITIZE_STRING);
+//        $data['email' . $this->getSuffix()] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+//        $data['name' . $this->getSuffix()] = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+//        $data['mobile' . $this->getSuffix()] = filter_var($_POST['mobile'], FILTER_SANITIZE_STRING);
         $data['participant_notes' . $this->getSuffix()] = filter_var($_POST['notes'], FILTER_SANITIZE_STRING);
-        $data['project_id' . $this->getSuffix()] = filter_var($_POST['project_id'], FILTER_SANITIZE_NUMBER_INT);
+//        $data['project_id' . $this->getSuffix()] = filter_var($_POST['project_id'], FILTER_SANITIZE_NUMBER_INT);
         $data['slot_id' . $this->getSuffix()] = filter_var($_POST['record_id'], FILTER_SANITIZE_STRING);
-        $data['private' . $this->getSuffix()] = filter_var($_POST['private'], FILTER_SANITIZE_NUMBER_INT);
+//        $data['private' . $this->getSuffix()] = filter_var($_POST['private'], FILTER_SANITIZE_NUMBER_INT);
         $data['participant_location' . $this->getSuffix()] = filter_var($_POST['type'], FILTER_SANITIZE_NUMBER_INT);
 
         /**
@@ -1455,20 +1455,18 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         foreach ($records as $id => $record) {
             $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
             if ($hash == $_COOKIE[$name]) {
-                return $record;
+                return array('id' => $id, 'record' => $record);
             }
         }
         return false;
     }
 
-    public function getReservationArray($fields, $data)
+    public function getReservationArray($data)
     {
-        $result = array();
-        foreach ($fields as $field) {
-            if (isset($data[$field]) && $data[$field] != '' && strpos($field, '_complete' == false)) {
-                $result[$field] = $data[$field];
-            }
+        if (isset($data['slot_id']) && $data['slot_id'] != '') {
+            return self::getSlot($data['slot_id'], $this->getSlotsEventId(), $this->getProjectId(),
+                $this->getPrimaryRecordFieldName());
         }
-        return $result;
+        return false;
     }
 }

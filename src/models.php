@@ -19,7 +19,18 @@ if (!isset($module)) {
 
             <!-- Modal body -->
             <div class="modal-body">
-                Modal body..
+                <table id="list-result" class="display table table-striped table-bordered"
+                       cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Time(PDT)</th>
+                        <th>Available Slots</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
 
             <!-- Modal footer -->

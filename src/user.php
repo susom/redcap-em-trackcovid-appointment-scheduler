@@ -7,11 +7,20 @@ namespace Stanford\TrackCovidAppointmentScheduler;
 try {
     if ($user = $module->verifyCookie('login')) {
         //JS and CSS with inputs URLs
-        define('USERID', $user[$module->getFirstEventId()]['full_name']);
+        define('USERID', $user['record'][$module->getFirstEventId()]['full_name']);
+        $recordId = $user['id'];
+        $url = $module->getUrl('src/list.php', true, true,
+                true) . '&event_id=' . $module->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
         require_once 'urls.php';
         ?>
         <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/types.css', true, true) ?>">
         <script src="<?php echo $module->getUrl('src/js/user.js', true, true) ?>"></script>
+        <script>
+            User.listURL = "<?php echo $url ?>"
+            User.slotsEventId = "<?php echo $module->getSlotsEventId() ?>"
+            User.submitURL = "<?php echo $module->getUrl('src/book.php', false,
+                    true) . '&pid=' . $module->getProjectId() . '&NOAUTH' ?>"
+        </script>
         <div id="brandbar">
             <div class="container">
                 <div class="row">
@@ -51,37 +60,43 @@ try {
                 <tr>
                     <th>Visit</th>
                     <th>Time</th>
+                    <th>Location</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
                 $events = $module->getProject()->events['1']['events'];
-                $reservationFields = \REDCap::getFieldNames('reservation');
+
                 foreach ($events as $eventId => $event) {
+                    $location = '';
                     //if we did not define reservation for this event skip it.
                     if (!in_array('reservation', $module->getProject()->eventsForms[$eventId])) {
                         continue;
                     }
                     // check if user has record for this event
 
-                    if (isset($user[$eventId])) {
-                        $reservation = $module->getReservationArray($reservationFields, $user[$eventId]);
+                    if (isset($user['record'][$eventId])) {
+                        $reservation = $module->getReservationArray($user['record'][$eventId]);
                         if (empty($reservation)) {
                             $time = 'Not Scheduled';
-                            $action = '<button class="btn btn-success">Schedule</button>';
+                            $action = '<button data-url="' . $url . '" data-record-id="' . $recordId . '" data-key="' . $eventId . '" class="survey-type btn btn-success">Schedule</button>';
                         } else {
-                            //todo provide data to view and reschedule.
+                            $time = date('m/d/Y H:i', strtotime($reservation['start']));
+                            $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
+                            $location = $locations[$reservation['location']];
+                            $action = '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
                         }
 
                     } else {
                         $time = 'Not Scheduled';
-                        $action = '<button class="btn btn-success">Schedule</button>';
+                        $action = '<button data-url="' . $url . '" data-record-id="' . $recordId . '" data-key="' . $eventId . '"  class="survey-type btn btn-success">Schedule</button>';
                     }
                     ?>
                     <tr>
                         <td><?php echo $event['descrip'] ?></td>
                         <td><?php echo $time ?></td>
+                        <td><?php echo $location ?></td>
                         <td><?php echo $action ?></td>
                     </tr>
                     <?php
@@ -95,6 +110,11 @@ try {
     } else {
         redirect($module->getUrl('src/login.php', false, false));
     }
+
+    require_once 'models.php';
+    ?>
+    <div class="loader"><!-- Place at bottom of page --></div>
+    <?php
 } catch (\LogicException $e) {
     $module->emError($e->getMessage());
     http_response_code(404);
