@@ -57,17 +57,32 @@ try {
                 <tbody>
                 <?php
                 $events = $module->getProject()->events['1']['events'];
-                foreach ($events as $id => $event) {
+                $reservationFields = \REDCap::getFieldNames('reservation');
+                foreach ($events as $eventId => $event) {
                     //if we did not define reservation for this event skip it.
-                    if (!in_array('reservation', $module->getProject()->eventsForms[$id])) {
+                    if (!in_array('reservation', $module->getProject()->eventsForms[$eventId])) {
                         continue;
                     }
+                    // check if user has record for this event
 
+                    if (isset($user[$eventId])) {
+                        $reservation = $module->getReservationArray($reservationFields, $user[$eventId]);
+                        if (empty($reservation)) {
+                            $time = 'Not Scheduled';
+                            $action = '<button class="btn btn-success">Schedule</button>';
+                        } else {
+                            //todo provide data to view and reschedule.
+                        }
+
+                    } else {
+                        $time = 'Not Scheduled';
+                        $action = '<button class="btn btn-success">Schedule</button>';
+                    }
                     ?>
                     <tr>
                         <td><?php echo $event['descrip'] ?></td>
-                        <td>Time</td>
-                        <td>Action</td>
+                        <td><?php echo $time ?></td>
+                        <td><?php echo $action ?></td>
                     </tr>
                     <?php
                 }

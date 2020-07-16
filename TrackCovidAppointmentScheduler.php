@@ -1449,16 +1449,26 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $param = array(
             'project_id' => $this->getProjectId(),
             'return_format' => 'array',
-            'events' => $this->getFirstEventId()
+            'events' => array_keys($this->getProject()->events['1']['events'])
         );
         $records = REDCap::getData($param);
         foreach ($records as $id => $record) {
-            $temp = $record[$this->getFirstEventId()];
             $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
             if ($hash == $_COOKIE[$name]) {
                 return $record;
             }
         }
         return false;
+    }
+
+    public function getReservationArray($fields, $data)
+    {
+        $result = array();
+        foreach ($fields as $field) {
+            if (isset($data[$field]) && $data[$field] != '' && strpos($field, '_complete' == false)) {
+                $result[$field] = $data[$field];
+            }
+        }
+        return $result;
     }
 }
