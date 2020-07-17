@@ -31,6 +31,7 @@ User = {
                 'success': function (data) {
                     $('#list-result').DataTable().clear().destroy()
                     if (data != '') {
+
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
                             dom: '<"location-filter"><lf<t>ip>',
@@ -40,17 +41,18 @@ User = {
                             "aaSorting": [[0, "asc"]],
                             initComplete: function () {
                                 // we only need location filter.
-                                console.log(this)
                                 this.api().columns([1]).every(function () {
 
                                     var column = this;
-                                    var select = $('<select><option value=""></option></select>')
+                                    var select = $('<select id="location-options"><option value=""></option></select>')
                                         .appendTo($('.location-filter'))
                                         .on('change', function () {
                                             var val = $.fn.dataTable.util.escapeRegex(
                                                 $(this).val()
                                             );
 
+                                            // set preferred location so it will be selected next time.
+                                            setCookie('preferred-location', val, 365);
                                             column
                                                 .search(val ? '^' + val + '$' : '', true, false)
                                                 .draw();
@@ -59,6 +61,11 @@ User = {
                                     column.data().unique().sort().each(function (d, j) {
                                         select.append('<option value="' + d + '">' + d + '</option>')
                                     });
+
+                                    // if preferred location is saved then select that
+                                    if (getCookie('preferred-location') != null) {
+                                        $("#location-options").val(getCookie('preferred-location')).trigger('change');
+                                    }
                                 });
                             }
                         });
@@ -195,4 +202,29 @@ User = {
 }
 window.onload = function () {
     User.init();
+}
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
