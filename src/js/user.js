@@ -101,7 +101,8 @@ User = {
                     alert(data.message);
                 },
                 'complete': function () {
-                    User.loadUserVisits()
+                    User.loadUserVisits();
+                    $('#generic-modal').modal('hide');
                 }
             });
         });
