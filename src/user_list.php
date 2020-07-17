@@ -42,10 +42,21 @@ try {
                     $time = 'Not Scheduled';
                     $action = '<button data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" class="get-list btn btn-success">Schedule</button>';
                 } else {
-                    $time = date('m/d/Y H:i', strtotime($reservation['start']));
+                    $time = date('m/d/Y H:i', strtotime($reservation['start'])) . ' - ' . date('H:i',
+                            strtotime($reservation['end']));
                     $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                     $location = $locations[$reservation['location']];
-                    $action = '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+
+                    // prevent cancel if appointment is in less than 24 hours
+                    if (strtotime($reservation['start']) - time() < 86406) {
+                        $action = 'This Appointment is in less than 24 hours please call to cancel!';
+                    } else {
+                        $action = '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+                    }
+
+
+                    //todo add message to competed or no show appointment.
+
                 }
 
             } else {
