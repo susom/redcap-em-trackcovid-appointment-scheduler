@@ -41,8 +41,6 @@ User = {
                         });
                         $('#generic-modal').modal('show');
                     } else {
-                        data.data = [];
-                        $('#list-result').DataTable().clear().destroy()
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
                             dom: 'Bfrtip',

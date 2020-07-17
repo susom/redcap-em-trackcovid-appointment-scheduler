@@ -43,9 +43,6 @@ try {
                                             <a class="nav-link" href="#">Logged in
                                                 as: <?php echo(defined('USERID') ? USERID : ' NOT LOGGED IN') ?></a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="manage nav-link" href="#">Manage my Appointments</a>
-                                        </li>
                                     </ul>
                                     <?php
                                 }
@@ -75,7 +72,7 @@ try {
 
         <?php
     } else {
-        redirect($module->getUrl('src/login.php', false, false));
+        redirect($module->getUrl('src/login.php', true, false));
     }
 
     require_once 'models.php';
