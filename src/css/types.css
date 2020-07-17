@@ -45,3 +45,16 @@ body.loading .loader {
 #brandbar img {
     margin-top: 9px;
 }
+
+.location-filter {
+    float: left;
+}
+
+.location-filter select {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.location-filter:before {
+    content: 'Location Filter:';
+}

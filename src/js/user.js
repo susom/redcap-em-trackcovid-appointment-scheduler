@@ -33,11 +33,34 @@ User = {
                     if (data != '') {
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
-                            dom: 'Bfrtip',
+                            dom: '<"location-filter"><lf<t>ip>',
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
-                            "aaSorting": [[0, "asc"]]
+                            "aaSorting": [[0, "asc"]],
+                            initComplete: function () {
+                                // we only need location filter.
+                                console.log(this)
+                                this.api().columns([1]).every(function () {
+
+                                    var column = this;
+                                    var select = $('<select><option value=""></option></select>')
+                                        .appendTo($('.location-filter'))
+                                        .on('change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+
+                                            column
+                                                .search(val ? '^' + val + '$' : '', true, false)
+                                                .draw();
+                                        });
+
+                                    column.data().unique().sort().each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>')
+                                    });
+                                });
+                            }
                         });
                         $('#generic-modal').modal('show');
                     } else {
@@ -160,7 +183,7 @@ User = {
                     "aaSorting": [[0, "asc"]],
                     buttons: [
                         'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
+                    ],
                 });
             },
             'error': function (request, error) {
