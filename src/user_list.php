@@ -10,7 +10,24 @@ try {
         $url = $module->getUrl('src/list.php', true, true,
                 true) . '&event_id=' . $module->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
         $result = array();
+        $baseLine = $module->getProjectSetting('baseline-month');
         foreach ($events as $eventId => $event) {
+
+            $year = date("Y");
+            // we want to get the month to know which part of month and year to get.
+            if ($event['day_offset'] > 0) {
+                $offset = $event['day_offset'] / 30;
+                $month = $baseLine + $offset;
+            } else {
+                $month = $baseLine;
+            }
+
+            // got next year
+            if ($month > 12) {
+                $month = 1;
+                $year += 1;
+            }
+
             $location = '';
             $row = array();
             //if we did not define reservation for this event skip it.
@@ -23,7 +40,7 @@ try {
                 $reservation = $module->getReservationArray($user['record'][$eventId]);
                 if (empty($reservation)) {
                     $time = 'Not Scheduled';
-                    $action = '<button data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" class="survey-type btn btn-success">Schedule</button>';
+                    $action = '<button data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" class="get-list btn btn-success">Schedule</button>';
                 } else {
                     $time = date('m/d/Y H:i', strtotime($reservation['start']));
                     $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
@@ -33,7 +50,7 @@ try {
 
             } else {
                 $time = 'Not Scheduled';
-                $action = '<button  data-record-id="' . $user['id'] . '" data-key="' . $eventId . '"  class="survey-type btn btn-success">Schedule</button>';
+                $action = '<button data-month="' . $month . '" data-year="' . $year . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '"  class="get-list btn btn-success">Schedule</button>';
             }
             $row[] = $event['descrip'];
             $row[] = $time;

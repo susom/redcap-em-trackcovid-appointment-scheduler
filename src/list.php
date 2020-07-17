@@ -6,7 +6,9 @@ namespace Stanford\TrackCovidAppointmentScheduler;
 
 $suffix = $module->getSuffix();
 $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
-$data = $module->getMonthSlots($eventId);
+$month = filter_var($_GET['month'], FILTER_SANITIZE_NUMBER_INT);
+$year = filter_var($_GET['year'], FILTER_SANITIZE_NUMBER_INT);
+$data = $module->getMonthSlots($eventId, $year, $month);
 $result = array();
 $result['data'] = array();
 if (!empty($data)) {

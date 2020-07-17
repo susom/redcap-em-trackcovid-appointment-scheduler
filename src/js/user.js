@@ -11,8 +11,7 @@ User = {
         /**
          * list view in modal
          */
-        jQuery(document).on("click", ".survey-type", function () {
-            var view = jQuery(this).data('default-view');
+        jQuery(document).on("click", ".get-list", function () {
             /**
              * init the reservation event id for selected slot.
              * @type {jQuery}
@@ -21,7 +20,7 @@ User = {
             User.record.participant_id = jQuery(this).data('record-id');
             ;
             jQuery.ajax({
-                'url': User.listURL + "&event_id=" + User.slotsEventId,
+                'url': User.listURL + "&event_id=" + User.slotsEventId + "&year=" + jQuery(this).data('year') + "&month=" + jQuery(this).data('month'),
                 'type': 'GET',
                 'beforeSend': function () {
                     /**
@@ -30,15 +29,31 @@ User = {
                     jQuery('.slots-container').html('');
                 },
                 'success': function (data) {
-                    $('#generic-modal').find('.modal-title').html("Appointments");
-                    $('#list-result').DataTable({
-                        dom: 'Bfrtip',
-                        data: data.data,
-                        pageLength: 50,
-                        "bDestroy": true,
-                        "aaSorting": [[0, "asc"]]
-                    });
-                    $('#generic-modal').modal('show');
+                    $('#list-result').DataTable().clear().destroy()
+                    if (data != '') {
+                        $('#generic-modal').find('.modal-title').html("Appointments");
+                        $('#list-result').DataTable({
+                            dom: 'Bfrtip',
+                            data: data.data,
+                            pageLength: 50,
+                            "bDestroy": true,
+                            "aaSorting": [[0, "asc"]]
+                        });
+                        $('#generic-modal').modal('show');
+                    } else {
+                        data.data = [];
+                        $('#list-result').DataTable().clear().destroy()
+                        $('#generic-modal').find('.modal-title').html("Appointments");
+                        $('#list-result').DataTable({
+                            dom: 'Bfrtip',
+                            data: data.data,
+                            pageLength: 50,
+                            "bDestroy": true,
+                            "aaSorting": [[0, "asc"]]
+                        });
+                        $('#generic-modal').modal('show');
+                    }
+
 
                     //change calendar view event to be displayed in modal
                     jQuery(".calendar-view").removeClass('calendar-view').addClass('survey-calendar-view');
