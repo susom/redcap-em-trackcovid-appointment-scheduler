@@ -75,6 +75,9 @@ require_once 'urls.php';
             $slotsEventId = $instance['slot_event_id'];
             $reservationEventId = $instance['reservation_event_id'];
         }
+        // get the event array to know the number of offset days to baseline visit
+        $event = $module->getProject()->events['1']['events'][$reservationEventId];
+        list($month, $year) = $module->getEventMonthYear($event['day_offset']);
         ?>
 
         <div class="card">
@@ -84,10 +87,12 @@ require_once 'urls.php';
             <div class="card-header" id="headingOne">
                 <div class="float-left">
                     <button class="type btn btn-link collapsed" type="button"
+                            data-month="<?php echo $month ?>"
+                            data-year="<?php echo $year ?>"
                             data-toggle="collapse-<?php echo $slotsEventId ?>"
                             data-target="#collapse-<?php echo $slotsEventId ?>" aria-expanded="true"
                             aria-controls="collapse-<?php echo $slotsEventId ?>"
-                            data-url="<?php echo $url . '&event_id=' . $slotsEventId . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&' . PROJECTID . '=' . $module->getProjectId() . (!defined('USERID') ? '&NOAUTH' : '') ?>"
+                            data-url="<?php echo $url . '&event_id=' . $slotsEventId . '&' . PROJECTID . '=' . $module->getProjectId() . '&month=' . $month . '&year=' . $year . (!defined('USERID') ? '&NOAUTH' : '') ?>"
                             data-key="<?php echo $slotsEventId ?>"
                             data-default-view="<?php echo $instance['default_view'] ?>"
                             data-name="<?php echo $title ?>">
@@ -106,7 +111,7 @@ require_once 'urls.php';
             <div id="collapse-<?php echo $slotsEventId ?>" class="collapse" aria-labelledby="headingOne"
                  data-parent="#accordionExample">
                 <div class="card-body" id="<?php echo $slotsEventId ?>-calendar">
-                    <div id="<?php echo $slotsEventId ?>-list-view">
+                    <div id="<?php echo $slotsEventId ?>-<?php echo $month ?>-<?php echo $year ?>-list-view">
                         <div class="row">
                             <div class="col-12">
                                 <?php
@@ -123,7 +128,7 @@ require_once 'urls.php';
                             <!--                                </div>-->
                         </div>
                         <hr>
-                        <table id="list-result" class="display table table-striped table-bordered"
+                        <table class="list-result display table table-striped table-bordered"
                                cellspacing="0" width="100%">
                             <thead>
                             <tr>

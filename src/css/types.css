@@ -46,15 +46,19 @@ body.loading .loader {
     margin-top: 9px;
 }
 
-.location-filter {
+.location-filter, .day-filter {
     float: left;
 }
 
-.location-filter select {
+.location-filter select, .day-filter select {
     margin-left: 10px;
     margin-right: 10px;
 }
 
 .location-filter:before {
     content: 'Location Filter:';
+}
+
+.day-filter:before {
+    content: 'Days Filter:';
 }

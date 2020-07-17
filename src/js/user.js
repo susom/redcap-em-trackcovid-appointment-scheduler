@@ -8,6 +8,7 @@ User = {
         //$("#appointments").dataTable();
         User.loadUserVisits();
 
+
         /**
          * list view in modal
          */
@@ -20,7 +21,7 @@ User = {
             User.record.participant_id = jQuery(this).data('record-id');
             ;
             jQuery.ajax({
-                'url': User.listURL + "&event_id=" + User.slotsEventId + "&year=" + jQuery(this).data('year') + "&month=" + jQuery(this).data('month'),
+                'url': User.listURL + "&event_id=" + User.slotsEventId + "&baseline=" + jQuery(this).data('baseline') + "&offset=" + jQuery(this).data('offset'),
                 'type': 'GET',
                 'beforeSend': function () {
                     /**
@@ -34,29 +35,46 @@ User = {
 
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
-                            dom: '<"location-filter"><lf<t>ip>',
+                            dom: '<"day-filter"><"location-filter"><lf<t>ip>',
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
                             "aaSorting": [[0, "asc"]],
                             initComplete: function () {
-                                // we only need location filter.
-                                this.api().columns([1]).every(function () {
+                                // we only need day and location filter.
+                                this.api().columns([0, 1]).every(function (index) {
 
                                     var column = this;
-                                    var select = $('<select id="location-options"><option value=""></option></select>')
-                                        .appendTo($('.location-filter'))
-                                        .on('change', function () {
-                                            var val = $.fn.dataTable.util.escapeRegex(
-                                                $(this).val()
-                                            );
+                                    if (index === 0) {
+                                        var select = $('<select id="day-options"><option value=""></option></select>')
+                                            .appendTo($('.day-filter'))
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                    $(this).val()
+                                                );
 
-                                            // set preferred location so it will be selected next time.
-                                            setCookie('preferred-location', val, 365);
-                                            column
-                                                .search(val ? '^' + val + '$' : '', true, false)
-                                                .draw();
-                                        });
+                                                // set preferred location so it will be selected next time.
+                                                column
+                                                    .search(val ? '^' + val + '$' : '', true, false)
+                                                    .draw();
+                                            });
+                                    }
+
+                                    if (index === 1) {
+                                        var select = $('<select id="location-options"><option value=""></option></select>')
+                                            .appendTo($('.location-filter'))
+                                            .on('change', function () {
+                                                var val = $.fn.dataTable.util.escapeRegex(
+                                                    $(this).val()
+                                                );
+
+                                                // set preferred location so it will be selected next time.
+                                                setCookie('preferred-location', val, 365);
+                                                column
+                                                    .search(val ? '^' + val + '$' : '', true, false)
+                                                    .draw();
+                                            });
+                                    }
 
                                     column.data().unique().sort().each(function (d, j) {
                                         select.append('<option value="' + d + '">' + d + '</option>')
@@ -228,3 +246,14 @@ function getCookie(name) {
 function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+$body = jQuery("body");
+
+jQuery(document).on({
+    ajaxStart: function () {
+        $body.addClass("loading");
+    },
+    ajaxStop: function () {
+        $body.removeClass("loading");
+    }
+});

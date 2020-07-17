@@ -10,23 +10,13 @@ try {
         $url = $module->getUrl('src/list.php', true, true,
                 true) . '&event_id=' . $module->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
         $result = array();
-        $baseLine = $module->getProjectSetting('baseline-month');
         foreach ($events as $eventId => $event) {
-
-            $year = date("Y");
-            // we want to get the month to know which part of month and year to get.
-            if ($event['day_offset'] > 0) {
-                $offset = $event['day_offset'] / 30;
-                $month = $baseLine + $offset;
+            if ($event['day_offset'] == 0) {
+                $module->setBaseLine(true);
             } else {
-                $month = $baseLine;
+                $module->setBaseLine(false);
             }
-
-            // got next year
-            if ($month > 12) {
-                $month = 1;
-                $year += 1;
-            }
+            list($month, $year) = $module->getEventMonthYear($event['day_offset']);
 
             $location = '';
             $row = array();
@@ -40,28 +30,33 @@ try {
                 $reservation = $module->getReservationArray($user['record'][$eventId]);
                 if (empty($reservation)) {
                     $time = 'Not Scheduled';
-                    $action = '<button data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" class="get-list btn btn-success">Schedule</button>';
+                    $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
+                        $event['day_offset']);
                 } else {
                     $time = date('m/d/Y H:i', strtotime($reservation['start'])) . ' - ' . date('H:i',
                             strtotime($reservation['end']));
                     $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                     $location = $locations[$reservation['location']];
 
+                    if ($module->isBaseLine()) {
+                        $module->setBaseLineDate($reservation['start']);
+                    }
+
                     // prevent cancel if appointment is in less than 24 hours
                     if (strtotime($reservation['start']) - time() < 86406) {
                         $action = 'This Appointment is in less than 24 hours please call to cancel!';
                     } else {
-                        $action = '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+                        $action = $module->getCancelActionButton($user, $eventId, $reservation);
                     }
 
 
-                    //todo add message to competed or no show appointment.
+                    //todo add message to completed or no show appointment.
 
                 }
 
             } else {
                 $time = 'Not Scheduled';
-                $action = '<button data-month="' . $month . '" data-year="' . $year . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '"  class="get-list btn btn-success">Schedule</button>';
+                $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
             }
             $row[] = $event['descrip'];
             $row[] = $time;

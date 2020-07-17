@@ -9,6 +9,17 @@ const CAMPUS_ONLY = 2;
 
 const LIST_VIEW = 1;
 const CALENDAR_VIEW = 2;
+
+$body = jQuery("body");
+
+jQuery(document).on({
+    ajaxStart: function () {
+        $body.addClass("loading");
+    },
+    ajaxStop: function () {
+        $body.removeClass("loading");
+    }
+});
 /**
  * Show Form to complete for selected time
  */
@@ -18,6 +29,8 @@ jQuery(document).on('click', '.type', function (e) {
     e.stopImmediatePropagation();
     var url = jQuery(this).data('url');
     var key = jQuery(this).data('key');
+    var month = jQuery(this).data('month');
+    var year = jQuery(this).data('year');
     var view = jQuery(this).data('default-view');
     var $elem = jQuery(this)
     /**
@@ -39,7 +52,7 @@ jQuery(document).on('click', '.type', function (e) {
             jQuery("#" + key + "-calendar-view").hide();
             jQuery("#" + key + "-list-view").show();
             jQuery("#" + key + "-calendar").collapse();
-            $('#list-result').DataTable({
+            $("#" + key + "-" + month + "-" + year + "-list-view" + ' .list-result').DataTable({
                 dom: 'Bfrtip',
                 data: data.data,
                 pageLength: 50,
@@ -49,8 +62,10 @@ jQuery(document).on('click', '.type', function (e) {
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
-            jQuery("#collapse-" + key).addClass('show');
-            jQuery("#" + key + "-calendar").addClass('show');
+
+            //show only the event for required month
+            jQuery("#collapse-" + key + "-" + month + "-" + year).addClass('show');
+            jQuery("#" + key + "-" + month + "-" + year + "-calendar").addClass('show');
 
             currentView = $elem;
         },
@@ -545,13 +560,3 @@ function popupCal(cal_id, width) {
     window.open(app_path_webroot + 'Calendar/calendar_popup.php?pid=' + pid + '&width=' + width + '&cal_id=' + cal_id, 'myWin', 'width=' + width + ', height=250, toolbar=0, menubar=0, location=0, status=0, scrollbars=1, resizable=1');
 }
 
-$body = $("body");
-
-$(document).on({
-    ajaxStart: function () {
-        $body.addClass("loading");
-    },
-    ajaxStop: function () {
-        $body.removeClass("loading");
-    }
-});

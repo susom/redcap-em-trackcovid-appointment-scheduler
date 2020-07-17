@@ -99,6 +99,8 @@ define("PARTICIPANT_STATUS", "participant_status");
  * @property int $projectId
  * @property int $recordId
  * @property \Project $project
+ * @property boolean $baseLine
+ * @property string $baseLineDate
  */
 class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalModule
 {
@@ -161,6 +163,11 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      * @var
      */
     private $project;
+
+
+    private $baseLine = false;
+
+    private $baseLineDate = '';
 
 
     /**
@@ -551,7 +558,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      * @param null $year
      * @return mixed
      */
-    public function getMonthSlots($eventId, $year = null, $month = null)
+    public function getMonthSlots($eventId, $year = null, $month = null, $baseline = '', $offset = 0)
     {
         try {
             if ($eventId) {
@@ -560,10 +567,15 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 if ($month != '' && $year != '') {
                     $start = "$year-$month-01";
                     $end = date('Y-m-t', strtotime($start));
+                } elseif ($baseline) {
+                    $add = $offset * 60 * 60 * 24;
+                    $week = 604800;
+                    $start = date('Y-m-d', strtotime($baseline) + $add - $week);
+                    $end = date('Y-m-d', strtotime($baseline) + $add + $week);
                 } else {
                     $start = date('Y-m-d');
-                    # change logic to get the next 30 days instead o just the end of this month.
-                    $end = date('Y-m-d', strtotime('+30 days'));
+                    # change logic to get the next 14 days instead o just the end of this month.
+                    $end = date('Y-m-d', strtotime('+14 days'));
                 }
 
                 $param = array(
@@ -1165,6 +1177,39 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
+     * @return bool
+     */
+    public function isBaseLine()
+    {
+        return $this->baseLine;
+    }
+
+    /**
+     * @param bool $baseLine
+     */
+    public function setBaseLine($baseLine)
+    {
+        $this->baseLine = $baseLine;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseLineDate()
+    {
+        return $this->baseLineDate;
+    }
+
+    /**
+     * @param string $baseLineDate
+     */
+    public function setBaseLineDate($baseLineDate)
+    {
+        $this->baseLineDate = $baseLineDate;
+    }
+
+
+    /**
      * @param $project_id
      * @param null $record
      * @param $instrument
@@ -1468,5 +1513,39 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 $this->getPrimaryRecordFieldName());
         }
         return false;
+    }
+
+    public function getEventMonthYear($offset)
+    {
+        $year = date('Y');
+        $baseLine = $this->getProjectSetting('baseline-month', $this->getProjectId());
+        if ($offset > 0) {
+            $o = $offset / 30;
+            $month = $baseLine + $o;
+        } else {
+            $month = $baseLine;
+        }
+
+        // got next year
+        if ($month > 12) {
+            $month = 1;
+            $year += 1;
+        }
+        return array($month, $year);
+    }
+
+    public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0)
+    {
+        if ($this->isBaseLine() || $this->getBaseLineDate()) {
+            return '<button data-baseline="' . $this->getBaseLineDate() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-success">Schedule</button>';
+        } else {
+            return 'Please schedule Baseline Visit First to be able to schedule other visits!';
+        }
+
+    }
+
+    public function getCancelActionButton($user, $eventId, $reservation)
+    {
+        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
     }
 }
