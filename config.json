@@ -50,6 +50,12 @@
         "icon": "brick",
         "url": "src/manager.php",
         "show-header-and-footer": false
+      },
+      {
+        "name": "Login Page",
+        "icon": "brick",
+        "url": "src/login.php",
+        "show-header-and-footer": false
       }
     ]
   },
