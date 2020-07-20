@@ -6,39 +6,74 @@ Form = {
         var body = $('body');
 
         function goToNextInput(e) {
-            var key = e.which,
-                t = $(e.target),
-                sib = t.next().find('.class');
-            var type = t.data('type')
-            var num = parseInt(t.data('num')) + 1
-            var search = "input[data-type=" + type + "][data-num=" + num + "]"
-            sib = $(search);
+            var key = e.which;
+            var t = $(e.target);
+            var type = t.data('type');
+            var num = parseInt(t.data('num'));
+            var search = "input[data-type=" + type + "][data-num=" + (num + 1) + "]";
+            var sib = $(search);
 
-            //special case for second and third input
+            if (type === 'newuniq' && (num === 2 || num === 3)) {
+                if (key >= 48 && key <= 57) {
+                    // Skip numbers
+                    key == 8;
+                }
 
-            // special case for delete
-            if (key == 8) {
-                t.val('')
-                num = parseInt(t.data('num')) - 1
-                search = "input[data-type=" + type + "][data-num=" + num + "]"
-                sib = $(search);
-                sib.select().focus();
-                return false;
+                // Uppercase
+                t.val(t.val().toUpperCase());
             }
 
-            if (key != 9 && (key < 48)) {
+            // Delete
+            if (key == 8) {
+                if (t.val() !== '') {
+                    // Clear the current value if present
+                    t.val('');
+                } else {
+                    // Goto the previous input and clear it
+                    if (num === 1) {
+                        if (type === 'zipcode') {
+                            // Go back to last from previous section
+                            $('input[data-type="newuniq"]').last().select().focus();
+                        } else {
+                            // Can't go back
+                        }
+                    } else {
+                        $('input[data-type="' + type + '"][data-num="' + (num - 1) + '"]').select().focus();
+                    }
+                }
                 e.preventDefault();
                 return false;
             }
 
+            // Let tabs work like normal...
             if (key === 9) {
                 return true;
             }
 
-            if (!sib || !sib.length) {
-                sib = body.find('input').eq(0);
+            // if it is empty, don't move forward
+            if (t.val() === '') {
+                e.preventDefault();
+                return false;
             }
-            sib.select().focus();
+
+            if ((key >= 48 && key <= 57) ||
+                (key >= 65 && key <= 90) ||
+                (key >= 97 && key <= 122)) {
+                // Find the next input if no siblings
+                if (!sib || !sib.length) {
+                    var tabindex = t.attr('tabindex');
+                    tabindex++; //increment tabindex
+                    sib = $('[tabindex=' + tabindex + ']'); //.focus();
+
+                    // if (type === 'newuniq' && num === 8) {
+                    //     sib = $('input[data-type="zipcode"][data-num="1"]');
+                    // }
+                }
+                sib.select().focus();
+            } else {
+                e.preventDefault();
+                return false;
+            }
         }
 
         function onKeyDown(e) {
@@ -117,7 +152,6 @@ Form = {
         })
     },
     ajaxVerify: function (unique, zipcode) {
-        console.log(Form.ajaxURL)
         $.ajax({
             url: Form.ajaxURL,
             data: {newuniq: unique, zipcode_abs: zipcode, instrument: Form.instrument},
@@ -130,7 +164,7 @@ Form = {
             },
             error: function (request, error) {
                 data = JSON.parse(request.responseText)
-                alert(data.message);
+                $('#errors').html('<strong>' + data.message + '</strong>').show()
             }
         });
     }

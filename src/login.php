@@ -25,7 +25,8 @@ if (!isset($_COOKIE['participant_login'])) {
                 </div>
             </div>
         </div>
-        <section><h2>Unique Code (8 Characters)</h2>
+        <div id="errors" class="text-left alert alert-danger" style="display: none"></div>
+        <section><h2>Enter your ID (8 Characters)</h2>
             <div class="row">
                 <div class="col-1"><input data-num="1" data-type="newuniq"
                                           class="newuniq overflow-auto form-control p-0" type="text" maxLength="1"
