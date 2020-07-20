@@ -6,7 +6,7 @@ use REDCap;
 
 include_once 'emLoggerTrait.php';
 include_once 'Participant.php';
-include_once 'CalendarEmail.php';
+include_once 'TrackCovidCalendarEmail.php';
 
 if (file_exists(__DIR__ . '../vendor/autoload.php')) {
     // Required if your environment does not handle autoloading
@@ -87,7 +87,7 @@ define("PARTICIPANT_STATUS", "participant_status");
 /**
  * Class TrackCovidAppointmentScheduler
  * @package Stanford\TrackCovidAppointmentScheduler
- * @property \CovidCalendarEmail $emailClient
+ * @property \TrackCovidCalendarEmail $emailClient
  * @property Client $twilioClient
  * @property  array $instances
  * @property int $eventId
@@ -110,7 +110,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     use emLoggerTrait;
 
     /**
-     * @var \CovidCalendarEmail|null
+     * @var \TrackCovidCalendarEmail|null
      */
     private $emailClient = null;
 
@@ -364,7 +364,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
-     * @return \CovidCalendarEmail
+     * @return \TrackCovidCalendarEmail
      */
     public function getEmailClient()
     {
@@ -372,11 +372,11 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
-     * @param \CovidCalendarEmail $emailClient
+     * @param \TrackCovidCalendarEmail $emailClient
      */
     public function setEmailClient()
     {
-        $this->emailClient = new \CovidCalendarEmail;
+        $this->emailClient = new \TrackCovidCalendarEmail;
     }
 
 

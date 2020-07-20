@@ -1,6 +1,7 @@
 <?php
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
+
 use PHPMailer\PHPMailer\PHPMailer;
 use Kigkonsult\Icalcreator\Vcalendar;
 
@@ -24,7 +25,7 @@ require 'vendor/autoload.php';
  * @property PHPMailer $mail
  *
  */
-class CovidCalendarEmail extends Message
+class TrackCovidCalendarEmail extends Message
 {
 
     private $headers;
