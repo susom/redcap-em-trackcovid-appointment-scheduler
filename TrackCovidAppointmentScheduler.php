@@ -1538,7 +1538,19 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0)
     {
         if ($this->isBaseLine() || $this->getBaseLineDate()) {
-            return '<button data-baseline="' . $this->getBaseLineDate() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-success">Schedule</button>';
+
+            if ($this->getBaseLineDate()) {
+                $add = $offset * 60 * 60 * 24;
+                $week = 604800;
+                $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
+                $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
+            } else {
+                $start = date('Y-m-d');
+                # change logic to get the next 14 days instead o just the end of this month.
+                $end = date('Y-m-d', strtotime('+14 days'));
+            }
+
+            return '<button data-baseline="' . $this->getBaseLineDate() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-success">Schedule</button>(Please Note the allowed range to schedule the visit is between ' . $start . ' and ' . $end . ')';
         } else {
             return 'Please schedule Baseline Visit First to be able to schedule other visits!';
         }
