@@ -16,7 +16,6 @@
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 /**
  * Get an OAuth2 token from an OAuth2 provider.
  * * Install this script on your server so that it's accessible
@@ -37,13 +36,10 @@ namespace PHPMailer\PHPMailer;
  * Plenty to choose from here:
  * @see http://oauth2-client.thephpleague.com/providers/thirdparty/
  */
-
 // @see https://github.com/thephpleague/oauth2-google
 use League\OAuth2\Client\Provider\Google;
-
 // @see https://packagist.org/packages/hayageek/oauth2-yahoo
 use Hayageek\OAuth2\Client\Provider\Yahoo;
-
 // @see https://github.com/stevenmaguire/oauth2-microsoft
 use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
 

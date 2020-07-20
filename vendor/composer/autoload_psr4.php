@@ -9,7 +9,6 @@ return array(
     'Twilio\\' => array($vendorDir . '/twilio/sdk/src/Twilio'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
-    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Kigkonsult\\Icalcreator\\' => array(
         $vendorDir . '/kigkonsult/icalcreator/src',
         $vendorDir . '/kigkonsult/icalcreator/src/Util',

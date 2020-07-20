@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd01d92d0f56a75374eb4608f1a884932
+class ComposerStaticInit3c2c05e97eb5cc00d8530ab91e60dafc
 {
     public static $files = array(
         '47b18101462cdeb25f661813113e3182' => __DIR__ . '/..' . '/kigkonsult/icalcreator/autoload.php',
@@ -19,10 +19,6 @@ class ComposerStaticInitd01d92d0f56a75374eb4608f1a884932
             array(
                 'Psr\\Log\\' => 8,
                 'PHPMailer\\PHPMailer\\' => 20,
-            ),
-        'M' =>
-            array(
-                'Monolog\\' => 8,
             ),
         'K' =>
             array(
@@ -43,10 +39,6 @@ class ComposerStaticInitd01d92d0f56a75374eb4608f1a884932
             array(
                 0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
             ),
-        'Monolog\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
-            ),
         'Kigkonsult\\Icalcreator\\' =>
             array(
                 0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',
@@ -58,8 +50,8 @@ class ComposerStaticInitd01d92d0f56a75374eb4608f1a884932
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd01d92d0f56a75374eb4608f1a884932::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd01d92d0f56a75374eb4608f1a884932::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3c2c05e97eb5cc00d8530ab91e60dafc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3c2c05e97eb5cc00d8530ab91e60dafc::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

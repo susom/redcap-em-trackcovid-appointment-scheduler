@@ -441,6 +441,8 @@ class PHPMailer
      * Only supported in `mail` and `sendmail` transports, not in SMTP.
      *
      * @var bool
+     *
+     * @deprecated 6.0.0 PHPMailer isn't a mailing list manager!
      */
     public $SingleTo = false;
 
@@ -745,7 +747,7 @@ class PHPMailer
      *
      * @var string
      */
-    const VERSION = '6.1.5';
+    const VERSION = '6.1.7';
 
     /**
      * Error severity: message only, continue processing.
@@ -915,8 +917,8 @@ class PHPMailer
                 "\t",
                     //Trim trailing space
                 trim(
-                //Indent for readability, except for trailing break
-                    str_replace(
+                    //Indent for readability, except for trailing break
+                str_replace(
                         "\n",
                         "\n                   \t                  ",
                         trim($str)
@@ -992,9 +994,9 @@ class PHPMailer
      * @param string $address The email address to send to
      * @param string $name
      *
-     * @return bool true on success, false if address already used or invalid in some way
      * @throws Exception
      *
+     * @return bool true on success, false if address already used or invalid in some way
      */
     public function addAddress($address, $name = '')
     {
@@ -1007,9 +1009,9 @@ class PHPMailer
      * @param string $address The email address to send to
      * @param string $name
      *
-     * @return bool true on success, false if address already used or invalid in some way
      * @throws Exception
      *
+     * @return bool true on success, false if address already used or invalid in some way
      */
     public function addCC($address, $name = '')
     {
@@ -1022,9 +1024,9 @@ class PHPMailer
      * @param string $address The email address to send to
      * @param string $name
      *
-     * @return bool true on success, false if address already used or invalid in some way
      * @throws Exception
      *
+     * @return bool true on success, false if address already used or invalid in some way
      */
     public function addBCC($address, $name = '')
     {
@@ -1037,9 +1039,9 @@ class PHPMailer
      * @param string $address The email address to reply to
      * @param string $name
      *
-     * @return bool true on success, false if address already used or invalid in some way
      * @throws Exception
      *
+     * @return bool true on success, false if address already used or invalid in some way
      */
     public function addReplyTo($address, $name = '')
     {
@@ -1056,9 +1058,9 @@ class PHPMailer
      * @param string $address The email address to send, resp. to reply to
      * @param string $name
      *
-     * @return bool true on success, false if address already used or invalid in some way
      * @throws Exception
      *
+     * @return bool true on success, false if address already used or invalid in some way
      */
     protected function addOrEnqueueAnAddress($kind, $address, $name)
     {
@@ -1111,9 +1113,9 @@ class PHPMailer
      * @param string $address The email address to send, resp. to reply to
      * @param string $name
      *
-     * @return bool true on success, false if address already used or invalid in some way
      * @throws Exception
      *
+     * @return bool true on success, false if address already used or invalid in some way
      */
     protected function addAnAddress($kind, $address, $name = '')
     {
@@ -1228,9 +1230,9 @@ class PHPMailer
      * @param string $name
      * @param bool $auto Whether to also set the Sender address, defaults to true
      *
-     * @return bool
      * @throws Exception
      *
+     * @return bool
      */
     public function setFrom($address, $name = '', $auto = true)
     {
@@ -1307,7 +1309,7 @@ class PHPMailer
             $patternselect = static::$validator;
         }
         if (is_callable($patternselect)) {
-            return $patternselect($address);
+            return call_user_func($patternselect, $address);
         }
         //Reject line breaks in addresses; it's valid RFC5322, but not RFC5321
         if (strpos($address, "\n") !== false || strpos($address, "\r") !== false) {
@@ -1380,11 +1382,11 @@ class PHPMailer
      * - Conversion to punycode is impossible (e.g. required PHP functions are not available)
      *   or fails for any reason (e.g. domain contains characters not allowed in an IDN).
      *
+     * @see PHPMailer::$CharSet
+     *
      * @param string $address The email address to convert
      *
      * @return string The encoded address in ASCII form
-     * @see PHPMailer::$CharSet
-     *
      */
     public function punyencodeAddress($address)
     {
@@ -1420,9 +1422,9 @@ class PHPMailer
      * Create a message and send it.
      * Uses the sending method specified by $Mailer.
      *
-     * @return bool false on error - See the ErrorInfo property for details of the error
      * @throws Exception
      *
+     * @return bool false on error - See the ErrorInfo property for details of the error
      */
     public function send()
     {
@@ -1446,9 +1448,9 @@ class PHPMailer
     /**
      * Prepare a message for sending.
      *
-     * @return bool
      * @throws Exception
      *
+     * @return bool
      */
     public function preSend()
     {
@@ -1582,9 +1584,9 @@ class PHPMailer
     /**
      * Actually send a message via the selected mechanism.
      *
-     * @return bool
      * @throws Exception
      *
+     * @return bool
      */
     public function postSend()
     {
@@ -1620,14 +1622,14 @@ class PHPMailer
     /**
      * Send mail using the $Sendmail program.
      *
+     * @see PHPMailer::$Sendmail
+     *
      * @param string $header The message headers
      * @param string $body The message body
      *
-     * @return bool
      * @throws Exception
      *
-     * @see PHPMailer::$Sendmail
-     *
+     * @return bool
      */
     protected function sendmailSend($header, $body)
     {
@@ -1837,16 +1839,16 @@ class PHPMailer
      * Send mail via SMTP.
      * Returns false if there is a bad MAIL FROM, RCPT, or DATA input.
      *
-     * @param string $header The message headers
-     * @param string $body The message body
-     *
-     * @return bool
-     * @throws Exception
-     *
      * @see  PHPMailer::setSMTPInstance() to use a different class.
      *
      * @uses \PHPMailer\PHPMailer\SMTP
      *
+     * @param string $header The message headers
+     * @param string $body The message body
+     *
+     * @throws Exception
+     *
+     * @return bool
      */
     protected function smtpSend($header, $body)
     {
@@ -1927,11 +1929,11 @@ class PHPMailer
      *
      * @param array $options An array of options compatible with stream_context_create()
      *
-     * @return bool
      * @throws Exception
      *
      * @uses \PHPMailer\PHPMailer\SMTP
      *
+     * @return bool
      */
     public function smtpConnect($options = null)
     {
@@ -2087,6 +2089,7 @@ class PHPMailer
             'se' => 'sv',
             'rs' => 'sr',
             'tg' => 'tl',
+            'am' => 'hy',
         ];
 
         if (isset($renamed_langcodes[$langcode])) {
@@ -2517,9 +2520,9 @@ class PHPMailer
      * Includes complete headers and body.
      * Only valid post preSend().
      *
-     * @return string
      * @see PHPMailer::preSend()
      *
+     * @return string
      */
     public function getSentMIMEMessage()
     {
@@ -2560,9 +2563,9 @@ class PHPMailer
      * Assemble the message body.
      * Returns an empty string on failure.
      *
-     * @return string The assembled message body
      * @throws Exception
      *
+     * @return string The assembled message body
      */
     public function createBody()
     {
@@ -2950,9 +2953,9 @@ class PHPMailer
      * @param string $type File extension (MIME) type
      * @param string $disposition Disposition to use
      *
-     * @return bool
      * @throws Exception
      *
+     * @return bool
      */
     public function addAttachment(
         $path,
@@ -2975,7 +2978,6 @@ class PHPMailer
             if ('' === $name) {
                 $name = $filename;
             }
-
             if (!$this->validateEncoding($encoding)) {
                 throw new Exception($this->lang('encoding') . $encoding);
             }
@@ -3020,9 +3022,9 @@ class PHPMailer
      * @param string $disposition_type
      * @param string $boundary
      *
-     * @return string
      * @throws Exception
      *
+     * @return string
      */
     protected function attachAll($disposition_type, $boundary)
     {
@@ -3064,9 +3066,9 @@ class PHPMailer
                 //Only include a filename property if we have one
                 if (!empty($name)) {
                     $mime[] = sprintf(
-                        'Content-Type: %s; name="%s"%s',
+                        'Content-Type: %s; name=%s%s',
                         $type,
-                        $this->encodeHeader($this->secureHeader($name)),
+                        static::quotedString($this->encodeHeader($this->secureHeader($name))),
                         static::$LE
                     );
                 } else {
@@ -3086,24 +3088,14 @@ class PHPMailer
                     $mime[] = 'Content-ID: <' . $this->encodeHeader($this->secureHeader($cid)) . '>' . static::$LE;
                 }
 
-                // If a filename contains any of these chars, it should be quoted,
-                // but not otherwise: RFC2183 & RFC2045 5.1
-                // Fixes a warning in IETF's msglint MIME checker
-                // Allow for bypassing the Content-Disposition header totally
+                // Allow for bypassing the Content-Disposition header
                 if (!empty($disposition)) {
                     $encoded_name = $this->encodeHeader($this->secureHeader($name));
-                    if (preg_match('/[ ()<>@,;:"\/\[\]?=]/', $encoded_name)) {
-                        $mime[] = sprintf(
-                            'Content-Disposition: %s; filename="%s"%s',
-                            $disposition,
-                            $encoded_name,
-                            static::$LE . static::$LE
-                        );
-                    } elseif (!empty($encoded_name)) {
+                    if (!empty($encoded_name)) {
                         $mime[] = sprintf(
                             'Content-Disposition: %s; filename=%s%s',
                             $disposition,
-                            $encoded_name,
+                            static::quotedString($encoded_name),
                             static::$LE . static::$LE
                         );
                     } else {
@@ -3163,6 +3155,7 @@ class PHPMailer
             if ($this->exceptions) {
                 throw $exc;
             }
+
             return '';
         }
     }
@@ -3174,9 +3167,9 @@ class PHPMailer
      * @param string $str The text to encode
      * @param string $encoding The encoding to use; one of 'base64', '7bit', '8bit', 'binary', 'quoted-printable'
      *
-     * @return string
      * @throws Exception
      *
+     * @return string
      */
     public function encodeString($str, $encoding = self::ENCODING_BASE64)
     {
@@ -3457,9 +3450,9 @@ class PHPMailer
      * @param string $type File extension (MIME) type
      * @param string $disposition Disposition to use
      *
-     * @return bool True on successfully adding an attachment
      * @throws Exception
      *
+     * @return bool True on successfully adding an attachment
      */
     public function addStringAttachment(
         $string,
@@ -3519,9 +3512,9 @@ class PHPMailer
      * @param string $type File MIME type
      * @param string $disposition Disposition to use
      *
-     * @return bool True on successfully adding an attachment
      * @throws Exception
      *
+     * @return bool True on successfully adding an attachment
      */
     public function addEmbeddedImage(
         $path,
@@ -3589,9 +3582,9 @@ class PHPMailer
      * @param string $type MIME type - will be used in preference to any automatically derived type
      * @param string $disposition Disposition to use
      *
-     * @return bool True on successfully adding an attachment
      * @throws Exception
      *
+     * @return bool True on successfully adding an attachment
      */
     public function addStringEmbeddedImage(
         $string,
@@ -3999,7 +3992,8 @@ class PHPMailer
      * @param string $message HTML message string
      * @param string $basedir Absolute path to a base directory to prepend to relative paths to images
      * @param bool|callable $advanced Whether to use the internal HTML to text converter
-     *                                or your own custom converter @return string $message The transformed message Body
+     *                                or your own custom converter
+     * @return string The transformed message body
      *
      * @throws Exception
      *
@@ -4123,7 +4117,7 @@ class PHPMailer
     public function html2text($html, $advanced = false)
     {
         if (is_callable($advanced)) {
-            return $advanced($html);
+            return call_user_func($advanced, $html);
         }
 
         return html_entity_decode(
@@ -4470,9 +4464,9 @@ class PHPMailer
      *
      * @param string $signHeader
      *
-     * @return string The DKIM signature value
      * @throws Exception
      *
+     * @return string The DKIM signature value
      */
     public function DKIM_Sign($signHeader)
     {
@@ -4575,9 +4569,9 @@ class PHPMailer
      * @param string $subject Subject
      * @param string $body Body
      *
-     * @return string
      * @throws Exception
      *
+     * @return string
      */
     public function DKIM_Add($headers_line, $subject, $body)
     {
@@ -4725,6 +4719,28 @@ class PHPMailer
     public static function hasLineLongerThanMax($str)
     {
         return (bool)preg_match('/^(.{' . (self::MAX_LINE_LENGTH + strlen(static::$LE)) . ',})/m', $str);
+    }
+
+    /**
+     * If a string contains any "special" characters, double-quote the name,
+     * and escape any double quotes with a backslash.
+     *
+     * @param string $str
+     *
+     * @return string
+     *
+     * @see RFC822 3.4.1
+     */
+    public static function quotedString($str)
+    {
+        if (preg_match('/[ ()<>@,;:"\/\[\]?=]/', $str)) {
+            //If the string contains any of these chars, it must be double-quoted
+            //and any double quotes must be escaped with a backslash
+            return '"' . str_replace('"', '\\"', $str) . '"';
+        }
+
+        //Return the string untouched, it doesn't need quoting
+        return $str;
     }
 
     /**
