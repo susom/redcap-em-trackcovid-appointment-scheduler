@@ -25,7 +25,7 @@ if (!isset($_COOKIE['participant_login'])) {
                 </div>
             </div>
         </div>
-        <div id="errors" class="text-left alert alert-danger" style="display: none"></div>
+        <div id="errors" class="row col-10 offset-1 text-left alert alert-danger" style="display: none"></div>
         <section><h2>Enter your ID (8 Characters)</h2>
             <div class="row">
                 <div class="col-1"><input data-num="1" data-type="newuniq"
