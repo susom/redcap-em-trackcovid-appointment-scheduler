@@ -40,12 +40,6 @@
   "links": {
     "project": [
       {
-        "name": "Scheduler Landing Page",
-        "icon": "brick",
-        "url": "src/shortcut.php",
-        "show-header-and-footer": false
-      },
-      {
         "name": "Manager Page",
         "icon": "brick",
         "url": "src/manager.php",

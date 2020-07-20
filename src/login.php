@@ -16,6 +16,15 @@ if (!isset($_COOKIE['participant_login'])) {
         Form.ajaxURL = "<?php echo $module->getUrl("src/verify.php", true, true)?>"
     </script>
     <div id="new-form" class="container">
+        <div class="row col-10 offset-1">
+            <div class="row">
+                <div style="padding:10px 0 0;"><img id="survey_logo"
+                                                    src="https://redcap.stanford.edu/surveys/index.php?pid=20184&amp;doc_id_hash=a825369bc1de8a7ce50ec7a5765c7fee0a79fc65&amp;__passthru=DataEntry%2Fimage_view.php&amp;s=DPXJ7FAJCX&amp;id=924268"
+                                                    alt="image" title="image"
+                                                    style="max-width:600px;width:559px;max-width:559px;height:145px;max-height:145px;">
+                </div>
+            </div>
+        </div>
         <section><h2>Unique Code (8 Characters)</h2>
             <div class="row">
                 <div class="col-1"><input data-num="1" data-type="newuniq"
