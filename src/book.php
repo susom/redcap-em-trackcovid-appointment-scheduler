@@ -80,7 +80,7 @@ try {
             if ($user['record'][$module->getFirstEventId()]['phone_number'] != '') {
                 $data['mobile'] = $user['record'][$module->getFirstEventId()]['phone_number'];
             }
-
+            $data['newuniq'] = $user['id'];
             $return = $module->notifyUser($data);
             echo json_encode(array(
                 'status' => 'ok',

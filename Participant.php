@@ -8,6 +8,8 @@ class Participant
 
     private $counter;
 
+    private $users;
+
     /**
      * @param string $email
      * @param string $date
@@ -142,7 +144,8 @@ class Participant
             $param = array(
                 'project_id' => $projectId,
                 'filterLogic' => $filter,
-                'return_format' => 'array'
+                'return_format' => 'array',
+                'event_id' => array(439, 440, 441)
             );
             $records = \REDCap::getData($param);
             return $records;
@@ -249,5 +252,20 @@ class Participant
             }
         }
         return $result;
+    }
+
+    public function getUserInfo($recordId, $eventId)
+    {
+        if (!$this->users) {
+            $param = array(
+                'filterLogic' => $recordId,
+                'return_format' => 'array',
+                'event_id' => $eventId
+            );
+            $this->users = \REDCap::getData($param);
+            return $this->users[$recordId][$eventId];
+        } else {
+            return $this->users[$recordId][$eventId];
+        }
     }
 }

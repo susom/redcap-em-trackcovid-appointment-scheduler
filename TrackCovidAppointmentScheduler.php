@@ -696,7 +696,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $this->sendEmail($user['email'],
             ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
             ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
-            '--APPT CONFIRMATION-- Please arrive' .
+            '--APPT CONFIRMATION-- ' . $user['newuniq'] . ' Please arrive' .
             ' on ' . date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
             ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
             ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),

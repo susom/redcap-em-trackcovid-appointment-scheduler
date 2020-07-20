@@ -24,11 +24,9 @@ try {
             <table id="booked-slots" class="display">
                 <thead>
                 <tr>
-                    <th>EmployeeID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
-                    <th>Notes</th>
                     <!--                    <th>Project</th>-->
                     <th>Date</th>
                     <th>Start Time</th>
@@ -39,6 +37,7 @@ try {
                 <tbody>
                 <?php
                 foreach ($records as $id => $events) {
+                    $user = $module->getParticipant()->getUserInfo($id, $module->getFirstEventId());
                     foreach ($events as $eventId => $record) {
                         //if past reservation we do not want to see it.
                         if (!array_key_exists($record['slot_id'], $slots)) {
@@ -48,11 +47,9 @@ try {
                         }
                         ?>
                         <tr>
-                            <td><?php echo $record['employee_id'] ?></td>
-                            <td><?php echo $record['name'] ?></td>
-                            <td><?php echo $record['email'] ?></td>
-                            <td><?php echo $record['mobile'] ?></td>
-                            <td><?php echo $record['notes'] ?></td>
+                            <td><?php echo $user['full_name'] ?></td>
+                            <td><?php echo $user['email'] ?></td>
+                            <td><?php echo $user['phone_number'] ?></td>
                             <!--                            <td>-->
                             <?php //echo $module::getProjectName($record['project_id']) ?><!--</td>-->
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>

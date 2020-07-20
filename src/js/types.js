@@ -421,18 +421,20 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                     jQuery('#booked-container').html(data);
                 }
 
+            },
+            error: function (request, error) {
+                alert("Request: " + JSON.stringify(request));
+            },
+            complete: function () {
                 jQuery('#booked-slots').DataTable(
                     {
                         pageLength: 50,
-                        order: [[6, "asc"], [7, "asc"]],
+                        order: [[3, "asc"], [4, "asc"]],
                         columnDefs: [
                             {"type": "date", "targets": 3}
                         ]
                     }
                 );
-            },
-            error: function (request, error) {
-                alert("Request: " + JSON.stringify(request));
             }
         });
     } else {
