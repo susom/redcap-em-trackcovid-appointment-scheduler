@@ -59,7 +59,8 @@ try {
                 <thead>
                 <tr>
                     <th>Visit</th>
-                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Date</th>
                     <th>Location</th>
                     <th>Action</th>
                 </tr>

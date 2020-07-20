@@ -21,7 +21,7 @@ try {
     if (!$module::isUserHasManagePermission()) {
         throw new \LogicException('You should not be here');
     } else {
-        $data['start' . $suffix] = date('`Y-m-d H:i:s`', strtotime(preg_replace("([^0-9/])", "", $_POST['start'])));
+        $data['start' . $suffix] = date('Y-m-d H:i:s', strtotime(preg_replace("([^0-9/])", "", $_POST['start'])));
         $data['end' . $suffix] = date('Y-m-d H:i:s', strtotime(preg_replace("([^0-9/])", "", $_POST['end'])));
         $data['notes' . $suffix] = filter_var($_POST['notes'], FILTER_SANITIZE_STRING);
         $data['instructor' . $suffix] = filter_var($_POST['instructor'], FILTER_SANITIZE_STRING);

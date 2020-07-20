@@ -27,7 +27,7 @@ try {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
-                    <!--                    <th>Project</th>-->
+                    <th>Location</th>
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
@@ -45,13 +45,14 @@ try {
                         } else {
                             $slot = end($slots[$record['slot_id']]);
                         }
+                        $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                         ?>
                         <tr>
                             <td><?php echo $user['full_name'] ?></td>
                             <td><?php echo $user['email'] ?></td>
                             <td><?php echo $user['phone_number'] ?></td>
                             <!--                            <td>-->
-                            <?php //echo $module::getProjectName($record['project_id']) ?><!--</td>-->
+                            <td><?php echo $locations[$record['participant_location']]; ?></td>
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) ?></td>
                             <td><?php echo date('H:i', strtotime($slot['end'])) ?></td>

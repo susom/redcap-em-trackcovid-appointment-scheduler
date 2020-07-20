@@ -50,7 +50,7 @@ body.loading .loader {
     float: left;
 }
 
-.location-filter select, .day-filter select {
+.location-filter select, .day-filter select, .previous-filter input {
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -61,4 +61,8 @@ body.loading .loader {
 
 .day-filter:before {
     content: 'Days Filter:';
+}
+
+.previous-filter:before {
+    content: 'Hide Previous Appointments:';
 }

@@ -25,7 +25,7 @@ try {
                 continue;
             }
             // check if user has record for this event
-
+            $status = 'Not Scheduled';
             if (isset($user['record'][$eventId])) {
                 $reservation = $module->getReservationArray($user['record'][$eventId]);
                 if (empty($reservation)) {
@@ -33,10 +33,12 @@ try {
                     $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
                         $event['day_offset']);
                 } else {
-                    $time = date('m/d/Y H:i', strtotime($reservation['start'])) . ' - ' . date('H:i',
+
+                    $time = date('D m Y H:i', strtotime($reservation['start'])) . ' - ' . date('H:i',
                             strtotime($reservation['end']));
                     $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
-                    $location = $locations[$reservation['location']];
+
+                    $location = $locations[$user['record'][$eventId]['participant_location']];
 
                     if ($module->isBaseLine()) {
                         $module->setBaseLineDate($reservation['start']);
@@ -49,16 +51,17 @@ try {
                         $action = $module->getCancelActionButton($user, $eventId, $reservation);
                     }
 
-
-                    //todo add message to completed or no show appointment.
-
+                    // determine the status
+                    $statuses = parseEnum($module->getProject()->metadata['participant_status']["element_enum"]);
+                    $status = $statuses[$user['record'][$eventId]['participant_status']];
                 }
 
             } else {
-                $time = 'Not Scheduled';
+                $time = '';
                 $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
             }
             $row[] = $event['descrip'];
+            $row[] = $status;
             $row[] = $time;
             $row[] = $location;
             $row[] = $action;

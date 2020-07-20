@@ -201,19 +201,44 @@ User = {
             },
             'success': function (data) {
                 $('#appointments').DataTable({
-                    dom: 'Bfrtip',
+                    dom: '<"previous-filter"><lf<t>ip>',
                     data: data.data,
                     pageLength: 50,
                     "bDestroy": true,
                     "aaSorting": [[0, "asc"]],
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ],
+                    initComplete: function () {
+                        // we only need day and location filter.
+                        this.api().columns([1]).every(function (index) {
+                            // below function will add filter to remove previous/completed appointments
+                            var column = this;
+                            $('<input type="checkbox" id="previous-filter" name="old" checked/>')
+                                .appendTo($('.previous-filter'))
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+                                    if (document.getElementById('previous-filter').checked) {
+                                        column
+                                            .search("Not Scheduled|Reserved", true, false)
+                                            .draw();
+                                    } else {
+                                        column
+                                            .search("Not Scheduled|Reserved|Canceled|Completed|No Show", true, false)
+                                            .draw();
+                                    }
+
+                                });
+
+                        });
+                    }
                 });
             },
             'error': function (request, error) {
                 var data = JSON.parse(request.responseText)
                 alert(data.message);
+            },
+            'complete': function () {
+                $("#previous-filter").trigger('change')
             }
         });
     }
