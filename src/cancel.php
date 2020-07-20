@@ -14,7 +14,7 @@ try {
     } else {
         $data['slot_id'] = false;
         $data['reservation_participant_id'] = false;
-        $data['participant_status'] = CANCELED;
+        $data['participant_status'] = NOT_SCHEDULED;
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 

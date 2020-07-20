@@ -29,7 +29,7 @@ try {
             if (isset($user['record'][$eventId])) {
                 $reservation = $module->getReservationArray($user['record'][$eventId]);
                 if (empty($reservation)) {
-                    $time = 'Not Scheduled';
+                    $time = '';
                     $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
                         $event['day_offset']);
                 } else {
