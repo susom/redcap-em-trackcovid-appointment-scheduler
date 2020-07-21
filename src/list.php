@@ -80,7 +80,7 @@ if (!empty($data)) {
         }
 
         $row = array();
-        $row[] = date('D m/Y', strtotime($slot['start' . $suffix]));
+        $row[] = date('D m/d/Y', strtotime($slot['start' . $suffix]));
         $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
         $row[] = date('h:i A', strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A',
                 strtotime($slot['end' . $suffix]));;
