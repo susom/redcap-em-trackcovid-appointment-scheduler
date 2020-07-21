@@ -1550,7 +1550,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 $end = date('Y-m-d', strtotime('+14 days'));
             }
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-success">Schedule</button>(Please Note the allowed range to schedule the visit is between ' . $start . ' and ' . $end . ')';
+            return '<button data-baseline="' . $this->getBaseLineDate() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-success">Schedule</button><br><small>(Please Note the allowed range to schedule the visit is between ' . $start . ' and ' . $end . ')</small>';
         } else {
             return 'Please schedule Baseline Visit First to be able to schedule other visits!';
         }
