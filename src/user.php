@@ -54,6 +54,13 @@ try {
             </div>
         </div>
         <div class="container">
+            <div class="col-12">
+                <?php
+                $instances = $module->getInstances();
+                $instance = $instances[0];
+                echo $instance['instance_description']
+                ?>
+            </div>
             <table id="appointments" class="display table table-striped table-bordered"
                    cellspacing="0" width="100%">
                 <thead>

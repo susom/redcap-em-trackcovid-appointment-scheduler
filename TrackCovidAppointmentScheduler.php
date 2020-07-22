@@ -574,9 +574,9 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                     $start = date('Y-m-d', strtotime($baseline) + $add - $week);
                     $end = date('Y-m-d', strtotime($baseline) + $add + $week);
                 } else {
-                    $start = date('Y-m-d');
-                    # change logic to get the next 14 days instead o just the end of this month.
-                    $end = date('Y-m-d', strtotime('+14 days'));
+                    $start = date('Y-m-d', strtotime('+7 days'));
+                    # change logic to get the next 21 days instead o just the end of this month.
+                    $end = date('Y-m-d', strtotime('+21 days'));
                 }
 
                 $param = array(

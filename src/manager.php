@@ -107,9 +107,6 @@ require_once 'urls.php';
             <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
                aria-controls="description" aria-selected="false">Manage Description</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $url ?>">Go to Calendar</a>
-        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active card card-body" id="manage" role="tabpanel" aria-labelledby="manage-tab">

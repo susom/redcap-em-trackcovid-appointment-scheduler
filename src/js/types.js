@@ -426,15 +426,43 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                 alert("Request: " + JSON.stringify(request));
             },
             complete: function () {
-                jQuery('#booked-slots').DataTable(
-                    {
-                        pageLength: 50,
-                        order: [[3, "asc"], [4, "asc"]],
-                        columnDefs: [
-                            {"type": "date", "targets": 3}
-                        ]
+                jQuery('#booked-slots').DataTable({
+                    dom: '<"day-filter"><"location-filter"><lf<t>ip>',
+                    pageLength: 50,
+                    order: [[3, "asc"], [4, "asc"]],
+                    columnDefs: [
+                        {"type": "date", "targets": 3}
+                    ],
+                    initComplete: function () {
+                        this.api().columns([3]).every(function (index) {
+
+                            var column = this;
+
+                            var select = $('<select id="location-options"><option value=""></option></select>')
+                                .appendTo($('.location-filter'))
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+
+                                    // set preferred location so it will be selected next time.
+                                    setCookie('preferred-location', val, 365);
+                                    column
+                                        .search(val ? '^' + val + '$' : '', true, false)
+                                        .draw();
+                                });
+
+                            column.data().unique().sort().each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>')
+                            });
+
+                            // if preferred location is saved then select that
+                            if (getCookie('preferred-location') != null) {
+                                $("#location-options").val(getCookie('preferred-location')).trigger('change');
+                            }
+                        });
                     }
-                );
+                });
             }
         });
     } else {
@@ -560,5 +588,30 @@ function loadDefaultView(view) {
 //Calendar functions
 function popupCal(cal_id, width) {
     window.open(app_path_webroot + 'Calendar/calendar_popup.php?pid=' + pid + '&width=' + width + '&cal_id=' + cal_id, 'myWin', 'width=' + width + ', height=250, toolbar=0, menubar=0, location=0, status=0, scrollbars=1, resizable=1');
+}
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
