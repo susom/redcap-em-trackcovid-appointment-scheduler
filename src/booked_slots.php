@@ -79,6 +79,14 @@ try {
                                     }
                                     ?>
                                 </select>
+                                <div class="clear"></div>
+                                <strong><a target="_blank" href="<?php echo rtrim(APP_PATH_WEBROOT_FULL,
+                                            '/') . APP_PATH_WEBROOT . 'DataEntry/index.php?pid=' . $module->getProjectId() . '&page=trackcovid_visit_summary&id=' . $id . '&event_id=' . $eventId ?>">Go
+                                        to Visit Summary</a></strong>
+                                <div class="clear"></div>
+                                <strong><a target="_blank" href="<?php echo $module->getUrl('src/user.php', false,
+                                            true) . '&code=' . $id . '&zip=' . $user['zipcode_abs'] ?>">Go
+                                        to <?php echo $user['full_name'] ?> Page</a></strong>
                             </td>
                         </tr>
                         <?php

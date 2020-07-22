@@ -1492,16 +1492,32 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 //        if(!isset($_COOKIE[$name])){
 //            return false;
 //        }
-        $param = array(
-            'project_id' => $this->getProjectId(),
-            'return_format' => 'array',
-            'events' => array_keys($this->getProject()->events['1']['events'])
-        );
-        $records = REDCap::getData($param);
-        foreach ($records as $id => $record) {
-            $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
-            if ($hash == $_COOKIE[$name]) {
-                return array('id' => $id, 'record' => $record);
+        // when manager hits user page. they must be logged in and have right permission on redcap.
+        if (defined('USERID') && isset($_GET['code']) && isset($_GET['zip']) && self::isUserHasManagePermission()) {
+            $param = array(
+                'project_id' => $this->getProjectId(),
+                'return_format' => 'array',
+                'events' => array_keys($this->getProject()->events['1']['events'])
+            );
+            $records = REDCap::getData($param);
+            foreach ($records as $id => $record) {
+                if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $id) {
+                    $this->setUserCookie('login', $this->generateUniqueCodeHash($id));
+                    return array('id' => $id, 'record' => $record);
+                }
+            }
+        } else {
+            $param = array(
+                'project_id' => $this->getProjectId(),
+                'return_format' => 'array',
+                'events' => array_keys($this->getProject()->events['1']['events'])
+            );
+            $records = REDCap::getData($param);
+            foreach ($records as $id => $record) {
+                $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
+                if ($hash == $_COOKIE[$name]) {
+                    return array('id' => $id, 'record' => $record);
+                }
             }
         }
         return false;

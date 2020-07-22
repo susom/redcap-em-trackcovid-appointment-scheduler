@@ -7,7 +7,6 @@ namespace Stanford\TrackCovidAppointmentScheduler;
 try {
     if ($user = $module->verifyCookie('login')) {
         //JS and CSS with inputs URLs
-        define('USERID', $user['record'][$module->getFirstEventId()]['full_name']);
         $recordId = $user['id'];
         $url = $module->getUrl('src/list.php', true, true,
                 true) . '&event_id=' . $module->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
@@ -36,12 +35,12 @@ try {
                         <nav class="navbar-expand-sm navbar-dark">
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                                 <?php
-                                if (defined('USERID')) {
+                                if ($user['record'][$module->getFirstEventId()]['full_name']) {
                                     ?>
                                     <ul class="navbar-nav">
                                         <li class="nav-item active">
                                             <a class="nav-link" href="#">Logged in
-                                                as: <?php echo(defined('USERID') ? USERID : ' NOT LOGGED IN') ?></a>
+                                                as: <?php echo $user['record'][$module->getFirstEventId()]['full_name'] ?></a>
                                         </li>
                                     </ul>
                                     <?php
