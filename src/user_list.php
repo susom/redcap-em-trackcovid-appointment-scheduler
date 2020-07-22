@@ -34,7 +34,7 @@ try {
                         $event['day_offset']);
                 } else {
 
-                    $time = date('D m Y H:i', strtotime($reservation['start'])) . ' - ' . date('H:i',
+                    $time = date('D m/d/Y H:i', strtotime($reservation['start'])) . ' - ' . date('H:i',
                             strtotime($reservation['end']));
                     $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
 
