@@ -434,10 +434,10 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                         {"type": "date", "targets": 3}
                     ],
                     initComplete: function () {
-                        this.api().columns([4, 5]).every(function (index) {
+                        this.api().columns([7, 6]).every(function (index) {
 
                             var column = this;
-                            if (index === 5) {
+                            if (index === 7) {
                                 var select = $('<select id="day-options"><option value=""></option></select>')
                                     .appendTo($('.day-filter'))
                                     .on('change', function () {
@@ -451,7 +451,7 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                                             .draw();
                                     });
                             }
-                            if (index === 4) {
+                            if (index === 6) {
                                 var select = $('<select id="location-options"><option value=""></option></select>')
                                     .appendTo($('.location-filter'))
                                     .on('change', function () {
