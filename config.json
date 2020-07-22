@@ -68,6 +68,12 @@
       "type": "descriptive"
     },
     {
+      "key": "testing-sites-event",
+      "name": "<b>Select Testing site Event</b>",
+      "required": true,
+      "type": "event-list"
+    },
+    {
       "key": "baseline-month",
       "name": "<h3>Select Baseline month to build scheduler based on that. </h3>",
       "required": true,
@@ -341,7 +347,7 @@
         },
         {
           "key": "calendar_body",
-          "name": "<b>Calendar Email Body</b>",
+          "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i>",
           "required": false,
           "type": "textarea"
         }

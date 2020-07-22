@@ -102,6 +102,7 @@ define("PARTICIPANT_STATUS", "participant_status");
  * @property \Project $project
  * @property boolean $baseLine
  * @property string $baseLineDate
+ * @property array $locationRecords
  */
 class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalModule
 {
@@ -170,6 +171,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     private $baseLineDate = '';
 
+    private $locationRecords;
 
     /**
      * TrackCovidAppointmentScheduler constructor.
@@ -679,7 +681,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     /**
      * @param array $user
      */
-    public function notifyUser($user)
+    public function notifyUser($user, $slot = null)
     {
         $instance = $this->getEventInstance();
         $this->calendarParams['calendarOrganizerEmail'] = ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL);
@@ -701,7 +703,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             ' on ' . date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
             ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
             ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),
-            $instance['calendar_body'],
+            $this->replaceRecordLabels($instance['calendar_body'], $slot),
             true
         );
 
@@ -1587,4 +1589,58 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             }
         }
     }
+
+    public function insertLocationInEmailBody($locationId, $body)
+    {
+        if (strpos($body, '[location]') !== false) {
+            $locations = $this->getLocationRecords();
+            $location = $locations[$locationId];
+            $text = "<br>Title: " . $location[$this->getProjectSetting('testing-sites-event')]['title'];
+            $text .= "<br>Address: " . $location[$this->getProjectSetting('testing-sites-event')]['testing_site_address'];
+            $text .= "<br>Details: " . $location[$this->getProjectSetting('testing-sites-event')]['site_details'];
+            $text .= "<br>Google Map Link: <a href='" . $location[$this->getProjectSetting('testing-sites-event')]['map_link'] . "'>" . $location[$this->getProjectSetting('testing-sites-event')]['map_link'] . "</a>";
+            return str_replace('[location]', $text, $body);
+        }
+    }
+
+    public function getLocationRecords()
+    {
+        if (!$this->locationRecords) {
+            $param = array(
+                'project_id' => $this->getProjectId(),
+                'events' => [$this->getProjectSetting('testing-sites-event')]
+            );
+
+            $results = \REDCap::getData($param);;
+            $this->locationRecords = $results;
+            return $this->locationRecords;
+        } else {
+            return $this->locationRecords;
+        }
+    }
+
+    public function replaceRecordLabels($text, $row)
+    {
+        $origin = $text;
+        preg_match_all("/\[(.*?)\]/", $text, $matches);
+        foreach ($matches[1] as $match) {
+            if (isset($row[$match])) {
+                if ($match == 'location') {
+                    $text = $this->insertLocationInEmailBody($row['location'], $text);
+                } else {
+                    $text = str_replace($match, $row[$match], $text);
+                }
+            }
+        }
+
+        if ($origin != $text) {
+            $text = str_replace("]", "", $text);
+            $text = str_replace("[", "", $text);
+            return $text;
+        } else {
+            return false;
+        }
+    }
+
+
 }

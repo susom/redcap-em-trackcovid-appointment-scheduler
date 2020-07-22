@@ -39,8 +39,12 @@ try {
                                     ?>
                                     <ul class="navbar-nav">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="#">Logged in
-                                                as: <?php echo $user['record'][$module->getFirstEventId()]['full_name'] ?></a>
+                                            <a class="nav-link" href="#">
+                                                <h5><?php echo $user['record'][$module->getFirstEventId()]['full_name'] ?></h5>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item ">
+                                            <a class="nav-link logout" href="#"><p>Logout</p></a>
                                         </li>
                                     </ul>
                                     <?php
@@ -57,8 +61,38 @@ try {
                 <?php
                 $instances = $module->getInstances();
                 $instance = $instances[0];
-                echo $instance['instance_description']
+                echo $instance['instance_description'];
+                $locations = $module->getLocationRecords();
+                $array = array();
+                $counties = parseEnum($module->getProject()->metadata['county']['element_enum']);
+
+                foreach ($locations as $location) {
+                    $county = $location[$module->getProjectSetting('testing-sites-event')]['county'];
+                    $array[$county][] = $location[$module->getProjectSetting('testing-sites-event')];
+                }
                 ?>
+                <ul>
+                    <?php
+                    foreach ($array as $c => $county) {
+                        ?>
+                        <li><h4><?php echo $counties[$c]; ?></h4>
+                            <ul>
+                                <?php
+                                foreach ($county as $site) {
+                                    ?>
+                                    <li><strong><?php echo $site['title'] ?>
+                                            : <?php echo $site['testing_site_address'] ?></strong>
+                                        <p><?php echo $site['site_details'] ?></p></li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </li>
+                        <?php
+                    }
+
+                    ?>
+                </ul>
             </div>
             <table id="appointments" class="display table table-striped table-bordered"
                    cellspacing="0" width="100%">

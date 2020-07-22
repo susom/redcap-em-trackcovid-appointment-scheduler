@@ -81,7 +81,7 @@ try {
                 $data['mobile'] = $user['record'][$module->getFirstEventId()]['phone_number'];
             }
             $data['newuniq'] = $user['id'];
-            $return = $module->notifyUser($data);
+            $return = $module->notifyUser($data, $slot);
             echo json_encode(array(
                 'status' => 'ok',
                 'message' => 'Appointment saved successfully!' . (isset($return['error']) ? ' with following errors' . $return['message'] : ''),
