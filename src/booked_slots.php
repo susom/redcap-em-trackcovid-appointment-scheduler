@@ -20,18 +20,22 @@ try {
     $slots = $module->getAllOpenSlots();
     if ($records) {
         ?>
-        <div class="container">
+        <div class="container-fluid">
             <table id="booked-slots" class="display">
                 <thead>
                 <tr>
+                    <th>Record ID</th>
                     <th>Name</th>
+                    <th>Date of Birth</th>
                     <th>Email</th>
                     <th>Mobile</th>
+                    <th>Visit type</th>
                     <th>Location</th>
                     <th>Date</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Status</th>
+                    <th>Appointment time</th>
+                    <th>Consent status</th>
+                    <th>Survey status</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,14 +52,19 @@ try {
                         $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                         ?>
                         <tr>
+                            <td><?php echo $id ?></td>
                             <td><?php echo $user['full_name'] ?></td>
+                            <td><?php echo $user['dob'] ?></td>
                             <td><?php echo $user['email'] ?></td>
                             <td><?php echo $user['phone_number'] ?></td>
+                            <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
                             <!--                            <td>-->
                             <td><?php echo $locations[$record['participant_location']]; ?></td>
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
-                            <td><?php echo date('H:i', strtotime($slot['start'])) ?></td>
-                            <td><?php echo date('H:i', strtotime($slot['end'])) ?></td>
+                            <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
+                                        strtotime($slot['end'])) ?></td>
+                            <td><?php //todo consent status   ?></td>
+                            <td><?php //todo add survey links ?></td>
                             <td>
                                 <select data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"

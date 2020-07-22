@@ -93,15 +93,16 @@ require_once 'urls.php';
     </nav>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="manage-tab" data-toggle="tab" href="#manage" role="tab"
-               aria-controls="manage" aria-selected="true">Manage Time Slots</a>
+            <a class="nav-link active" id="booked-tab" data-toggle="tab" href="#booked" role="tab"
+               aria-controls="booked"
+               aria-selected="false">Manage Booked Slots</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="booked-tab" data-toggle="tab" href="#booked" role="tab" aria-controls="booked"
-               aria-selected="false">Manage Booked Slots</a>
+            <a class="nav-link" id="manage-tab" data-toggle="tab" href="#manage" role="tab"
+               aria-controls="manage" aria-selected="true">Manage Time Slots</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
@@ -109,11 +110,12 @@ require_once 'urls.php';
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active card card-body" id="manage" role="tabpanel" aria-labelledby="manage-tab">
-            <div id="manager-container"></div>
-        </div>
-        <div class="tab-pane fade card card-body" id="booked" role="tabpanel" aria-labelledby="booked-tab">
+        <div class="tab-pane fade  show active  card card-body" id="booked" role="tabpanel"
+             aria-labelledby="booked-tab">
             <div id="booked-container"></div>
+        </div>
+        <div class="tab-pane fadecard card-body" id="manage" role="tabpanel" aria-labelledby="manage-tab">
+            <div id="manager-container"></div>
         </div>
         <div class="tab-pane fade card card-body" id="description" role="tabpanel" aria-labelledby="description-tab">
             <div id="instance-description-container"></div>

@@ -434,24 +434,38 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                         {"type": "date", "targets": 3}
                     ],
                     initComplete: function () {
-                        this.api().columns([3]).every(function (index) {
+                        this.api().columns([4, 5]).every(function (index) {
 
                             var column = this;
+                            if (index === 5) {
+                                var select = $('<select id="day-options"><option value=""></option></select>')
+                                    .appendTo($('.day-filter'))
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
 
-                            var select = $('<select id="location-options"><option value=""></option></select>')
-                                .appendTo($('.location-filter'))
-                                .on('change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                                        // set preferred location so it will be selected next time.
+                                        column
+                                            .search(val ? '^' + val + '$' : '', true, false)
+                                            .draw();
+                                    });
+                            }
+                            if (index === 4) {
+                                var select = $('<select id="location-options"><option value=""></option></select>')
+                                    .appendTo($('.location-filter'))
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex(
+                                            $(this).val()
+                                        );
 
-                                    // set preferred location so it will be selected next time.
-                                    setCookie('preferred-location', val, 365);
-                                    column
-                                        .search(val ? '^' + val + '$' : '', true, false)
-                                        .draw();
-                                });
-
+                                        // set preferred location so it will be selected next time.
+                                        setCookie('preferred-location', val, 365);
+                                        column
+                                            .search(val ? '^' + val + '$' : '', true, false)
+                                            .draw();
+                                    });
+                            }
                             column.data().unique().sort().each(function (d, j) {
                                 select.append('<option value="' + d + '">' + d + '</option>')
                             });
