@@ -25,10 +25,10 @@ User = {
             text += "<br><strong>Address:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
             text += "<br><strong>Details:</strong> " + location[User.locationsEventId]['site_details'];
             text += "<br><strong>Google Map Link:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['map_link'] + "</a>";
-            jQuery('#generic-modal').find('.modal-title').html(location[User.locationsEventId]['title'] + " Information");
-            jQuery('#generic-modal').find('.modal-body').html(text);
-            jQuery('#generic-modal').css('top', '50%');
-            $('#generic-modal').modal('show');
+            jQuery('#location-modal').find('.modal-title').html(location[User.locationsEventId]['title'] + " Information");
+            jQuery('#location-modal').find('.modal-body').html(text);
+            jQuery('#location-modal').css('top', '50%');
+            $('#location-modal').modal('show');
         });
 
         /**

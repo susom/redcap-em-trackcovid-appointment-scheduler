@@ -45,7 +45,7 @@ if (!isset($module)) {
 
 
 <!-- Booking Modal -->
-<div class="modal" id="booking">
+<div class="modal" id="location-modal">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -172,7 +172,6 @@ if (!isset($module)) {
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="submit" id="submit-booking-form" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
