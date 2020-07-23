@@ -63,7 +63,7 @@ try {
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
-                            <td><?php //todo consent status   ?></td>
+                            <td><?php echo $user['consent_signature'] ? 'Completed' : 'Not Completed' ?></td>
                             <td><?php //todo add survey links ?></td>
                             <td>
                                 <select data-participant-id="<?php echo $id ?>"
