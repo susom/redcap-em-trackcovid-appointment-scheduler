@@ -54,7 +54,7 @@ try {
                         <tr>
                             <td><?php echo $id ?></td>
                             <td><?php echo $user['first_name'] . ' ' . $user['last_name'] ?></td>
-                            <td><?php echo $user['dob'] ?></td>
+                            <td><?php echo $user['dob'] ? date('m/d/Y', strtotime($user['dob'])) : '' ?></td>
                             <td><?php echo $user['email'] ?></td>
                             <td><?php echo $user['phone_number'] ?></td>
                             <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
@@ -86,8 +86,7 @@ try {
                                 <div class="clear"></div>
                                 <strong><a target="_blank" href="<?php echo $module->getUrl('src/user.php', false,
                                             true) . '&code=' . $id . '&zip=' . $user['zipcode_abs'] ?>">Go
-                                        to <?php echo $user['first_name'] . ' ' . $user['last_name'] ?>
-                                        Page</a></strong>
+                                        to Scheduling Page</a></strong>
                             </td>
                         </tr>
                         <?php

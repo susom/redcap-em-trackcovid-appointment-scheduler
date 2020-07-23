@@ -75,28 +75,48 @@ try {
                     $array[$county][] = $location[$module->getProjectSetting('testing-sites-event')];
                 }
                 ?>
-                <ul>
-                    <?php
-                    foreach ($array as $c => $county) {
-                        ?>
-                        <li><h4><?php echo $counties[$c]; ?></h4>
-                            <ul>
-                                <?php
-                                foreach ($county as $site) {
-                                    ?>
-                                    <li><strong><?php echo $site['title'] ?>
-                                            : <?php echo $site['testing_site_address'] ?></strong>
-                                        <p><?php echo $site['site_details'] ?></p></li>
-                                    <?php
-                                }
-                                ?>
-                            </ul>
-                        </li>
-                        <?php
-                    }
 
-                    ?>
-                </ul>
+                <div class="accordion mb-3" id="accordionExample">
+                    <div class="card" style="    border-bottom-width: 1px  !important;border-bottom-style: solid !important;
+    border-bottom-color: rgba(0, 0, 0, 0.125) !important;">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    View Testing Sites Information:
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <ul>
+                                    <?php
+                                    foreach ($array as $c => $county) {
+                                        ?>
+                                        <li><h4><?php echo $counties[$c]; ?></h4>
+                                            <ul>
+                                                <?php
+                                                foreach ($county as $site) {
+                                                    ?>
+                                                    <li><strong><?php echo $site['title'] ?>
+                                                            : <?php echo $site['testing_site_address'] ?></strong>
+                                                        <p><?php echo $site['site_details'] ?></p></li>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </ul>
+                                        </li>
+                                        <?php
+                                    }
+
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <table id="appointments" class="display table table-striped table-bordered"
                    cellspacing="0" width="100%">
