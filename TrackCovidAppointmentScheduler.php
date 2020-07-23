@@ -171,7 +171,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     private $baseLineDate = '';
 
-    private $locationRecords;
+    public $locationRecords;
 
     /**
      * TrackCovidAppointmentScheduler constructor.
@@ -211,6 +211,9 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 if (defined('SUPER_USER')) {
                     $this->setCachedIsSuperUser(SUPER_USER);
                 }
+
+                // load locations to be used in the EM
+                $this->getLocationRecords();
             }
 
 
