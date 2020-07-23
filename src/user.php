@@ -40,11 +40,11 @@ try {
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
                                 <ul class="navbar-nav"><?php
-                                    if ($user['record'][$module->getFirstEventId()]['full_name']) {
+                                    if ($user['record'][$module->getFirstEventId()]['first_name']) {
                                         ?>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="#">
-                                                <h5><?php echo $user['record'][$module->getFirstEventId()]['full_name'] ?></h5>
+                                                <h5><?php echo $user['record'][$module->getFirstEventId()]['first_name'] . ' ' . $user['record'][$module->getFirstEventId()]['last_name'] ?></h5>
                                             </a>
                                         </li>
                                         <?php
