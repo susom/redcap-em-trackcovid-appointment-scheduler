@@ -17,11 +17,12 @@ try {
         <script>
             User.listURL = "<?php echo $url ?>"
             User.slotsEventId = "<?php echo $module->getSlotsEventId() ?>"
-            User.submitURL = "<?php echo $module->getUrl('src/book.php', false,
-                    true) . '&pid=' . $module->getProjectId() . '&NOAUTH' ?>"
-            User.cancelURL = "<?php echo $module->getUrl('src/cancel.php', false,
-                    true) . '&pid=' . $module->getProjectId() . '&NOAUTH'?>"
-            User.userListURL = "<?php echo $module->getUrl('src/user_list.php', false, true) . '&NOAUTH'?>"
+            User.submitURL = "<?php echo $module->getUrl('src/book.php', true,
+                    true) . '&pid=' . $module->getProjectId()  ?>"
+            User.cancelURL = "<?php echo $module->getUrl('src/cancel.php', true,
+                    true) . '&pid=' . $module->getProjectId() ?>"
+            User.userListURL = "<?php echo $module->getUrl('src/user_list.php', true, true)?>"
+            User.loginURL = "<?php echo $module->getUrl('src/login.php', true, true) ?>"
         </script>
         <div id="brandbar">
             <div class="container">
@@ -34,22 +35,22 @@ try {
                     <div class="col-9">
                         <nav class="navbar-expand-sm navbar-dark">
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-                                <?php
-                                if ($user['record'][$module->getFirstEventId()]['full_name']) {
-                                    ?>
-                                    <ul class="navbar-nav">
+
+                                <ul class="navbar-nav"><?php
+                                    if ($user['record'][$module->getFirstEventId()]['full_name']) {
+                                        ?>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="#">
                                                 <h5><?php echo $user['record'][$module->getFirstEventId()]['full_name'] ?></h5>
                                             </a>
                                         </li>
-                                        <li class="nav-item ">
-                                            <a class="nav-link logout" href="#"><p>Logout</p></a>
-                                        </li>
-                                    </ul>
-                                    <?php
-                                }
-                                ?>
+                                        <?php
+                                    }
+                                    ?>
+                                    <li class="nav-item ">
+                                        <a class="nav-link logout" href="#"><p>Logout</p></a>
+                                    </li>
+                                </ul>
                             </div>
                         </nav>
                     </div>

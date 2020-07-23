@@ -3,12 +3,18 @@ User = {
     slotsEventId: '',
     cancelURL: '',
     userListURL: '',
+    loginURL: '',
     record: {},
     init: function () {
         //$("#appointments").dataTable();
         User.loadUserVisits();
 
 
+        jQuery(document).on("click", ".logout", function () {
+            eraseCookie('login');
+            eraseCookie('preferred-location');
+            window.location.replace(User.loginURL);
+        });
         /**
          * list view in modal
          */

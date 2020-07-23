@@ -9,7 +9,7 @@ try {
     $zipcode_abs = filter_var($_POST['zipcode_abs'], FILTER_VALIDATE_INT);
 
     if ($module->verifyUser($newuniq, $zipcode_abs)) {
-        $module->setUserCookie('login', $module->generateUniqueCodeHash($newuniq));
+        //$module->setUserCookie('login', $module->generateUniqueCodeHash($newuniq));
         echo json_encode(array(
             'status' => 'success',
             'cookie' => $module->generateUniqueCodeHash($newuniq),
