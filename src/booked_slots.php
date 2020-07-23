@@ -50,7 +50,7 @@ try {
                             $slot = end($slots[$record['slot_id']]);
                         }
                         $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
-                        $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
+                        $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['monthly_followup_survey_complete']['element_enum']);
                         ?>
                         <tr>
                             <td><?php echo $id ?></td>
@@ -65,7 +65,7 @@ try {
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
                             <td><?php echo $user['consent_signature'] ? 'Completed' : 'Incomplete' ?></td>
-                            <td><?php echo $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_monthly_followup_survey_complete']] ?></td>
+                            <td><?php echo $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']] ?></td>
                             <td>
                                 <select data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"
