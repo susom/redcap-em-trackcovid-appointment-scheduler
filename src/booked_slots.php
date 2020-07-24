@@ -64,8 +64,8 @@ try {
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
-                            <td><?php echo $user['consent_signature'] ? 'Completed' : 'Incomplete' ?></td>
-                            <td><?php echo $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']] ?></td>
+                            <td><?php echo $user['consent_date'] ? 'Completed' : 'Incomplete' ?></td>
+                            <td><?php echo $record['monthly_followup_survey_complete'] ? $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']] : 'Incomplete' ?></td>
                             <td>
                                 <select data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"
