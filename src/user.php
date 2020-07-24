@@ -95,7 +95,7 @@ try {
                                     <?php
                                     foreach ($array as $c => $county) {
                                         ?>
-                                        <li><h4><?php echo $counties[$c]; ?></h4>
+                                        <li><h4><?php echo 'County of ' . $counties[$c]; ?></h4>
                                             <ul>
                                                 <?php
                                                 foreach ($county as $site) {

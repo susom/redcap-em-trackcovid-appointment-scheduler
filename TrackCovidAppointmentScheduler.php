@@ -1486,10 +1486,10 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return hash('sha256', $newuniq);
     }
 
-    public function setUserCookie($name, $value)
+    public function setUserCookie($name, $value, $time = 86406)
     {
         #day
-        setcookie($name, $value, time() + 86406);
+        setcookie($name, $value, time() + $time);
     }
 
     public function verifyCookie($name)
