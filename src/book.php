@@ -60,7 +60,8 @@ try {
         // the location is defined in the slot.
         $data['reservation_participant_location' . $module->getSuffix()] = $slot['location'];
 
-        $data['reservation_start'] = $slot['start'];
+        $data['reservation_datetime'] = $slot['start'];
+        $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
 
         $data['redcap_event_name'] = $module->getUniqueEventName($reservationEventId);
         $data[$module->getPrimaryRecordFieldName()] = filter_var($_POST['participant_id'],
