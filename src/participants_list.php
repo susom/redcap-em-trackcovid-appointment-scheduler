@@ -46,7 +46,7 @@ try {
                     <td><?php echo $participant['mobile' . $suffix] ?></td>
                     <td><?php echo $participant['participant_notes' . $suffix] ?></td>
                     <td><?php
-                        if ($participant['participant_status' . $suffix] == RESERVED) {
+                        if ($participant['reservation_participant_status' . $suffix] == RESERVED) {
                             ?>
                             <!--                        <button type="button"-->
                             <!--                                data-participant-id="--><?php //echo $participantId ?><!--"-->
@@ -61,17 +61,17 @@ try {
                                 foreach ($module->getParticipantStatus() as $key => $status) {
                                     // list all statuses from reservation instrument. update comment.
                                     ?>
-                                    <option value="<?php echo $key ?>" <?php echo($participant['participant_status'] == $key ? 'selected' : '') ?>><?php echo $status ?></option>
+                                    <option value="<?php echo $key ?>" <?php echo($participant['reservation_participant_status'] == $key ? 'selected' : '') ?>><?php echo $status ?></option>
                                     <?php
                                 }
                                 ?>
                             </select>
                             <?php
-                        } elseif ($participant['participant_status' . $suffix] == CANCELED) {
+                        } elseif ($participant['reservation_participant_status' . $suffix] == CANCELED) {
                             ?>
                             User cancelled this appointment!
                             <?php
-                        } elseif ($participant['participant_status' . $suffix] == NO_SHOW) {
+                        } elseif ($participant['reservation_participant_status' . $suffix] == NO_SHOW) {
                             ?>
                             Instructor Marked this Participant as no show
                             <?php

@@ -18,7 +18,7 @@ try {
         $data = $module->sanitizeInput();
 
 
-        $data['participant_status' . $module->getSuffix()] = RESERVED;
+        $data['reservation_participant_status' . $module->getSuffix()] = RESERVED;
         if (!isset($_POST['participant_id'])) {
             $data['reservation_participant_id'] = USERID;
         } else {
@@ -58,7 +58,7 @@ try {
         $data[$second] = REDCAP_COMPLETE;
 
         // the location is defined in the slot.
-        $data['participant_location' . $module->getSuffix()] = $slot['location'];
+        $data['reservation_participant_location' . $module->getSuffix()] = $slot['location'];
 
         $data['reservation_start'] = $slot['start'];
 
@@ -91,7 +91,12 @@ try {
                 'email' => $data['email']
             ));
         } else {
-            throw new \Exception(implode(",", $response['errors']));
+            if (is_array($response['errors'])) {
+                throw new \Exception(implode(",", $response['errors']));
+            } else {
+                throw new \Exception($response['errors']);
+            }
+
         }
     } else {
         throw new \LogicException("User not login");

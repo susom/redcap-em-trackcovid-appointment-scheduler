@@ -12,9 +12,9 @@ try {
     if ($data[$primary] == '') {
         throw new \LogicException('Participation ID is missing');
     } else {
-        $data['slot_id'] = false;
+        $data['reservation_slot_id'] = false;
         $data['reservation_participant_id'] = false;
-        $data['participant_status'] = NOT_SCHEDULED;
+        $data['reservation_participant_status'] = NOT_SCHEDULED;
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 

@@ -155,7 +155,7 @@ jQuery(document).on('change', '.participants-no-show', function (e) {
          * Get Manage modal to let user manage their saved appointments
          */
         jQuery.ajax({
-            url: url + '&participations_id=' + participation_id + "&event_id=" + event_id + "&participant_status=" + status,
+            url: url + '&participations_id=' + participation_id + "&event_id=" + event_id + "&reservation_participant_status=" + status,
             type: 'GET',
             datatype: 'json',
             success: function (data) {

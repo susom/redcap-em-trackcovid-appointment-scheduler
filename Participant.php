@@ -95,7 +95,7 @@ class Participant
             }
 
             foreach ($records as $id => $record) {
-                if ($record[$eventId]["slot_id$suffix"] == $slotId && $record[$eventId]["participant_status$suffix"] == RESERVED) {
+                if ($record[$eventId]["reservation_slot_id$suffix"] == $slotId && $record[$eventId]["reservation_participant_status$suffix"] == RESERVED) {
                     if (self::canUserUpdateReservations($record[$eventId]["employee_id"])) {
                         //capture record id for cancellation
                         $record[$eventId]['record_id'] = $id;
@@ -118,7 +118,7 @@ class Participant
     {
         try {
 
-            $filter = "[slot_id] = '" . $slotId . "' AND [participant_status] ='" . RESERVED . "'";
+            $filter = "[reservation_slot_id] = '" . $slotId . "' AND [reservation_participant_status] ='" . RESERVED . "'";
             $param = array(
                 'project_id' => $projectId,
                 'filterLogic' => $filter,
@@ -140,12 +140,11 @@ class Participant
     {
         try {
 
-            $filter = "[participant_status] ='" . RESERVED . "'";
+            $filter = "[reservation_participant_status] ='" . RESERVED . "'";
             $param = array(
                 'project_id' => $projectId,
-                'filterLogic' => $filter,
-                'return_format' => 'array',
-                'event_id' => array(439, 440, 441)
+                //'filterLogic' => $filter,
+                'return_format' => 'array'
             );
             $records = \REDCap::getData($param);
             return $records;
@@ -162,7 +161,7 @@ class Participant
     {
         try {
 
-            $filter = "[slot_id$suffix] = '" . $recordId . "'";
+            $filter = "[reservation_slot_id$suffix] = '" . $recordId . "'";
             $param = array(
                 'project_id' => $projectId,
                 'filterLogic' => $filter,
@@ -206,7 +205,7 @@ class Participant
             if (is_null($status)) {
                 $filter = "[employee_id$suffix] = '" . $sunetID . "'";
             } else {
-                $filter = "[employee_id$suffix] = '" . $sunetID . "' AND [participant_status$suffix] = $status";
+                $filter = "[employee_id$suffix] = '" . $sunetID . "' AND [reservation_participant_status$suffix] = $status";
             }
             $param = array(
                 'project_id' => $projectId,
@@ -247,7 +246,7 @@ class Participant
             $participation = end($record);
             $eventId = key($record);
             $participation['event_id'] = $eventId;
-            if ($participation['participant_status' . $suffix] == $status) {
+            if ($participation['reservation_participant_status' . $suffix] == $status) {
                 $result[] = $participation;
             }
         }

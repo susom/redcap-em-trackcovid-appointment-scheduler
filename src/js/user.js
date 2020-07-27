@@ -245,7 +245,7 @@ User = {
                                             .draw();
                                     } else {
                                         column
-                                            .search("Available|Not Scheduled|Reserved|Canceled|Completed|No Show", true, false)
+                                            .search("Available|Not Scheduled|Reserved|Canceled|Complete|No Show", true, false)
                                             .draw();
                                     }
 

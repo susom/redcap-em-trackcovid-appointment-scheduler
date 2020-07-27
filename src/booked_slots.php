@@ -44,10 +44,10 @@ try {
                     $user = $module->getParticipant()->getUserInfo($id, $module->getFirstEventId());
                     foreach ($events as $eventId => $record) {
                         //if past reservation we do not want to see it.
-                        if (!array_key_exists($record['slot_id'], $slots)) {
+                        if (!array_key_exists($record['reservation_slot_id'], $slots)) {
                             continue;
                         } else {
-                            $slot = end($slots[$record['slot_id']]);
+                            $slot = end($slots[$record['reservation_slot_id']]);
                         }
                         $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                         $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['monthly_followup_survey_complete']['element_enum']);
@@ -60,7 +60,7 @@ try {
                             <td><?php echo $user['phone_number'] ?></td>
                             <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
                             <!--                            <td>-->
-                            <td><?php echo $locations[$record['participant_location']]; ?></td>
+                            <td><?php echo $locations[$record['reservation_participant_location']]; ?></td>
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
@@ -75,7 +75,7 @@ try {
                                     foreach ($module->getParticipantStatus() as $key => $status) {
                                         // list all statuses from reservation instrument. update comment.
                                         ?>
-                                        <option value="<?php echo $key ?>" <?php echo($record['participant_status'] == $key ? 'selected' : '') ?>><?php echo $status ?></option>
+                                        <option value="<?php echo $key ?>" <?php echo($record['reservation_participant_status'] == $key ? 'selected' : '') ?>><?php echo $status ?></option>
                                         <?php
                                     }
                                     ?>

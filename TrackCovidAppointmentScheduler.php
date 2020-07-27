@@ -75,14 +75,14 @@ define('COMPLEMENTARY_SUFFIX', 'complementary_suffix');
 define('PROJECTID', 'projectid');
 
 define("SURVEY_RESERVATION_FIELD", "survey_reservation_id");
-define("RESERVATION_SLOT_FIELD", "slot_id");
+define("RESERVATION_SLOT_FIELD", "reservation_slot_id");
 define("DEFAULT_EMAIL", "redcap-scheduler@stanford.edu");
 define("DEFAULT_NAME", "REDCap Admin");
 
 
 define("LOCATION", "location");
 
-define("PARTICIPANT_STATUS", "participant_status");
+define("PARTICIPANT_STATUS", "reservation_participant_status");
 
 /**
  * Class TrackCovidAppointmentScheduler
@@ -581,7 +581,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 } else {
                     $start = date('Y-m-d', strtotime('+7 days'));
                     # change logic to get the next 21 days instead o just the end of this month.
-                    $end = date('Y-m-d', strtotime('+365 days'));
+                    $end = date('Y-m-d', strtotime('+30 days'));
                 }
 
                 $param = array(
@@ -690,7 +690,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $this->calendarParams['calendarOrganizerEmail'] = ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL);
         $this->calendarParams['calendarOrganizer'] = ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME);
         $this->calendarParams['calendarDescription'] = $instance['calendar_body'];
-        $this->calendarParams['calendarLocation'] = $user['participant_location'];
+        $this->calendarParams['calendarLocation'] = $user['reservation_participant_location'];
         $this->calendarParams['calendarDate'] = preg_replace("([^0-9/])", "", $_POST['calendarDate']);
         $this->calendarParams['calendarStartTime'] = preg_replace("([^0-9/])", "", $_POST['calendarStartTime']);
         $this->calendarParams['calendarEndTime'] = preg_replace("([^0-9/])", "", $_POST['calendarEndTime']);
@@ -805,11 +805,12 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 //        $data['email' . $this->getSuffix()] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 //        $data['name' . $this->getSuffix()] = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
 //        $data['mobile' . $this->getSuffix()] = filter_var($_POST['mobile'], FILTER_SANITIZE_STRING);
-        $data['participant_notes' . $this->getSuffix()] = filter_var($_POST['notes'], FILTER_SANITIZE_STRING);
+        //$data['participant_notes' . $this->getSuffix()] = filter_var($_POST['notes'], FILTER_SANITIZE_STRING);
 //        $data['project_id' . $this->getSuffix()] = filter_var($_POST['project_id'], FILTER_SANITIZE_NUMBER_INT);
-        $data['slot_id' . $this->getSuffix()] = filter_var($_POST['record_id'], FILTER_SANITIZE_STRING);
+        $data['reservation_slot_id' . $this->getSuffix()] = filter_var($_POST['record_id'], FILTER_SANITIZE_STRING);
 //        $data['private' . $this->getSuffix()] = filter_var($_POST['private'], FILTER_SANITIZE_NUMBER_INT);
-        $data['participant_location' . $this->getSuffix()] = filter_var($_POST['type'], FILTER_SANITIZE_NUMBER_INT);
+        $data['reservation_participant_location' . $this->getSuffix()] = filter_var($_POST['type'],
+            FILTER_SANITIZE_NUMBER_INT);
 
         /**
          * For Event data you do not need to append suffix info because it will not be saved.
@@ -879,7 +880,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function forceCancellation($recordId, $eventId)
     {
-        $data['participant_status'] = CANCELED;
+        $data['reservation_participant_status'] = CANCELED;
         $data[$this->getPrimaryRecordFieldName()] = $recordId;
         $data['redcap_event_name'] = \REDCap::getEventNames(true, true, $eventId);
         $response = \REDCap::saveData('json', json_encode(array($data)));
@@ -1029,7 +1030,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 if (!empty($slot)) {
                     require __DIR__ . '/src/survey.php';
                     $record = $slot[$slotId][$slotEventId];
-                    $status = $reservation[$reservationId][$reservationEventId]['participant_status'];
+                    $status = $reservation[$reservationId][$reservationEventId]['reservation_participant_status'];
                     switch ($status) {
                         case CANCELED:
                             echo "Your reservation at " . date('M/d/Y', strtotime($record['start'])) . ' was canceled';
@@ -1315,7 +1316,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
         foreach ($reservations as $reservation) {
             $record = $reservation[$reservationEventId];
-            $reservationSlot = self::getSlot($record['slot_id'], $slotEventId, $this->getProjectId(),
+            $reservationSlot = self::getSlot($record['reservation_slot_id'], $slotEventId, $this->getProjectId(),
                 $this->getPrimaryRecordFieldName());
             $reservationSlotDate = date('Y-m-d', strtotime($reservationSlot['start']));
             if ($reservationSlotDate == $slotDate) {
@@ -1414,7 +1415,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
 
             $project = new \Project($projectId);
-            $locations = $project->metadata[PARTICIPANT_STATUS]['element_enum'];
+            $locations = $project->metadata['reservation_participant_status']['element_enum'];
             return parseEnum($locations);
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -1530,8 +1531,8 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getReservationArray($data)
     {
-        if (isset($data['slot_id']) && $data['slot_id'] != '') {
-            return self::getSlot($data['slot_id'], $this->getSlotsEventId(), $this->getProjectId(),
+        if (isset($data['reservation_slot_id']) && $data['reservation_slot_id'] != '') {
+            return self::getSlot($data['reservation_slot_id'], $this->getSlotsEventId(), $this->getProjectId(),
                 $this->getPrimaryRecordFieldName());
         }
         return false;
@@ -1580,7 +1581,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getCancelActionButton($user, $eventId, $reservation)
     {
-        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['reservation_slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
     }
 
     public function getBaseLineEventID()

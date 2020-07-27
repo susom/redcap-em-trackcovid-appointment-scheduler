@@ -14,7 +14,8 @@ try {
     }
     $primaryField = \REDCap::getRecordIdField();
     $data[$primaryField] = filter_var($_GET['participations_id'], FILTER_SANITIZE_STRING);
-    $data['participant_status'] = filter_var($_GET['participant_status'], FILTER_SANITIZE_NUMBER_INT);
+    $data['reservation_participant_status'] = filter_var($_GET['reservation_participant_status'],
+        FILTER_SANITIZE_NUMBER_INT);
 
     $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
     if ($data[$primaryField] == '') {
@@ -31,9 +32,15 @@ try {
             //TODO notify instructor about the cancellation
             echo json_encode(array('status' => 'ok', 'message' => 'Appointment status updated'));
         } else {
-            throw new \LogicException(implode(",", $response['errors']));
+            if (is_array($response['errors'])) {
+                throw new \Exception(implode(",", $response['errors']));
+            } else {
+                throw new \Exception($response['errors']);
+            }
         }
     }
 } catch (\LogicException $e) {
+    $module->emError($e->getMessage());
+    http_response_code(404);
     echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
 }
