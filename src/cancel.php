@@ -14,6 +14,9 @@ try {
     } else {
         $data['reservation_slot_id'] = false;
         $data['reservation_participant_id'] = false;
+        $data['reservation_datetime'] = false;
+        $data['reservation_date'] = false;
+        $data['reservation_participant_location'] = false;
         $data['reservation_participant_status'] = NOT_SCHEDULED;
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
