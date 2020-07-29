@@ -161,6 +161,7 @@ User = {
                     if (response.status == 'ok') {
                         alert(response.message);
                         $('#booking').modal('hide');
+                        $("#complete-section").show();
                         record = {};
                     } else {
                         alert(response.message);
@@ -208,6 +209,10 @@ User = {
                     }
                 });
             }
+        });
+
+        jQuery("#complete-schedule").click(function () {
+            $('#complete-modal').modal('show');
         });
 
     },

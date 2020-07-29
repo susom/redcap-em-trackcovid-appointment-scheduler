@@ -133,6 +133,11 @@ try {
 
                 </tbody>
             </table>
+            <div id="complete-section" class="row" style="display: none">
+                <div class="col text-center">
+                    <button id="complete-schedule" class="btn btn-success btn-lg">Complete</button>
+                </div>
+            </div>
         </div>
 
         <?php
