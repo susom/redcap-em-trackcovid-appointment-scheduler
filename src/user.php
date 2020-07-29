@@ -40,12 +40,14 @@ try {
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
                                 <ul class="navbar-nav"><?php
-                                    $module->emLog($user['record']);
-                                    if ($user['record'][$module->getFirstEventId()]['first_name']) {
+                                    $r = $module->getParticipant()->getUserInfo($user['id'],
+                                        $module->getFirstEventId());
+                                    $module->emLog($r);
+                                    if ($r['first_name']) {
                                         ?>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="#">
-                                                <h5><?php echo $user['record'][$module->getFirstEventId()]['first_name'] . ' ' . $user['record'][$module->getFirstEventId()]['last_name'] ?></h5>
+                                                <h5><?php echo $r['first_name'] . ' ' . $r['last_name'] ?></h5>
                                             </a>
                                         </li>
                                         <?php
