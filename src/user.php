@@ -40,6 +40,7 @@ try {
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
                                 <ul class="navbar-nav"><?php
+                                    $module->emLog($user['record']);
                                     if ($user['record'][$module->getFirstEventId()]['first_name']) {
                                         ?>
                                         <li class="nav-item active">
