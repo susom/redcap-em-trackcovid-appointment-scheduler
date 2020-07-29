@@ -168,7 +168,8 @@ User = {
 
                         // only show this for baseline visit.
                         if (User.currentOffset === 0) {
-                            $("#complete-section").show();
+                            //$("#complete-section").show();
+                            $('#complete-modal').modal('show');
                         }
 
                         record = {};
