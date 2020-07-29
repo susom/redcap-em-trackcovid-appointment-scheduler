@@ -161,8 +161,7 @@ User = {
                     if (response.status == 'ok') {
                         //alert(response.message);
                         $('#booking').modal('hide');
-                        //$("#complete-section").show();
-                        $('#complete-modal').modal('show');
+                        $("#complete-section").show();
                         record = {};
                     } else {
                         alert(response.message);

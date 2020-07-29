@@ -257,7 +257,9 @@ if (!isset($module)) {
 
             <!-- Modal body -->
             <div class="modal-body">
-                You are done until you do the questionnaires (the link for which will be sent to you) (edited)
+                Thank you for scheduling! You have now completed your enrollment in the study. We will email you the
+                link to your questionnaire 1 week before your first appointment. If you did not provide an email or if
+                you forget to complete the questionnaire, you can do so at your first study visit.
             </div>
 
             <!-- Modal footer -->
