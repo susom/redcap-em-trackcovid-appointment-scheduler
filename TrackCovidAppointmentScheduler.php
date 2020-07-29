@@ -1503,9 +1503,10 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             $param = array(
                 'project_id' => $this->getProjectId(),
                 'return_format' => 'array',
-                'events' => array_keys($this->getProject()->events['1']['events'])
+                'records' => [filter_var($_GET['code'], FILTER_SANITIZE_STRING)]
             );
             $records = REDCap::getData($param);
+            $this->emLog('project_id', $this->getProjectId());
             $this->emLog('USERID', USERID);
             $this->emLog('code', $_GET['code']);
             $this->emLog('zip', $_GET['zip']);
