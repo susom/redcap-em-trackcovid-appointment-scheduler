@@ -1562,10 +1562,16 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         if ($this->isBaseLine() || $this->getBaseLineDate()) {
 
             if ($this->getBaseLineDate()) {
-                $add = $offset * 60 * 60 * 24;
-                $week = 604800;
-                $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
-                $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
+                if ($offset > 0) {
+                    $add = $offset * 60 * 60 * 24;
+                    $week = 604800;
+                    $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
+                    $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
+                } else {
+                    $start = date('Y-m-d', strtotime('+7 days'));
+                    $end = date('Y-m-d', strtotime('+30 days'));
+                }
+
             } else {
                 $start = date('Y-m-d');
                 # change logic to get the next 14 days instead o just the end of this month.
