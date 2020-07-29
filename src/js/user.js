@@ -159,9 +159,10 @@ User = {
                 success: function (response) {
                     response = JSON.parse(response);
                     if (response.status == 'ok') {
-                        alert(response.message);
+                        //alert(response.message);
                         $('#booking').modal('hide');
-                        $("#complete-section").show();
+                        //$("#complete-section").show();
+                        $('#complete-modal').modal('show');
                         record = {};
                     } else {
                         alert(response.message);
