@@ -6,6 +6,7 @@ User = {
     loginURL: '',
     record: {},
     locations: [],
+    currentOffset: null,
     init: function () {
         //$("#appointments").dataTable();
         User.loadUserVisits();
@@ -41,6 +42,9 @@ User = {
              */
             User.record.reservation_event_id = jQuery(this).data('key');
             User.record.participant_id = jQuery(this).data('record-id');
+
+            // we need this to determine displaying the complete button or not.
+            User.currentOffset = jQuery(this).data('offset');
             ;
             jQuery.ajax({
                 'url': User.listURL + "&event_id=" + User.slotsEventId + "&baseline=" + jQuery(this).data('baseline') + "&offset=" + jQuery(this).data('offset'),
@@ -161,7 +165,12 @@ User = {
                     if (response.status == 'ok') {
                         //alert(response.message);
                         $('#booking').modal('hide');
-                        $("#complete-section").show();
+
+                        // only show this for baseline visit.
+                        if (User.currentOffset === 0) {
+                            $("#complete-section").show();
+                        }
+
                         record = {};
                     } else {
                         alert(response.message);
