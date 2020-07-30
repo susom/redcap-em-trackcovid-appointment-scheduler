@@ -25,10 +25,7 @@ try {
                 <thead>
                 <tr>
                     <th>Record ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
+                    <th>Demographics Information</th>
                     <th>Visit type</th>
                     <th>Location</th>
                     <th>Date</th>
@@ -54,10 +51,12 @@ try {
                         ?>
                         <tr>
                             <td><?php echo $id ?></td>
-                            <td><?php echo $user['first_name'] . ' ' . $user['last_name'] ?></td>
-                            <td><?php echo $user['dob'] ? date('m/d/Y', strtotime($user['dob'])) : '' ?></td>
-                            <td><?php echo $user['email'] ?></td>
-                            <td><?php echo $user['phone_number'] ?></td>
+                            <td>
+                                <div class="row"><?php echo $user['first_name'] . ' ' . $user['last_name'] ?>
+                                    DOB:<?php echo $user['dob'] ? date('m/d/Y', strtotime($user['dob'])) : '' ?></div>
+                                <div class="row"><?php echo $user['email'] ?> </div>
+                                <div class="row"><?php echo $user['phone_number'] ?></div>
+                            </td>
                             <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
                             <!--                            <td>-->
                             <td><?php echo $locations[$record['reservation_participant_location']]; ?></td>

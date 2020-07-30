@@ -27,15 +27,16 @@ require_once 'urls.php';
 ?>
 <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/types.css', true, true) ?>">
 <div id="brandbar">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-3">
                 <a href="http://www.stanford.edu"><img
-                            src="https://www-media.stanford.edu/su-identity/images/brandbar-stanford-logo@2x.png"
-                            alt="Stanford University" width="152" height="23"></a>
+                            src="<?php echo $module->getUrl('src/images/trackcovid_logo.png', true,
+                                true) ?>"
+                            alt="TrackCovid" class="h-auto"></a>
             </div>
             <div class="col-9">
-                <nav class="navbar-expand-sm navbar-dark">
+                <nav class="navbar-expand-sm navbar-light">
                     <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                         <?php
                         if (defined('USERID')) {
