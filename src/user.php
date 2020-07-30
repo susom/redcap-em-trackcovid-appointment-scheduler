@@ -32,8 +32,9 @@ try {
                 <div class="row">
                     <div class="col-3">
                         <a href="http://www.stanford.edu"><img
-                                    src="https://www-media.stanford.edu/su-identity/images/brandbar-stanford-logo@2x.png"
-                                    alt="Stanford University" width="152" height="23"></a>
+                                    src="<?php echo $module->getUrl('src/images/web-logo-color-filled-shield.png', true,
+                                        true) ?>"
+                                    alt="Stanford University" class="w-100 h-auto"></a>
                     </div>
                     <div class="col-9">
                         <nav class="navbar-expand-sm navbar-dark">
