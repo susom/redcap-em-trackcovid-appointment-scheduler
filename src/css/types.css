@@ -44,6 +44,7 @@ body.loading .loader {
 
 #brandbar img {
     margin-top: 9px;
+    margin-bottom: 9px;
 }
 
 .location-filter, .day-filter {
