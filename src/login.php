@@ -13,7 +13,8 @@ if (!isset($_COOKIE['participant_login'])) {
     <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/verification_form.css', true, true) ?>">
     <script src="<?php echo $module->getUrl('src/js/login.js', true, true) ?>"></script>
     <script>
-        Form.ajaxURL = "<?php echo $module->getUrl("src/verify.php", true, true)?>"
+        Form.ajaxURL = "<?php echo $module->getUrl("src/verify.php", true,
+                true) . '&pid=' . $module->getProjectId() . '&NOAUTH'?>"
     </script>
     <div id="new-form" class="container">
         <div class="row col-10 offset-1">
