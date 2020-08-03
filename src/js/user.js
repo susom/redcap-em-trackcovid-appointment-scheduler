@@ -110,12 +110,12 @@ User = {
                                     if (getCookie('preferred-location') != null) {
                                         // need to check the preferred location does exist in the list.
                                         var exists = false;
-                                        for (var i = 0, opts = document.getElementById('location-options').options; i < opts.length; ++i) {
-                                            if (opts[i].value === 'bar') {
+                                        $('#location-options option').each(function () {
+                                            if (this.value == getCookie('preferred-location')) {
                                                 exists = true;
-                                                break;
+                                                return false;
                                             }
-                                        }
+                                        });
                                         if (exists === true) {
                                             $("#location-options").val(getCookie('preferred-location')).trigger('change');
                                         }
