@@ -108,7 +108,17 @@ User = {
 
                                     // if preferred location is saved then select that
                                     if (getCookie('preferred-location') != null) {
-                                        $("#location-options").val(getCookie('preferred-location')).trigger('change');
+                                        // need to check the preferred location does exist in the list.
+                                        var exists = false;
+                                        for (var i = 0, opts = document.getElementById('location-options').options; i < opts.length; ++i) {
+                                            if (opts[i].value === 'bar') {
+                                                exists = true;
+                                                break;
+                                            }
+                                        }
+                                        if (exists === true) {
+                                            $("#location-options").val(getCookie('preferred-location')).trigger('change');
+                                        }
                                     }
                                 });
                             }
