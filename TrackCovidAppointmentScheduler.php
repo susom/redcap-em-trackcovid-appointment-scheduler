@@ -1642,6 +1642,8 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             if (isset($row[$match])) {
                 if ($match == 'location') {
                     $text = $this->insertLocationInEmailBody($row['location'], $text);
+                } elseif ($match == 'start') {
+                    $text = str_replace($match, date('F jS, Y', strtotime($row[$match])), $text);
                 } else {
                     $text = str_replace($match, $row[$match], $text);
                 }
