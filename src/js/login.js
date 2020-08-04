@@ -5,6 +5,25 @@ Form = {
 
         var body = $('body');
 
+        $(".code_info").on('click', function () {
+            $(".example_code").fadeIn("fast");
+
+            //adjust for sc(reen width
+            //TODO do this better , rush job
+            var view_w = $(window).width();
+            if (view_w < 716) {
+                var new_w = view_w - 20;
+                var new_ml = Math.round(new_w / 2) * -1;
+                $("#example_img").css("width", new_w + "px").css("margin-left", new_ml + "px");
+            } else {
+                $("#example_img").css("width", "100%").css("margin-left", "-348px");
+            }
+        });
+
+        $(".example_code").click(function () {
+            $(this).fadeOut("medium");
+        });
+
         function goToNextInput(e) {
             var key = e.which;
             var t = $(e.target);

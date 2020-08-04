@@ -1,3 +1,15 @@
+body {
+    background-image: none;
+    background-color: #faf7f4;
+}
+
+.pagecontainer {
+    margin: 0 auto;
+    max-height: 100%;
+    padding: 0 0 10px;
+    text-align: left;
+    max-width: 800px;
+}
 
 #form, #surveyinstructions, #changeFont {
     display: none;
