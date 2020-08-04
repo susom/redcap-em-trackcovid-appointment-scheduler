@@ -1609,7 +1609,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         if (strpos($body, '[location]') !== false) {
             $locations = $this->getLocationRecords();
-            $location = $locations[$locationId];
+            $location = $locations['SITE' . $locationId];
             $text = "<br>Title: " . $location[$this->getProjectSetting('testing-sites-event')]['title'];
             $text .= "<br>Address: " . $location[$this->getProjectSetting('testing-sites-event')]['testing_site_address'];
             $text .= "<br>Details: " . $location[$this->getProjectSetting('testing-sites-event')]['site_details'];
