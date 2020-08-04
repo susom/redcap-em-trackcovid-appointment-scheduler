@@ -46,9 +46,9 @@
         "show-header-and-footer": false
       },
       {
-        "name": "Login Page",
+        "name": "User Page",
         "icon": "brick",
-        "url": "src/login.php",
+        "url": "src/user.php",
         "show-header-and-footer": false
       }
     ]
