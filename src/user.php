@@ -148,7 +148,7 @@ try {
 
         <?php
     } else {
-        redirect($module->getUrl('src/login.php', true, false));
+        redirect($module->getUrl('src/login.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH');
     }
 
     require_once 'models.php';
