@@ -5,7 +5,9 @@ namespace Stanford\TrackCovidAppointmentScheduler;
 /** @var \Stanford\TrackCovidAppointmentScheduler\TrackCovidAppointmentScheduler $module */
 
 try {
+    $module->emLog("beginning of user page");
     if ($user = $module->verifyCookie('login')) {
+        $module->emLog("cookie verified.");
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
         $url = $module->getUrl('src/list.php', true, true,
