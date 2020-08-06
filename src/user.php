@@ -7,7 +7,6 @@ namespace Stanford\TrackCovidAppointmentScheduler;
 try {
 
     if ($user = $module->verifyCookie('login')) {
-        $module->emLog("cookie verified.");
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
         $url = $module->getUrl('src/list.php', true, true,
@@ -45,7 +44,6 @@ try {
                                 <ul class="navbar-nav"><?php
                                     $r = $module->getParticipant()->getUserInfo($user['id'],
                                         $module->getFirstEventId());
-                                    $module->emLog($r);
                                     if ($r['first_name']) {
                                         ?>
                                         <li class="nav-item active">
