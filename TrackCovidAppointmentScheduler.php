@@ -1364,7 +1364,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             //this function return right for main user when hit it with survey respondent!!!!!
             $right = REDCap::getUserRights();
             $user = $right[USERID];
-            if ($user['design'] === "1") {
+            if ($user['design'] === "1" || $user['forms']['reservation'] == "1") {
                 return true;
             }
         } elseif (defined('SUPER_USER') && SUPER_USER == "1") {
