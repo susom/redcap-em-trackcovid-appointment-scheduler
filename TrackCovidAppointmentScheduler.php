@@ -1361,10 +1361,10 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         if (defined('PROJECT_ID') and (!defined('NOAUTH') || NOAUTH == false)) {
 
-            //this function return right for main user when hit it with survey respondent!!!!!
+            //this function return right for main user when hit it with survey respondent!
             $right = REDCap::getUserRights();
             $user = $right[USERID];
-            if ($user['design'] === "1" || $user['forms']['reservation'] == "1") {
+            if ($user['design'] === "1" || $user['forms']['reservation'] === "1") {
                 return true;
             }
         } elseif (defined('SUPER_USER') && SUPER_USER == "1") {
@@ -1498,6 +1498,11 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 //        if(!isset($_COOKIE[$name])){
 //            return false;
 //        }
+        if (defined('USERID')) {
+            $right = REDCap::getUserRights();
+            $user = $right[USERID];
+            $this->emLog($user['forms']);
+        }
         // when manager hits user page. they must be logged in and have right permission on redcap.
         if (defined('USERID') && isset($_GET['code']) && isset($_GET['zip']) && self::isUserHasManagePermission()) {
             $param = array(
