@@ -14,7 +14,8 @@ try {
     }
 
     //get records for all reservations.
-    $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId());
+    $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
+        array_keys($module->getProject()->events['1']['events']));
 
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();

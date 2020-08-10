@@ -1654,7 +1654,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             $text = str_replace("[", "", $text);
             return $text;
         } else {
-            return false;
+            return $origin;
         }
     }
 
