@@ -49,6 +49,15 @@ try {
                         }
                         $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                         $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['monthly_followup_survey_complete']['element_enum']);
+                        $status = $record['monthly_followup_survey_complete'] ? $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']] : false;
+                        $baseStatus = $record['baseline_survey_complete'] ? $trackcovid_monthly_followup_survey_complete_statuses[$record['baseline_survey_complete']] : false;
+                        if ($record['baseline_survey_complete']) {
+                            $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['baseline_survey_complete']];
+                        } elseif ($record['monthly_followup_survey_complete']) {
+                            $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']];
+                        } else {
+                            $status = 'Incomplete';
+                        }
                         ?>
                         <tr>
                             <td><?php echo $id ?></td>
@@ -65,7 +74,7 @@ try {
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
                             <td><?php echo $user['consent_date'] ? 'Completed' : 'Incomplete' ?></td>
-                            <td><?php echo $record['monthly_followup_survey_complete'] ? $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']] : 'Incomplete' ?></td>
+                            <td><?php echo $status ?></td>
                             <td>
                                 <select data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"
