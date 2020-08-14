@@ -1659,4 +1659,18 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
 
+    public function getRecordRescheduleCounter($recordId, $eventId)
+    {
+        $param = array(
+            'project_id' => $this->getProjectId(),
+            'events' => [$eventId],
+            'recocrds' => [$recordId]
+        );
+        $data = REDCap::getData($param);
+        if (isset($data[$recordId][$eventId]['reservation_reschedule_counter'])) {
+            return $data[$recordId][$eventId]['reservation_reschedule_counter'];
+        }
+        return false;
+    }
+
 }

@@ -18,6 +18,12 @@ try {
         $data['reservation_date'] = false;
         $data['reservation_participant_location'] = false;
         $data['reservation_participant_status'] = NOT_SCHEDULED;
+
+        $rescheduleCounter = $module->getRecordRescheduleCounter($data[$module->getPrimaryRecordFieldName()], $eventId);
+        if ($rescheduleCounter == '') {
+            $data['reservation_reschedule_counter'] = 0;
+        }
+
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 

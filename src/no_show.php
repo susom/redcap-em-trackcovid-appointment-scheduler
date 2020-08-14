@@ -25,6 +25,17 @@ try {
         throw new \LogicException('Event ID is missing');
     } else {
 
+        if ($data['reservation_participant_status'] == AVAILABLE) {
+            $data['reservation_datetime'] = false;
+            $data['reservation_date'] = false;
+
+            // no not rescheduled before then make value zero to increase it in the next schedule
+            if ($data['reservation_reschedule_counter'] == '') {
+                $data['reservation_reschedule_counter'] = 0;
+            }
+
+        }
+
         $data['redcap_event_name'] = \REDCap::getEventNames(true, true, $eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 
