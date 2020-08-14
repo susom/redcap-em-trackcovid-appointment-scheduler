@@ -30,7 +30,7 @@ try {
             $data['reservation_date'] = false;
 
             // no not rescheduled before then make value zero to increase it in the next schedule
-            $rescheduleCounter = $module->getRecordRescheduleCounter($data[$module->getPrimaryRecordFieldName()],
+            $rescheduleCounter = $module->getRecordRescheduleCounter($data[$primaryField],
                 $eventId);
             if ($rescheduleCounter == '') {
                 $data['reservation_reschedule_counter'] = 0;
