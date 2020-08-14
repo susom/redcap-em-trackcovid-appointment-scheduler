@@ -62,6 +62,7 @@ try {
 
         $data['reservation_datetime'] = $slot['start'];
         $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
+        $data['reservation_created_at'] = date('Y-m-d H:i:s');
 
         $data['redcap_event_name'] = $module->getUniqueEventName($reservationEventId);
         $data[$module->getPrimaryRecordFieldName()] = filter_var($_POST['participant_id'],
