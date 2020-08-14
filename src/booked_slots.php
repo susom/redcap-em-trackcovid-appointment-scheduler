@@ -48,9 +48,7 @@ try {
                             $slot = end($slots[$record['reservation_slot_id']]);
                         }
                         $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
-                        $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['monthly_followup_survey_complete']['element_enum']);
-                        $status = $record['monthly_followup_survey_complete'] ? $trackcovid_monthly_followup_survey_complete_statuses[$record['monthly_followup_survey_complete']] : false;
-                        $baseStatus = $record['baseline_survey_complete'] ? $trackcovid_monthly_followup_survey_complete_statuses[$record['baseline_survey_complete']] : false;
+                        $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
                         if ($record['trackcovid_baseline_survey_complete']) {
                             $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];
                         } elseif ($record['trackcovid_monthly_followup_survey_complete']) {
