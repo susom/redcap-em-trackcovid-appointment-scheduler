@@ -780,7 +780,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      * @param bool $calendar
      * @param string $url
      */
-    private function sendEmail($email, $senderEmail, $senderName, $subject, $body, $calendar = false, $url = '')
+    public function sendEmail($email, $senderEmail, $senderName, $subject, $body, $calendar = false, $url = '')
     {
         $this->emailClient->setTo($email);
         $this->emailClient->setFrom($senderEmail);
@@ -901,7 +901,8 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 $filter = "[$primary] = '" . $record_id . "'";
                 $param = array(
                     'project_id' => $projectId,
-                    'filterLogic' => $filter,
+                    //'filterLogic' => $filter,
+                    'records' => [$record_id],
                     'return_format' => 'array',
                     'events' => $event_id
                 );
@@ -1673,4 +1674,49 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return false;
     }
 
+    /**
+     * @param array $instances
+     * @param int $slotEventId
+     * @return bool
+     */
+    public function getSlotEventIdFromReservationEventId($reservationEventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+
+            if ($instance['reservation_event_id'] == $reservationEventId) {
+                return $instance['slot_event_id'];
+            }
+
+        }
+        return false;
+    }
+
+    /**
+     * @param array $instances
+     * @param int $slotEventId
+     * @return bool
+     */
+    public function getReservationEventIdViaSlotEventIds($slotEventId)
+    {
+        $result = array();
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+
+            /**
+             * If its regular appointment
+             */
+            if ($this->getSuffix() == '') {
+                if ($instance['slot_event_id'] == $slotEventId) {
+                    $result[] = $instance['reservation_event_id'];
+                }
+            } else {
+                if ($instance['survey_complementary_slot_event_id'] == $slotEventId) {
+                    $result[] = $instance['survey_complementary_reservation_event_id'];
+                }
+            }
+
+        }
+        return $result;
+    }
 }
