@@ -58,7 +58,7 @@ require_once 'urls.php';
     </div>
 </div>
 <!-- below code need to be hidden to trigger jquery click -->
-<div class="container" style="display: none">
+<div class="container-fluid" style="display: none">
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
 
         <div class="collapse navbar-collapse justify-content-end hidden" id="navbarCollapse">
