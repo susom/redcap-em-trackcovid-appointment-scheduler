@@ -55,9 +55,9 @@ try {
                     ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
                     ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
                     '--CONFIRMATION-- Your appointment is canceled at ' . date('m/d/Y',
-                        strtotime($slot['slot_start'])),
+                        strtotime($slot['start'])),
                     '--CONFIRMATION-- Your appointment is canceled at ' . date('m/d/Y',
-                        strtotime($slot['slot_start']))
+                        strtotime($slot['start']))
                 );
             }
 
