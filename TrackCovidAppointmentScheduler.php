@@ -1755,4 +1755,13 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
 
+    public function getReservationEvents()
+    {
+        $result = array();
+        foreach ($this->getInstances() as $instance) {
+            $result[] = $instance['reservation_event_id'];
+        }
+        return $result;
+    }
+
 }
