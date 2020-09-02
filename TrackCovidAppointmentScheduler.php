@@ -6,6 +6,7 @@ use REDCap;
 
 include_once 'emLoggerTrait.php';
 include_once 'Participant.php';
+include_once 'Scheduler.php';
 include_once 'TrackCovidCalendarEmail.php';
 
 if (file_exists(__DIR__ . '../vendor/autoload.php')) {
@@ -104,6 +105,7 @@ define("PARTICIPANT_STATUS", "reservation_participant_status");
  * @property string $baseLineDate
  * @property array $locationRecords
  * @property int $defaultAffiliation
+ * @property \Stanford\TrackCovidAppointmentScheduler\Scheduler $scheduler
  */
 class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalModule
 {
@@ -175,6 +177,9 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public $locationRecords;
 
     private $defaultAffiliation;
+
+    private $scheduler;
+
     /**
      * TrackCovidAppointmentScheduler constructor.
      */
@@ -213,6 +218,11 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 if (defined('SUPER_USER')) {
                     $this->setCachedIsSuperUser(SUPER_USER);
                 }
+
+
+                // set the scheduler project object and allowed testing sites.
+                $this->setScheduler(new Scheduler(new \Project($this->getProjectSetting('slots-project')), json_decode($this->getProjectSetting('allowed-testing-sites'), true), $this->getProjectSetting('slots-project-event-id'), $this->getProjectSetting('slots-project-testing-sites-event-id')));
+
 
                 // load locations to be used in the EM
                 $this->getLocationRecords();
@@ -258,207 +268,6 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getRecordId()
-    {
-        return $this->recordId;
-    }
-
-    /**
-     * @param int $recordId
-     */
-    public function setRecordId($recordId)
-    {
-        $this->recordId = $recordId;
-    }
-
-    /**
-     * @return \Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param \Project $project
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProjectId()
-    {
-        return $this->projectId;
-    }
-
-    /**
-     * @param int $projectId
-     */
-    public function setProjectId($projectId)
-    {
-        $this->projectId = $projectId;
-    }
-
-
-    /**
-     * @return Client
-     */
-    public function getTwilioClient()
-    {
-        return $this->twilioClient;
-    }
-
-    /**
-     * @param Client $twilioClient
-     */
-    public function setTwilioClient($twilioClient)
-    {
-        $this->twilioClient = $twilioClient;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCalendarParams()
-    {
-        return $this->calendarParams;
-    }
-
-    /**
-     * @param array $calendarParams
-     */
-    public function setCalendarParams($calendarParams)
-    {
-        $this->calendarParams = $calendarParams;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getMainSurveyId()
-    {
-        return $this->mainSurveyId;
-    }
-
-    /**
-     * @param mixed $mainSurveyId
-     */
-    public function setMainSurveyId($mainSurveyId)
-    {
-        $this->mainSurveyId = $mainSurveyId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSuffix()
-    {
-        return $this->suffix;
-    }
-
-    public function setSuffix()
-    {
-        $this->suffix = (isset($_GET['complementary_suffix']) ? filter_var($_GET['complementary_suffix'],
-            FILTER_SANITIZE_STRING) : '');
-    }
-
-    /**
-     * @return \TrackCovidCalendarEmail
-     */
-    public function getEmailClient()
-    {
-        return $this->emailClient;
-    }
-
-    /**
-     * @param \TrackCovidCalendarEmail $emailClient
-     */
-    public function setEmailClient()
-    {
-        $this->emailClient = new \TrackCovidCalendarEmail;
-    }
-
-
-    /**
-     * @return \Stanford\TrackCovidAppointmentScheduler\Participant
-     */
-    public function getParticipant()
-    {
-        return $this->participant;
-    }
-
-    /**
-     * @param \Stanford\TrackCovidAppointmentScheduler\Participant $participant
-     */
-    public function setParticipant($participant)
-    {
-        $this->participant = $participant;
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getEventInstance()
-    {
-        if (!$this->eventInstance) {
-            $this->setEventInstance($this->getFirstEventId($this->getProjectId()));
-        }
-        return $this->eventInstance;
-    }
-
-    /**
-     * Pass event id and search for it in the instances array
-     * @param int $eventId
-     */
-    public function setEventInstance($eventId)
-    {
-        foreach ($this->getInstances() as $instance) {
-            if ($instance['slot_event_id'] == $eventId) {
-                $this->eventInstance = $instance;
-            }
-        }
-    }
-
-    /**
-     * @return int
-     */
-    public function getEventId()
-    {
-        return $this->eventId;
-    }
-
-    /**
-     * @param int $eventId
-     */
-    public function setEventId($eventId)
-    {
-        $this->eventId = $eventId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getInstances()
-    {
-        return $this->instances;
-    }
-
-    /**
-     * save $instances
-     */
-    public function setInstances()
-    {
-        $this->instances = $this->getSubSettings('instance', $this->getProjectId());;
-    }
 
     /**
      * @param int $configId
@@ -593,17 +402,17 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 }
 
                 $param = array(
-                    'project_id' => $this->getProjectId(),
+                    'project_id' => $this->getScheduler()->getProject()->project_id,
                     'return_format' => 'array',
-                    'events' => $eventId
+                    'events' => [$this->getScheduler()->getSlotsEventId()]
                 );
                 $data = array();
                 $records = REDCap::getData($param);
                 foreach ($records as $record) {
-                    if (strtotime($record[$eventId][$variable]) > strtotime($start) && strtotime($record[$eventId][$variable]) < strtotime($end) && $record[$eventId]['slot_status'] != CANCELED) {
+                    if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
                         if ($affiliation) {
                             $locations = $this->getLocationRecords();
-                            $location = end($locations['SITE' . $record[$eventId]['location']]);
+                            $location = end($locations['SITE' . $record[$this->getScheduler()->getSlotsEventId()]['location']]);
                             if ($location['site_affiliation'] == $affiliation) {
                                 $data[] = $record;
                             }
@@ -1640,12 +1449,19 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         if (!$this->locationRecords) {
             $param = array(
-                'project_id' => $this->getProjectId(),
-                'events' => [$this->getProjectSetting('testing-sites-event')]
+                'project_id' => $this->getScheduler()->getProject()->project_id,
+                'events' => [$this->getScheduler()->getTestingSitesEventId()]
             );
 
-            $results = \REDCap::getData($param);;
-            $this->locationRecords = $results;
+            $results = \REDCap::getData($param);
+            $locations = array();
+            //filter the locations based on what defined on config.json
+            foreach ($results as $id => $result) {
+                if (in_array($id, $this->getScheduler()->getSites())) {
+                    $locations[$id] = $result;
+                }
+            }
+            $this->locationRecords = $locations;
             return $this->locationRecords;
         } else {
             return $this->locationRecords;
@@ -1764,4 +1580,222 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return $result;
     }
 
+    /**
+     * @return Scheduler
+     */
+    public function getScheduler()
+    {
+        return $this->scheduler;
+    }
+
+    /**
+     * @param Scheduler $scheduler
+     */
+    public function setScheduler(Scheduler $scheduler)
+    {
+        $this->scheduler = $scheduler;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getRecordId()
+    {
+        return $this->recordId;
+    }
+
+    /**
+     * @param int $recordId
+     */
+    public function setRecordId($recordId)
+    {
+        $this->recordId = $recordId;
+    }
+
+    /**
+     * @return \Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param \Project $project
+     */
+    public function setProject($project)
+    {
+        $this->project = $project;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProjectId()
+    {
+        return $this->projectId;
+    }
+
+    /**
+     * @param int $projectId
+     */
+    public function setProjectId($projectId)
+    {
+        $this->projectId = $projectId;
+    }
+
+
+    /**
+     * @return Client
+     */
+    public function getTwilioClient()
+    {
+        return $this->twilioClient;
+    }
+
+    /**
+     * @param Client $twilioClient
+     */
+    public function setTwilioClient($twilioClient)
+    {
+        $this->twilioClient = $twilioClient;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCalendarParams()
+    {
+        return $this->calendarParams;
+    }
+
+    /**
+     * @param array $calendarParams
+     */
+    public function setCalendarParams($calendarParams)
+    {
+        $this->calendarParams = $calendarParams;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getMainSurveyId()
+    {
+        return $this->mainSurveyId;
+    }
+
+    /**
+     * @param mixed $mainSurveyId
+     */
+    public function setMainSurveyId($mainSurveyId)
+    {
+        $this->mainSurveyId = $mainSurveyId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuffix()
+    {
+        return $this->suffix;
+    }
+
+    public function setSuffix()
+    {
+        $this->suffix = (isset($_GET['complementary_suffix']) ? filter_var($_GET['complementary_suffix'],
+            FILTER_SANITIZE_STRING) : '');
+    }
+
+    /**
+     * @return \TrackCovidCalendarEmail
+     */
+    public function getEmailClient()
+    {
+        return $this->emailClient;
+    }
+
+    /**
+     * @param \TrackCovidCalendarEmail $emailClient
+     */
+    public function setEmailClient()
+    {
+        $this->emailClient = new \TrackCovidCalendarEmail;
+    }
+
+
+    /**
+     * @return \Stanford\TrackCovidAppointmentScheduler\Participant
+     */
+    public function getParticipant()
+    {
+        return $this->participant;
+    }
+
+    /**
+     * @param \Stanford\TrackCovidAppointmentScheduler\Participant $participant
+     */
+    public function setParticipant($participant)
+    {
+        $this->participant = $participant;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getEventInstance()
+    {
+        if (!$this->eventInstance) {
+            $this->setEventInstance($this->getFirstEventId($this->getProjectId()));
+        }
+        return $this->eventInstance;
+    }
+
+    /**
+     * Pass event id and search for it in the instances array
+     * @param int $eventId
+     */
+    public function setEventInstance($eventId)
+    {
+        foreach ($this->getInstances() as $instance) {
+            if ($instance['slot_event_id'] == $eventId) {
+                $this->eventInstance = $instance;
+            }
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
+
+    /**
+     * @param int $eventId
+     */
+    public function setEventId($eventId)
+    {
+        $this->eventId = $eventId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstances()
+    {
+        return $this->instances;
+    }
+
+    /**
+     * save $instances
+     */
+    public function setInstances()
+    {
+        $this->instances = $this->getSubSettings('instance', $this->getProjectId());;
+    }
 }

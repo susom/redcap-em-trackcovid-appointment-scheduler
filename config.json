@@ -68,66 +68,28 @@
       "type": "descriptive"
     },
     {
-      "key": "testing-sites-event",
-      "name": "<b>Select Testing site Event</b>",
+      "key": "slots-project",
+      "name": "<b>Please select project where slots/testing-sites are located.</b>",
       "required": true,
-      "type": "event-list"
+      "type": "project-id"
     },
     {
-      "key": "baseline-month",
-      "name": "<h3>Select Baseline month to build scheduler based on that. </h3>",
+      "key": "slots-project-event-id",
+      "name": "<b>Set the event name for the slot from slots project.</b>",
       "required": true,
-      "type": "dropdown",
-      "choices": [
-        {
-          "name": "Jnauary",
-          "value": "1"
-        },
-        {
-          "name": "February",
-          "value": "2"
-        },
-        {
-          "name": "March",
-          "value": "3"
-        },
-        {
-          "name": "April",
-          "value": "4"
-        },
-        {
-          "name": "May",
-          "value": "5"
-        },
-        {
-          "name": "June",
-          "value": "6"
-        },
-        {
-          "name": "July",
-          "value": "7"
-        },
-        {
-          "name": "August",
-          "value": "8"
-        },
-        {
-          "name": "September",
-          "value": "9"
-        },
-        {
-          "name": "October",
-          "value": "10"
-        },
-        {
-          "name": "November",
-          "value": "11"
-        },
-        {
-          "name": "December",
-          "value": "12"
-        }
-      ]
+      "type": "text"
+    },
+    {
+      "key": "slots-project-testing-sites-event-id",
+      "name": "<b>Set the event name for the testing sites from slots project.</b>",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "allowed-testing-sites",
+      "name": "<b>Json object with a list of allowed testing sites.</b>",
+      "required": true,
+      "type": "textarea"
     },
     {
       "key": "instance",
