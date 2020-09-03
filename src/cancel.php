@@ -9,6 +9,7 @@ try {
     $primary = $module->getPrimaryRecordFieldName();
     $data[$primary] = $_GET[$primary];
     $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
+    $slotId = filter_var($_GET['reservation_slot_id'], FILTER_SANITIZE_STRING);
     if ($data[$primary] == '') {
         throw new \LogicException('Participation ID is missing');
     } else {
@@ -28,6 +29,11 @@ try {
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 
         if (empty($response['errors'])) {
+
+            $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());
+            // update booked spots
+            $module->getScheduler()->updateSlotBookedSpots($slot, -1);
+
             //TODO notify instructor about the cancellation
             echo json_encode(array('status' => 'ok', 'message' => 'Appointment canceled successfully!'));
         } else {

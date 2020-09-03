@@ -26,24 +26,18 @@ try {
         }
 
         $reservationEventId = filter_var($_POST['reservation_event_id'], FILTER_VALIDATE_INT);
-        $slot = $module::getSlot(filter_var($_POST['record_id'], FILTER_SANITIZE_STRING), $data['event_id'],
-            $module->getProjectId(), $module->getPrimaryRecordFieldName());
+        $slot = $module->getSlot(filter_var($_POST['record_id'], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
 
 
         // check if any slot is available
         $counter = $module->getParticipant()->getSlotActualCountReservedSpots(filter_var($_POST['record_id'],
             FILTER_SANITIZE_STRING),
-            $reservationEventId, '', $module->getProjectId());
+            $reservationEventId, '', $module->getProjectId(), $slot);
 
         if ((int)($slot['number_of_participants'] - $counter['counter']) <= 0) {
             throw new \Exception("All time slots are booked please try different time");
         }
 
-        if (defined('USERID')) {
-            $userid = USERID;
-        } else {
-            $userid = $data['reservation_participant_id'];
-        }
 
 //        $module->doesUserHaveSameDateReservation($date, $userid, $module->getSuffix(), $data['event_id'],
 //            $reservationEventId);
@@ -85,10 +79,8 @@ try {
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
         if (empty($response['errors'])) {
 
-            //if slot has instructor identified then send email to the instructor
-//            if (!empty($slot['instructor'])) {
-//                $data['instructor'] = $slot['instructor'];
-//            }
+            // update booked spots
+            $module->getScheduler()->updateSlotBookedSpots($slot);
 
             // add email and mobile to notify the user about
             if ($user['record'][$module->getFirstEventId()]['email'] != '') {

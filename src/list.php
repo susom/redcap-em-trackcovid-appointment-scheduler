@@ -43,7 +43,7 @@ if (!empty($data)) {
 
 
         $counter = $module->getParticipant()->getSlotActualCountReservedSpots($slot['record_id'],
-            $module->getReservationEvents(), $suffix, $module->getProjectId());
+            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
 
         $available = (int)($slot['number_of_participants' . $suffix] - $counter['counter']);;
 
@@ -52,15 +52,7 @@ if (!empty($data)) {
         }
 
         $cancelButton = '';
-        if ($counter['userBookThisSlot']) {
-            $reservation = end($counter['userBookThisSlot']);
-            $cancelButton = '<button type="button"
-                                                                      data-participation-id="' . $reservation[$module->getPrimaryRecordFieldName()] . '"
-                                                                      data-event-id="' . $reservationEventId . '"
-                                                                      class="cancel-appointment btn btn-block btn-danger">Cancel
-                            </button>';
-        } else {
-            $bookButton = '<button type="button"
+        $bookButton = '<button type="button"
                                         data-record-id="' . $slot['record_id'] . '"
                                         data-event-id="' . $eventId . '"
                                         data-notes-label="' . $module->getNoteLabel() . '"
@@ -74,11 +66,10 @@ if (!empty($data)) {
                                         data-start="' . date('Hi', strtotime($slot['start' . $suffix])) . '"
                                         data-end="' . date('Hi', strtotime($slot['end' . $suffix])) . '"
                                         data-modal-title="' . date('M/d/Y',
-                    strtotime($slot['start' . $suffix])) . ' ' . date('h:i A',
-                    strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A', strtotime($slot['end' . $suffix])) . '"
+                strtotime($slot['start' . $suffix])) . ' ' . date('h:i A',
+                strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A', strtotime($slot['end' . $suffix])) . '"
                                         class="time-slot btn btn-block btn-success">Book
                                 </button>';
-        }
 
         $row = array();
         $row[] = date('m/d/Y', strtotime($slot['start' . $suffix]));

@@ -268,27 +268,6 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         }
     }
 
-
-    /**
-     * @param int $configId
-     * @return mixed
-     */
-    public function getSlots($configId)
-    {
-        $types = $this->getInstances();
-
-        try {
-            if (!empty($types[$configId])) {
-                $instance = $types[$configId];
-                $eventId = $instance['event_id'];
-                return REDCap::getData('array', null, null, $eventId);
-            } else {
-                throw new \Exception('No Type exists');
-            }
-        } catch (\Exception $e) {
-        }
-    }
-
     /**
      * Get available time slots for specific date
      * @param string $date
@@ -401,13 +380,8 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                     $end = date('Y-m-d', strtotime('+30 days'));
                 }
 
-                $param = array(
-                    'project_id' => $this->getScheduler()->getProject()->project_id,
-                    'return_format' => 'array',
-                    'events' => [$this->getScheduler()->getSlotsEventId()]
-                );
-                $data = array();
-                $records = REDCap::getData($param);
+
+                $records = $this->getScheduler()->getSlots();
                 foreach ($records as $record) {
                     if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
                         if ($affiliation) {
@@ -444,7 +418,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                  */
             $filter = "[start$suffix] > '" . date('Y-m-d') . "' AND " . "[slot_status$suffix] != '" . CANCELED . "'";
             $param = array(
-                'project_id' => $this->getProjectId(),
+                'project_id' => $this->getScheduler()->getProject()->project_id,
                 'filterLogic' => $filter,
                 'return_format' => 'array'
             );
@@ -718,23 +692,12 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      * @param int $record_id
      * @return array
      */
-    public static function getSlot($record_id, $event_id, $projectId, $primary)
+    public function getSlot($record_id, $event_id)
     {
         try {
             if ($event_id) {
-                /*
-                 * TODO Check if date within allowed window
-                 */
-                $filter = "[$primary] = '" . $record_id . "'";
-                $param = array(
-                    'project_id' => $projectId,
-                    //'filterLogic' => $filter,
-                    'records' => [$record_id],
-                    'return_format' => 'array',
-                    'events' => $event_id
-                );
-                $record = REDCap::getData($param);
-                return $record[$record_id][$event_id];
+                $record = $this->getScheduler()->getSlot($record_id);
+                return $record[$event_id];
             } else {
                 throw new \LogicException('Not event id passed, Aborting!');
             }
@@ -1144,8 +1107,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
         foreach ($reservations as $reservation) {
             $record = $reservation[$reservationEventId];
-            $reservationSlot = self::getSlot($record['reservation_slot_id'], $slotEventId, $this->getProjectId(),
-                $this->getPrimaryRecordFieldName());
+            $reservationSlot = $this->getSlot($record['reservation_slot_id'], $this->getScheduler()->getSlotsEventId());
             $reservationSlotDate = date('Y-m-d', strtotime($reservationSlot['start']));
             if ($reservationSlotDate == $slotDate) {
                 throw new \LogicException("you cant book more than one reservation on same date. please select another date");
@@ -1365,8 +1327,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function getReservationArray($data)
     {
         if (isset($data['reservation_slot_id']) && $data['reservation_slot_id'] != '') {
-            return self::getSlot($data['reservation_slot_id'], $this->getSlotsEventId(), $this->getProjectId(),
-                $this->getPrimaryRecordFieldName());
+            return $this->getSlot($data['reservation_slot_id'], $this->getScheduler()->getSlotsEventId());
         }
         return false;
     }
@@ -1417,9 +1378,9 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     }
 
-    public function getCancelActionButton($user, $eventId, $reservation)
+    public function getCancelActionButton($user, $eventId, $slot)
     {
-        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $reservation['reservation_slot_id'] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $slot[$this->getScheduler()->getProject()->table_pk] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
     }
 
     public function getBaseLineEventID()

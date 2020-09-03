@@ -28,8 +28,7 @@ try {
             throw new \LogicException(implode("\n", $response['errors']));
         } else {
 
-            $slot = TrackCovidAppointmentScheduler::getSlot($data[$primary], $eventId, $module->getProjectId(),
-                $module->getPrimaryRecordFieldName());
+            $slot = $module->getSlot($data[$primary], $module->getScheduler()->getSlotsEventId());
             $message['subject'] = $message['body'] = 'Your reservation at ' . date('m/d/Y',
                     strtotime($slot['start' . $suffix])) . ' at ' . date('H:i',
                     strtotime($slot['start' . $suffix])) . ' to ' . date('H:i',

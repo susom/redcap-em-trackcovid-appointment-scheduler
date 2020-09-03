@@ -76,6 +76,7 @@ try {
                             <td>
                                 <select data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"
+                                        data-slot-id="<?php echo $record['reservation_slot_id'] ?>"
                                         class="participants-no-show">
                                     <option>CHANGE STATUS</option>
                                     <?php

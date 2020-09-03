@@ -18,6 +18,7 @@ try {
         FILTER_SANITIZE_NUMBER_INT);
 
     $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
+    $slotId = filter_var($_GET['reservation_slot_id'], FILTER_SANITIZE_STRING);
     if ($data[$primaryField] == '') {
         throw new \LogicException('Participation ID is missing');
     }
@@ -42,16 +43,18 @@ try {
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 
         if (empty($response['errors'])) {
+            $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());
+            // update booked spots
+            $module->getScheduler()->updateSlotBookedSpots($slot, -1);
+
 
             //notify user when canceled.
             if ($data['reservation_participant_status'] == CANCELED) {
                 $instance = $module->getEventInstance();
                 $user = $module->getParticipant()->getUserInfo($data[$primaryField], $module->getFirstEventId());
-                $reservation = $module::getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $eventId,
-                    $module->getProjectId(), $primaryField);
-                $slot = $module::getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
-                    $module->getSlotEventIdFromReservationEventId($eventId),
-                    $module->getProjectId(), $primaryField);
+                $reservation = $module->getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
+                $slot = $module->getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
+                    $module->getScheduler()->getSlotsEventId());
                 $module->sendEmail($user['email'],
                     ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
                     ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),

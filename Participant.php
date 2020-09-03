@@ -73,10 +73,14 @@ class Participant
     }
 
     /**
-     * @param int $record_id
-     * @return int
+     * @param string $slotId
+     * @param int $eventId
+     * @param string $suffix
+     * @param int $projectId
+     * @param array $slot
+     * @return mixed
      */
-    public function getSlotActualCountReservedSpots($slotId, $eventId, $suffix, $projectId)
+    public function getSlotActualCountReservedSpots($slotId, $eventId, $suffix, $projectId, $slot)
     {
         try {
             //this flag will determine if logged in user booked this slot
@@ -94,28 +98,20 @@ class Participant
                     if (is_array($eventId)) {
                         foreach ($eventId as $event) {
                             if ($record[$event]["reservation_participant_status"] == RESERVED) {
-                                if (self::canUserUpdateReservations($record[$event]["employee_id"])) {
-                                    //capture record id for cancellation
-                                    $record[$event]['record_id'] = $id;
-                                    $userBookThisSlot[] = $record[$event];
-                                    $this->counter[$record[$event]["reservation_slot_id"]]["userBookThisSlot"][] = $record[$event];;
-                                }
                                 $this->counter[$record[$event]["reservation_slot_id"]]["counter"]++;
                             }
                         }
                     } else {
                         if ($record[$eventId]["reservation_participant_status"] == RESERVED) {
-                            if (self::canUserUpdateReservations($record[$eventId]["employee_id"])) {
-                                //capture record id for cancellation
-                                $record[$eventId]['record_id'] = $id;
-                                $userBookThisSlot[] = $record[$eventId];
-                                $this->counter[$record[$eventId]["reservation_slot_id"]]["userBookThisSlot"][] = $record[$eventId];;
-                            }
                             $this->counter[$record[$eventId]["reservation_slot_id"]]["counter"]++;
                         }
                     }
                 }
 
+            }
+
+            if ($slot['number_of_booked_slots']) {
+                $this->counter[$slotId]['counter'] = $slot['number_of_booked_slots'];
             }
             return $this->counter[$slotId];
 //
@@ -207,22 +203,6 @@ class Participant
             return $record;
         } catch (\LogicException $e) {
             echo $e->getMessage();
-        }
-    }
-
-    /**
-     * @param int $event_id
-     * @param int $record_id
-     * @return bool
-     */
-    public function isThereAvailableSpotsInAppointment($event_id, $record_id, $projectId, $primary)
-    {
-        $slot = TrackCovidAppointmentScheduler::getSlot($record_id, $event_id, $projectId, $primary);
-        if ($slot['number_of_participants'] > $this->getSlotActualCountReservedSpots($record_id, $event_id, '',
-                $projectId)) {
-            return true;
-        } else {
-            return false;
         }
     }
 

@@ -32,7 +32,7 @@ if (isset($_GET['date'])) {
              */
             $typeText = $module->getLocationLabel($slot['location']);
             $counter = $module->getParticipant()->getSlotActualCountReservedSpots($recordId,
-                $reservationEventId, '', $module->getProjectId());
+                $reservationEventId, '', $module->getProjectId(), $slot);
             ?>
             <div class="alert alert-light" role="alert">
                 <?php

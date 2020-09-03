@@ -208,11 +208,12 @@ User = {
             if (confirm("Are you sure you want to cancel this appointment?")) {
                 var record_id = jQuery(this).data('record-id');
                 var event_id = jQuery(this).data('key');
+                var slot_id = jQuery(this).data('slot-id');
                 /**
                  * Get Manage modal to let user manage their saved appointments
                  */
                 jQuery.ajax({
-                    url: User.cancelURL + '&record_id=' + record_id + '&event_id=' + event_id,
+                    url: User.cancelURL + '&record_id=' + record_id + '&event_id=' + event_id + '&reservation_slot_id=' + slot_id,
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
