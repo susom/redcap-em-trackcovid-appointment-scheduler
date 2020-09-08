@@ -1494,9 +1494,15 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             'events' => $this->getFirstEventId()
         );
         $data = REDCap::getData($param);
+
+        // this to check if participant withdraw from the ths study.
+        $withdraw = $data[$newuniq][$this->getFirstEventId()]['calc_inactive'];
         if (empty($data)) {
             return false;
         } else {
+            if ($withdraw) {
+                return false;
+            }
             return $data;
         }
     }
@@ -1545,7 +1551,12 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
                 $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
+                // this to check if participant withdraw from the ths study.
+                $withdraw = $record[$id][$this->getFirstEventId()]['calc_inactive'];
                 if ($hash == $_COOKIE[$name]) {
+                    if ($withdraw) {
+                        return false;
+                    }
                     return array('id' => $id, 'record' => $record);
                 }
             }
