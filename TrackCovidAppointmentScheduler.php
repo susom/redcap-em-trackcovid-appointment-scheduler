@@ -41,6 +41,8 @@ define('RESERVED', 1);
 define('CANCELED', 2);
 define('NO_SHOW', 3);
 define('NOT_SCHEDULED', 4);
+define('COMPLETE', 5);
+define('SKIPPED', 6);
 
 /**
  * Constants for statuses  text
@@ -1008,44 +1010,6 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
 
     /**
-     * @param $project_id
-     * @param null $record
-     * @param $instrument
-     * @param $event_id
-     * @param null $group_id
-     * @param $survey_hash
-     * @param null $response_id
-     * @param int $repeat_instance
-     */
-    public function redcap_survey_page_top(
-        $project_id,
-        $record = null,
-        $instrument,
-        $event_id,
-        $group_id = null,
-        $survey_hash,
-        $response_id = null,
-        $repeat_instance = 1
-    ) {
-
-        // check if the instrument is defined as survey instrument in EM
-        $surveyInstruments = end($this->getProjectSetting("instrument_id_for_complementary_appointment"));
-        if ($surveyInstruments == $instrument) {
-            $this->setInstances();
-            $this->setRecordId($record);
-            $this->setMainSurveyId($instrument);
-
-            //this included for ajax loader
-            echo '<style>';
-            require __DIR__ . '/src/css/types.css';
-            echo '</style>';
-
-            require __DIR__ . '/src/survey.php';
-        }
-
-    }
-
-    /**
      * @return int
      */
     public function getSlotsEventId()
@@ -1265,9 +1229,15 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             'events' => $this->getFirstEventId()
         );
         $data = REDCap::getData($param);
+
+        // this to check if participant withdraw from the ths study.
+        $withdraw = $data[$newuniq][$this->getFirstEventId()]['calc_inactive'];
         if (empty($data)) {
             return false;
         } else {
+            if ($withdraw) {
+                return false;
+            }
             return $data;
         }
     }
@@ -1316,7 +1286,12 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
                 $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
+                // this to check if participant withdraw from the ths study.
+                $withdraw = $record[$id][$this->getFirstEventId()]['calc_inactive'];
                 if ($hash == $_COOKIE[$name]) {
+                    if ($withdraw) {
+                        return false;
+                    }
                     return array('id' => $id, 'record' => $record);
                 }
             }
@@ -1328,6 +1303,22 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         if (isset($data['reservation_slot_id']) && $data['reservation_slot_id'] != '') {
             return $this->getSlot($data['reservation_slot_id'], $this->getScheduler()->getSlotsEventId());
+        }
+        return false;
+    }
+
+
+    public function isReservationInPast($date)
+    {
+        /**
+         * open the window one day for manager page
+         */
+        $d = date('Y-m-d', strtotime($date));
+        /**
+         * skip past reseravtion.
+         */
+        if (time() > strtotime('+1 day', strtotime($d))) {
+            return true;
         }
         return false;
     }
@@ -1350,6 +1341,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         }
         return array($month, $year);
     }
+
 
     public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0)
     {
@@ -1381,6 +1373,11 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function getCancelActionButton($user, $eventId, $slot)
     {
         return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $slot[$this->getScheduler()->getProject()->table_pk] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+    }
+
+    public function getSkipActionButton($user, $eventId)
+    {
+        return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '"  class="skip-appointment btn btn-warning">Skip</button>';
     }
 
     public function getBaseLineEventID()

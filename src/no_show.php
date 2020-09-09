@@ -27,6 +27,13 @@ try {
     } else {
 
 
+        if ($data['reservation_participant_status'] == SKIPPED) {
+            $data['reservation_participant_id'] = filter_var($_GET['participations_id'], FILTER_SANITIZE_STRING);
+            $data['reservation_datetime'] = date('Y-m-d H:i:s');
+            $data['reservation_date'] = date('Y-m-d');
+            $data['reservation_created_at'] = date('Y-m-d H:i:s');
+            $data['summary_notes'] = filter_var($_GET['notes'], FILTER_SANITIZE_STRING);
+        }
         if ($data['reservation_participant_status'] == AVAILABLE) {
             $data['reservation_datetime'] = false;
             $data['reservation_date'] = false;
@@ -50,11 +57,14 @@ try {
 
             //notify user when canceled.
             if ($data['reservation_participant_status'] == CANCELED) {
+
+                $reservation = $module::getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $eventId,
+                    $module->getProjectId(), $primaryField);
+                $slot = $module::getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
+                    $module->getSlotEventIdFromReservationEventId($eventId),
+                    $module->getProjectId(), $primaryField);
                 $instance = $module->getEventInstance();
                 $user = $module->getParticipant()->getUserInfo($data[$primaryField], $module->getFirstEventId());
-                $reservation = $module->getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
-                $slot = $module->getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
-                    $module->getScheduler()->getSlotsEventId());
                 $module->sendEmail($user['email'],
                     ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
                     ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),

@@ -41,11 +41,24 @@ try {
                 foreach ($records as $id => $events) {
                     $user = $module->getParticipant()->getUserInfo($id, $module->getFirstEventId());
                     foreach ($events as $eventId => $record) {
-                        //if past reservation we do not want to see it.
-                        if (!array_key_exists($record['reservation_slot_id'], $slots)) {
+
+                        //skip past or empty reservation
+                        if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
                             continue;
+                        }
+                        //if past reservation we do not want to see it.
+                        //exception for imported reservation.
+                        if (empty($record['reservation_slot_id'])) {
+                            $slot['start'] = $record['reservation_datetime'];
+                            // because we do not know the end of the lost we assumed its 15 minutes after the start
+                            $slot['_end'] = date('Y-m-d H:i:s', strtotime($record['reservation_datetime']) + 900);
                         } else {
-                            $slot = end($slots[$record['reservation_slot_id']]);
+                            //if past reservation we do not want to see it.
+                            if (!array_key_exists($record['reservation_slot_id'], $slots)) {
+                                continue;
+                            } else {
+                                $slot = end($slots[$record['reservation_slot_id']]);
+                            }
                         }
                         $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
                         $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
