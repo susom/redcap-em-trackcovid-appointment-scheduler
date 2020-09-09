@@ -1,5 +1,5 @@
 {
-  "name": "Track COVID-19 Appointment Scheduler",
+  "name": "Track COVID-19 Shared Appointment Scheduler",
   "namespace": "Stanford\\TrackCovidSharedAppointmentScheduler",
   "description": "Allow users to Schedule COVID-19 testing.",
   "authors": [
