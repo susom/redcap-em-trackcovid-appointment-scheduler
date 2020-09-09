@@ -21,7 +21,7 @@ User = {
         $(document).on('click', ".location-info", function () {
 
             var locationId = $(this).data('location')
-            var location = User.locations[locationId];
+            var location = User.locations['SITE' + locationId];
             var text = ''
             text += "<br><strong>Address:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
             text += "<br><strong>Details:</strong> " + location[User.locationsEventId]['site_details'];
