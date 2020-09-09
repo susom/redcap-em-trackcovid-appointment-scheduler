@@ -39,8 +39,7 @@ use Twilio\Version;
  * @property array $facebookMessenger
  * @property array $alexa
  */
-class NotificationInstance extends InstanceResource
-{
+class NotificationInstance extends InstanceResource {
     /**
      * Initialize the NotificationInstance
      *
@@ -50,8 +49,7 @@ class NotificationInstance extends InstanceResource
      *                           associated with
      * @return \Twilio\Rest\Notify\V1\Service\NotificationInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -78,7 +76,7 @@ class NotificationInstance extends InstanceResource
             'alexa' => Values::array_get($payload, 'alexa'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
     }
 
     /**
@@ -88,8 +86,7 @@ class NotificationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -107,8 +104,7 @@ class NotificationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Notify.V1.NotificationInstance]';
     }
 }

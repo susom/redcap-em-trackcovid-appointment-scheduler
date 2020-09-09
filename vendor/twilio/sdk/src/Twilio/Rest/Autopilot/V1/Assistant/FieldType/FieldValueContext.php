@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class FieldValueContext extends InstanceContext
-{
+class FieldValueContext extends InstanceContext {
     /**
      * Initialize the FieldValueContext
      *
@@ -31,8 +30,7 @@ class FieldValueContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\FieldType\FieldValueContext
      */
-    public function __construct(Version $version, $assistantSid, $fieldTypeSid, $sid)
-    {
+    public function __construct(Version $version, $assistantSid, $fieldTypeSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -51,8 +49,7 @@ class FieldValueContext extends InstanceContext
      * @return FieldValueInstance Fetched FieldValueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -76,8 +73,7 @@ class FieldValueContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -86,8 +82,7 @@ class FieldValueContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

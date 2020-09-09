@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -44,7 +44,6 @@ trait METHODtrait
 {
     /**
      * @var string calendar property METHOD
-     * @access protected
      */
     protected $method = null;
 
@@ -55,9 +54,9 @@ trait METHODtrait
      */
     public function createMethod()
     {
-        return (empty($this->method))
+        return ( empty( $this->method ))
             ? null
-            : sprintf(self::$FMTICAL, self::METHOD, $this->method);
+            : sprintf( self::$FMTICAL, self::METHOD, $this->method );
     }
 
     /**
@@ -78,9 +77,8 @@ trait METHODtrait
      * @return string
      * @since  2.27.1 - 2018-12-15
      */
-    public function getMethod()
-    {
-        if (empty($this->method)) {
+    public function getMethod() {
+        if( empty( $this->method )) {
             return false;
         }
         return $this->method;
@@ -93,14 +91,14 @@ trait METHODtrait
      * @return static
      * @since  2.29.14 - 2019-09-03
      */
-    public function setMethod($value)
+    public function setMethod( $value )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::METHOD);
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::METHOD );
             $value = Util::$SP0;
         }
-        Util::assertString($value, self::METHOD);
-        $this->method = (string)$value;
+        Util::assertString( $value, self::METHOD );
+        $this->method = (string) $value;
         return $this;
     }
 }

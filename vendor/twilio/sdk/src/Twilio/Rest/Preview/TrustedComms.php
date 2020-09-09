@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Preview\TrustedComms\PhoneCallList $phoneCalls
  * @method \Twilio\Rest\Preview\TrustedComms\BusinessContext businesses(string $sid)
  */
-class TrustedComms extends Version
-{
+class TrustedComms extends Version {
     protected $_brandedCalls = null;
     protected $_businesses = null;
     protected $_cps = null;
@@ -43,8 +42,7 @@ class TrustedComms extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Preview\TrustedComms TrustedComms version of Preview
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'TrustedComms';
     }
@@ -52,8 +50,7 @@ class TrustedComms extends Version
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\BrandedCallList
      */
-    protected function getBrandedCalls()
-    {
+    protected function getBrandedCalls() {
         if (!$this->_brandedCalls) {
             $this->_brandedCalls = new BrandedCallList($this);
         }
@@ -63,8 +60,7 @@ class TrustedComms extends Version
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\BusinessList
      */
-    protected function getBusinesses()
-    {
+    protected function getBusinesses() {
         if (!$this->_businesses) {
             $this->_businesses = new BusinessList($this);
         }
@@ -74,8 +70,7 @@ class TrustedComms extends Version
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\CpsList
      */
-    protected function getCps()
-    {
+    protected function getCps() {
         if (!$this->_cps) {
             $this->_cps = new CpsList($this);
         }
@@ -85,8 +80,7 @@ class TrustedComms extends Version
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallList
      */
-    protected function getCurrentCalls()
-    {
+    protected function getCurrentCalls() {
         if (!$this->_currentCalls) {
             $this->_currentCalls = new CurrentCallList($this);
         }
@@ -96,8 +90,7 @@ class TrustedComms extends Version
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\DeviceList
      */
-    protected function getDevices()
-    {
+    protected function getDevices() {
         if (!$this->_devices) {
             $this->_devices = new DeviceList($this);
         }
@@ -107,8 +100,7 @@ class TrustedComms extends Version
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\PhoneCallList
      */
-    protected function getPhoneCalls()
-    {
+    protected function getPhoneCalls() {
         if (!$this->_phoneCalls) {
             $this->_phoneCalls = new PhoneCallList($this);
         }
@@ -122,8 +114,7 @@ class TrustedComms extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -140,8 +131,7 @@ class TrustedComms extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -155,8 +145,7 @@ class TrustedComms extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms]';
     }
 }

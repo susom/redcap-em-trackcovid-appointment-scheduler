@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class InsightsInstance extends InstanceResource
-{
+class InsightsInstance extends InstanceResource {
     /**
      * Initialize the InsightsInstance
      *
@@ -27,11 +26,10 @@ class InsightsInstance extends InstanceResource
      * @param string $businessSid A string that uniquely identifies this Business.
      * @return \Twilio\Rest\Preview\TrustedComms\Business\InsightsInstance
      */
-    public function __construct(Version $version, array $payload, $businessSid)
-    {
+    public function __construct(Version $version, array $payload, $businessSid) {
         parent::__construct($version);
 
-        $this->solution = array('businessSid' => $businessSid,);
+        $this->solution = array('businessSid' => $businessSid, );
     }
 
     /**
@@ -41,8 +39,7 @@ class InsightsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -60,8 +57,7 @@ class InsightsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.InsightsInstance]';
     }
 }

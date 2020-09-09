@@ -12,8 +12,7 @@ namespace Twilio\Rest\Studio\V1\Flow\Engagement\Step;
 use Twilio\ListResource;
 use Twilio\Version;
 
-class StepContextList extends ListResource
-{
+class StepContextList extends ListResource {
     /**
      * Construct the StepContextList
      *
@@ -23,8 +22,7 @@ class StepContextList extends ListResource
      * @param string $stepSid Step SID
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\Step\StepContextList
      */
-    public function __construct(Version $version, $flowSid, $engagementSid, $stepSid)
-    {
+    public function __construct(Version $version, $flowSid, $engagementSid, $stepSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -40,8 +38,7 @@ class StepContextList extends ListResource
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\Step\StepContextContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new StepContextContext(
             $this->version,
             $this->solution['flowSid'],
@@ -55,8 +52,7 @@ class StepContextList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Studio.V1.StepContextList]';
     }
 }

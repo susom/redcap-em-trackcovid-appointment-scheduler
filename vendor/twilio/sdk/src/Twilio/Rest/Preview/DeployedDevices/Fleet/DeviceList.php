@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DeviceList extends ListResource
-{
+class DeviceList extends ListResource {
     /**
      * Construct the DeviceList
      *
@@ -28,12 +27,11 @@ class DeviceList extends ListResource
      * @param string $fleetSid The unique identifier of the Fleet.
      * @return \Twilio\Rest\Preview\DeployedDevices\Fleet\DeviceList
      */
-    public function __construct(Version $version, $fleetSid)
-    {
+    public function __construct(Version $version, $fleetSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('fleetSid' => $fleetSid,);
+        $this->solution = array('fleetSid' => $fleetSid, );
 
         $this->uri = '/Fleets/' . \rawurlencode($fleetSid) . '/Devices';
     }
@@ -45,8 +43,7 @@ class DeviceList extends ListResource
      * @return DeviceInstance Newly created DeviceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -86,8 +83,7 @@ class DeviceList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -111,8 +107,7 @@ class DeviceList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return DeviceInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -126,12 +121,7 @@ class DeviceList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of DeviceInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'DeploymentSid' => $options['deploymentSid'],
@@ -156,8 +146,7 @@ class DeviceList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of DeviceInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -172,8 +161,7 @@ class DeviceList extends ListResource
      * @param string $sid A string that uniquely identifies the Device.
      * @return \Twilio\Rest\Preview\DeployedDevices\Fleet\DeviceContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new DeviceContext($this->version, $this->solution['fleetSid'], $sid);
     }
 
@@ -182,8 +170,7 @@ class DeviceList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.DeployedDevices.DeviceList]';
     }
 }

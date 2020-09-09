@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,12 +26,12 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
 use InvalidArgumentException;
-use Kigkonsult\Icalcreator\Util\Util;
+Use Kigkonsult\Icalcreator\Util\Util;
 
 /**
  * VERSION property functions
@@ -58,7 +58,7 @@ trait VERSIONtrait
      */
     public function createVersion()
     {
-        return sprintf(self::$FMTICAL, self::VERSION, $this->version);
+        return sprintf( self::$FMTICAL, self::VERSION, $this->version );
     }
 
     /**
@@ -80,13 +80,13 @@ trait VERSIONtrait
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setVersion($value)
+    public function setVersion( $value )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::VERSION);
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::VERSION );
         }
-        Util::assertString($value, self::VERSION);
-        $this->version = (string)$value;
+        Util::assertString( $value, self::VERSION );
+        $this->version = (string) $value;
         return $this;
     }
 }

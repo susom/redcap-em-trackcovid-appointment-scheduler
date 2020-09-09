@@ -43,8 +43,7 @@ use Twilio\Version;
  * @property string $verificationCode
  * @property string $verificationCallSids
  */
-class HostedNumberOrderInstance extends InstanceResource
-{
+class HostedNumberOrderInstance extends InstanceResource {
     /**
      * Initialize the HostedNumberOrderInstance
      *
@@ -53,8 +52,7 @@ class HostedNumberOrderInstance extends InstanceResource
      * @param string $sid HostedNumberOrder sid.
      * @return \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -84,7 +82,7 @@ class HostedNumberOrderInstance extends InstanceResource
             'verificationCallSids' => Values::array_get($payload, 'verification_call_sids'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -95,8 +93,7 @@ class HostedNumberOrderInstance extends InstanceResource
      *                                                                     for this
      *                                                                     HostedNumberOrderInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new HostedNumberOrderContext($this->version, $this->solution['sid']);
         }
@@ -110,8 +107,7 @@ class HostedNumberOrderInstance extends InstanceResource
      * @return HostedNumberOrderInstance Fetched HostedNumberOrderInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -121,8 +117,7 @@ class HostedNumberOrderInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -133,8 +128,7 @@ class HostedNumberOrderInstance extends InstanceResource
      * @return HostedNumberOrderInstance Updated HostedNumberOrderInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -145,8 +139,7 @@ class HostedNumberOrderInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -164,8 +157,7 @@ class HostedNumberOrderInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

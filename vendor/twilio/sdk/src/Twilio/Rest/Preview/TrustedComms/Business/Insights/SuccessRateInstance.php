@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property \DateTime $start
  * @property string $url
  */
-class SuccessRateInstance extends InstanceResource
-{
+class SuccessRateInstance extends InstanceResource {
     /**
      * Initialize the SuccessRateInstance
      *
@@ -37,8 +36,7 @@ class SuccessRateInstance extends InstanceResource
      * @param string $businessSid A string that uniquely identifies this Business.
      * @return \Twilio\Rest\Preview\TrustedComms\Business\Insights\SuccessRateInstance
      */
-    public function __construct(Version $version, array $payload, $businessSid)
-    {
+    public function __construct(Version $version, array $payload, $businessSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -52,7 +50,7 @@ class SuccessRateInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('businessSid' => $businessSid,);
+        $this->solution = array('businessSid' => $businessSid, );
     }
 
     /**
@@ -62,8 +60,7 @@ class SuccessRateInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\TrustedComms\Business\Insights\SuccessRateContext Context for this
      *                                                                                SuccessRateInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SuccessRateContext($this->version, $this->solution['businessSid']);
         }
@@ -78,8 +75,7 @@ class SuccessRateInstance extends InstanceResource
      * @return SuccessRateInstance Fetched SuccessRateInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -90,8 +86,7 @@ class SuccessRateInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -109,8 +104,7 @@ class SuccessRateInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

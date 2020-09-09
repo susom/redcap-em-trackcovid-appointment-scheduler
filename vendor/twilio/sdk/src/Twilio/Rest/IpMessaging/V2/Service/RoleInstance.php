@@ -26,8 +26,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class RoleInstance extends InstanceResource
-{
+class RoleInstance extends InstanceResource {
     /**
      * Initialize the RoleInstance
      *
@@ -38,8 +37,7 @@ class RoleInstance extends InstanceResource
      * @param string $sid The SID of the Role resource to fetch
      * @return \Twilio\Rest\IpMessaging\V2\Service\RoleInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -55,7 +53,7 @@ class RoleInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -65,8 +63,7 @@ class RoleInstance extends InstanceResource
      * @return \Twilio\Rest\IpMessaging\V2\Service\RoleContext Context for this
      *                                                         RoleInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new RoleContext(
                 $this->version,
@@ -84,8 +81,7 @@ class RoleInstance extends InstanceResource
      * @return RoleInstance Fetched RoleInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -95,8 +91,7 @@ class RoleInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -107,8 +102,7 @@ class RoleInstance extends InstanceResource
      * @return RoleInstance Updated RoleInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($permission)
-    {
+    public function update($permission) {
         return $this->proxy()->update($permission);
     }
 
@@ -119,8 +113,7 @@ class RoleInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -138,8 +131,7 @@ class RoleInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

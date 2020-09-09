@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class EngagementInstance extends InstanceResource
-{
+class EngagementInstance extends InstanceResource {
     protected $_steps = null;
     protected $_engagementContext = null;
 
@@ -42,8 +41,7 @@ class EngagementInstance extends InstanceResource
      * @param string $sid The SID of the Engagement resource to fetch
      * @return \Twilio\Rest\Studio\V1\Flow\EngagementInstance
      */
-    public function __construct(Version $version, array $payload, $flowSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $flowSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -61,7 +59,7 @@ class EngagementInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('flowSid' => $flowSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('flowSid' => $flowSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -71,8 +69,7 @@ class EngagementInstance extends InstanceResource
      * @return \Twilio\Rest\Studio\V1\Flow\EngagementContext Context for this
      *                                                       EngagementInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new EngagementContext(
                 $this->version,
@@ -90,8 +87,7 @@ class EngagementInstance extends InstanceResource
      * @return EngagementInstance Fetched EngagementInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -101,8 +97,7 @@ class EngagementInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -111,8 +106,7 @@ class EngagementInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\StepList
      */
-    protected function getSteps()
-    {
+    protected function getSteps() {
         return $this->proxy()->steps;
     }
 
@@ -121,8 +115,7 @@ class EngagementInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextList
      */
-    protected function getEngagementContext()
-    {
+    protected function getEngagementContext() {
         return $this->proxy()->engagementContext;
     }
 
@@ -133,8 +126,7 @@ class EngagementInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -152,8 +144,7 @@ class EngagementInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -1,11 +1,11 @@
 <?php
 /**
- * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
+  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -58,8 +58,6 @@ final class Vfreebusy extends Vcomponent
 
     /**
      * @var string
-     * @access protected
-     * @static
      */
     protected static $compSgn = 'f';
 
@@ -109,21 +107,21 @@ final class Vfreebusy extends Vcomponent
      */
     public function createComponent()
     {
-        $compType = strtoupper($this->getCompType());
-        $component = sprintf(self::$FMTBEGIN, $compType);
-        $component .= $this->createUid();
-        $component .= $this->createDtstamp();
-        $component .= $this->createAttendee();
-        $component .= $this->createComment();
-        $component .= $this->createContact();
-        $component .= $this->createDtstart();
-        $component .= $this->createDtend();
-        $component .= $this->createDuration();
-        $component .= $this->createFreebusy();
-        $component .= $this->createOrganizer();
-        $component .= $this->createRequeststatus();
-        $component .= $this->createUrl();
-        $component .= $this->createXprop();
-        return $component . sprintf(self::$FMTEND, $compType);
+        $compType    = strtoupper( $this->getCompType());
+        $component   = sprintf( self::$FMTBEGIN, $compType );
+        $component  .= $this->createUid();
+        $component  .= $this->createDtstamp();
+        $component  .= $this->createAttendee();
+        $component  .= $this->createComment();
+        $component  .= $this->createContact();
+        $component  .= $this->createDtstart();
+        $component  .= $this->createDtend();
+        $component  .= $this->createDuration();
+        $component  .= $this->createFreebusy();
+        $component  .= $this->createOrganizer();
+        $component  .= $this->createRequeststatus();
+        $component  .= $this->createUrl();
+        $component  .= $this->createXprop();
+        return $component . sprintf( self::$FMTEND, $compType );
     }
 }

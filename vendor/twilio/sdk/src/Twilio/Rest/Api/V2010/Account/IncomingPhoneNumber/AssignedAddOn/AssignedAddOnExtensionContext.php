@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class AssignedAddOnExtensionContext extends InstanceContext
-{
+class AssignedAddOnExtensionContext extends InstanceContext {
     /**
      * Initialize the AssignedAddOnExtensionContext
      *
@@ -32,8 +31,7 @@ class AssignedAddOnExtensionContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOn\AssignedAddOnExtensionContext
      */
-    public function __construct(Version $version, $accountSid, $resourceSid, $assignedAddOnSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $resourceSid, $assignedAddOnSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -53,8 +51,7 @@ class AssignedAddOnExtensionContext extends InstanceContext
      * @return AssignedAddOnExtensionInstance Fetched AssignedAddOnExtensionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -78,8 +75,7 @@ class AssignedAddOnExtensionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

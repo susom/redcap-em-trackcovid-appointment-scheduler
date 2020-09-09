@@ -31,8 +31,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class WorkflowInstance extends InstanceResource
-{
+class WorkflowInstance extends InstanceResource {
     protected $_statistics = null;
     protected $_realTimeStatistics = null;
     protected $_cumulativeStatistics = null;
@@ -47,8 +46,7 @@ class WorkflowInstance extends InstanceResource
      * @param string $sid The SID of the resource
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkflowInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -68,7 +66,7 @@ class WorkflowInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -79,8 +77,7 @@ class WorkflowInstance extends InstanceResource
      *                                                              this
      *                                                              WorkflowInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new WorkflowContext(
                 $this->version,
@@ -98,8 +95,7 @@ class WorkflowInstance extends InstanceResource
      * @return WorkflowInstance Fetched WorkflowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -110,8 +106,7 @@ class WorkflowInstance extends InstanceResource
      * @return WorkflowInstance Updated WorkflowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -121,8 +116,7 @@ class WorkflowInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -131,8 +125,7 @@ class WorkflowInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowStatisticsList
      */
-    protected function getStatistics()
-    {
+    protected function getStatistics() {
         return $this->proxy()->statistics;
     }
 
@@ -141,8 +134,7 @@ class WorkflowInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowRealTimeStatisticsList
      */
-    protected function getRealTimeStatistics()
-    {
+    protected function getRealTimeStatistics() {
         return $this->proxy()->realTimeStatistics;
     }
 
@@ -151,8 +143,7 @@ class WorkflowInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowCumulativeStatisticsList
      */
-    protected function getCumulativeStatistics()
-    {
+    protected function getCumulativeStatistics() {
         return $this->proxy()->cumulativeStatistics;
     }
 
@@ -163,8 +154,7 @@ class WorkflowInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -182,8 +172,7 @@ class WorkflowInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

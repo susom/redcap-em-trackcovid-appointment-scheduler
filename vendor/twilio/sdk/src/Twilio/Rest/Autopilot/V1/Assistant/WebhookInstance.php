@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $webhookUrl
  * @property string $webhookMethod
  */
-class WebhookInstance extends InstanceResource
-{
+class WebhookInstance extends InstanceResource {
     /**
      * Initialize the WebhookInstance
      *
@@ -42,8 +41,7 @@ class WebhookInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Autopilot\V1\Assistant\WebhookInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -60,7 +58,7 @@ class WebhookInstance extends InstanceResource
             'webhookMethod' => Values::array_get($payload, 'webhook_method'),
         );
 
-        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -70,8 +68,7 @@ class WebhookInstance extends InstanceResource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\WebhookContext Context for this
      *                                                            WebhookInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new WebhookContext(
                 $this->version,
@@ -89,8 +86,7 @@ class WebhookInstance extends InstanceResource
      * @return WebhookInstance Fetched WebhookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -101,8 +97,7 @@ class WebhookInstance extends InstanceResource
      * @return WebhookInstance Updated WebhookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -112,8 +107,7 @@ class WebhookInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -124,8 +118,7 @@ class WebhookInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -143,8 +136,7 @@ class WebhookInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

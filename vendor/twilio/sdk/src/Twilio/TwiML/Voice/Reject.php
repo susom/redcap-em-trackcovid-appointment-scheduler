@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Reject extends TwiML
-{
+class Reject extends TwiML {
     /**
      * Reject constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Reject', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Reject extends TwiML
      * @param string $reason Rejection reason
      * @return static $this.
      */
-    public function setReason($reason)
-    {
+    public function setReason($reason) {
         return $this->setAttribute('reason', $reason);
     }
 }

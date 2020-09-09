@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class TaskChannelInstance extends InstanceResource
-{
+class TaskChannelInstance extends InstanceResource {
     /**
      * Initialize the TaskChannelInstance
      *
@@ -40,8 +39,7 @@ class TaskChannelInstance extends InstanceResource
      * @param string $sid The SID of the TaskChannel resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskChannelInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -58,7 +56,7 @@ class TaskChannelInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -69,8 +67,7 @@ class TaskChannelInstance extends InstanceResource
      *                                                                 this
      *                                                                 TaskChannelInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new TaskChannelContext(
                 $this->version,
@@ -88,8 +85,7 @@ class TaskChannelInstance extends InstanceResource
      * @return TaskChannelInstance Fetched TaskChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -100,8 +96,7 @@ class TaskChannelInstance extends InstanceResource
      * @return TaskChannelInstance Updated TaskChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -111,8 +106,7 @@ class TaskChannelInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -123,8 +117,7 @@ class TaskChannelInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -142,8 +135,7 @@ class TaskChannelInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

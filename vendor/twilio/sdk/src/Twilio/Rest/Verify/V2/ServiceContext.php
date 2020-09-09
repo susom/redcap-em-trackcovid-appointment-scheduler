@@ -29,8 +29,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Verify\V2\Service\RateLimitContext rateLimits(string $sid)
  * @method \Twilio\Rest\Verify\V2\Service\MessagingConfigurationContext messagingConfigurations(string $country)
  */
-class ServiceContext extends InstanceContext
-{
+class ServiceContext extends InstanceContext {
     protected $_verifications = null;
     protected $_verificationChecks = null;
     protected $_rateLimits = null;
@@ -43,12 +42,11 @@ class ServiceContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Verify\V2\ServiceContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($sid) . '';
     }
@@ -59,8 +57,7 @@ class ServiceContext extends InstanceContext
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -78,8 +75,7 @@ class ServiceContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -90,8 +86,7 @@ class ServiceContext extends InstanceContext
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -120,8 +115,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Verify\V2\Service\VerificationList
      */
-    protected function getVerifications()
-    {
+    protected function getVerifications() {
         if (!$this->_verifications) {
             $this->_verifications = new VerificationList($this->version, $this->solution['sid']);
         }
@@ -134,8 +128,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckList
      */
-    protected function getVerificationChecks()
-    {
+    protected function getVerificationChecks() {
         if (!$this->_verificationChecks) {
             $this->_verificationChecks = new VerificationCheckList($this->version, $this->solution['sid']);
         }
@@ -148,8 +141,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Verify\V2\Service\RateLimitList
      */
-    protected function getRateLimits()
-    {
+    protected function getRateLimits() {
         if (!$this->_rateLimits) {
             $this->_rateLimits = new RateLimitList($this->version, $this->solution['sid']);
         }
@@ -162,8 +154,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Verify\V2\Service\MessagingConfigurationList
      */
-    protected function getMessagingConfigurations()
-    {
+    protected function getMessagingConfigurations() {
         if (!$this->_messagingConfigurations) {
             $this->_messagingConfigurations = new MessagingConfigurationList(
                 $this->version,
@@ -181,8 +172,7 @@ class ServiceContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -199,8 +189,7 @@ class ServiceContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -214,8 +203,7 @@ class ServiceContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

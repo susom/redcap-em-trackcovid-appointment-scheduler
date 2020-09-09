@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Pricing\V1\PhoneNumberList $phoneNumbers
  * @property \Twilio\Rest\Pricing\V1\VoiceList $voice
  */
-class V1 extends Version
-{
+class V1 extends Version {
     protected $_messaging = null;
     protected $_phoneNumbers = null;
     protected $_voice = null;
@@ -33,8 +32,7 @@ class V1 extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Pricing\V1 V1 version of Pricing
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'v1';
     }
@@ -42,8 +40,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Pricing\V1\MessagingList
      */
-    protected function getMessaging()
-    {
+    protected function getMessaging() {
         if (!$this->_messaging) {
             $this->_messaging = new MessagingList($this);
         }
@@ -53,8 +50,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Pricing\V1\PhoneNumberList
      */
-    protected function getPhoneNumbers()
-    {
+    protected function getPhoneNumbers() {
         if (!$this->_phoneNumbers) {
             $this->_phoneNumbers = new PhoneNumberList($this);
         }
@@ -64,8 +60,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Pricing\V1\VoiceList
      */
-    protected function getVoice()
-    {
+    protected function getVoice() {
         if (!$this->_voice) {
             $this->_voice = new VoiceList($this);
         }
@@ -79,8 +74,7 @@ class V1 extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -97,8 +91,7 @@ class V1 extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -112,8 +105,7 @@ class V1 extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Pricing.V1]';
     }
 }

@@ -24,8 +24,7 @@ use Twilio\Rest\FlexApi\V1;
  * @method \Twilio\Rest\FlexApi\V1\FlexFlowContext flexFlow(string $sid)
  * @method \Twilio\Rest\FlexApi\V1\WebChannelContext webChannel(string $sid)
  */
-class FlexApi extends Domain
-{
+class FlexApi extends Domain {
     protected $_v1 = null;
 
     /**
@@ -35,8 +34,7 @@ class FlexApi extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\FlexApi Domain for FlexApi
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://flex-api.twilio.com';
@@ -45,8 +43,7 @@ class FlexApi extends Domain
     /**
      * @return \Twilio\Rest\FlexApi\V1 Version v1 of flex_api
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -60,8 +57,7 @@ class FlexApi extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -78,8 +74,7 @@ class FlexApi extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -91,8 +86,7 @@ class FlexApi extends Domain
     /**
      * @return \Twilio\Rest\FlexApi\V1\ChannelList
      */
-    protected function getChannel()
-    {
+    protected function getChannel() {
         return $this->v1->channel;
     }
 
@@ -101,32 +95,28 @@ class FlexApi extends Domain
      *                    fetch
      * @return \Twilio\Rest\FlexApi\V1\ChannelContext
      */
-    protected function contextChannel($sid)
-    {
+    protected function contextChannel($sid) {
         return $this->v1->channel($sid);
     }
 
     /**
      * @return \Twilio\Rest\FlexApi\V1\ConfigurationList
      */
-    protected function getConfiguration()
-    {
+    protected function getConfiguration() {
         return $this->v1->configuration;
     }
 
     /**
      * @return \Twilio\Rest\FlexApi\V1\ConfigurationContext
      */
-    protected function contextConfiguration()
-    {
+    protected function contextConfiguration() {
         return $this->v1->configuration();
     }
 
     /**
      * @return \Twilio\Rest\FlexApi\V1\FlexFlowList
      */
-    protected function getFlexFlow()
-    {
+    protected function getFlexFlow() {
         return $this->v1->flexFlow;
     }
 
@@ -134,16 +124,14 @@ class FlexApi extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\FlexApi\V1\FlexFlowContext
      */
-    protected function contextFlexFlow($sid)
-    {
+    protected function contextFlexFlow($sid) {
         return $this->v1->flexFlow($sid);
     }
 
     /**
      * @return \Twilio\Rest\FlexApi\V1\WebChannelList
      */
-    protected function getWebChannel()
-    {
+    protected function getWebChannel() {
         return $this->v1->webChannel;
     }
 
@@ -151,8 +139,7 @@ class FlexApi extends Domain
      * @param string $sid The SID of the WebChannel resource to fetch
      * @return \Twilio\Rest\FlexApi\V1\WebChannelContext
      */
-    protected function contextWebChannel($sid)
-    {
+    protected function contextWebChannel($sid) {
         return $this->v1->webChannel($sid);
     }
 
@@ -161,8 +148,7 @@ class FlexApi extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.FlexApi]';
     }
 }

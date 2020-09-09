@@ -13,8 +13,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class AddOnResultList extends ListResource
-{
+class AddOnResultList extends ListResource {
     /**
      * Construct the AddOnResultList
      *
@@ -24,12 +23,11 @@ class AddOnResultList extends ListResource
      *                             AddOnResult resource belongs
      * @return \Twilio\Rest\Api\V2010\Account\Recording\AddOnResultList
      */
-    public function __construct(Version $version, $accountSid, $referenceSid)
-    {
+    public function __construct(Version $version, $accountSid, $referenceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'referenceSid' => $referenceSid,);
+        $this->solution = array('accountSid' => $accountSid, 'referenceSid' => $referenceSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Recordings/' . \rawurlencode($referenceSid) . '/AddOnResults.json';
     }
@@ -52,8 +50,7 @@ class AddOnResultList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -76,8 +73,7 @@ class AddOnResultList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return AddOnResultInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -90,8 +86,7 @@ class AddOnResultList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of AddOnResultInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -114,8 +109,7 @@ class AddOnResultList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of AddOnResultInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -130,8 +124,7 @@ class AddOnResultList extends ListResource
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Recording\AddOnResultContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new AddOnResultContext(
             $this->version,
             $this->solution['accountSid'],
@@ -145,8 +138,7 @@ class AddOnResultList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.AddOnResultList]';
     }
 }

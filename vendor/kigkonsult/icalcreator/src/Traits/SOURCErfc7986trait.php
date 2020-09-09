@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -46,7 +46,6 @@ trait SOURCErfc7986trait
 {
     /**
      * @var array component property SOURCE value
-     * @access protected
      */
     protected $source = null;
 
@@ -57,15 +56,17 @@ trait SOURCErfc7986trait
      */
     public function createSource()
     {
-        if (empty($this->source)) {
+        if( empty( $this->source )) {
             return null;
         }
-        if (empty($this->source[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::SOURCE) : null;
+        if( empty( $this->source[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::SOURCE )
+                : null;
         }
         return StringFactory::createElement(
             self::SOURCE,
-            ParameterFactory::createParams($this->source[Util::$LCparams]),
+            ParameterFactory::createParams( $this->source[Util::$LCparams] ),
             $this->source[Util::$LCvalue]
         );
     }
@@ -84,37 +85,39 @@ trait SOURCErfc7986trait
     /**
      * Get calendar component property source
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      */
-    public function getSource($inclParam = false)
+    public function getSource( $inclParam = false )
     {
-        if (empty($this->source)) {
+        if( empty( $this->source )) {
             return false;
         }
-        return ($inclParam) ? $this->source : $this->source[Util::$LCvalue];
+        return ( $inclParam ) ? $this->source : $this->source[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property source
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      */
-    public function setSource($value = null, $params = [])
+    public function setSource( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::SOURCE);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::SOURCE );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            HttpFactory::assertUrl($value);
+        }
+        else {
+            HttpFactory::assertUrl( $value );
         }
         $this->source = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params, [self::VALUE => self::URI]),
+            Util::$LCvalue  => $value,
+            Util::$LCparams =>
+                ParameterFactory::setParams( $params, [ self::VALUE => self::URI ] ),
         ];
         return $this;
     }

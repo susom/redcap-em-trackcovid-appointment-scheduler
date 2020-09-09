@@ -31,8 +31,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class FlowRevisionInstance extends InstanceResource
-{
+class FlowRevisionInstance extends InstanceResource {
     /**
      * Initialize the FlowRevisionInstance
      *
@@ -43,8 +42,7 @@ class FlowRevisionInstance extends InstanceResource
      *                         and `LatestRevision`
      * @return \Twilio\Rest\Studio\V2\Flow\FlowRevisionInstance
      */
-    public function __construct(Version $version, array $payload, $sid, $revision = null)
-    {
+    public function __construct(Version $version, array $payload, $sid, $revision = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -63,7 +61,7 @@ class FlowRevisionInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('sid' => $sid, 'revision' => $revision ?: $this->properties['revision'],);
+        $this->solution = array('sid' => $sid, 'revision' => $revision ?: $this->properties['revision'], );
     }
 
     /**
@@ -73,8 +71,7 @@ class FlowRevisionInstance extends InstanceResource
      * @return \Twilio\Rest\Studio\V2\Flow\FlowRevisionContext Context for this
      *                                                         FlowRevisionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FlowRevisionContext(
                 $this->version,
@@ -92,8 +89,7 @@ class FlowRevisionInstance extends InstanceResource
      * @return FlowRevisionInstance Fetched FlowRevisionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -104,8 +100,7 @@ class FlowRevisionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -123,8 +118,7 @@ class FlowRevisionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property int $unreadMessagesCount
  * @property array $links
  */
-class UserChannelInstance extends InstanceResource
-{
+class UserChannelInstance extends InstanceResource {
     /**
      * Initialize the UserChannelInstance
      *
@@ -36,8 +35,7 @@ class UserChannelInstance extends InstanceResource
      * @param string $userSid The unique string that identifies the resource
      * @return \Twilio\Rest\IpMessaging\V1\Service\User\UserChannelInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $userSid)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $userSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -52,7 +50,7 @@ class UserChannelInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'userSid' => $userSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'userSid' => $userSid, );
     }
 
     /**
@@ -62,8 +60,7 @@ class UserChannelInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -81,8 +78,7 @@ class UserChannelInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.IpMessaging.V1.UserChannelInstance]';
     }
 }

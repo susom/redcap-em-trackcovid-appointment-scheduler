@@ -17,8 +17,7 @@ use Twilio\Rest\Numbers\V2;
  * @property \Twilio\Rest\Numbers\V2 $v2
  * @property \Twilio\Rest\Numbers\V2\RegulatoryComplianceList $regulatoryCompliance
  */
-class Numbers extends Domain
-{
+class Numbers extends Domain {
     protected $_v2 = null;
 
     /**
@@ -28,8 +27,7 @@ class Numbers extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Numbers Domain for Numbers
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://numbers.twilio.com';
@@ -38,8 +36,7 @@ class Numbers extends Domain
     /**
      * @return \Twilio\Rest\Numbers\V2 Version v2 of numbers
      */
-    protected function getV2()
-    {
+    protected function getV2() {
         if (!$this->_v2) {
             $this->_v2 = new V2($this);
         }
@@ -53,8 +50,7 @@ class Numbers extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -71,8 +67,7 @@ class Numbers extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -84,8 +79,7 @@ class Numbers extends Domain
     /**
      * @return \Twilio\Rest\Numbers\V2\RegulatoryComplianceList
      */
-    protected function getRegulatoryCompliance()
-    {
+    protected function getRegulatoryCompliance() {
         return $this->v2->regulatoryCompliance;
     }
 
@@ -94,8 +88,7 @@ class Numbers extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Numbers]';
     }
 }

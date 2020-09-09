@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class MemberContext extends InstanceContext
-{
+class MemberContext extends InstanceContext {
     /**
      * Initialize the MemberContext
      *
@@ -26,12 +25,11 @@ class MemberContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Chat\V1\Service\Channel\MemberContext
      */
-    public function __construct(Version $version, $serviceSid, $channelSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $channelSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Channels/' . \rawurlencode($channelSid) . '/Members/' . \rawurlencode($sid) . '';
     }
@@ -42,8 +40,7 @@ class MemberContext extends InstanceContext
      * @return MemberInstance Fetched MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class MemberContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -79,8 +75,7 @@ class MemberContext extends InstanceContext
      * @return MemberInstance Updated MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -109,8 +104,7 @@ class MemberContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

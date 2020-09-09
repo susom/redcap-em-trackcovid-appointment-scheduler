@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class WebhookOptions
-{
+abstract class WebhookOptions {
     /**
      * @param string $webhookMethod The HTTP method to use when sending a webhook
      *                              request
@@ -31,22 +30,12 @@ abstract class WebhookOptions
      * @param string $target The routing target of the webhook
      * @return UpdateWebhookOptions Options builder
      */
-    public static function update(
-        $webhookMethod = Values::NONE,
-        $webhookFilters = Values::NONE,
-        $preWebhookUrl = Values::NONE,
-        $postWebhookUrl = Values::NONE,
-        $preWebhookRetryCount = Values::NONE,
-        $postWebhookRetryCount = Values::NONE,
-        $target = Values::NONE
-    ) {
-        return new UpdateWebhookOptions($webhookMethod, $webhookFilters, $preWebhookUrl, $postWebhookUrl,
-            $preWebhookRetryCount, $postWebhookRetryCount, $target);
+    public static function update($webhookMethod = Values::NONE, $webhookFilters = Values::NONE, $preWebhookUrl = Values::NONE, $postWebhookUrl = Values::NONE, $preWebhookRetryCount = Values::NONE, $postWebhookRetryCount = Values::NONE, $target = Values::NONE) {
+        return new UpdateWebhookOptions($webhookMethod, $webhookFilters, $preWebhookUrl, $postWebhookUrl, $preWebhookRetryCount, $postWebhookRetryCount, $target);
     }
 }
 
-class UpdateWebhookOptions extends Options
-{
+class UpdateWebhookOptions extends Options {
     /**
      * @param string $webhookMethod The HTTP method to use when sending a webhook
      *                              request
@@ -60,15 +49,7 @@ class UpdateWebhookOptions extends Options
      *                                   webhook request if the first attempt fails
      * @param string $target The routing target of the webhook
      */
-    public function __construct(
-        $webhookMethod = Values::NONE,
-        $webhookFilters = Values::NONE,
-        $preWebhookUrl = Values::NONE,
-        $postWebhookUrl = Values::NONE,
-        $preWebhookRetryCount = Values::NONE,
-        $postWebhookRetryCount = Values::NONE,
-        $target = Values::NONE
-    ) {
+    public function __construct($webhookMethod = Values::NONE, $webhookFilters = Values::NONE, $preWebhookUrl = Values::NONE, $postWebhookUrl = Values::NONE, $preWebhookRetryCount = Values::NONE, $postWebhookRetryCount = Values::NONE, $target = Values::NONE) {
         $this->options['webhookMethod'] = $webhookMethod;
         $this->options['webhookFilters'] = $webhookFilters;
         $this->options['preWebhookUrl'] = $preWebhookUrl;
@@ -85,8 +66,7 @@ class UpdateWebhookOptions extends Options
      *                              request
      * @return $this Fluent Builder
      */
-    public function setWebhookMethod($webhookMethod)
-    {
+    public function setWebhookMethod($webhookMethod) {
         $this->options['webhookMethod'] = $webhookMethod;
         return $this;
     }
@@ -98,8 +78,7 @@ class UpdateWebhookOptions extends Options
      *                               enabled for the Service
      * @return $this Fluent Builder
      */
-    public function setWebhookFilters($webhookFilters)
-    {
+    public function setWebhookFilters($webhookFilters) {
         $this->options['webhookFilters'] = $webhookFilters;
         return $this;
     }
@@ -110,8 +89,7 @@ class UpdateWebhookOptions extends Options
      * @param string $preWebhookUrl The absolute URL of the pre-event webhook
      * @return $this Fluent Builder
      */
-    public function setPreWebhookUrl($preWebhookUrl)
-    {
+    public function setPreWebhookUrl($preWebhookUrl) {
         $this->options['preWebhookUrl'] = $preWebhookUrl;
         return $this;
     }
@@ -122,8 +100,7 @@ class UpdateWebhookOptions extends Options
      * @param string $postWebhookUrl The absolute URL of the post-event webhook
      * @return $this Fluent Builder
      */
-    public function setPostWebhookUrl($postWebhookUrl)
-    {
+    public function setPostWebhookUrl($postWebhookUrl) {
         $this->options['postWebhookUrl'] = $postWebhookUrl;
         return $this;
     }
@@ -135,8 +112,7 @@ class UpdateWebhookOptions extends Options
      *                                  webhook request if the first attempt fails
      * @return $this Fluent Builder
      */
-    public function setPreWebhookRetryCount($preWebhookRetryCount)
-    {
+    public function setPreWebhookRetryCount($preWebhookRetryCount) {
         $this->options['preWebhookRetryCount'] = $preWebhookRetryCount;
         return $this;
     }
@@ -148,8 +124,7 @@ class UpdateWebhookOptions extends Options
      *                                   webhook request if the first attempt fails
      * @return $this Fluent Builder
      */
-    public function setPostWebhookRetryCount($postWebhookRetryCount)
-    {
+    public function setPostWebhookRetryCount($postWebhookRetryCount) {
         $this->options['postWebhookRetryCount'] = $postWebhookRetryCount;
         return $this;
     }
@@ -160,8 +135,7 @@ class UpdateWebhookOptions extends Options
      * @param string $target The routing target of the webhook
      * @return $this Fluent Builder
      */
-    public function setTarget($target)
-    {
+    public function setTarget($target) {
         $this->options['target'] = $target;
         return $this;
     }
@@ -171,8 +145,7 @@ class UpdateWebhookOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

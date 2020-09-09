@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class UserChannelContext extends InstanceContext
-{
+class UserChannelContext extends InstanceContext {
     /**
      * Initialize the UserChannelContext
      *
@@ -30,8 +29,7 @@ class UserChannelContext extends InstanceContext
      *                           to fetch
      * @return \Twilio\Rest\Chat\V2\Service\User\UserChannelContext
      */
-    public function __construct(Version $version, $serviceSid, $userSid, $channelSid)
-    {
+    public function __construct(Version $version, $serviceSid, $userSid, $channelSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -50,8 +48,7 @@ class UserChannelContext extends InstanceContext
      * @return UserChannelInstance Fetched UserChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -75,8 +72,7 @@ class UserChannelContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -87,8 +83,7 @@ class UserChannelContext extends InstanceContext
      * @return UserChannelInstance Updated UserChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -118,8 +113,7 @@ class UserChannelContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

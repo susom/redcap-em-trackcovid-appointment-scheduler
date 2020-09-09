@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property string $uniqueName
  * @property string $url
  */
-class FieldInstance extends InstanceResource
-{
+class FieldInstance extends InstanceResource {
     /**
      * Initialize the FieldInstance
      *
@@ -41,8 +40,7 @@ class FieldInstance extends InstanceResource
      *                    resource.
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\FieldInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $taskSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid, $taskSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -73,8 +71,7 @@ class FieldInstance extends InstanceResource
      *                                                                     for this
      *                                                                     FieldInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FieldContext(
                 $this->version,
@@ -93,8 +90,7 @@ class FieldInstance extends InstanceResource
      * @return FieldInstance Fetched FieldInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -104,8 +100,7 @@ class FieldInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -116,8 +111,7 @@ class FieldInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -135,8 +129,7 @@ class FieldInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

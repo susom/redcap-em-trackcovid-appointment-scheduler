@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CallSummaryContext extends InstanceContext
-{
+class CallSummaryContext extends InstanceContext {
     /**
      * Initialize the CallSummaryContext
      *
@@ -27,12 +26,11 @@ class CallSummaryContext extends InstanceContext
      * @param string $callSid The call_sid
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryContext
      */
-    public function __construct(Version $version, $callSid)
-    {
+    public function __construct(Version $version, $callSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('callSid' => $callSid,);
+        $this->solution = array('callSid' => $callSid, );
 
         $this->uri = '/Voice/' . \rawurlencode($callSid) . '/Summary';
     }
@@ -44,11 +42,10 @@ class CallSummaryContext extends InstanceContext
      * @return CallSummaryInstance Fetched CallSummaryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
-        $params = Values::of(array('ProcessingState' => $options['processingState'],));
+        $params = Values::of(array('ProcessingState' => $options['processingState'], ));
 
         $payload = $this->version->fetch(
             'GET',
@@ -64,8 +61,7 @@ class CallSummaryContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

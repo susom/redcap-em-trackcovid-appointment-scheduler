@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -47,10 +47,11 @@ class IcalvCardFactoryTest extends TestCase
 {
 
     /**
+     * IcalvCardFactoryTest provider
+    /**
      * SelectComponentsTest provider
      */
-    public function IcalvCardFactoryTestProvider()
-    {
+    public function IcalvCardFactoryTestProvider() {
 
         $dataArr = [];
 
@@ -105,20 +106,19 @@ class IcalvCardFactoryTest extends TestCase
      *
      * @test
      * @dataProvider IcalvCardFactoryTestProvider'
-     * @para, int       $case
+     * @param int       $case
      * @param Vcalendar $vcalendar
-     * @param string $version
-     * @param bool $inclParams fetch from values or include from parameters
+     * @param string    $version
+     * @param bool      $inclParams  fetch from values or include from parameters
      */
-    public function IcalvCardFactoryTest($case, Vcalendar $vcalendar, $version, $inclParams)
-    {
-        $vCards = IcalvCardFactory::iCal2vCards($vcalendar, $version, $inclParams, $count);
+    public function IcalvCardFactoryTest( $case, Vcalendar $vcalendar, $version, $inclParams ) {
+        $vCards = IcalvCardFactory::iCal2vCards( $vcalendar, $version, $inclParams, $count );
 
-        if (!empty($version)) {
-            $this->assertNotFalse(strpos($vCards, $version));
+        if( ! empty( $version )) {
+            $this->assertNotFalse( strpos( $vCards, $version ));
         }
 
-        $this->assertEquals($count, substr_count($vCards, 'BEGIN:VCARD'));
+        $this->assertEquals( $count, substr_count( $vCards,  'BEGIN:VCARD' ));
     }
 
 }

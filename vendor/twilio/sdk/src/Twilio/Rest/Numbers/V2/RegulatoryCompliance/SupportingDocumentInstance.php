@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class SupportingDocumentInstance extends InstanceResource
-{
+class SupportingDocumentInstance extends InstanceResource {
     /**
      * Initialize the SupportingDocumentInstance
      *
@@ -38,8 +37,7 @@ class SupportingDocumentInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -56,7 +54,7 @@ class SupportingDocumentInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -66,8 +64,7 @@ class SupportingDocumentInstance extends InstanceResource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentContext Context for this
      *                                                                                SupportingDocumentInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SupportingDocumentContext($this->version, $this->solution['sid']);
         }
@@ -81,8 +78,7 @@ class SupportingDocumentInstance extends InstanceResource
      * @return SupportingDocumentInstance Fetched SupportingDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -93,8 +89,7 @@ class SupportingDocumentInstance extends InstanceResource
      * @return SupportingDocumentInstance Updated SupportingDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -105,8 +100,7 @@ class SupportingDocumentInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -124,8 +118,7 @@ class SupportingDocumentInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

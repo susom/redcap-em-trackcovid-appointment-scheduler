@@ -12,8 +12,7 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class TaskQueueCumulativeStatisticsOptions
-{
+abstract class TaskQueueCumulativeStatisticsOptions {
     /**
      * @param \DateTime $endDate Only calculate statistics from on or before this
      *                           date
@@ -28,20 +27,12 @@ abstract class TaskQueueCumulativeStatisticsOptions
      *                                statistics on
      * @return FetchTaskQueueCumulativeStatisticsOptions Options builder
      */
-    public static function fetch(
-        $endDate = Values::NONE,
-        $minutes = Values::NONE,
-        $startDate = Values::NONE,
-        $taskChannel = Values::NONE,
-        $splitByWaitTime = Values::NONE
-    ) {
-        return new FetchTaskQueueCumulativeStatisticsOptions($endDate, $minutes, $startDate, $taskChannel,
-            $splitByWaitTime);
+    public static function fetch($endDate = Values::NONE, $minutes = Values::NONE, $startDate = Values::NONE, $taskChannel = Values::NONE, $splitByWaitTime = Values::NONE) {
+        return new FetchTaskQueueCumulativeStatisticsOptions($endDate, $minutes, $startDate, $taskChannel, $splitByWaitTime);
     }
 }
 
-class FetchTaskQueueCumulativeStatisticsOptions extends Options
-{
+class FetchTaskQueueCumulativeStatisticsOptions extends Options {
     /**
      * @param \DateTime $endDate Only calculate statistics from on or before this
      *                           date
@@ -55,13 +46,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *                                describes the thresholds to calculate
      *                                statistics on
      */
-    public function __construct(
-        $endDate = Values::NONE,
-        $minutes = Values::NONE,
-        $startDate = Values::NONE,
-        $taskChannel = Values::NONE,
-        $splitByWaitTime = Values::NONE
-    ) {
+    public function __construct($endDate = Values::NONE, $minutes = Values::NONE, $startDate = Values::NONE, $taskChannel = Values::NONE, $splitByWaitTime = Values::NONE) {
         $this->options['endDate'] = $endDate;
         $this->options['minutes'] = $minutes;
         $this->options['startDate'] = $startDate;
@@ -76,8 +61,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *                           date
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -89,8 +73,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *                     past
      * @return $this Fluent Builder
      */
-    public function setMinutes($minutes)
-    {
+    public function setMinutes($minutes) {
         $this->options['minutes'] = $minutes;
         return $this;
     }
@@ -102,8 +85,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *                             date
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -115,8 +97,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *                            TaskChannel
      * @return $this Fluent Builder
      */
-    public function setTaskChannel($taskChannel)
-    {
+    public function setTaskChannel($taskChannel) {
         $this->options['taskChannel'] = $taskChannel;
         return $this;
     }
@@ -129,8 +110,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *                                statistics on
      * @return $this Fluent Builder
      */
-    public function setSplitByWaitTime($splitByWaitTime)
-    {
+    public function setSplitByWaitTime($splitByWaitTime) {
         $this->options['splitByWaitTime'] = $splitByWaitTime;
         return $this;
     }
@@ -140,8 +120,7 @@ class FetchTaskQueueCumulativeStatisticsOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

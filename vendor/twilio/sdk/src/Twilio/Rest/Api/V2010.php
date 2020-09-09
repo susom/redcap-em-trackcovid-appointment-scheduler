@@ -62,8 +62,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Api\V2010\Account\ShortCodeContext shortCodes(string $sid)
  * @method \Twilio\Rest\Api\V2010\Account\TranscriptionContext transcriptions(string $sid)
  */
-class V2010 extends Version
-{
+class V2010 extends Version {
     protected $_accounts = null;
     protected $_account = null;
     protected $_addresses = null;
@@ -97,8 +96,7 @@ class V2010 extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Api\V2010 V2010 version of Api
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = '2010-04-01';
     }
@@ -106,8 +104,7 @@ class V2010 extends Version
     /**
      * @return \Twilio\Rest\Api\V2010\AccountList
      */
-    protected function getAccounts()
-    {
+    protected function getAccounts() {
         if (!$this->_accounts) {
             $this->_accounts = new AccountList($this);
         }
@@ -118,8 +115,7 @@ class V2010 extends Version
      * @return \Twilio\Rest\Api\V2010\AccountContext Account provided as the
      *                                               authenticating account
      */
-    protected function getAccount()
-    {
+    protected function getAccount() {
         if (!$this->_account) {
             $this->_account = new AccountContext(
                 $this,
@@ -135,200 +131,175 @@ class V2010 extends Version
      * @param AccountContext|AccountInstance $account account to use as the primary
      *                                                account
      */
-    public function setAccount($account)
-    {
+    public function setAccount($account) {
         $this->_account = $account;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\AddressList
      */
-    protected function getAddresses()
-    {
+    protected function getAddresses() {
         return $this->account->addresses;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ApplicationList
      */
-    protected function getApplications()
-    {
+    protected function getApplications() {
         return $this->account->applications;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppList
      */
-    protected function getAuthorizedConnectApps()
-    {
+    protected function getAuthorizedConnectApps() {
         return $this->account->authorizedConnectApps;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountryList
      */
-    protected function getAvailablePhoneNumbers()
-    {
+    protected function getAvailablePhoneNumbers() {
         return $this->account->availablePhoneNumbers;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\BalanceList
      */
-    protected function getBalance()
-    {
+    protected function getBalance() {
         return $this->account->balance;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\CallList
      */
-    protected function getCalls()
-    {
+    protected function getCalls() {
         return $this->account->calls;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ConferenceList
      */
-    protected function getConferences()
-    {
+    protected function getConferences() {
         return $this->account->conferences;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ConnectAppList
      */
-    protected function getConnectApps()
-    {
+    protected function getConnectApps() {
         return $this->account->connectApps;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberList
      */
-    protected function getIncomingPhoneNumbers()
-    {
+    protected function getIncomingPhoneNumbers() {
         return $this->account->incomingPhoneNumbers;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\KeyList
      */
-    protected function getKeys()
-    {
+    protected function getKeys() {
         return $this->account->keys;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\MessageList
      */
-    protected function getMessages()
-    {
+    protected function getMessages() {
         return $this->account->messages;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\NewKeyList
      */
-    protected function getNewKeys()
-    {
+    protected function getNewKeys() {
         return $this->account->newKeys;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\NewSigningKeyList
      */
-    protected function getNewSigningKeys()
-    {
+    protected function getNewSigningKeys() {
         return $this->account->newSigningKeys;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\NotificationList
      */
-    protected function getNotifications()
-    {
+    protected function getNotifications() {
         return $this->account->notifications;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\OutgoingCallerIdList
      */
-    protected function getOutgoingCallerIds()
-    {
+    protected function getOutgoingCallerIds() {
         return $this->account->outgoingCallerIds;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\QueueList
      */
-    protected function getQueues()
-    {
+    protected function getQueues() {
         return $this->account->queues;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\RecordingList
      */
-    protected function getRecordings()
-    {
+    protected function getRecordings() {
         return $this->account->recordings;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\SigningKeyList
      */
-    protected function getSigningKeys()
-    {
+    protected function getSigningKeys() {
         return $this->account->signingKeys;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\SipList
      */
-    protected function getSip()
-    {
+    protected function getSip() {
         return $this->account->sip;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ShortCodeList
      */
-    protected function getShortCodes()
-    {
+    protected function getShortCodes() {
         return $this->account->shortCodes;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\TokenList
      */
-    protected function getTokens()
-    {
+    protected function getTokens() {
         return $this->account->tokens;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\TranscriptionList
      */
-    protected function getTranscriptions()
-    {
+    protected function getTranscriptions() {
         return $this->account->transcriptions;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\UsageList
      */
-    protected function getUsage()
-    {
+    protected function getUsage() {
         return $this->account->usage;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ValidationRequestList
      */
-    protected function getValidationRequests()
-    {
+    protected function getValidationRequests() {
         return $this->account->validationRequests;
     }
 
@@ -339,8 +310,7 @@ class V2010 extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -357,8 +327,7 @@ class V2010 extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -372,8 +341,7 @@ class V2010 extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010]';
     }
 }

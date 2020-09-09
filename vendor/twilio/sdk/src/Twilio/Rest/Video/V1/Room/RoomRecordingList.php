@@ -15,8 +15,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class RoomRecordingList extends ListResource
-{
+class RoomRecordingList extends ListResource {
     /**
      * Construct the RoomRecordingList
      *
@@ -25,12 +24,11 @@ class RoomRecordingList extends ListResource
      *                        associated with
      * @return \Twilio\Rest\Video\V1\Room\RoomRecordingList
      */
-    public function __construct(Version $version, $roomSid)
-    {
+    public function __construct(Version $version, $roomSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('roomSid' => $roomSid,);
+        $this->solution = array('roomSid' => $roomSid, );
 
         $this->uri = '/Rooms/' . \rawurlencode($roomSid) . '/Recordings';
     }
@@ -54,8 +52,7 @@ class RoomRecordingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -79,8 +76,7 @@ class RoomRecordingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return RoomRecordingInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -94,12 +90,7 @@ class RoomRecordingList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of RoomRecordingInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Status' => $options['status'],
@@ -127,8 +118,7 @@ class RoomRecordingList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of RoomRecordingInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -143,8 +133,7 @@ class RoomRecordingList extends ListResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\Room\RoomRecordingContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new RoomRecordingContext($this->version, $this->solution['roomSid'], $sid);
     }
 
@@ -153,8 +142,7 @@ class RoomRecordingList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Video.V1.RoomRecordingList]';
     }
 }

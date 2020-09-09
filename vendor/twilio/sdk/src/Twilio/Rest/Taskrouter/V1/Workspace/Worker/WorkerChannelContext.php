@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkerChannelContext extends InstanceContext
-{
+class WorkerChannelContext extends InstanceContext {
     /**
      * Initialize the WorkerChannelContext
      *
@@ -29,12 +28,11 @@ class WorkerChannelContext extends InstanceContext
      * @param string $sid The SID of the to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelContext
      */
-    public function __construct(Version $version, $workspaceSid, $workerSid, $sid)
-    {
+    public function __construct(Version $version, $workspaceSid, $workerSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'workerSid' => $workerSid, 'sid' => $sid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'workerSid' => $workerSid, 'sid' => $sid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workers/' . \rawurlencode($workerSid) . '/Channels/' . \rawurlencode($sid) . '';
     }
@@ -45,8 +43,7 @@ class WorkerChannelContext extends InstanceContext
      * @return WorkerChannelInstance Fetched WorkerChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -71,8 +68,7 @@ class WorkerChannelContext extends InstanceContext
      * @return WorkerChannelInstance Updated WorkerChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -101,8 +97,7 @@ class WorkerChannelContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

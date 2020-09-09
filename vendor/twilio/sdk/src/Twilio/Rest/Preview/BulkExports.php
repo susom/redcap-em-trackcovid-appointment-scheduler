@@ -21,8 +21,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Preview\BulkExports\ExportContext exports(string $resourceType)
  * @method \Twilio\Rest\Preview\BulkExports\ExportConfigurationContext exportConfiguration(string $resourceType)
  */
-class BulkExports extends Version
-{
+class BulkExports extends Version {
     protected $_exports = null;
     protected $_exportConfiguration = null;
 
@@ -32,8 +31,7 @@ class BulkExports extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Preview\BulkExports BulkExports version of Preview
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'BulkExports';
     }
@@ -41,8 +39,7 @@ class BulkExports extends Version
     /**
      * @return \Twilio\Rest\Preview\BulkExports\ExportList
      */
-    protected function getExports()
-    {
+    protected function getExports() {
         if (!$this->_exports) {
             $this->_exports = new ExportList($this);
         }
@@ -52,8 +49,7 @@ class BulkExports extends Version
     /**
      * @return \Twilio\Rest\Preview\BulkExports\ExportConfigurationList
      */
-    protected function getExportConfiguration()
-    {
+    protected function getExportConfiguration() {
         if (!$this->_exportConfiguration) {
             $this->_exportConfiguration = new ExportConfigurationList($this);
         }
@@ -67,8 +63,7 @@ class BulkExports extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -85,8 +80,7 @@ class BulkExports extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -100,8 +94,7 @@ class BulkExports extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.BulkExports]';
     }
 }

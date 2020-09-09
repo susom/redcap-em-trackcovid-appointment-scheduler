@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class ExportAssistantContext extends InstanceContext
-{
+class ExportAssistantContext extends InstanceContext {
     /**
      * Initialize the ExportAssistantContext
      *
@@ -26,12 +25,11 @@ class ExportAssistantContext extends InstanceContext
      * @param string $assistantSid The SID of the Assistant to export.
      * @return \Twilio\Rest\Autopilot\V1\Assistant\ExportAssistantContext
      */
-    public function __construct(Version $version, $assistantSid)
-    {
+    public function __construct(Version $version, $assistantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/Export';
     }
@@ -42,8 +40,7 @@ class ExportAssistantContext extends InstanceContext
      * @return ExportAssistantInstance Fetched ExportAssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -60,8 +57,7 @@ class ExportAssistantContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property \DateTime $dateUpdated
  */
-class SubscribeRulesInstance extends InstanceResource
-{
+class SubscribeRulesInstance extends InstanceResource {
     /**
      * Initialize the SubscribeRulesInstance
      *
@@ -36,8 +35,7 @@ class SubscribeRulesInstance extends InstanceResource
      *                               Subscribe Rules
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribeRulesInstance
      */
-    public function __construct(Version $version, array $payload, $roomSid, $participantSid)
-    {
+    public function __construct(Version $version, array $payload, $roomSid, $participantSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,7 +47,7 @@ class SubscribeRulesInstance extends InstanceResource
             'dateUpdated' => Deserialize::dateTime(Values::array_get($payload, 'date_updated')),
         );
 
-        $this->solution = array('roomSid' => $roomSid, 'participantSid' => $participantSid,);
+        $this->solution = array('roomSid' => $roomSid, 'participantSid' => $participantSid, );
     }
 
     /**
@@ -59,8 +57,7 @@ class SubscribeRulesInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -78,8 +75,7 @@ class SubscribeRulesInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Video.V1.SubscribeRulesInstance]';
     }
 }

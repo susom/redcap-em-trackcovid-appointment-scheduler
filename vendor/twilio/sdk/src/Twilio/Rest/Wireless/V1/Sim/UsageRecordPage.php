@@ -11,18 +11,15 @@ namespace Twilio\Rest\Wireless\V1\Sim;
 
 use Twilio\Page;
 
-class UsageRecordPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class UsageRecordPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new UsageRecordInstance($this->version, $payload, $this->solution['simSid']);
     }
 
@@ -31,8 +28,7 @@ class UsageRecordPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Wireless.V1.UsageRecordPage]';
     }
 }

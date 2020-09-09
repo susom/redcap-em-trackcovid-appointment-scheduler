@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class FlowRevisionContext extends InstanceContext
-{
+class FlowRevisionContext extends InstanceContext {
     /**
      * Initialize the FlowRevisionContext
      *
@@ -28,12 +27,11 @@ class FlowRevisionContext extends InstanceContext
      *                         and `LatestRevision`
      * @return \Twilio\Rest\Studio\V2\Flow\FlowRevisionContext
      */
-    public function __construct(Version $version, $sid, $revision)
-    {
+    public function __construct(Version $version, $sid, $revision) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid, 'revision' => $revision,);
+        $this->solution = array('sid' => $sid, 'revision' => $revision, );
 
         $this->uri = '/Flows/' . \rawurlencode($sid) . '/Revisions/' . \rawurlencode($revision) . '';
     }
@@ -44,8 +42,7 @@ class FlowRevisionContext extends InstanceContext
      * @return FlowRevisionInstance Fetched FlowRevisionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class FlowRevisionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

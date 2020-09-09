@@ -12,27 +12,23 @@ namespace Twilio\Rest\Chat\V2\Service\User;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class UserBindingOptions
-{
+abstract class UserBindingOptions {
     /**
      * @param string $bindingType The push technology used by the User Binding
      *                            resources to read
      * @return ReadUserBindingOptions Options builder
      */
-    public static function read($bindingType = Values::NONE)
-    {
+    public static function read($bindingType = Values::NONE) {
         return new ReadUserBindingOptions($bindingType);
     }
 }
 
-class ReadUserBindingOptions extends Options
-{
+class ReadUserBindingOptions extends Options {
     /**
      * @param string $bindingType The push technology used by the User Binding
      *                            resources to read
      */
-    public function __construct($bindingType = Values::NONE)
-    {
+    public function __construct($bindingType = Values::NONE) {
         $this->options['bindingType'] = $bindingType;
     }
 
@@ -43,8 +39,7 @@ class ReadUserBindingOptions extends Options
      *                            resources to read
      * @return $this Fluent Builder
      */
-    public function setBindingType($bindingType)
-    {
+    public function setBindingType($bindingType) {
         $this->options['bindingType'] = $bindingType;
         return $this;
     }
@@ -54,8 +49,7 @@ class ReadUserBindingOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

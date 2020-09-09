@@ -43,8 +43,7 @@ use Twilio\Version;
  * @property string $emergencyAddressSid
  * @property string $uri
  */
-class DependentPhoneNumberInstance extends InstanceResource
-{
+class DependentPhoneNumberInstance extends InstanceResource {
     /**
      * Initialize the DependentPhoneNumberInstance
      *
@@ -54,8 +53,7 @@ class DependentPhoneNumberInstance extends InstanceResource
      * @param string $addressSid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\Address\DependentPhoneNumberInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $addressSid)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $addressSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -88,7 +86,7 @@ class DependentPhoneNumberInstance extends InstanceResource
             'uri' => Values::array_get($payload, 'uri'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'addressSid' => $addressSid,);
+        $this->solution = array('accountSid' => $accountSid, 'addressSid' => $addressSid, );
     }
 
     /**
@@ -98,8 +96,7 @@ class DependentPhoneNumberInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -117,8 +114,7 @@ class DependentPhoneNumberInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.DependentPhoneNumberInstance]';
     }
 }

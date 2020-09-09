@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class TerminatingSipDomainContext extends InstanceContext
-{
+class TerminatingSipDomainContext extends InstanceContext {
     /**
      * Initialize the TerminatingSipDomainContext
      *
@@ -24,12 +23,11 @@ class TerminatingSipDomainContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Trunking\V1\Trunk\TerminatingSipDomainContext
      */
-    public function __construct(Version $version, $trunkSid, $sid)
-    {
+    public function __construct(Version $version, $trunkSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('trunkSid' => $trunkSid, 'sid' => $sid,);
+        $this->solution = array('trunkSid' => $trunkSid, 'sid' => $sid, );
 
         $this->uri = '/Trunks/' . \rawurlencode($trunkSid) . '/TerminatingSipDomains/' . \rawurlencode($sid) . '';
     }
@@ -40,8 +38,7 @@ class TerminatingSipDomainContext extends InstanceContext
      * @return TerminatingSipDomainInstance Fetched TerminatingSipDomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -64,8 +61,7 @@ class TerminatingSipDomainContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -74,8 +70,7 @@ class TerminatingSipDomainContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

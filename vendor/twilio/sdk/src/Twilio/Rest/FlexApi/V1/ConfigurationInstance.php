@@ -52,8 +52,7 @@ use Twilio\Version;
  * @property string $serverlessServiceSids
  * @property string $url
  */
-class ConfigurationInstance extends InstanceResource
-{
+class ConfigurationInstance extends InstanceResource {
     /**
      * Initialize the ConfigurationInstance
      *
@@ -61,8 +60,7 @@ class ConfigurationInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\FlexApi\V1\ConfigurationInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -113,8 +111,7 @@ class ConfigurationInstance extends InstanceResource
      * @return \Twilio\Rest\FlexApi\V1\ConfigurationContext Context for this
      *                                                      ConfigurationInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ConfigurationContext($this->version);
         }
@@ -129,8 +126,7 @@ class ConfigurationInstance extends InstanceResource
      * @return ConfigurationInstance Fetched ConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -140,8 +136,7 @@ class ConfigurationInstance extends InstanceResource
      * @return ConfigurationInstance Newly created ConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create()
-    {
+    public function create() {
         return $this->proxy()->create();
     }
 
@@ -151,8 +146,7 @@ class ConfigurationInstance extends InstanceResource
      * @return ConfigurationInstance Updated ConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update()
-    {
+    public function update() {
         return $this->proxy()->update();
     }
 
@@ -163,8 +157,7 @@ class ConfigurationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -182,8 +175,7 @@ class ConfigurationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

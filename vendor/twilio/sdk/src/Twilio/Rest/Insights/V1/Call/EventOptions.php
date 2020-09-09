@@ -15,25 +15,21 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class EventOptions
-{
+abstract class EventOptions {
     /**
      * @param string $edge The edge
      * @return ReadEventOptions Options builder
      */
-    public static function read($edge = Values::NONE)
-    {
+    public static function read($edge = Values::NONE) {
         return new ReadEventOptions($edge);
     }
 }
 
-class ReadEventOptions extends Options
-{
+class ReadEventOptions extends Options {
     /**
      * @param string $edge The edge
      */
-    public function __construct($edge = Values::NONE)
-    {
+    public function __construct($edge = Values::NONE) {
         $this->options['edge'] = $edge;
     }
 
@@ -43,8 +39,7 @@ class ReadEventOptions extends Options
      * @param string $edge The edge
      * @return $this Fluent Builder
      */
-    public function setEdge($edge)
-    {
+    public function setEdge($edge) {
         $this->options['edge'] = $edge;
         return $this;
     }
@@ -54,8 +49,7 @@ class ReadEventOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -15,25 +15,21 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class SyncMapOptions
-{
+abstract class SyncMapOptions {
     /**
      * @param string $uniqueName The unique_name
      * @return CreateSyncMapOptions Options builder
      */
-    public static function create($uniqueName = Values::NONE)
-    {
+    public static function create($uniqueName = Values::NONE) {
         return new CreateSyncMapOptions($uniqueName);
     }
 }
 
-class CreateSyncMapOptions extends Options
-{
+class CreateSyncMapOptions extends Options {
     /**
      * @param string $uniqueName The unique_name
      */
-    public function __construct($uniqueName = Values::NONE)
-    {
+    public function __construct($uniqueName = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
     }
 
@@ -43,8 +39,7 @@ class CreateSyncMapOptions extends Options
      * @param string $uniqueName The unique_name
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -54,8 +49,7 @@ class CreateSyncMapOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

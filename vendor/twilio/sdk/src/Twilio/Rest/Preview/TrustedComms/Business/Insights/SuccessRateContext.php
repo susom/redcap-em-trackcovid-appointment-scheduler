@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class SuccessRateContext extends InstanceContext
-{
+class SuccessRateContext extends InstanceContext {
     /**
      * Initialize the SuccessRateContext
      *
@@ -28,12 +27,11 @@ class SuccessRateContext extends InstanceContext
      * @param string $businessSid Business Sid.
      * @return \Twilio\Rest\Preview\TrustedComms\Business\Insights\SuccessRateContext
      */
-    public function __construct(Version $version, $businessSid)
-    {
+    public function __construct(Version $version, $businessSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('businessSid' => $businessSid,);
+        $this->solution = array('businessSid' => $businessSid, );
 
         $this->uri = '/Businesses/' . \rawurlencode($businessSid) . '/Insights/SuccessRate';
     }
@@ -45,8 +43,7 @@ class SuccessRateContext extends InstanceContext
      * @return SuccessRateInstance Fetched SuccessRateInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
         $params = Values::of(array(
@@ -73,8 +70,7 @@ class SuccessRateContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

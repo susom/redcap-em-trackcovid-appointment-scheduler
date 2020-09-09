@@ -5,7 +5,7 @@
  * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.18
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -80,7 +80,6 @@ final class Vcalendar extends IcalBase
         Traits\METHODtrait,
         Traits\PRODIDtrait,
         Traits\VERSIONtrait;
-
     // The following are OPTIONAL, but MUST NOT occur more than once.
     use Traits\UIDrfc7986trait,
         Traits\LAST_MODIFIEDtrait,
@@ -88,13 +87,11 @@ final class Vcalendar extends IcalBase
         Traits\REFRESH_INTERVALrfc7986trait,
         Traits\SOURCErfc7986trait,
         Traits\COLORrfc7986trait;
-
     // The following are OPTIONAL, and MAY occur more than once.
     use Traits\NAMErfc7986trait,
         Traits\DESCRIPTIONtrait,
         Traits\CATEGORIEStrait,
         Traits\IMAGErfc7986trait;
-
 
     /**
      * @const
@@ -103,25 +100,15 @@ final class Vcalendar extends IcalBase
 
     /**
      * @var string property output formats, used by CALSCALE, METHOD, PRODID and VERSION
-     * @access private
-     * @static
      */
     private static $FMTICAL = "%s:%s\r\n";
 
     /**
      * @var array  iCal component date-property collection
-     * @access private
-     * @static
      */
-    private static $DATEPROPS = [
-        self::DTSTART,
-        self::DTEND,
-        self::DUE,
-        self::CREATED,
-        self::COMPLETED,
-        self::DTSTAMP,
-        self::LAST_MODIFIED,
-        self::RECURRENCE_ID,
+    private static $DATEPROPS  = [
+        self::DTSTART, self::DTEND, self::DUE, self::CREATED, self::COMPLETED,
+        self::DTSTAMP, self::LAST_MODIFIED, self::RECURRENCE_ID,
     ];
 
     /**
@@ -130,16 +117,18 @@ final class Vcalendar extends IcalBase
      * @param array $config
      * @since  2.29.5 - 2019-06-20
      */
-    public function __construct($config = [])
+    public function __construct( $config = [] )
     {
         static $SERVER_NAME = 'SERVER_NAME';
-        static $LOCALHOST = 'localhost';
-        $this->compType = self::VCALENDAR;
+        static $LOCALHOST   = 'localhost';
+        $this->compType     = self::VCALENDAR;
         $this->setConfig(
             self::UNIQUE_ID,
-            (isset($_SERVER[$SERVER_NAME])) ? gethostbyname($_SERVER[$SERVER_NAME]) : $LOCALHOST
+            ( isset( $_SERVER[$SERVER_NAME] ))
+                ? gethostbyname( $_SERVER[$SERVER_NAME] )
+                : $LOCALHOST
         );
-        $this->setConfig($config);
+        $this->setConfig( $config );
         $this->setUid();
     }
 
@@ -150,8 +139,8 @@ final class Vcalendar extends IcalBase
      */
     public function __destruct()
     {
-        if (!empty($this->components)) {
-            foreach ($this->components as $cix => $comp) {
+        if( ! empty( $this->components )) {
+            foreach( $this->components as $cix => $comp ) {
                 $this->components[$cix]->__destruct();
             }
         }
@@ -188,12 +177,11 @@ final class Vcalendar extends IcalBase
      *
      * @param array $config
      * @return static
-     * @static
      * @since  2.18.5 - 2013-08-29
      */
-    public static function factory($config = [])
+    public static function factory( $config = [] )
     {
-        return new self($config);
+        return new self( $config );
     }
 
     /**
@@ -204,7 +192,12 @@ final class Vcalendar extends IcalBase
      */
     public static function iCalcreatorVersion()
     {
-        return trim(substr(ICALCREATOR_VERSION, strpos(ICALCREATOR_VERSION, Util::$SP1)));
+        return trim(
+            substr(
+                ICALCREATOR_VERSION,
+                strpos( ICALCREATOR_VERSION, Util::$SP1 )
+            )
+        );
     }
 
     /**
@@ -219,7 +212,7 @@ final class Vcalendar extends IcalBase
      * @return mixed
      * @since  2.29.17 - 2020-01-25
      */
-    public function getProperty($propName)
+    public function getProperty( $propName )
     {
         static $PROPS = [
             self::ATTENDEE,
@@ -239,58 +232,64 @@ final class Vcalendar extends IcalBase
             self::UID,
             self::URL
         ];
-        $propName = strtoupper($propName);
-        if (!Util::isPropInList($propName, $PROPS)) {
+        $propName = strtoupper( $propName );
+        if( ! Util::isPropInList( $propName, $PROPS )) {
             return false;
         }
         $output = [];
-        foreach ($this->components as $cix => $component) {
-            switch (true) {
-                case (!Util::isCompInList($component->getCompType(), self::$VCOMPS)) :
+        foreach( $this->components as $cix => $component ) {
+            switch( true ) {
+                case ( ! Util::isCompInList( $component->getCompType(), self::$VCOMPS )) :
                     continue 2;
-                case (!property_exists($component, self::getInternalPropName($propName))) :
+                case ( ! property_exists(
+                    $component,
+                    self::getInternalPropName( $propName ))
+                ) :
                     continue 2;
-                case (Util::isPropInList($propName, self::$MPROPS1)) :
-                    $component->getProperties($propName, $output);
+                case ( Util::isPropInList( $propName, self::$MPROPS1 )) :
+                    $component->getProperties( $propName, $output );
                     continue 2;
-                case ((3 < strlen($propName)) && (self::UID == substr($propName, -3))) :
-                    if (false !== ($content = $component->getRecurrenceid())) {
+                case (( 3 < strlen( $propName )) &&
+                    ( self::UID == substr( $propName, -3 ))) :
+                    if( false !== ( $content = $component->getRecurrenceid())) {
                         $content = $component->getUid();
                     }
                     break;
-                case ((self::GEOLOCATION == $propName) &&
-                    (!property_exists($component, strtolower(self::GEO)) ||
-                        (false === ($content = $component->getGeoLocation())))) :
+                case (( self::GEOLOCATION == $propName ) &&
+                    ( ! property_exists( $component, strtolower( self::GEO )) ||
+                        ( false === ( $content = $component->getGeoLocation())))) :
                     continue 2;
                 default :
-                    $method = parent::getGetMethodName($propName);
-                    if (!method_exists($component, $method) ||
-                        (false === ($content = $component->{$method}()))) {
+                    $method = parent::getGetMethodName( $propName );
+                    if( ! method_exists( $component, $method ) ||
+                        ( false === ( $content = $component->{$method}()))) {
                         continue 2;
                     }
             } // end switch
-            if ((false === $content) || empty($content)) {
+            if(( false === $content ) || empty( $content )) {
                 continue;
             }
-            switch (true) {
-                case ($content instanceof DateTime) :
-                    $key = $content->format(DateTimeFactory::$Ymd);
-                    if (!isset($output[$key])) {
+            switch( true ) {
+                case ( $content instanceof DateTime ) :
+                    $key = $content->format( DateTimeFactory::$Ymd );
+                    if( ! isset( $output[$key] )) {
                         $output[$key] = 1;
-                    } else {
+                    }
+                    else {
                         $output[$key] += 1;
                     }
                     break;
-                case (is_array($content)) :
-                    foreach ($content as $partKey => $partValue) {
-                        if (!isset($output[$partKey])) {
+                case ( is_array( $content )) :
+                    foreach( $content as $partKey => $partValue ) {
+                        if( ! isset( $output[$partKey] )) {
                             $output[$partKey] = $partValue;
-                        } else {
+                        }
+                        else {
                             $output[$partKey] += $partValue;
                         }
-                    }
+                    } // end foreach
                     break;
-                case (!isset($output[$content])) :
+                case ( ! isset( $output[$content] )) :
                     $output[$content] = 1;
                     break;
                 default :
@@ -298,8 +297,8 @@ final class Vcalendar extends IcalBase
                     break;
             } // end switch
         } // end foreach( $this->components as $cix => $component)
-        if (!empty($output)) {
-            ksort($output);
+        if( ! empty( $output )) {
+            ksort( $output );
         }
         return $output;
     }
@@ -313,91 +312,100 @@ final class Vcalendar extends IcalBase
      * @since  2.27.14 - 2019-02-20
      * @todo throw InvalidArgumentException on unknown component
      */
-    public function getComponent($arg1 = null, $arg2 = null)
+    public function getComponent( $arg1 = null, $arg2 = null )
     {
         $index = $argType = null;
-        switch (true) {
-            case is_null($arg1) : // first or next in component chain
+        switch( true ) {
+            case is_null( $arg1 ) : // first or next in component chain
                 $argType = self::$INDEX;
-                if (isset($this->compix[self::$INDEX])) {
+                if( isset( $this->compix[self::$INDEX] )) {
                     $this->compix[self::$INDEX] = $this->compix[self::$INDEX] + 1;
-                } else {
+                }
+                else {
                     $this->compix[self::$INDEX] = 1;
                 }
                 $index = $this->compix[self::$INDEX];
                 break;
-            case is_array($arg1) : // [ *[propertyName => propertyValue] ]
-                $arg2 = implode(Util::$MINUS, array_keys($arg1));
-                if (isset($this->compix[$arg2])) {
+            case is_array( $arg1 ) : // [ *[propertyName => propertyValue] ]
+                $arg2 = implode( Util::$MINUS, array_keys( $arg1 ));
+                if( isset( $this->compix[$arg2] )) {
                     $this->compix[$arg2] = $this->compix[$arg2] + 1;
-                } else {
+                }
+                else {
                     $this->compix[$arg2] = 1;
                 }
                 $index = $this->compix[$arg2];
                 break;
-            case ctype_digit((string)$arg1) : // specific component in chain
-                $argType = self::$INDEX;
-                $index = (int)$arg1;
+            case ctype_digit((string) $arg1 ) : // specific component in chain
+                $argType      = self::$INDEX;
+                $index        = (int) $arg1;
                 $this->compix = [];
                 break;
-            case Util::isCompInList($arg1, self::$CALCOMPS) : // component type
-                unset($this->compix[self::$INDEX]);
+            case Util::isCompInList( $arg1, self::$CALCOMPS ) : // component type
+                unset( $this->compix[self::$INDEX] );
                 $argType = $arg1;
-                if (is_null($arg2)) {
-                    if (isset($this->compix[$argType])) {
+                if( is_null( $arg2 )) {
+                    if( isset( $this->compix[$argType] )) {
                         $this->compix[$argType] = $this->compix[$argType] + 1;
-                    } else {
+                    }
+                    else {
                         $this->compix[$argType] = 1;
                     }
                     $index = $this->compix[$argType];
-                } elseif (isset($arg2) && ctype_digit((string)$arg2)) {
-                    $index = (int)$arg2;
+                }
+                elseif( isset( $arg2 ) && ctype_digit((string) $arg2 )) {
+                    $index = (int) $arg2;
                 }
                 break;
-            case is_string($arg1) : // assume UID as 1st argument
-                if (is_null($arg2)) {
-                    if (isset($this->compix[$arg1])) {
+            case is_string( $arg1 ) : // assume UID as 1st argument
+                if( is_null( $arg2 )) {
+                    if( isset( $this->compix[$arg1] )) {
                         $this->compix[$arg1] = $this->compix[$arg1] + 1;
-                    } else {
+                    }
+                    else {
                         $this->compix[$arg1] = 1;
                     }
                     $index = $this->compix[$arg1];
-                } elseif (isset($arg2) && ctype_digit((string)$arg2)) {
-                    $index = (int)$arg2;
+                }
+                elseif( isset( $arg2 ) && ctype_digit((string) $arg2 )) {
+                    $index = (int) $arg2;
                 }
                 break;
         } // end switch( true )
-        if (isset($index)) {
+        if( isset( $index )) {
             $index -= 1;
         }
-        $cKeys = array_keys($this->components);
-        if (!empty($index) && ($index > end($cKeys))) {
+        $cKeys = array_keys( $this->components );
+        if( ! empty( $index ) && ( $index > end( $cKeys ))) {
             return false;
         }
         $cix1gC = 0;
-        foreach ($cKeys as $cix) {
-            switch (true) {
-                case  empty($this->components[$cix]) :
+        foreach( $cKeys as $cix ) {
+            switch( true ) {
+                case  empty( $this->components[$cix] ) :
                     break;
-                case ((self::$INDEX == $argType) && ($index == $cix)) :
+                case (( self::$INDEX == $argType ) && ( $index == $cix )) :
                     return clone $this->components[$cix];
                     break;
-                case (0 == strcasecmp($argType, $this->components[$cix]->getCompType())) :
-                    if ($index == $cix1gC) {
+                case ( 0 == strcasecmp(
+                    $argType,
+                    $this->components[$cix]->getCompType()
+                    )) :
+                    if( $index == $cix1gC ) {
                         return clone $this->components[$cix];
                     }
                     $cix1gC++;
                     break;
-                case is_array($arg1) : // [ *[propertyName => propertyValue] ]
-                    if (self::isFoundInCompsProps($this->components[$cix], $arg1)) {
-                        if ($index == $cix1gC) {
+                case is_array( $arg1 ) : // [ *[propertyName => propertyValue] ]
+                    if( self::isFoundInCompsProps( $this->components[$cix], $arg1 )) {
+                        if( $index == $cix1gC ) {
                             return clone $this->components[$cix];
                         }
                         $cix1gC++;
                     }
                     break;
-                case (!$argType && ($arg1 == $this->components[$cix]->getUid())) :
-                    if ($index == $cix1gC) {
+                case ( ! $argType && ( $arg1 == $this->components[$cix]->getUid())) :
+                    if( $index == $cix1gC ) {
                         return clone $this->components[$cix];
                     }
                     $cix1gC++;
@@ -413,62 +421,66 @@ final class Vcalendar extends IcalBase
      * Return bool true on argList values found in any component property
      *
      * @param CalendarComponent $component
-     * @param array $argList
+     * @param array             $argList
      * @return bool
-     * @access private
-     * @static
      * @since  2.29.17 - 2020-01-25
      */
-    private static function isFoundInCompsProps(CalendarComponent $component, array $argList)
-    {
-        foreach ($argList as $propName => $propValue) {
-            switch (true) {
-                case (!Util::isPropInList($propName, self::$DATEPROPS) &&
-                    !Util::isPropInList($propName, Vcalendar::$OTHERPROPS)) :
+    private static function isFoundInCompsProps(
+        CalendarComponent $component,
+        array $argList
+    ) {
+        foreach( $argList as $propName => $propValue ) {
+            switch( true ) {
+                case ( ! Util::isPropInList( $propName, self::$DATEPROPS ) &&
+                    ! Util::isPropInList( $propName, Vcalendar::$OTHERPROPS )) :
                     continue 2;
                     break;
-                case (!property_exists($component, parent::getInternalPropName($propName))) :
+                case ( ! property_exists( $component, parent::getInternalPropName( $propName ))) :
                     continue 2;
                     break;
-                case (Util::isPropInList($propName, self::$MPROPS1)) : // multiple occurrence
+                case ( Util::isPropInList( $propName, self::$MPROPS1 )) : // multiple occurrence
                     $propValues = [];
-                    $component->getProperties($propName, $propValues);
-                    if (in_array($propValue, array_keys($propValues))) {
+                    $component->getProperties( $propName, $propValues );
+                    if( in_array( $propValue, array_keys( $propValues ))) {
                         return true;
                     }
                     continue 2;
                     break;
             } // end switch
-            $method = parent::getGetMethodName($propName);
-            if (!method_exists($component, $method)) {
+            $method = parent::getGetMethodName( $propName );
+            if( ! method_exists( $component, $method )) {
                 continue;
             }
-            if (false === ($value = $component->{$method}())) { // single occurrence
+            if( false === ( $value = $component->{$method}())) { // single occurrence
                 continue; // missing/empty property
             }
-            switch (true) {
-                case (self::SUMMARY == $propName) : // exists in (any case)
-                    if (false !== stripos($value, $propValue)) {
+            switch( true ) {
+                case ( self::SUMMARY == $propName ) : // exists in (any case)
+                    if( false !== stripos( $value, $propValue )) {
                         return true;
                     }
                     continue 2;
                     break;
-                case (Util::isPropInList($propName, self::$DATEPROPS)) :
-                    $fmt = (9 > strlen($propValue)) ? DateTimeFactory::$Ymd : DateTimeFactory::$YmdHis;
-                    $valueDate = $value->format($fmt);
-                    if ($propValue == $valueDate) {
+                case ( Util::isPropInList( $propName, self::$DATEPROPS )) :
+                    $fmt       = ( 9 > strlen( $propValue ))
+                        ? DateTimeFactory::$Ymd
+                        : DateTimeFactory::$YmdHis;
+                    $valueDate = $value->format( $fmt );
+                    if( $propValue == $valueDate ) {
                         return true;
                     }
                     continue 2;
                     break;
-                case !is_array($value) :
-                    $value = [$value];
+                case ! is_array( $value ) :
+                    $value = [ $value ];
                     break;
             } // end switch
-            foreach ($value as $part) {
-                $part = (false !== strpos($part, Util::$COMMA)) ? explode(Util::$COMMA, $part) : [$part];
-                foreach ($part as $subPart) {
-                    if ($propValue == $subPart) {
+            foreach( $value as $part ) {
+                $part = ( false !== strpos( $part, Util::$COMMA ))
+                    ? explode( Util::$COMMA, $part )
+                    : [ $part ];
+                foreach( $part as $subPart ) {
+                    if( $propValue == $subPart ) {
                         return true;
                     }
                 }
@@ -487,7 +499,7 @@ final class Vcalendar extends IcalBase
      */
     public function newVevent()
     {
-        $comp = new Vevent($this->getConfig());
+        $comp = new Vevent( $this->getConfig());
         $comp->getDtstamp();
         $comp->getUid();
         $ix = $this->getNextComponentIndex();
@@ -505,7 +517,7 @@ final class Vcalendar extends IcalBase
      */
     public function newVtodo()
     {
-        $comp = new Vtodo($this->getConfig());
+        $comp = new Vtodo( $this->getConfig());
         $comp->getDtstamp();
         $comp->getUid();
         $ix = $this->getNextComponentIndex();
@@ -523,7 +535,7 @@ final class Vcalendar extends IcalBase
      */
     public function newVjournal()
     {
-        $comp = new Vjournal($this->getConfig());
+        $comp = new Vjournal( $this->getConfig());
         $comp->getDtstamp();
         $comp->getUid();
         $ix = $this->getNextComponentIndex();
@@ -541,7 +553,7 @@ final class Vcalendar extends IcalBase
      */
     public function newVfreebusy()
     {
-        $comp = new Vfreebusy($this->getConfig());
+        $comp = new Vfreebusy( $this->getConfig());
         $comp->getDtstamp();
         $comp->getUid();
         $ix = $this->getNextComponentIndex();
@@ -558,20 +570,20 @@ final class Vcalendar extends IcalBase
     public function newVtimezone()
     {
         $vTimezones = $others = [];
-        foreach (array_keys($this->components) as $cix) {
-            if (self::VTIMEZONE == $this->components[$cix]->getCompType()) {
+        foreach( array_keys( $this->components ) as $cix ) {
+            if( self::VTIMEZONE == $this->components[$cix]->getCompType()) {
                 $vTimezones[] = clone $this->components[$cix];
                 continue;
             }
             $others[] = clone $this->components[$cix];
         } // end foreach
-        $vtix = count($vTimezones);
-        $vTimezones[$vtix] = new Vtimezone($this->getConfig());
-        $this->components = [];
-        foreach (array_keys($vTimezones) as $cix) {
+        $vtix              = count( $vTimezones );
+        $vTimezones[$vtix] = new Vtimezone( $this->getConfig());
+        $this->components  = [];
+        foreach( array_keys( $vTimezones ) as $cix ) {
             $this->components[] = $vTimezones[$cix];
         }
-        foreach (array_keys($others) as $cix) {
+        foreach( array_keys( $others ) as $cix ) {
             $this->components[] = $others[$cix];
         }
         return $this->components[$vtix];
@@ -585,35 +597,37 @@ final class Vcalendar extends IcalBase
      * @throws InvalidArgumentException
      * @since  2.27.3 - 2018-12-28
      */
-    public function replaceComponent(CalendarComponent $component)
+    public function replaceComponent( CalendarComponent $component )
     {
         static $ERRMSG1 = 'Invalid component type \'%s\'';
         static $ERRMSG2 = 'Vtimezone with tzid \'%s\' not found, found \'%s\'';
-        if (Util::isCompInList($component->getCompType(), self::$VCOMPS)) {
-            return $this->setComponent($component, $component->getUid());
+        if( Util::isCompInList( $component->getCompType(), self::$VCOMPS )) {
+            return $this->setComponent( $component, $component->getUid());
         }
-        if ((self::VTIMEZONE != $component->getCompType()) ||
-            (false === ($tzId = $component->getTzid()))) {
-            throw new InvalidArgumentException(sprintf($ERRMSG1, $component->getCompType()));
+        if(( self::VTIMEZONE != $component->getCompType()) ||
+            ( false === ( $tzId = $component->getTzid()))) {
+            throw new InvalidArgumentException(
+                sprintf( $ERRMSG1, $component->getCompType())
+            );
         }
         $found = [];
-        foreach ($this->components as $cix => $comp) {
-            if (self::VTIMEZONE != $component->getCompType()) {
+        foreach( $this->components as $cix => $comp ) {
+            if( self::VTIMEZONE != $component->getCompType()) {
                 continue;
             }
             $foundTxid = $comp->getTzid();
-            if ($tzId == $foundTxid) {
-                $component->compix = [];
+            if( $tzId == $foundTxid ) {
+                $component->compix      = [];
                 $this->components[$cix] = $component;
                 return $this;
             }
             $found[] = $foundTxid;
-        }
+        } // end foreach
         throw new InvalidArgumentException(
             sprintf(
                 $ERRMSG2,
                 $component->getCompType(),
-                implode(Util::$COMMA, $found)
+                implode( Util::$COMMA, $found )
             )
         );
     }
@@ -624,21 +638,21 @@ final class Vcalendar extends IcalBase
      * DTSTART MUST be set for every component.
      * No date check.
      *
-     * @param int|array|DateTimeInterface $startY (int) start Year,  default current Year
+     * @param int|array|DateTimeInterface $startY    (int) start Year,  default current Year
      *                                      ALT. DateTime start date
      *                                      ALT. array selectOptions ( *[ <propName> => <uniqueValue> ] )
-     * @param int|DateTimeInterface $startM (int) start Month, default current Month
+     * @param int|DateTimeInterface $startM    (int) start Month, default current Month
      *                                      ALT. DateTime end date
-     * @param int $startD start Day,   default current Day
-     * @param int $endY end   Year,  default $startY
-     * @param int $endM end   Month, default $startM
-     * @param int $endD end   Day,   default $startD
-     * @param mixed $cType calendar component type(-s), default false=all else string/array type(-s)
-     * @param bool $flat false (default) => output : array[Year][Month][Day][]
+     * @param int   $startD                  start Day,   default current Day
+     * @param int   $endY                    end   Year,  default $startY
+     * @param int   $endM                    end   Month, default $startM
+     * @param int   $endD                    end   Day,   default $startD
+     * @param mixed $cType                   calendar component type(-s), default false=all else string/array type(-s)
+     * @param bool  $flat                    false (default) => output : array[Year][Month][Day][]
      *                                       true            => output : array[] (ignores split)
-     * @param bool $any true (default) - select component(-s) that occurs within period
+     * @param bool  $any                     true (default) - select component(-s) that occurs within period
      *                                       false          - only component(-s) that starts within period
-     * @param bool $split true (default) - one component copy every DAY it occurs during the
+     * @param bool  $split                   true (default) - one component copy every DAY it occurs during the
      *                                       period (implies flat=false)
      *                                       false          - one occurance of component only in output array
      * @return mixed   array on success, bool false on error
@@ -649,13 +663,13 @@ final class Vcalendar extends IcalBase
         $startY = null,
         $startM = null,
         $startD = null,
-        $endY = null,
-        $endM = null,
-        $endD = null,
-        $cType = null,
-        $flat = null,
-        $any = null,
-        $split = null
+        $endY   = null,
+        $endM   = null,
+        $endD   = null,
+        $cType  = null,
+        $flat   = null,
+        $any    = null,
+        $split  = null
     ) {
         try {
             return SelectFactory::selectComponents(
@@ -663,7 +677,8 @@ final class Vcalendar extends IcalBase
                 $startY, $startM, $startD, $endY, $endM, $endD,
                 $cType, $flat, $any, $split
             );
-        } catch (Exception $e) {
+        }
+        catch( Exception $e ) {
             throw $e;
         }
     }
@@ -679,23 +694,23 @@ final class Vcalendar extends IcalBase
      * @return static
      * @since  2.27.3 - 2018-12-28
      */
-    public function sort($sortArg = null)
+    public function sort( $sortArg = null )
     {
-        static $SORTER = ['Kigkonsult\Icalcreator\Util\SortFactory', 'cmpfcn'];
-        if (2 > $this->countComponents()) {
+        static $SORTER = [ 'Kigkonsult\Icalcreator\Util\SortFactory', 'cmpfcn' ];
+        if( 2 > $this->countComponents()) {
             return $this;
         }
-        if (!is_null($sortArg)) {
-            $sortArg = strtoupper($sortArg);
-            if (!Util::isPropInList($sortArg, Vcalendar::$OTHERPROPS) &&
-                (self::DTSTAMP != $sortArg)) {
+        if( ! is_null( $sortArg )) {
+            $sortArg = strtoupper( $sortArg );
+            if( ! Util::isPropInList( $sortArg, Vcalendar::$OTHERPROPS ) &&
+                ( self::DTSTAMP != $sortArg )) {
                 $sortArg = null;
             }
         }
-        foreach ($this->components as $cix => $component) {
-            SortFactory::setSortArgs($this->components[$cix], $sortArg);
+        foreach( $this->components as $cix => $component ) {
+            SortFactory::setSortArgs( $this->components[$cix], $sortArg );
         }
-        usort($this->components, $SORTER);
+        usort( $this->components, $SORTER );
         return $this;
     }
 
@@ -709,13 +724,13 @@ final class Vcalendar extends IcalBase
      * @throws UnexpectedValueException
      * @since  2.29.3  2019-08-29
      */
-    public function parse($unParsedText)
+    public function parse( $unParsedText )
     {
-        $rows = StringFactory::conformParseInput($unParsedText);
-        $this->parse2intoComps($rows);
+        $rows = StringFactory::conformParseInput( $unParsedText );
+        $this->parse2intoComps( $rows );
         $this->parse3thisProperties();
         /* parse Components */
-        if (!empty($this->countComponents())) {
+        if( ! empty( $this->countComponents())) {
             $this->parse4subComps();
         }
         return $this;
@@ -725,59 +740,58 @@ final class Vcalendar extends IcalBase
      * Parse into calendar and comps data
      *
      * @param array $rows
-     * @access private
      * @throws Exception
      * @throws UnexpectedValueException
      * @since  2.29.3 - 2019-08-26
      */
-    private function parse2intoComps(array $rows)
+    private function parse2intoComps( array $rows )
     {
-        static $ERR20 = 'Ical content not in sync (row %d) %s';
+        static $ERR20           = 'Ical content not in sync (row %d) %s';
         static $BEGIN_VCALENDAR = 'BEGIN:VCALENDAR';
-        static $END_VCALENDAR = 'END:VCALENDAR';
-        static $ENDSARR = ['END:VE', 'END:VF', 'END:VJ', 'END:VT'];
-        static $BEGIN_VEVENT = 'BEGIN:VEVENT';
+        static $END_VCALENDAR   = 'END:VCALENDAR';
+        static $ENDSARR         = [ 'END:VE', 'END:VF', 'END:VJ', 'END:VT' ];
+        static $BEGIN_VEVENT    = 'BEGIN:VEVENT';
         static $BEGIN_VFREEBUSY = 'BEGIN:VFREEBUSY';
-        static $BEGIN_VJOURNAL = 'BEGIN:VJOURNAL';
-        static $BEGIN_VTODO = 'BEGIN:VTODO';
+        static $BEGIN_VJOURNAL  = 'BEGIN:VJOURNAL';
+        static $BEGIN_VTODO     = 'BEGIN:VTODO';
         static $BEGIN_VTIMEZONE = 'BEGIN:VTIMEZONE';
-        $comp = $this;
+        $comp    = $this;
         $calSync = $compSync = 0;
         /* identify components and update unparsed data for components */
-        foreach ($rows as $lix => $row) {
-            switch (true) {
-                case StringFactory::startsWith($row, $BEGIN_VCALENDAR) :
+        foreach( $rows as $lix => $row ) {
+            switch( true ) {
+                case StringFactory::startsWith( $row, $BEGIN_VCALENDAR ) :
                     $calSync++;
                     break;
-                case StringFactory::startsWith($row, $END_VCALENDAR) :
-                    $calSync -= 1;
-                    if (0 != $calSync) {  /* err 20 */
+                case StringFactory::startsWith( $row, $END_VCALENDAR ) :
+                    $calSync  -= 1;
+                    if( 0 != $calSync ) {  /* err 20 */
                         throw new UnexpectedValueException(
-                            sprintf($ERR20, $lix, PHP_EOL . implode(PHP_EOL, $rows))
+                            sprintf( $ERR20, $lix, PHP_EOL . implode( PHP_EOL, $rows ))
                         );
                     }
                     break 2;
-                case (in_array(strtoupper(substr($row, 0, 6)), $ENDSARR)) :
-                    $compSync -= 1;
+                case ( in_array( strtoupper( substr( $row, 0, 6 )), $ENDSARR )) :
+                    $compSync  -= 1;
                     break;
-                case StringFactory::startsWith($row, $BEGIN_VEVENT) :
-                    $comp = $this->newVevent();
+                case StringFactory::startsWith( $row, $BEGIN_VEVENT ) :
+                    $comp      = $this->newVevent();
                     $compSync += 1;
                     break;
-                case StringFactory::startsWith($row, $BEGIN_VFREEBUSY) :
-                    $comp = $this->newVfreebusy();
+                case StringFactory::startsWith( $row, $BEGIN_VFREEBUSY ) :
+                    $comp      = $this->newVfreebusy();
                     $compSync += 1;
                     break;
-                case StringFactory::startsWith($row, $BEGIN_VJOURNAL) :
-                    $comp = $this->newVjournal();
+                case StringFactory::startsWith( $row, $BEGIN_VJOURNAL ) :
+                    $comp      = $this->newVjournal();
                     $compSync += 1;
                     break;
-                case StringFactory::startsWith($row, $BEGIN_VTODO) :
-                    $comp = $this->newVtodo();
+                case StringFactory::startsWith( $row, $BEGIN_VTODO ) :
+                    $comp      = $this->newVtodo();
                     $compSync += 1;
                     break;
-                case StringFactory::startsWith($row, $BEGIN_VTIMEZONE) :
-                    $comp = $this->newVtimezone();
+                case StringFactory::startsWith( $row, $BEGIN_VTIMEZONE ) :
+                    $comp      = $this->newVtimezone();
                     $compSync += 1;
                     break;
                 default : /* update component with unparsed data */
@@ -791,15 +805,15 @@ final class Vcalendar extends IcalBase
      * Parse calendar data
      *
      * @throws UnexpectedValueException
-     * @access private
-     * @since  2.29.3 - 2019-08-26
+     * @since  2.29.22 - 2020-08-26
      */
     private function parse3thisProperties()
     {
-        static $NLCHARS = '\n';
-        static $BEGIN = 'BEGIN:';
-        static $ERR = 'Unknown ical component (row %d) %s';
-        static $CALPROPS = [
+        static $NLCHARS   = '\n';
+        static $BEGIN     = 'BEGIN:';
+        static $ERR       = 'Unknown ical component (row %d) %s';
+        static $PVPROPS   = [ self::PRODID, self::VERSION ];
+        static $CALPROPS  = [
             self::CALSCALE,
             self::METHOD,
             self::PRODID,
@@ -817,68 +831,73 @@ final class Vcalendar extends IcalBase
             self::UID,
             self::URL,
         ];
-        if (!isset($this->unparsed) ||
-            !is_array($this->unparsed) ||
-            (1 > count($this->unparsed))) {
+        if( ! isset( $this->unparsed ) ||
+            ! is_array( $this->unparsed ) ||
+            ( 1 > count( $this->unparsed ))) {
             return;
         }
-        /* concatenate property values spread over several rows */
+            /* concatenate property values spread over several rows */
         static $TRIMCHARS = "\x00..\x1F";
-        $rows = StringFactory::concatRows($this->unparsed);
-        foreach ($rows as $lix => $row) {
-            if (StringFactory::startsWith($row, $BEGIN)) {
-                throw new UnexpectedValueException(sprintf($ERR, $lix, PHP_EOL . implode(PHP_EOL, $rows)));
+        $rows = StringFactory::concatRows( $this->unparsed );
+        foreach( $rows as $lix => $row ) {
+            if( StringFactory::startsWith( $row, $BEGIN )) {
+                throw new UnexpectedValueException(
+                    sprintf( $ERR, $lix, PHP_EOL . implode( PHP_EOL, $rows ))
+                );
             }
             /* split property name  and  opt.params and value */
-            list($propName, $row) = StringFactory::getPropName($row);
-            switch (true) {
-                case (StringFactory::isXprefixed($propName) ||
-                    Util::isPropInList($propName, $RFC7986PROPS)) :
+            list( $propName, $row ) = StringFactory::getPropName( $row );
+            switch( true ) {
+                case ( StringFactory::isXprefixed( $propName ) ||
+                       Util::isPropInList( $propName, $RFC7986PROPS )) :
                     break;
-                case (Util::isPropInList($propName, [self::PRODID, self::VERSION])) :
+                case Util::isPropInList( $propName, $PVPROPS ) :
                     continue 2;  // ignore version/prodid properties
                     break;
-                case (!Util::isPropInList($propName, $CALPROPS)) :
+                case ( ! Util::isPropInList( $propName, $CALPROPS )) :
                     continue 2;  // skip non standard property names
                     break;
             } // end switch
             /* separate attributes from value */
-            list($value, $propAttr) = StringFactory::splitContent($row);
+            list( $value, $propAttr ) = StringFactory::splitContent( $row );
             /* update Property */
-            if (StringFactory::isXprefixed($propName)) {
-                $this->setXprop($propName, StringFactory::strunrep($value), $propAttr);
+            if( StringFactory::isXprefixed( $propName )) {
+                $this->setXprop(
+                    $propName,
+                    StringFactory::strunrep( $value ),
+                    $propAttr
+                );
                 continue;
             }
-            if (($NLCHARS == strtolower(substr($value, -2))) &&
-                !Util::isPropInList($propName, self::$TEXTPROPS)) {
-                $value = StringFactory::trimTrailNL($value);
+            if(( $NLCHARS == strtolower( substr( $value, -2 ))) &&
+                ! Util::isPropInList( $propName, self::$TEXTPROPS )) {
+                $value = StringFactory::trimTrailNL( $value );
             }
-            $method = parent::getSetMethodName($propName);
-            switch ($propName) {
+            $method = parent::getSetMethodName( $propName );
+            switch( $propName ) {
                 case self::LAST_MODIFIED :    // fall through
                 case self::REFRESH_INTERVAL : // fall through
                 case self::URL :
-                    $this->{$method}($value, $propAttr);
+                    $this->{$method}( $value, $propAttr );
                     break;
                 default :
-                    $value = StringFactory::strunrep(rtrim($value, $TRIMCHARS));
-                    $this->{$method}($value, $propAttr);
+                    $value = StringFactory::strunrep( rtrim( $value, $TRIMCHARS ));
+                    $this->{$method}( $value, $propAttr );
             } // end switch
         } // end foreach
-        unset($this->unparsed);
+        unset( $this->unparsed );
     }
 
     /**
      * Parse sub-components
      *
-     * @access private
      * @since  2.29.3 - 2019-07-02
      */
     private function parse4subComps()
     {
-        foreach (array_keys($this->components) as $ckey) {
-            if (!empty($this->components[$ckey]) &&
-                !empty($this->components[$ckey]->unparsed)) {
+        foreach( array_keys( $this->components ) as $ckey ) {
+            if( ! empty( $this->components[$ckey] ) &&
+                ! empty( $this->components[$ckey]->unparsed )) {
                 $this->components[$ckey]->parse();
             }
         } // end foreach
@@ -887,18 +906,28 @@ final class Vcalendar extends IcalBase
     /**
      * Return static with (replaced) populated Vtimezone component
      *
-     * @param string $timezone valid timezone acceptable by PHP5 DateTimeZone
-     * @param array $xProp *[x-propName => x-propValue]
-     * @param DateTimeInterface|int $start .. or unix timestamp
-     * @param DateTimeInterface|int $end .. or unix timestamp
+     * @param string        $timezone valid timezone acceptable by PHP5 DateTimeZone
+     * @param array         $xProp    *[x-propName => x-propValue]
+     * @param DateTimeInterface|int  $start    .. or unix timestamp
+     * @param DateTimeInterface|int  $end      .. or unix timestamp
      * @return Vcalendar
      * @throws Exception
      * @throws InvalidArgumentException;
      * @since  2.29.16 - 2020-01-25
      */
-    public function vtimezonePopulate($timezone = null, $xProp = [], $start = null, $end = null)
-    {
-        return VtimezonePopulateFactory::process($this, $timezone, $xProp, $start, $end);
+    public function vtimezonePopulate(
+        $timezone = null,
+        $xProp = [],
+        $start = null,
+        $end = null
+    ) {
+        return VtimezonePopulateFactory::process(
+            $this,
+            $timezone,
+            $xProp,
+            $start,
+            $end
+        );
     }
 
     /**
@@ -911,8 +940,8 @@ final class Vcalendar extends IcalBase
     public function createCalendar()
     {
         static $BEGIN_VCALENDAR = "BEGIN:VCALENDAR";
-        static $END_VCALENDAR = "END:VCALENDAR";
-        $calendar = $BEGIN_VCALENDAR . Util::$CRLF;
+        static $END_VCALENDAR   = "END:VCALENDAR";
+        $calendar  = $BEGIN_VCALENDAR . Util::$CRLF;
         $calendar .= $this->createVersion();
         $calendar .= $this->createProdid();
         $calendar .= $this->createCalscale();
@@ -928,11 +957,11 @@ final class Vcalendar extends IcalBase
         $calendar .= $this->createCategories();
         $calendar .= $this->createImage();
         $calendar .= $this->createXprop();
-        $config = $this->getConfig();
+        $config    = $this->getConfig();
         $this->reset();
-        foreach (array_keys($this->components) as $cix) {
-            if (!empty($this->components[$cix])) {
-                $this->components[$cix]->setConfig($config, false, true);
+        foreach( array_keys( $this->components ) as $cix ) {
+            if( ! empty( $this->components[$cix] )) {
+                $this->components[$cix]->setConfig( $config, false, true );
                 $calendar .= $this->components[$cix]->createComponent();
             }
         }
@@ -943,17 +972,27 @@ final class Vcalendar extends IcalBase
      * Return created, updated and/or parsed calendar,
      * sending a HTTP redirect header.
      *
-     * @param bool $utf8Encode
-     * @param bool $gzip
-     * @param bool $cdType true : Content-Disposition: attachment... (default), false : ...inline...
-     * @param string $fileName
+     * @param bool    $utf8Encode
+     * @param bool    $gzip
+     * @param bool    $cdType true : Content-Disposition: attachment... (default), false : ...inline...
+     * @param string  $fileName
      * @return bool true on success, false on error
      * @throws Exception
      * @since  2.29.15 - 2020-01-19
      */
-    public function returnCalendar($utf8Encode = false, $gzip = false, $cdType = true, $fileName = null)
-    {
-        return HttpFactory::returnCalendar($this, $utf8Encode, $gzip, $cdType, $fileName);
+    public function returnCalendar(
+        $utf8Encode = false,
+        $gzip = false,
+        $cdType = true,
+        $fileName = null
+    ) {
+        return HttpFactory::returnCalendar(
+            $this,
+            $utf8Encode,
+            $gzip,
+            $cdType,
+            $fileName
+        );
     }
 
 }

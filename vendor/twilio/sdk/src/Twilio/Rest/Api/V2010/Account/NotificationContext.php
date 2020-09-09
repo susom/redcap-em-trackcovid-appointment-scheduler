@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class NotificationContext extends InstanceContext
-{
+class NotificationContext extends InstanceContext {
     /**
      * Initialize the NotificationContext
      *
@@ -25,12 +24,11 @@ class NotificationContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\NotificationContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Notifications/' . \rawurlencode($sid) . '.json';
     }
@@ -41,8 +39,7 @@ class NotificationContext extends InstanceContext
      * @return NotificationInstance Fetched NotificationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -64,8 +61,7 @@ class NotificationContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

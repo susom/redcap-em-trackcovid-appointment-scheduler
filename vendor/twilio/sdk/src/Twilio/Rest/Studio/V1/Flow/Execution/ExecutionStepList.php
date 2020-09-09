@@ -13,8 +13,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class ExecutionStepList extends ListResource
-{
+class ExecutionStepList extends ListResource {
     /**
      * Construct the ExecutionStepList
      *
@@ -23,12 +22,11 @@ class ExecutionStepList extends ListResource
      * @param string $executionSid The SID of the Execution
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStepList
      */
-    public function __construct(Version $version, $flowSid, $executionSid)
-    {
+    public function __construct(Version $version, $flowSid, $executionSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('flowSid' => $flowSid, 'executionSid' => $executionSid,);
+        $this->solution = array('flowSid' => $flowSid, 'executionSid' => $executionSid, );
 
         $this->uri = '/Flows/' . \rawurlencode($flowSid) . '/Executions/' . \rawurlencode($executionSid) . '/Steps';
     }
@@ -51,8 +49,7 @@ class ExecutionStepList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -75,8 +72,7 @@ class ExecutionStepList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return ExecutionStepInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -89,8 +85,7 @@ class ExecutionStepList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of ExecutionStepInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -113,8 +108,7 @@ class ExecutionStepList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of ExecutionStepInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -129,8 +123,7 @@ class ExecutionStepList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStepContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new ExecutionStepContext(
             $this->version,
             $this->solution['flowSid'],
@@ -144,8 +137,7 @@ class ExecutionStepList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Studio.V1.ExecutionStepList]';
     }
 }

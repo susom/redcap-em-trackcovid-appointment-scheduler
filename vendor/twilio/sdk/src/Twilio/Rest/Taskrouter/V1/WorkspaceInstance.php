@@ -33,8 +33,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class WorkspaceInstance extends InstanceResource
-{
+class WorkspaceInstance extends InstanceResource {
     protected $_activities = null;
     protected $_events = null;
     protected $_tasks = null;
@@ -54,8 +53,7 @@ class WorkspaceInstance extends InstanceResource
      * @param string $sid The SID of the resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\WorkspaceInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -77,7 +75,7 @@ class WorkspaceInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -87,8 +85,7 @@ class WorkspaceInstance extends InstanceResource
      * @return \Twilio\Rest\Taskrouter\V1\WorkspaceContext Context for this
      *                                                     WorkspaceInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new WorkspaceContext($this->version, $this->solution['sid']);
         }
@@ -102,8 +99,7 @@ class WorkspaceInstance extends InstanceResource
      * @return WorkspaceInstance Fetched WorkspaceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -114,8 +110,7 @@ class WorkspaceInstance extends InstanceResource
      * @return WorkspaceInstance Updated WorkspaceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -125,8 +120,7 @@ class WorkspaceInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -135,8 +129,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\ActivityList
      */
-    protected function getActivities()
-    {
+    protected function getActivities() {
         return $this->proxy()->activities;
     }
 
@@ -145,8 +138,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\EventList
      */
-    protected function getEvents()
-    {
+    protected function getEvents() {
         return $this->proxy()->events;
     }
 
@@ -155,8 +147,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskList
      */
-    protected function getTasks()
-    {
+    protected function getTasks() {
         return $this->proxy()->tasks;
     }
 
@@ -165,8 +156,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueueList
      */
-    protected function getTaskQueues()
-    {
+    protected function getTaskQueues() {
         return $this->proxy()->taskQueues;
     }
 
@@ -175,8 +165,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkerList
      */
-    protected function getWorkers()
-    {
+    protected function getWorkers() {
         return $this->proxy()->workers;
     }
 
@@ -185,8 +174,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkflowList
      */
-    protected function getWorkflows()
-    {
+    protected function getWorkflows() {
         return $this->proxy()->workflows;
     }
 
@@ -195,8 +183,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceStatisticsList
      */
-    protected function getStatistics()
-    {
+    protected function getStatistics() {
         return $this->proxy()->statistics;
     }
 
@@ -205,8 +192,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceRealTimeStatisticsList
      */
-    protected function getRealTimeStatistics()
-    {
+    protected function getRealTimeStatistics() {
         return $this->proxy()->realTimeStatistics;
     }
 
@@ -215,8 +201,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceCumulativeStatisticsList
      */
-    protected function getCumulativeStatistics()
-    {
+    protected function getCumulativeStatistics() {
         return $this->proxy()->cumulativeStatistics;
     }
 
@@ -225,8 +210,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskChannelList
      */
-    protected function getTaskChannels()
-    {
+    protected function getTaskChannels() {
         return $this->proxy()->taskChannels;
     }
 
@@ -237,8 +221,7 @@ class WorkspaceInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -256,8 +239,7 @@ class WorkspaceInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

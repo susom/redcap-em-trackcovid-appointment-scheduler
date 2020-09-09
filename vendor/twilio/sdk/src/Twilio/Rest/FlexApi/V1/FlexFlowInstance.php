@@ -32,8 +32,7 @@ use Twilio\Version;
  * @property bool $janitorEnabled
  * @property string $url
  */
-class FlexFlowInstance extends InstanceResource
-{
+class FlexFlowInstance extends InstanceResource {
     /**
      * Initialize the FlexFlowInstance
      *
@@ -42,8 +41,7 @@ class FlexFlowInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\FlexApi\V1\FlexFlowInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -64,7 +62,7 @@ class FlexFlowInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -74,8 +72,7 @@ class FlexFlowInstance extends InstanceResource
      * @return \Twilio\Rest\FlexApi\V1\FlexFlowContext Context for this
      *                                                 FlexFlowInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FlexFlowContext($this->version, $this->solution['sid']);
         }
@@ -89,8 +86,7 @@ class FlexFlowInstance extends InstanceResource
      * @return FlexFlowInstance Fetched FlexFlowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -101,8 +97,7 @@ class FlexFlowInstance extends InstanceResource
      * @return FlexFlowInstance Updated FlexFlowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -112,8 +107,7 @@ class FlexFlowInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -124,8 +118,7 @@ class FlexFlowInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -143,8 +136,7 @@ class FlexFlowInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

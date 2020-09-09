@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class ModelBuildOptions
-{
+abstract class ModelBuildOptions {
     /**
      * @param string $statusCallback The status_callback
      * @param string $uniqueName A user-provided string that uniquely identifies
@@ -24,8 +23,7 @@ abstract class ModelBuildOptions
      *                           up to 64 characters long. For example: v0.1
      * @return CreateModelBuildOptions Options builder
      */
-    public static function create($statusCallback = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public static function create($statusCallback = Values::NONE, $uniqueName = Values::NONE) {
         return new CreateModelBuildOptions($statusCallback, $uniqueName);
     }
 
@@ -35,22 +33,19 @@ abstract class ModelBuildOptions
      *                           up to 64 characters long. For example: v0.1
      * @return UpdateModelBuildOptions Options builder
      */
-    public static function update($uniqueName = Values::NONE)
-    {
+    public static function update($uniqueName = Values::NONE) {
         return new UpdateModelBuildOptions($uniqueName);
     }
 }
 
-class CreateModelBuildOptions extends Options
-{
+class CreateModelBuildOptions extends Options {
     /**
      * @param string $statusCallback The status_callback
      * @param string $uniqueName A user-provided string that uniquely identifies
      *                           this resource as an alternative to the sid. Unique
      *                           up to 64 characters long. For example: v0.1
      */
-    public function __construct($statusCallback = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public function __construct($statusCallback = Values::NONE, $uniqueName = Values::NONE) {
         $this->options['statusCallback'] = $statusCallback;
         $this->options['uniqueName'] = $uniqueName;
     }
@@ -61,8 +56,7 @@ class CreateModelBuildOptions extends Options
      * @param string $statusCallback The status_callback
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -75,8 +69,7 @@ class CreateModelBuildOptions extends Options
      *                           up to 64 characters long. For example: v0.1
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -86,8 +79,7 @@ class CreateModelBuildOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -98,15 +90,13 @@ class CreateModelBuildOptions extends Options
     }
 }
 
-class UpdateModelBuildOptions extends Options
-{
+class UpdateModelBuildOptions extends Options {
     /**
      * @param string $uniqueName A user-provided string that uniquely identifies
      *                           this resource as an alternative to the sid. Unique
      *                           up to 64 characters long. For example: v0.1
      */
-    public function __construct($uniqueName = Values::NONE)
-    {
+    public function __construct($uniqueName = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
     }
 
@@ -118,8 +108,7 @@ class UpdateModelBuildOptions extends Options
      *                           up to 64 characters long. For example: v0.1
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -129,8 +118,7 @@ class UpdateModelBuildOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

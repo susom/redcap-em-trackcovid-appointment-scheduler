@@ -20,8 +20,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Preview\TrustedComms\Business\Insights\SuccessRateList $successRate
  * @method \Twilio\Rest\Preview\TrustedComms\Business\Insights\SuccessRateContext successRate()
  */
-class InsightsList extends ListResource
-{
+class InsightsList extends ListResource {
     protected $_successRate = null;
 
     /**
@@ -31,19 +30,17 @@ class InsightsList extends ListResource
      * @param string $businessSid A string that uniquely identifies this Business.
      * @return \Twilio\Rest\Preview\TrustedComms\Business\InsightsList
      */
-    public function __construct(Version $version, $businessSid)
-    {
+    public function __construct(Version $version, $businessSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('businessSid' => $businessSid,);
+        $this->solution = array('businessSid' => $businessSid, );
     }
 
     /**
      * Access the successRate
      */
-    protected function getSuccessRate()
-    {
+    protected function getSuccessRate() {
         if (!$this->_successRate) {
             $this->_successRate = new SuccessRateList($this->version, $this->solution['businessSid']);
         }
@@ -58,8 +55,7 @@ class InsightsList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -76,8 +72,7 @@ class InsightsList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -91,8 +86,7 @@ class InsightsList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.InsightsList]';
     }
 }

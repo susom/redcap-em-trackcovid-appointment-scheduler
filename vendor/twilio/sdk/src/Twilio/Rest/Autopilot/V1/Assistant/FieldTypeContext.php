@@ -22,8 +22,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Autopilot\V1\Assistant\FieldType\FieldValueList $fieldValues
  * @method \Twilio\Rest\Autopilot\V1\Assistant\FieldType\FieldValueContext fieldValues(string $sid)
  */
-class FieldTypeContext extends InstanceContext
-{
+class FieldTypeContext extends InstanceContext {
     protected $_fieldValues = null;
 
     /**
@@ -35,12 +34,11 @@ class FieldTypeContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\FieldTypeContext
      */
-    public function __construct(Version $version, $assistantSid, $sid)
-    {
+    public function __construct(Version $version, $assistantSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid,);
+        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/FieldTypes/' . \rawurlencode($sid) . '';
     }
@@ -51,8 +49,7 @@ class FieldTypeContext extends InstanceContext
      * @return FieldTypeInstance Fetched FieldTypeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -76,8 +73,7 @@ class FieldTypeContext extends InstanceContext
      * @return FieldTypeInstance Updated FieldTypeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -106,8 +102,7 @@ class FieldTypeContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -116,8 +111,7 @@ class FieldTypeContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\FieldType\FieldValueList
      */
-    protected function getFieldValues()
-    {
+    protected function getFieldValues() {
         if (!$this->_fieldValues) {
             $this->_fieldValues = new FieldValueList(
                 $this->version,
@@ -136,8 +130,7 @@ class FieldTypeContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -154,8 +147,7 @@ class FieldTypeContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -169,8 +161,7 @@ class FieldTypeContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

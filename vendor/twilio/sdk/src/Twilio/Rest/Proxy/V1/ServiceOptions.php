@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class ServiceOptions
-{
+abstract class ServiceOptions {
     /**
      * @param int $defaultTtl Default TTL for a Session, in seconds
      * @param string $callbackUrl The URL we should call when the interaction
@@ -32,17 +31,8 @@ abstract class ServiceOptions
      * @param string $chatInstanceSid The SID of the Chat Service Instance
      * @return CreateServiceOptions Options builder
      */
-    public static function create(
-        $defaultTtl = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $geoMatchLevel = Values::NONE,
-        $numberSelectionBehavior = Values::NONE,
-        $interceptCallbackUrl = Values::NONE,
-        $outOfSessionCallbackUrl = Values::NONE,
-        $chatInstanceSid = Values::NONE
-    ) {
-        return new CreateServiceOptions($defaultTtl, $callbackUrl, $geoMatchLevel, $numberSelectionBehavior,
-            $interceptCallbackUrl, $outOfSessionCallbackUrl, $chatInstanceSid);
+    public static function create($defaultTtl = Values::NONE, $callbackUrl = Values::NONE, $geoMatchLevel = Values::NONE, $numberSelectionBehavior = Values::NONE, $interceptCallbackUrl = Values::NONE, $outOfSessionCallbackUrl = Values::NONE, $chatInstanceSid = Values::NONE) {
+        return new CreateServiceOptions($defaultTtl, $callbackUrl, $geoMatchLevel, $numberSelectionBehavior, $interceptCallbackUrl, $outOfSessionCallbackUrl, $chatInstanceSid);
     }
 
     /**
@@ -62,23 +52,12 @@ abstract class ServiceOptions
      * @param string $chatInstanceSid The SID of the Chat Service Instance
      * @return UpdateServiceOptions Options builder
      */
-    public static function update(
-        $uniqueName = Values::NONE,
-        $defaultTtl = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $geoMatchLevel = Values::NONE,
-        $numberSelectionBehavior = Values::NONE,
-        $interceptCallbackUrl = Values::NONE,
-        $outOfSessionCallbackUrl = Values::NONE,
-        $chatInstanceSid = Values::NONE
-    ) {
-        return new UpdateServiceOptions($uniqueName, $defaultTtl, $callbackUrl, $geoMatchLevel,
-            $numberSelectionBehavior, $interceptCallbackUrl, $outOfSessionCallbackUrl, $chatInstanceSid);
+    public static function update($uniqueName = Values::NONE, $defaultTtl = Values::NONE, $callbackUrl = Values::NONE, $geoMatchLevel = Values::NONE, $numberSelectionBehavior = Values::NONE, $interceptCallbackUrl = Values::NONE, $outOfSessionCallbackUrl = Values::NONE, $chatInstanceSid = Values::NONE) {
+        return new UpdateServiceOptions($uniqueName, $defaultTtl, $callbackUrl, $geoMatchLevel, $numberSelectionBehavior, $interceptCallbackUrl, $outOfSessionCallbackUrl, $chatInstanceSid);
     }
 }
 
-class CreateServiceOptions extends Options
-{
+class CreateServiceOptions extends Options {
     /**
      * @param int $defaultTtl Default TTL for a Session, in seconds
      * @param string $callbackUrl The URL we should call when the interaction
@@ -93,15 +72,7 @@ class CreateServiceOptions extends Options
      *                                        non-existent Session
      * @param string $chatInstanceSid The SID of the Chat Service Instance
      */
-    public function __construct(
-        $defaultTtl = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $geoMatchLevel = Values::NONE,
-        $numberSelectionBehavior = Values::NONE,
-        $interceptCallbackUrl = Values::NONE,
-        $outOfSessionCallbackUrl = Values::NONE,
-        $chatInstanceSid = Values::NONE
-    ) {
+    public function __construct($defaultTtl = Values::NONE, $callbackUrl = Values::NONE, $geoMatchLevel = Values::NONE, $numberSelectionBehavior = Values::NONE, $interceptCallbackUrl = Values::NONE, $outOfSessionCallbackUrl = Values::NONE, $chatInstanceSid = Values::NONE) {
         $this->options['defaultTtl'] = $defaultTtl;
         $this->options['callbackUrl'] = $callbackUrl;
         $this->options['geoMatchLevel'] = $geoMatchLevel;
@@ -117,8 +88,7 @@ class CreateServiceOptions extends Options
      * @param int $defaultTtl Default TTL for a Session, in seconds
      * @return $this Fluent Builder
      */
-    public function setDefaultTtl($defaultTtl)
-    {
+    public function setDefaultTtl($defaultTtl) {
         $this->options['defaultTtl'] = $defaultTtl;
         return $this;
     }
@@ -130,8 +100,7 @@ class CreateServiceOptions extends Options
      *                            status changes
      * @return $this Fluent Builder
      */
-    public function setCallbackUrl($callbackUrl)
-    {
+    public function setCallbackUrl($callbackUrl) {
         $this->options['callbackUrl'] = $callbackUrl;
         return $this;
     }
@@ -143,8 +112,7 @@ class CreateServiceOptions extends Options
      *                              to the participant identifier
      * @return $this Fluent Builder
      */
-    public function setGeoMatchLevel($geoMatchLevel)
-    {
+    public function setGeoMatchLevel($geoMatchLevel) {
         $this->options['geoMatchLevel'] = $geoMatchLevel;
         return $this;
     }
@@ -156,8 +124,7 @@ class CreateServiceOptions extends Options
      *                                        selection for the Service instance
      * @return $this Fluent Builder
      */
-    public function setNumberSelectionBehavior($numberSelectionBehavior)
-    {
+    public function setNumberSelectionBehavior($numberSelectionBehavior) {
         $this->options['numberSelectionBehavior'] = $numberSelectionBehavior;
         return $this;
     }
@@ -168,8 +135,7 @@ class CreateServiceOptions extends Options
      * @param string $interceptCallbackUrl The URL we call on each interaction
      * @return $this Fluent Builder
      */
-    public function setInterceptCallbackUrl($interceptCallbackUrl)
-    {
+    public function setInterceptCallbackUrl($interceptCallbackUrl) {
         $this->options['interceptCallbackUrl'] = $interceptCallbackUrl;
         return $this;
     }
@@ -182,8 +148,7 @@ class CreateServiceOptions extends Options
      *                                        non-existent Session
      * @return $this Fluent Builder
      */
-    public function setOutOfSessionCallbackUrl($outOfSessionCallbackUrl)
-    {
+    public function setOutOfSessionCallbackUrl($outOfSessionCallbackUrl) {
         $this->options['outOfSessionCallbackUrl'] = $outOfSessionCallbackUrl;
         return $this;
     }
@@ -194,8 +159,7 @@ class CreateServiceOptions extends Options
      * @param string $chatInstanceSid The SID of the Chat Service Instance
      * @return $this Fluent Builder
      */
-    public function setChatInstanceSid($chatInstanceSid)
-    {
+    public function setChatInstanceSid($chatInstanceSid) {
         $this->options['chatInstanceSid'] = $chatInstanceSid;
         return $this;
     }
@@ -205,8 +169,7 @@ class CreateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -217,8 +180,7 @@ class CreateServiceOptions extends Options
     }
 }
 
-class UpdateServiceOptions extends Options
-{
+class UpdateServiceOptions extends Options {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
@@ -235,16 +197,7 @@ class UpdateServiceOptions extends Options
      *                                        non-existent Session
      * @param string $chatInstanceSid The SID of the Chat Service Instance
      */
-    public function __construct(
-        $uniqueName = Values::NONE,
-        $defaultTtl = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $geoMatchLevel = Values::NONE,
-        $numberSelectionBehavior = Values::NONE,
-        $interceptCallbackUrl = Values::NONE,
-        $outOfSessionCallbackUrl = Values::NONE,
-        $chatInstanceSid = Values::NONE
-    ) {
+    public function __construct($uniqueName = Values::NONE, $defaultTtl = Values::NONE, $callbackUrl = Values::NONE, $geoMatchLevel = Values::NONE, $numberSelectionBehavior = Values::NONE, $interceptCallbackUrl = Values::NONE, $outOfSessionCallbackUrl = Values::NONE, $chatInstanceSid = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['defaultTtl'] = $defaultTtl;
         $this->options['callbackUrl'] = $callbackUrl;
@@ -262,8 +215,7 @@ class UpdateServiceOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -274,8 +226,7 @@ class UpdateServiceOptions extends Options
      * @param int $defaultTtl Default TTL for a Session, in seconds
      * @return $this Fluent Builder
      */
-    public function setDefaultTtl($defaultTtl)
-    {
+    public function setDefaultTtl($defaultTtl) {
         $this->options['defaultTtl'] = $defaultTtl;
         return $this;
     }
@@ -287,8 +238,7 @@ class UpdateServiceOptions extends Options
      *                            status changes
      * @return $this Fluent Builder
      */
-    public function setCallbackUrl($callbackUrl)
-    {
+    public function setCallbackUrl($callbackUrl) {
         $this->options['callbackUrl'] = $callbackUrl;
         return $this;
     }
@@ -300,8 +250,7 @@ class UpdateServiceOptions extends Options
      *                              to the participant identifier
      * @return $this Fluent Builder
      */
-    public function setGeoMatchLevel($geoMatchLevel)
-    {
+    public function setGeoMatchLevel($geoMatchLevel) {
         $this->options['geoMatchLevel'] = $geoMatchLevel;
         return $this;
     }
@@ -313,8 +262,7 @@ class UpdateServiceOptions extends Options
      *                                        selection for the Service instance
      * @return $this Fluent Builder
      */
-    public function setNumberSelectionBehavior($numberSelectionBehavior)
-    {
+    public function setNumberSelectionBehavior($numberSelectionBehavior) {
         $this->options['numberSelectionBehavior'] = $numberSelectionBehavior;
         return $this;
     }
@@ -325,8 +273,7 @@ class UpdateServiceOptions extends Options
      * @param string $interceptCallbackUrl The URL we call on each interaction
      * @return $this Fluent Builder
      */
-    public function setInterceptCallbackUrl($interceptCallbackUrl)
-    {
+    public function setInterceptCallbackUrl($interceptCallbackUrl) {
         $this->options['interceptCallbackUrl'] = $interceptCallbackUrl;
         return $this;
     }
@@ -339,8 +286,7 @@ class UpdateServiceOptions extends Options
      *                                        non-existent Session
      * @return $this Fluent Builder
      */
-    public function setOutOfSessionCallbackUrl($outOfSessionCallbackUrl)
-    {
+    public function setOutOfSessionCallbackUrl($outOfSessionCallbackUrl) {
         $this->options['outOfSessionCallbackUrl'] = $outOfSessionCallbackUrl;
         return $this;
     }
@@ -351,8 +297,7 @@ class UpdateServiceOptions extends Options
      * @param string $chatInstanceSid The SID of the Chat Service Instance
      * @return $this Fluent Builder
      */
-    public function setChatInstanceSid($chatInstanceSid)
-    {
+    public function setChatInstanceSid($chatInstanceSid) {
         $this->options['chatInstanceSid'] = $chatInstanceSid;
         return $this;
     }
@@ -362,8 +307,7 @@ class UpdateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

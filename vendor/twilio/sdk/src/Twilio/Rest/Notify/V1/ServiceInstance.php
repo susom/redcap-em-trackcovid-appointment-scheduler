@@ -38,8 +38,7 @@ use Twilio\Version;
  * @property string $alexaSkillId
  * @property string $defaultAlexaNotificationProtocolVersion
  */
-class ServiceInstance extends InstanceResource
-{
+class ServiceInstance extends InstanceResource {
     protected $_bindings = null;
     protected $_notifications = null;
 
@@ -51,8 +50,7 @@ class ServiceInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Notify\V1\ServiceInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -67,21 +65,17 @@ class ServiceInstance extends InstanceResource
             'fcmCredentialSid' => Values::array_get($payload, 'fcm_credential_sid'),
             'messagingServiceSid' => Values::array_get($payload, 'messaging_service_sid'),
             'facebookMessengerPageId' => Values::array_get($payload, 'facebook_messenger_page_id'),
-            'defaultApnNotificationProtocolVersion' => Values::array_get($payload,
-                'default_apn_notification_protocol_version'),
-            'defaultGcmNotificationProtocolVersion' => Values::array_get($payload,
-                'default_gcm_notification_protocol_version'),
-            'defaultFcmNotificationProtocolVersion' => Values::array_get($payload,
-                'default_fcm_notification_protocol_version'),
+            'defaultApnNotificationProtocolVersion' => Values::array_get($payload, 'default_apn_notification_protocol_version'),
+            'defaultGcmNotificationProtocolVersion' => Values::array_get($payload, 'default_gcm_notification_protocol_version'),
+            'defaultFcmNotificationProtocolVersion' => Values::array_get($payload, 'default_fcm_notification_protocol_version'),
             'logEnabled' => Values::array_get($payload, 'log_enabled'),
             'url' => Values::array_get($payload, 'url'),
             'links' => Values::array_get($payload, 'links'),
             'alexaSkillId' => Values::array_get($payload, 'alexa_skill_id'),
-            'defaultAlexaNotificationProtocolVersion' => Values::array_get($payload,
-                'default_alexa_notification_protocol_version'),
+            'defaultAlexaNotificationProtocolVersion' => Values::array_get($payload, 'default_alexa_notification_protocol_version'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -91,8 +85,7 @@ class ServiceInstance extends InstanceResource
      * @return \Twilio\Rest\Notify\V1\ServiceContext Context for this
      *                                               ServiceInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ServiceContext($this->version, $this->solution['sid']);
         }
@@ -106,8 +99,7 @@ class ServiceInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -117,8 +109,7 @@ class ServiceInstance extends InstanceResource
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -129,8 +120,7 @@ class ServiceInstance extends InstanceResource
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -139,8 +129,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Notify\V1\Service\BindingList
      */
-    protected function getBindings()
-    {
+    protected function getBindings() {
         return $this->proxy()->bindings;
     }
 
@@ -149,8 +138,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Notify\V1\Service\NotificationList
      */
-    protected function getNotifications()
-    {
+    protected function getNotifications() {
         return $this->proxy()->notifications;
     }
 
@@ -161,8 +149,7 @@ class ServiceInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -180,8 +167,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

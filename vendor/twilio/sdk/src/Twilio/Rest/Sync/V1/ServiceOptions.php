@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class ServiceOptions
-{
+abstract class ServiceOptions {
     /**
      * @param string $friendlyName A string that you assign to describe the resource
      * @param string $webhookUrl The URL we should call when Sync objects are
@@ -37,17 +36,8 @@ abstract class ServiceOptions
      *                                      used to update Sync objects
      * @return CreateServiceOptions Options builder
      */
-    public static function create(
-        $friendlyName = Values::NONE,
-        $webhookUrl = Values::NONE,
-        $reachabilityWebhooksEnabled = Values::NONE,
-        $aclEnabled = Values::NONE,
-        $reachabilityDebouncingEnabled = Values::NONE,
-        $reachabilityDebouncingWindow = Values::NONE,
-        $webhooksFromRestEnabled = Values::NONE
-    ) {
-        return new CreateServiceOptions($friendlyName, $webhookUrl, $reachabilityWebhooksEnabled, $aclEnabled,
-            $reachabilityDebouncingEnabled, $reachabilityDebouncingWindow, $webhooksFromRestEnabled);
+    public static function create($friendlyName = Values::NONE, $webhookUrl = Values::NONE, $reachabilityWebhooksEnabled = Values::NONE, $aclEnabled = Values::NONE, $reachabilityDebouncingEnabled = Values::NONE, $reachabilityDebouncingWindow = Values::NONE, $webhooksFromRestEnabled = Values::NONE) {
+        return new CreateServiceOptions($friendlyName, $webhookUrl, $reachabilityWebhooksEnabled, $aclEnabled, $reachabilityDebouncingEnabled, $reachabilityDebouncingWindow, $webhooksFromRestEnabled);
     }
 
     /**
@@ -70,22 +60,12 @@ abstract class ServiceOptions
      *                                      used to update Sync objects
      * @return UpdateServiceOptions Options builder
      */
-    public static function update(
-        $webhookUrl = Values::NONE,
-        $friendlyName = Values::NONE,
-        $reachabilityWebhooksEnabled = Values::NONE,
-        $aclEnabled = Values::NONE,
-        $reachabilityDebouncingEnabled = Values::NONE,
-        $reachabilityDebouncingWindow = Values::NONE,
-        $webhooksFromRestEnabled = Values::NONE
-    ) {
-        return new UpdateServiceOptions($webhookUrl, $friendlyName, $reachabilityWebhooksEnabled, $aclEnabled,
-            $reachabilityDebouncingEnabled, $reachabilityDebouncingWindow, $webhooksFromRestEnabled);
+    public static function update($webhookUrl = Values::NONE, $friendlyName = Values::NONE, $reachabilityWebhooksEnabled = Values::NONE, $aclEnabled = Values::NONE, $reachabilityDebouncingEnabled = Values::NONE, $reachabilityDebouncingWindow = Values::NONE, $webhooksFromRestEnabled = Values::NONE) {
+        return new UpdateServiceOptions($webhookUrl, $friendlyName, $reachabilityWebhooksEnabled, $aclEnabled, $reachabilityDebouncingEnabled, $reachabilityDebouncingWindow, $webhooksFromRestEnabled);
     }
 }
 
-class CreateServiceOptions extends Options
-{
+class CreateServiceOptions extends Options {
     /**
      * @param string $friendlyName A string that you assign to describe the resource
      * @param string $webhookUrl The URL we should call when Sync objects are
@@ -105,15 +85,7 @@ class CreateServiceOptions extends Options
      *                                      call webhook_url when the REST API is
      *                                      used to update Sync objects
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $webhookUrl = Values::NONE,
-        $reachabilityWebhooksEnabled = Values::NONE,
-        $aclEnabled = Values::NONE,
-        $reachabilityDebouncingEnabled = Values::NONE,
-        $reachabilityDebouncingWindow = Values::NONE,
-        $webhooksFromRestEnabled = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $webhookUrl = Values::NONE, $reachabilityWebhooksEnabled = Values::NONE, $aclEnabled = Values::NONE, $reachabilityDebouncingEnabled = Values::NONE, $reachabilityDebouncingWindow = Values::NONE, $webhooksFromRestEnabled = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['webhookUrl'] = $webhookUrl;
         $this->options['reachabilityWebhooksEnabled'] = $reachabilityWebhooksEnabled;
@@ -129,8 +101,7 @@ class CreateServiceOptions extends Options
      * @param string $friendlyName A string that you assign to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -142,8 +113,7 @@ class CreateServiceOptions extends Options
      *                           manipulated
      * @return $this Fluent Builder
      */
-    public function setWebhookUrl($webhookUrl)
-    {
+    public function setWebhookUrl($webhookUrl) {
         $this->options['webhookUrl'] = $webhookUrl;
         return $this;
     }
@@ -156,8 +126,7 @@ class CreateServiceOptions extends Options
      *                                          endpoints connect to Sync
      * @return $this Fluent Builder
      */
-    public function setReachabilityWebhooksEnabled($reachabilityWebhooksEnabled)
-    {
+    public function setReachabilityWebhooksEnabled($reachabilityWebhooksEnabled) {
         $this->options['reachabilityWebhooksEnabled'] = $reachabilityWebhooksEnabled;
         return $this;
     }
@@ -170,8 +139,7 @@ class CreateServiceOptions extends Options
      *                         Permissions resource
      * @return $this Fluent Builder
      */
-    public function setAclEnabled($aclEnabled)
-    {
+    public function setAclEnabled($aclEnabled) {
         $this->options['aclEnabled'] = $aclEnabled;
         return $this;
     }
@@ -184,8 +152,7 @@ class CreateServiceOptions extends Options
      *                                            occurs after a configurable delay
      * @return $this Fluent Builder
      */
-    public function setReachabilityDebouncingEnabled($reachabilityDebouncingEnabled)
-    {
+    public function setReachabilityDebouncingEnabled($reachabilityDebouncingEnabled) {
         $this->options['reachabilityDebouncingEnabled'] = $reachabilityDebouncingEnabled;
         return $this;
     }
@@ -197,8 +164,7 @@ class CreateServiceOptions extends Options
      *                                          milliseconds
      * @return $this Fluent Builder
      */
-    public function setReachabilityDebouncingWindow($reachabilityDebouncingWindow)
-    {
+    public function setReachabilityDebouncingWindow($reachabilityDebouncingWindow) {
         $this->options['reachabilityDebouncingWindow'] = $reachabilityDebouncingWindow;
         return $this;
     }
@@ -211,8 +177,7 @@ class CreateServiceOptions extends Options
      *                                      used to update Sync objects
      * @return $this Fluent Builder
      */
-    public function setWebhooksFromRestEnabled($webhooksFromRestEnabled)
-    {
+    public function setWebhooksFromRestEnabled($webhooksFromRestEnabled) {
         $this->options['webhooksFromRestEnabled'] = $webhooksFromRestEnabled;
         return $this;
     }
@@ -222,8 +187,7 @@ class CreateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -234,8 +198,7 @@ class CreateServiceOptions extends Options
     }
 }
 
-class UpdateServiceOptions extends Options
-{
+class UpdateServiceOptions extends Options {
     /**
      * @param string $webhookUrl The URL we should call when Sync objects are
      *                           manipulated
@@ -255,15 +218,7 @@ class UpdateServiceOptions extends Options
      *                                      call webhook_url when the REST API is
      *                                      used to update Sync objects
      */
-    public function __construct(
-        $webhookUrl = Values::NONE,
-        $friendlyName = Values::NONE,
-        $reachabilityWebhooksEnabled = Values::NONE,
-        $aclEnabled = Values::NONE,
-        $reachabilityDebouncingEnabled = Values::NONE,
-        $reachabilityDebouncingWindow = Values::NONE,
-        $webhooksFromRestEnabled = Values::NONE
-    ) {
+    public function __construct($webhookUrl = Values::NONE, $friendlyName = Values::NONE, $reachabilityWebhooksEnabled = Values::NONE, $aclEnabled = Values::NONE, $reachabilityDebouncingEnabled = Values::NONE, $reachabilityDebouncingWindow = Values::NONE, $webhooksFromRestEnabled = Values::NONE) {
         $this->options['webhookUrl'] = $webhookUrl;
         $this->options['friendlyName'] = $friendlyName;
         $this->options['reachabilityWebhooksEnabled'] = $reachabilityWebhooksEnabled;
@@ -280,8 +235,7 @@ class UpdateServiceOptions extends Options
      *                           manipulated
      * @return $this Fluent Builder
      */
-    public function setWebhookUrl($webhookUrl)
-    {
+    public function setWebhookUrl($webhookUrl) {
         $this->options['webhookUrl'] = $webhookUrl;
         return $this;
     }
@@ -292,8 +246,7 @@ class UpdateServiceOptions extends Options
      * @param string $friendlyName A string that you assign to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -306,8 +259,7 @@ class UpdateServiceOptions extends Options
      *                                          endpoints connect to Sync
      * @return $this Fluent Builder
      */
-    public function setReachabilityWebhooksEnabled($reachabilityWebhooksEnabled)
-    {
+    public function setReachabilityWebhooksEnabled($reachabilityWebhooksEnabled) {
         $this->options['reachabilityWebhooksEnabled'] = $reachabilityWebhooksEnabled;
         return $this;
     }
@@ -320,8 +272,7 @@ class UpdateServiceOptions extends Options
      *                         Permissions resource
      * @return $this Fluent Builder
      */
-    public function setAclEnabled($aclEnabled)
-    {
+    public function setAclEnabled($aclEnabled) {
         $this->options['aclEnabled'] = $aclEnabled;
         return $this;
     }
@@ -334,8 +285,7 @@ class UpdateServiceOptions extends Options
      *                                            occurs after a configurable delay
      * @return $this Fluent Builder
      */
-    public function setReachabilityDebouncingEnabled($reachabilityDebouncingEnabled)
-    {
+    public function setReachabilityDebouncingEnabled($reachabilityDebouncingEnabled) {
         $this->options['reachabilityDebouncingEnabled'] = $reachabilityDebouncingEnabled;
         return $this;
     }
@@ -347,8 +297,7 @@ class UpdateServiceOptions extends Options
      *                                          milliseconds
      * @return $this Fluent Builder
      */
-    public function setReachabilityDebouncingWindow($reachabilityDebouncingWindow)
-    {
+    public function setReachabilityDebouncingWindow($reachabilityDebouncingWindow) {
         $this->options['reachabilityDebouncingWindow'] = $reachabilityDebouncingWindow;
         return $this;
     }
@@ -361,8 +310,7 @@ class UpdateServiceOptions extends Options
      *                                      used to update Sync objects
      * @return $this Fluent Builder
      */
-    public function setWebhooksFromRestEnabled($webhooksFromRestEnabled)
-    {
+    public function setWebhooksFromRestEnabled($webhooksFromRestEnabled) {
         $this->options['webhooksFromRestEnabled'] = $webhooksFromRestEnabled;
         return $this;
     }
@@ -372,8 +320,7 @@ class UpdateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

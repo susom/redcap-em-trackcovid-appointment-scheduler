@@ -12,8 +12,7 @@ namespace Twilio\Rest\Monitor\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class AlertOptions
-{
+abstract class AlertOptions {
     /**
      * @param string $logLevel Only show alerts for this log-level
      * @param \DateTime $startDate Only include alerts that occurred on or after
@@ -22,14 +21,12 @@ abstract class AlertOptions
      *                           this date and time
      * @return ReadAlertOptions Options builder
      */
-    public static function read($logLevel = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE)
-    {
+    public static function read($logLevel = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
         return new ReadAlertOptions($logLevel, $startDate, $endDate);
     }
 }
 
-class ReadAlertOptions extends Options
-{
+class ReadAlertOptions extends Options {
     /**
      * @param string $logLevel Only show alerts for this log-level
      * @param \DateTime $startDate Only include alerts that occurred on or after
@@ -37,8 +34,7 @@ class ReadAlertOptions extends Options
      * @param \DateTime $endDate Only include alerts that occurred on or before
      *                           this date and time
      */
-    public function __construct($logLevel = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE)
-    {
+    public function __construct($logLevel = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
         $this->options['logLevel'] = $logLevel;
         $this->options['startDate'] = $startDate;
         $this->options['endDate'] = $endDate;
@@ -50,8 +46,7 @@ class ReadAlertOptions extends Options
      * @param string $logLevel Only show alerts for this log-level
      * @return $this Fluent Builder
      */
-    public function setLogLevel($logLevel)
-    {
+    public function setLogLevel($logLevel) {
         $this->options['logLevel'] = $logLevel;
         return $this;
     }
@@ -63,8 +58,7 @@ class ReadAlertOptions extends Options
      *                             this date and time
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -76,8 +70,7 @@ class ReadAlertOptions extends Options
      *                           this date and time
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -87,8 +80,7 @@ class ReadAlertOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

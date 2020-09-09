@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class ExecutionContextContext extends InstanceContext
-{
+class ExecutionContextContext extends InstanceContext {
     /**
      * Initialize the ExecutionContextContext
      *
@@ -24,12 +23,11 @@ class ExecutionContextContext extends InstanceContext
      * @param string $executionSid The SID of the Execution
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionContextContext
      */
-    public function __construct(Version $version, $flowSid, $executionSid)
-    {
+    public function __construct(Version $version, $flowSid, $executionSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('flowSid' => $flowSid, 'executionSid' => $executionSid,);
+        $this->solution = array('flowSid' => $flowSid, 'executionSid' => $executionSid, );
 
         $this->uri = '/Flows/' . \rawurlencode($flowSid) . '/Executions/' . \rawurlencode($executionSid) . '/Context';
     }
@@ -40,8 +38,7 @@ class ExecutionContextContext extends InstanceContext
      * @return ExecutionContextInstance Fetched ExecutionContextInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -63,8 +60,7 @@ class ExecutionContextContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

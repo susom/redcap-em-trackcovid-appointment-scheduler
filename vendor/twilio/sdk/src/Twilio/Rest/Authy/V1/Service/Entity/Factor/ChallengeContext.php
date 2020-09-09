@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class ChallengeContext extends InstanceContext
-{
+class ChallengeContext extends InstanceContext {
     /**
      * Initialize the ChallengeContext
      *
@@ -31,8 +30,7 @@ class ChallengeContext extends InstanceContext
      *                    `latest`.
      * @return \Twilio\Rest\Authy\V1\Service\Entity\Factor\ChallengeContext
      */
-    public function __construct(Version $version, $serviceSid, $identity, $factorSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $identity, $factorSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -52,8 +50,7 @@ class ChallengeContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -63,8 +60,7 @@ class ChallengeContext extends InstanceContext
      * @return ChallengeInstance Fetched ChallengeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -90,11 +86,10 @@ class ChallengeContext extends InstanceContext
      * @return ChallengeInstance Updated ChallengeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('AuthPayload' => $options['authPayload'],));
+        $data = Values::of(array('AuthPayload' => $options['authPayload'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -118,8 +113,7 @@ class ChallengeContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

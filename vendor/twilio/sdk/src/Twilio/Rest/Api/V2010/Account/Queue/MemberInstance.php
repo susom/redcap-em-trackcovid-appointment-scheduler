@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property int $waitTime
  * @property string $queueSid
  */
-class MemberInstance extends InstanceResource
-{
+class MemberInstance extends InstanceResource {
     /**
      * Initialize the MemberInstance
      *
@@ -36,8 +35,7 @@ class MemberInstance extends InstanceResource
      * @param string $callSid The Call SID of the resource(s) to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $queueSid, $callSid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $queueSid, $callSid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -64,8 +62,7 @@ class MemberInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberContext Context for this
      *                                                            MemberInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new MemberContext(
                 $this->version,
@@ -84,8 +81,7 @@ class MemberInstance extends InstanceResource
      * @return MemberInstance Fetched MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -97,8 +93,7 @@ class MemberInstance extends InstanceResource
      * @return MemberInstance Updated MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($url, $options = array())
-    {
+    public function update($url, $options = array()) {
         return $this->proxy()->update($url, $options);
     }
 
@@ -109,8 +104,7 @@ class MemberInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -128,8 +122,7 @@ class MemberInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

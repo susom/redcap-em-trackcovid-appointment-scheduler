@@ -18,16 +18,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class BrandedCallList extends ListResource
-{
+class BrandedCallList extends ListResource {
     /**
      * Construct the BrandedCallList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\TrustedComms\BrandedCallList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -46,8 +44,7 @@ class BrandedCallList extends ListResource
      * @return BrandedCallInstance Newly created BrandedCallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($from, $to, $reason, $options = array())
-    {
+    public function create($from, $to, $reason, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -72,8 +69,7 @@ class BrandedCallList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.BrandedCallList]';
     }
 }

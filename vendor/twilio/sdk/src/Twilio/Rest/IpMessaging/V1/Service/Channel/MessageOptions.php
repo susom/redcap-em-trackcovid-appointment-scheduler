@@ -12,16 +12,14 @@ namespace Twilio\Rest\IpMessaging\V1\Service\Channel;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class MessageOptions
-{
+abstract class MessageOptions {
     /**
      * @param string $from The identity of the new message's author
      * @param string $attributes A valid JSON string that contains
      *                           application-specific data
      * @return CreateMessageOptions Options builder
      */
-    public static function create($from = Values::NONE, $attributes = Values::NONE)
-    {
+    public static function create($from = Values::NONE, $attributes = Values::NONE) {
         return new CreateMessageOptions($from, $attributes);
     }
 
@@ -29,8 +27,7 @@ abstract class MessageOptions
      * @param string $order The sort order of the returned messages
      * @return ReadMessageOptions Options builder
      */
-    public static function read($order = Values::NONE)
-    {
+    public static function read($order = Values::NONE) {
         return new ReadMessageOptions($order);
     }
 
@@ -40,21 +37,18 @@ abstract class MessageOptions
      *                           application-specific data
      * @return UpdateMessageOptions Options builder
      */
-    public static function update($body = Values::NONE, $attributes = Values::NONE)
-    {
+    public static function update($body = Values::NONE, $attributes = Values::NONE) {
         return new UpdateMessageOptions($body, $attributes);
     }
 }
 
-class CreateMessageOptions extends Options
-{
+class CreateMessageOptions extends Options {
     /**
      * @param string $from The identity of the new message's author
      * @param string $attributes A valid JSON string that contains
      *                           application-specific data
      */
-    public function __construct($from = Values::NONE, $attributes = Values::NONE)
-    {
+    public function __construct($from = Values::NONE, $attributes = Values::NONE) {
         $this->options['from'] = $from;
         $this->options['attributes'] = $attributes;
     }
@@ -65,8 +59,7 @@ class CreateMessageOptions extends Options
      * @param string $from The identity of the new message's author
      * @return $this Fluent Builder
      */
-    public function setFrom($from)
-    {
+    public function setFrom($from) {
         $this->options['from'] = $from;
         return $this;
     }
@@ -78,8 +71,7 @@ class CreateMessageOptions extends Options
      *                           application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -89,8 +81,7 @@ class CreateMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -101,13 +92,11 @@ class CreateMessageOptions extends Options
     }
 }
 
-class ReadMessageOptions extends Options
-{
+class ReadMessageOptions extends Options {
     /**
      * @param string $order The sort order of the returned messages
      */
-    public function __construct($order = Values::NONE)
-    {
+    public function __construct($order = Values::NONE) {
         $this->options['order'] = $order;
     }
 
@@ -117,8 +106,7 @@ class ReadMessageOptions extends Options
      * @param string $order The sort order of the returned messages
      * @return $this Fluent Builder
      */
-    public function setOrder($order)
-    {
+    public function setOrder($order) {
         $this->options['order'] = $order;
         return $this;
     }
@@ -128,8 +116,7 @@ class ReadMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -140,15 +127,13 @@ class ReadMessageOptions extends Options
     }
 }
 
-class UpdateMessageOptions extends Options
-{
+class UpdateMessageOptions extends Options {
     /**
      * @param string $body The message to send to the channel
      * @param string $attributes A valid JSON string that contains
      *                           application-specific data
      */
-    public function __construct($body = Values::NONE, $attributes = Values::NONE)
-    {
+    public function __construct($body = Values::NONE, $attributes = Values::NONE) {
         $this->options['body'] = $body;
         $this->options['attributes'] = $attributes;
     }
@@ -159,8 +144,7 @@ class UpdateMessageOptions extends Options
      * @param string $body The message to send to the channel
      * @return $this Fluent Builder
      */
-    public function setBody($body)
-    {
+    public function setBody($body) {
         $this->options['body'] = $body;
         return $this;
     }
@@ -172,8 +156,7 @@ class UpdateMessageOptions extends Options
      *                           application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -183,8 +166,7 @@ class UpdateMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

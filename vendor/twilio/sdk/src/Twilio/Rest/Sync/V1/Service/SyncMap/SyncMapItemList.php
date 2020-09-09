@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SyncMapItemList extends ListResource
-{
+class SyncMapItemList extends ListResource {
     /**
      * Construct the SyncMapItemList
      *
@@ -30,12 +29,11 @@ class SyncMapItemList extends ListResource
      * @param string $mapSid The SID of the Sync Map that contains the Map Item
      * @return \Twilio\Rest\Sync\V1\Service\SyncMap\SyncMapItemList
      */
-    public function __construct(Version $version, $serviceSid, $mapSid)
-    {
+    public function __construct(Version $version, $serviceSid, $mapSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'mapSid' => $mapSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'mapSid' => $mapSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Maps/' . \rawurlencode($mapSid) . '/Items';
     }
@@ -50,8 +48,7 @@ class SyncMapItemList extends ListResource
      * @return SyncMapItemInstance Newly created SyncMapItemInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($key, $data, $options = array())
-    {
+    public function create($key, $data, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -96,8 +93,7 @@ class SyncMapItemList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -121,8 +117,7 @@ class SyncMapItemList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return SyncMapItemInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -136,12 +131,7 @@ class SyncMapItemList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of SyncMapItemInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Order' => $options['order'],
@@ -168,8 +158,7 @@ class SyncMapItemList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of SyncMapItemInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -184,8 +173,7 @@ class SyncMapItemList extends ListResource
      * @param string $key The key value of the Sync Map Item resource to fetch
      * @return \Twilio\Rest\Sync\V1\Service\SyncMap\SyncMapItemContext
      */
-    public function getContext($key)
-    {
+    public function getContext($key) {
         return new SyncMapItemContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -199,8 +187,7 @@ class SyncMapItemList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Sync.V1.SyncMapItemList]';
     }
 }

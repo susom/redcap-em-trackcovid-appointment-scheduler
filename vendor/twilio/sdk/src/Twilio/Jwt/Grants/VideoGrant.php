@@ -4,8 +4,7 @@
 namespace Twilio\Jwt\Grants;
 
 
-class VideoGrant implements Grant
-{
+class VideoGrant implements Grant {
 
     private $room;
 
@@ -14,8 +13,7 @@ class VideoGrant implements Grant
      *
      * @return string room name or sid set in this grant
      */
-    public function getRoom()
-    {
+    public function getRoom() {
         return $this->room;
     }
 
@@ -25,8 +23,7 @@ class VideoGrant implements Grant
      * @param string $roomSidOrName room sid or name
      * @return $this updated grant
      */
-    public function setRoom($roomSidOrName)
-    {
+    public function setRoom($roomSidOrName) {
         $this->room = $roomSidOrName;
         return $this;
     }
@@ -36,8 +33,7 @@ class VideoGrant implements Grant
      *
      * @return string type of the grant
      */
-    public function getGrantKey()
-    {
+    public function getGrantKey() {
         return 'video';
     }
 
@@ -46,8 +42,7 @@ class VideoGrant implements Grant
      *
      * @return array data of the grant
      */
-    public function getPayload()
-    {
+    public function getPayload() {
         $payload = array();
         if ($this->room) {
             $payload['room'] = $this->room;

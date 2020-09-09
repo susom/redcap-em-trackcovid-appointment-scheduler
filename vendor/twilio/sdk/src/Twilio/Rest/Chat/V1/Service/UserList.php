@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class UserList extends ListResource
-{
+class UserList extends ListResource {
     /**
      * Construct the UserList
      *
@@ -25,12 +24,11 @@ class UserList extends ListResource
      *                           associated with
      * @return \Twilio\Rest\Chat\V1\Service\UserList
      */
-    public function __construct(Version $version, $serviceSid)
-    {
+    public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Users';
     }
@@ -44,8 +42,7 @@ class UserList extends ListResource
      * @return UserInstance Newly created UserInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($identity, $options = array())
-    {
+    public function create($identity, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -83,8 +80,7 @@ class UserList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -107,8 +103,7 @@ class UserList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return UserInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -121,8 +116,7 @@ class UserList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of UserInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -145,8 +139,7 @@ class UserList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of UserInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -161,8 +154,7 @@ class UserList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Chat\V1\Service\UserContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new UserContext($this->version, $this->solution['serviceSid'], $sid);
     }
 
@@ -171,8 +163,7 @@ class UserList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Chat.V1.UserList]';
     }
 }

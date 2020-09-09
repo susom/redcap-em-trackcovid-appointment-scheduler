@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Messaging;
 
 use Twilio\TwiML\TwiML;
 
-class Message extends TwiML
-{
+class Message extends TwiML {
     /**
      * Message constructor.
      *
      * @param string $body Message Body
      * @param array $attributes Optional attributes
      */
-    public function __construct($body, $attributes = array())
-    {
+    public function __construct($body, $attributes = array()) {
         parent::__construct('Message', $body, $attributes);
     }
 
@@ -30,8 +28,7 @@ class Message extends TwiML
      * @param string $message Message Body
      * @return Body Child element.
      */
-    public function body($message)
-    {
+    public function body($message) {
         return $this->nest(new Body($message));
     }
 
@@ -41,8 +38,7 @@ class Message extends TwiML
      * @param string $url Media URL
      * @return Media Child element.
      */
-    public function media($url)
-    {
+    public function media($url) {
         return $this->nest(new Media($url));
     }
 
@@ -52,8 +48,7 @@ class Message extends TwiML
      * @param string $to Phone Number to send Message to
      * @return static $this.
      */
-    public function setTo($to)
-    {
+    public function setTo($to) {
         return $this->setAttribute('to', $to);
     }
 
@@ -63,8 +58,7 @@ class Message extends TwiML
      * @param string $from Phone Number to send Message from
      * @return static $this.
      */
-    public function setFrom($from)
-    {
+    public function setFrom($from) {
         return $this->setAttribute('from', $from);
     }
 
@@ -74,8 +68,7 @@ class Message extends TwiML
      * @param string $action Action URL
      * @return static $this.
      */
-    public function setAction($action)
-    {
+    public function setAction($action) {
         return $this->setAttribute('action', $action);
     }
 
@@ -85,8 +78,7 @@ class Message extends TwiML
      * @param string $method Action URL Method
      * @return static $this.
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         return $this->setAttribute('method', $method);
     }
 
@@ -97,8 +89,7 @@ class Message extends TwiML
      *                               action.
      * @return static $this.
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         return $this->setAttribute('statusCallback', $statusCallback);
     }
 }

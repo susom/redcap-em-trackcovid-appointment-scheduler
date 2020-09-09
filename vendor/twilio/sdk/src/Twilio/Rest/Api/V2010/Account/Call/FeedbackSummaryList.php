@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class FeedbackSummaryList extends ListResource
-{
+class FeedbackSummaryList extends ListResource {
     /**
      * Construct the FeedbackSummaryList
      *
@@ -25,12 +24,11 @@ class FeedbackSummaryList extends ListResource
      * @param string $accountSid The SID of the Account that created this resource
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/FeedbackSummary.json';
     }
@@ -44,8 +42,7 @@ class FeedbackSummaryList extends ListResource
      * @return FeedbackSummaryInstance Newly created FeedbackSummaryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($startDate, $endDate, $options = array())
-    {
+    public function create($startDate, $endDate, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -73,8 +70,7 @@ class FeedbackSummaryList extends ListResource
      *                    resource
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new FeedbackSummaryContext($this->version, $this->solution['accountSid'], $sid);
     }
 
@@ -83,8 +79,7 @@ class FeedbackSummaryList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.FeedbackSummaryList]';
     }
 }

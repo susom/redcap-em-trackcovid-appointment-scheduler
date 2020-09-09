@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -50,7 +50,6 @@ trait DURATIONtrait
 {
     /**
      * @var array component property DURATION value
-     * @access protected
      */
     protected $duration = null;
 
@@ -63,27 +62,31 @@ trait DURATIONtrait
      */
     public function createDuration()
     {
-        if (empty($this->duration)) {
+        if( empty( $this->duration )) {
             return null;
         }
-        if (empty($this->duration[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY))
-                ? StringFactory::createElement(self::DURATION)
+        if( empty( $this->duration[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::DURATION )
                 : null;
         }
-        if (DateIntervalFactory::isDateIntervalArrayInvertSet($this->duration[Util::$LCvalue])) { // fix pre 7.0.5 bug
+        if( DateIntervalFactory::isDateIntervalArrayInvertSet( $this->duration[Util::$LCvalue] )) { // fix pre 7.0.5 bug
             try {
-                $dateInterval = DateIntervalFactory::DateIntervalArr2DateInterval($this->duration[Util::$LCvalue]);
-            } catch (Exception $e) {
+                $dateInterval = DateIntervalFactory::DateIntervalArr2DateInterval(
+                    $this->duration[Util::$LCvalue]
+                );
+            }
+            catch( Exception $e ) {
                 throw $e;
             }
-        } else {
+        }
+        else {
             $dateInterval = $this->duration[Util::$LCvalue];
         }
         return StringFactory::createElement(
             self::DURATION,
-            ParameterFactory::createParams($this->duration[Util::$LCparams]),
-            DateIntervalFactory::dateInterval2String($dateInterval)
+            ParameterFactory::createParams( $this->duration[Util::$LCparams] ),
+            DateIntervalFactory::dateInterval2String( $dateInterval )
         );
     }
 
@@ -102,40 +105,46 @@ trait DURATIONtrait
     /**
      * Get calendar component property duration
      *
-     * @param bool $inclParam
-     * @param bool $specform
+     * @param bool   $inclParam
+     * @param bool   $specform
      * @return bool|array|DateInterval
      * @throws Exception
      * @since  2.29.2 - 2019-06-29
      */
-    public function getDuration($inclParam = false, $specform = false)
+    public function getDuration( $inclParam = false, $specform = false )
     {
-        if (empty($this->duration)) {
+        if( empty( $this->duration )) {
             return false;
         }
-        if (empty($this->duration[Util::$LCvalue])) {
-            return ($inclParam) ? $this->duration : $this->duration[Util::$LCvalue];
+        if( empty( $this->duration[Util::$LCvalue] )) {
+            return ( $inclParam ) ? $this->duration : $this->duration[Util::$LCvalue];
         }
-        if (DateIntervalFactory::isDateIntervalArrayInvertSet($this->duration[Util::$LCvalue])) { // fix pre 7.0.5 bug
+        if( DateIntervalFactory::isDateIntervalArrayInvertSet( $this->duration[Util::$LCvalue] )) { // fix pre 7.0.5 bug
             try {
-                $value = DateIntervalFactory::DateIntervalArr2DateInterval($this->duration[Util::$LCvalue]);
-            } catch (Exception $e) {
+                $value = DateIntervalFactory::DateIntervalArr2DateInterval(
+                    $this->duration[Util::$LCvalue]
+                );
+            }
+            catch( Exception $e ) {
                 throw $e;
             }
-        } else {
+        }
+        else {
             $value = $this->duration[Util::$LCvalue];
         }
         $params = $this->duration[Util::$LCparams];
-        if ($specform && !empty($this->dtstart)) {
+        if( $specform && ! empty( $this->dtstart )) {
             $dtStart = $this->dtstart;
             $dtValue = clone $dtStart[Util::$LCvalue];
-            DateIntervalFactory::modifyDateTimeFromDateInterval($dtValue, $value);
-            $value = $dtValue;
-            if ($inclParam && isset($dtStart[Util::$LCparams][self::TZID])) {
-                $params = array_merge($params, $dtStart[Util::$LCparams]);
+            DateIntervalFactory::modifyDateTimeFromDateInterval( $dtValue, $value );
+            $value   = $dtValue;
+            if( $inclParam && isset( $dtStart[Util::$LCparams][self::TZID] )) {
+                $params = array_merge( $params, $dtStart[Util::$LCparams] );
             }
         }
-        return ($inclParam) ? [Util::$LCvalue => $value, Util::$LCparams => (array)$params,] : $value;
+        return ( $inclParam )
+            ? [ Util::$LCvalue  => $value, Util::$LCparams => (array) $params, ]
+            : $value;
     }
 
     /**
@@ -152,39 +161,44 @@ trait DURATIONtrait
      *        "DURATION" property MUST be specified as a "dur-day" or "dur-week"
      *        value."
      */
-    public function setDuration($value = null, $params = [])
+    public function setDuration( $value  = null, $params = [] )
     {
-        switch (true) {
-            case (empty($value) && (empty($params) || is_array($params))) :
-                $this->assertEmptyValue($value, self::DURATION);
+        switch( true ) {
+            case ( empty( $value ) && ( empty( $params ) || is_array( $params ))) :
+                $this->assertEmptyValue( $value, self::DURATION );
                 $this->duration = [
-                    Util::$LCvalue => Util::$SP0,
+                    Util::$LCvalue  => Util::$SP0,
                     Util::$LCparams => []
                 ];
                 return $this;
                 break;
-            case($value instanceof DateInterval) :
-                $value = DateIntervalFactory::conformDateInterval($value);
+            case( $value instanceof DateInterval ) :
+                $value = DateIntervalFactory::conformDateInterval( $value );
                 break;
-            case DateIntervalFactory::isStringAndDuration($value) :
-                $value = StringFactory::trimTrailNL($value);
-                $value = DateIntervalFactory::removePlusMinusPrefix($value); // can only be positive
+            case DateIntervalFactory::isStringAndDuration( $value ) :
+                $value = StringFactory::trimTrailNL( $value );
+                $value = DateIntervalFactory::removePlusMinusPrefix( $value ); // can only be positive
                 try {
-                    $dateInterval = new DateInterval($value);
-                    $value = DateIntervalFactory::conformDateInterval($dateInterval);
-                } catch (Exception $e) {
-                    throw new InvalidArgumentException($e->getMessage(), null, $e);
+                    $dateInterval = new DateInterval( $value );
+                    $value        = DateIntervalFactory::conformDateInterval( $dateInterval );
+                }
+                catch( Exception $e ) {
+                    throw new InvalidArgumentException( $e->getMessage(), null, $e );
                 }
                 break;
             default :
                 throw new InvalidArgumentException(
-                    sprintf(self::$FMTERRPROPFMT, self::DURATION, var_export($value, true))
+                    sprintf(
+                        self::$FMTERRPROPFMT,
+                        self::DURATION,
+                        var_export( $value, true )
+                    )
                 );
                 break;
         } // end switch
         $this->duration = [
-            Util::$LCvalue => (array)$value,  // fix pre 7.0.5 bug
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => (array) $value,  // fix pre 7.0.5 bug
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

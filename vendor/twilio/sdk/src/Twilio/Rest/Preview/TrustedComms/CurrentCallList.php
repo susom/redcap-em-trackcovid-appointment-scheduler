@@ -15,16 +15,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CurrentCallList extends ListResource
-{
+class CurrentCallList extends ListResource {
     /**
      * Construct the CurrentCallList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -36,8 +34,7 @@ class CurrentCallList extends ListResource
      *
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new CurrentCallContext($this->version);
     }
 
@@ -46,8 +43,7 @@ class CurrentCallList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.CurrentCallList]';
     }
 }

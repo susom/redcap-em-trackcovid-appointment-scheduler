@@ -35,8 +35,7 @@ use Twilio\Version;
  * @property array $subresourceUris
  * @property bool $sipRegistration
  */
-class DomainInstance extends InstanceResource
-{
+class DomainInstance extends InstanceResource {
     protected $_ipAccessControlListMappings = null;
     protected $_credentialListMappings = null;
     protected $_auth = null;
@@ -51,8 +50,7 @@ class DomainInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\Sip\DomainInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -76,7 +74,7 @@ class DomainInstance extends InstanceResource
             'sipRegistration' => Values::array_get($payload, 'sip_registration'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -86,8 +84,7 @@ class DomainInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\Sip\DomainContext Context for this
      *                                                          DomainInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new DomainContext(
                 $this->version,
@@ -105,8 +102,7 @@ class DomainInstance extends InstanceResource
      * @return DomainInstance Fetched DomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -117,8 +113,7 @@ class DomainInstance extends InstanceResource
      * @return DomainInstance Updated DomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -128,8 +123,7 @@ class DomainInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -138,8 +132,7 @@ class DomainInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingList
      */
-    protected function getIpAccessControlListMappings()
-    {
+    protected function getIpAccessControlListMappings() {
         return $this->proxy()->ipAccessControlListMappings;
     }
 
@@ -148,8 +141,7 @@ class DomainInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\CredentialListMappingList
      */
-    protected function getCredentialListMappings()
-    {
+    protected function getCredentialListMappings() {
         return $this->proxy()->credentialListMappings;
     }
 
@@ -158,8 +150,7 @@ class DomainInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypesList
      */
-    protected function getAuth()
-    {
+    protected function getAuth() {
         return $this->proxy()->auth;
     }
 
@@ -170,8 +161,7 @@ class DomainInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -189,8 +179,7 @@ class DomainInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

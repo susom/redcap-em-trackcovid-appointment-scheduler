@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DeploymentContext extends InstanceContext
-{
+class DeploymentContext extends InstanceContext {
     /**
      * Initialize the DeploymentContext
      *
@@ -30,8 +29,7 @@ class DeploymentContext extends InstanceContext
      * @param string $sid The SID that identifies the Deployment resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentContext
      */
-    public function __construct(Version $version, $serviceSid, $environmentSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $environmentSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -50,8 +48,7 @@ class DeploymentContext extends InstanceContext
      * @return DeploymentInstance Fetched DeploymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -74,8 +71,7 @@ class DeploymentContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

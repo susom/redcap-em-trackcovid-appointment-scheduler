@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait ATTACHtrait
 {
     /**
      * @var array component property ATTACH value
-     * @access protected
      */
     protected $attach = null;
 
@@ -56,75 +55,76 @@ trait ATTACHtrait
      */
     public function createAttach()
     {
-        if (empty($this->attach)) {
+        if( empty( $this->attach )) {
             return null;
         }
         $output = null;
-        foreach ($this->attach as $aix => $attachPart) {
-            if (!empty($attachPart[Util::$LCvalue])) {
+        foreach( $this->attach as $aix => $attachPart ) {
+            if( ! empty( $attachPart[Util::$LCvalue] )) {
                 $output .= StringFactory::createElement(
                     self::ATTACH,
-                    ParameterFactory::createParams($attachPart[Util::$LCparams]),
+                    ParameterFactory::createParams( $attachPart[Util::$LCparams] ),
                     $attachPart[Util::$LCvalue]
                 );
-            } elseif ($this->getConfig(self::ALLOWEMPTY)) {
-                $output .= StringFactory::createElement(self::ATTACH);
             }
-        }
+            elseif( $this->getConfig( self::ALLOWEMPTY )) {
+                $output .= StringFactory::createElement( self::ATTACH );
+            }
+        } // end foreach
         return $output;
     }
 
     /**
      * Delete calendar component property attach
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteAttach($propDelIx = null)
+    public function deleteAttach( $propDelIx = null )
     {
-        if (empty($this->attach)) {
-            unset($this->propDelIx[self::ATTACH]);
+        if( empty( $this->attach )) {
+            unset( $this->propDelIx[self::ATTACH] );
             return false;
         }
-        return $this->deletePropertyM($this->attach, self::ATTACH, $propDelIx);
+        return $this->deletePropertyM( $this->attach, self::ATTACH, $propDelIx );
     }
 
     /**
      * Get calendar component property attach
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-16
      */
-    public function getAttach($propIx = null, $inclParam = false)
+    public function getAttach( $propIx = null, $inclParam = false )
     {
-        if (empty($this->attach)) {
-            unset($this->propIx[self::ATTACH]);
+        if( empty( $this->attach )) {
+            unset( $this->propIx[self::ATTACH] );
             return false;
         }
-        return $this->getPropertyM($this->attach, self::ATTACH, $propIx, $inclParam);
+        return $this->getPropertyM( $this->attach, self::ATTACH, $propIx, $inclParam );
     }
 
     /**
      * Set calendar component property attach
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.27.3 2018-12-20
      */
-    public function setAttach($value = null, $params = [], $index = null)
+    public function setAttach( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::ATTACH);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::ATTACH );
+            $value  = Util::$SP0;
             $params = [];
         }
-        $this->setMval($this->attach, $value, $params, null, $index);
+        $this->setMval( $this->attach, $value, $params, null, $index );
         return $this;
     }
 }

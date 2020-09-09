@@ -15,8 +15,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class OriginationUrlList extends ListResource
-{
+class OriginationUrlList extends ListResource {
     /**
      * Construct the OriginationUrlList
      *
@@ -24,12 +23,11 @@ class OriginationUrlList extends ListResource
      * @param string $trunkSid The SID of the Trunk that owns the Origination URL
      * @return \Twilio\Rest\Trunking\V1\Trunk\OriginationUrlList
      */
-    public function __construct(Version $version, $trunkSid)
-    {
+    public function __construct(Version $version, $trunkSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('trunkSid' => $trunkSid,);
+        $this->solution = array('trunkSid' => $trunkSid, );
 
         $this->uri = '/Trunks/' . \rawurlencode($trunkSid) . '/OriginationUrls';
     }
@@ -47,8 +45,7 @@ class OriginationUrlList extends ListResource
      * @return OriginationUrlInstance Newly created OriginationUrlInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($weight, $priority, $enabled, $friendlyName, $sipUrl)
-    {
+    public function create($weight, $priority, $enabled, $friendlyName, $sipUrl) {
         $data = Values::of(array(
             'Weight' => $weight,
             'Priority' => $priority,
@@ -85,8 +82,7 @@ class OriginationUrlList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -109,8 +105,7 @@ class OriginationUrlList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return OriginationUrlInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -123,8 +118,7 @@ class OriginationUrlList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of OriginationUrlInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -147,8 +141,7 @@ class OriginationUrlList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of OriginationUrlInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -163,8 +156,7 @@ class OriginationUrlList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Trunking\V1\Trunk\OriginationUrlContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new OriginationUrlContext($this->version, $this->solution['trunkSid'], $sid);
     }
 
@@ -173,8 +165,7 @@ class OriginationUrlList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Trunking.V1.OriginationUrlList]';
     }
 }

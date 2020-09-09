@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class OriginationUrlContext extends InstanceContext
-{
+class OriginationUrlContext extends InstanceContext {
     /**
      * Initialize the OriginationUrlContext
      *
@@ -27,12 +26,11 @@ class OriginationUrlContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Trunking\V1\Trunk\OriginationUrlContext
      */
-    public function __construct(Version $version, $trunkSid, $sid)
-    {
+    public function __construct(Version $version, $trunkSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('trunkSid' => $trunkSid, 'sid' => $sid,);
+        $this->solution = array('trunkSid' => $trunkSid, 'sid' => $sid, );
 
         $this->uri = '/Trunks/' . \rawurlencode($trunkSid) . '/OriginationUrls/' . \rawurlencode($sid) . '';
     }
@@ -43,8 +41,7 @@ class OriginationUrlContext extends InstanceContext
      * @return OriginationUrlInstance Fetched OriginationUrlInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class OriginationUrlContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -79,8 +75,7 @@ class OriginationUrlContext extends InstanceContext
      * @return OriginationUrlInstance Updated OriginationUrlInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -111,8 +106,7 @@ class OriginationUrlContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

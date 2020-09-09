@@ -16,16 +16,14 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class RatePlanList extends ListResource
-{
+class RatePlanList extends ListResource {
     /**
      * Construct the RatePlanList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Wireless\V1\RatePlanList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -52,8 +50,7 @@ class RatePlanList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -76,8 +73,7 @@ class RatePlanList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return RatePlanInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -90,8 +86,7 @@ class RatePlanList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of RatePlanInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -114,8 +109,7 @@ class RatePlanList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of RatePlanInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -131,8 +125,7 @@ class RatePlanList extends ListResource
      * @return RatePlanInstance Newly created RatePlanInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -144,9 +137,7 @@ class RatePlanList extends ListResource
             'MessagingEnabled' => Serialize::booleanToString($options['messagingEnabled']),
             'VoiceEnabled' => Serialize::booleanToString($options['voiceEnabled']),
             'NationalRoamingEnabled' => Serialize::booleanToString($options['nationalRoamingEnabled']),
-            'InternationalRoaming' => Serialize::map($options['internationalRoaming'], function ($e) {
-                return $e;
-            }),
+            'InternationalRoaming' => Serialize::map($options['internationalRoaming'], function($e) { return $e; }),
             'NationalRoamingDataLimit' => $options['nationalRoamingDataLimit'],
             'InternationalRoamingDataLimit' => $options['internationalRoamingDataLimit'],
         ));
@@ -167,8 +158,7 @@ class RatePlanList extends ListResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Wireless\V1\RatePlanContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new RatePlanContext($this->version, $sid);
     }
 
@@ -177,8 +167,7 @@ class RatePlanList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Wireless.V1.RatePlanList]';
     }
 }

@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class WebhookList extends ListResource
-{
+class WebhookList extends ListResource {
     /**
      * Construct the WebhookList
      *
@@ -28,12 +27,11 @@ class WebhookList extends ListResource
      *                             the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\WebhookList
      */
-    public function __construct(Version $version, $assistantSid)
-    {
+    public function __construct(Version $version, $assistantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/Webhooks';
     }
@@ -56,8 +54,7 @@ class WebhookList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -80,8 +77,7 @@ class WebhookList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return WebhookInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -94,8 +90,7 @@ class WebhookList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of WebhookInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -118,8 +113,7 @@ class WebhookList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of WebhookInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -140,8 +134,7 @@ class WebhookList extends ListResource
      * @return WebhookInstance Newly created WebhookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($uniqueName, $events, $webhookUrl, $options = array())
-    {
+    public function create($uniqueName, $events, $webhookUrl, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -167,8 +160,7 @@ class WebhookList extends ListResource
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Autopilot\V1\Assistant\WebhookContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new WebhookContext($this->version, $this->solution['assistantSid'], $sid);
     }
 
@@ -177,8 +169,7 @@ class WebhookList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Autopilot.V1.WebhookList]';
     }
 }

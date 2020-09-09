@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class KeyContext extends InstanceContext
-{
+class KeyContext extends InstanceContext {
     /**
      * Initialize the KeyContext
      *
@@ -26,12 +25,11 @@ class KeyContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\KeyContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Keys/' . \rawurlencode($sid) . '.json';
     }
@@ -42,8 +40,7 @@ class KeyContext extends InstanceContext
      * @return KeyInstance Fetched KeyInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,11 +64,10 @@ class KeyContext extends InstanceContext
      * @return KeyInstance Updated KeyInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('FriendlyName' => $options['friendlyName'],));
+        $data = Values::of(array('FriendlyName' => $options['friendlyName'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -94,8 +90,7 @@ class KeyContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -104,8 +99,7 @@ class KeyContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

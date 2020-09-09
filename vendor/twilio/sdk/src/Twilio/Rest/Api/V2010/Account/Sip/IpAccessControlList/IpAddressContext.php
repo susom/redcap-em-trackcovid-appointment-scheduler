@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class IpAddressContext extends InstanceContext
-{
+class IpAddressContext extends InstanceContext {
     /**
      * Initialize the IpAddressContext
      *
@@ -28,8 +27,7 @@ class IpAddressContext extends InstanceContext
      * @param string $sid A string that identifies the IpAddress resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Sip\IpAccessControlList\IpAddressContext
      */
-    public function __construct(Version $version, $accountSid, $ipAccessControlListSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $ipAccessControlListSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -48,8 +46,7 @@ class IpAddressContext extends InstanceContext
      * @return IpAddressInstance Fetched IpAddressInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -74,8 +71,7 @@ class IpAddressContext extends InstanceContext
      * @return IpAddressInstance Updated IpAddressInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -106,8 +102,7 @@ class IpAddressContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -116,8 +111,7 @@ class IpAddressContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

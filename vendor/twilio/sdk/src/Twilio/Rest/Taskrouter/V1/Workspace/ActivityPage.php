@@ -11,18 +11,15 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace;
 
 use Twilio\Page;
 
-class ActivityPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class ActivityPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new ActivityInstance($this->version, $payload, $this->solution['workspaceSid']);
     }
 
@@ -31,8 +28,7 @@ class ActivityPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Taskrouter.V1.ActivityPage]';
     }
 }

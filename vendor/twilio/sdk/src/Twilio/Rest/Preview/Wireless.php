@@ -24,8 +24,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Preview\Wireless\RatePlanContext ratePlans(string $sid)
  * @method \Twilio\Rest\Preview\Wireless\SimContext sims(string $sid)
  */
-class Wireless extends Version
-{
+class Wireless extends Version {
     protected $_commands = null;
     protected $_ratePlans = null;
     protected $_sims = null;
@@ -36,8 +35,7 @@ class Wireless extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Preview\Wireless Wireless version of Preview
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'wireless';
     }
@@ -45,8 +43,7 @@ class Wireless extends Version
     /**
      * @return \Twilio\Rest\Preview\Wireless\CommandList
      */
-    protected function getCommands()
-    {
+    protected function getCommands() {
         if (!$this->_commands) {
             $this->_commands = new CommandList($this);
         }
@@ -56,8 +53,7 @@ class Wireless extends Version
     /**
      * @return \Twilio\Rest\Preview\Wireless\RatePlanList
      */
-    protected function getRatePlans()
-    {
+    protected function getRatePlans() {
         if (!$this->_ratePlans) {
             $this->_ratePlans = new RatePlanList($this);
         }
@@ -67,8 +63,7 @@ class Wireless extends Version
     /**
      * @return \Twilio\Rest\Preview\Wireless\SimList
      */
-    protected function getSims()
-    {
+    protected function getSims() {
         if (!$this->_sims) {
             $this->_sims = new SimList($this);
         }
@@ -82,8 +77,7 @@ class Wireless extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -100,8 +94,7 @@ class Wireless extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -115,8 +108,7 @@ class Wireless extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.Wireless]';
     }
 }

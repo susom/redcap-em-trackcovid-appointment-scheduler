@@ -20,8 +20,7 @@ use Twilio\Version;
  *
  * @property \Twilio\Rest\Voice\V1\DialingPermissions\Country\HighriskSpecialPrefixList $highriskSpecialPrefixes
  */
-class CountryContext extends InstanceContext
-{
+class CountryContext extends InstanceContext {
     protected $_highriskSpecialPrefixes = null;
 
     /**
@@ -31,12 +30,11 @@ class CountryContext extends InstanceContext
      * @param string $isoCode The ISO country code
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\CountryContext
      */
-    public function __construct(Version $version, $isoCode)
-    {
+    public function __construct(Version $version, $isoCode) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('isoCode' => $isoCode,);
+        $this->solution = array('isoCode' => $isoCode, );
 
         $this->uri = '/DialingPermissions/Countries/' . \rawurlencode($isoCode) . '';
     }
@@ -47,8 +45,7 @@ class CountryContext extends InstanceContext
      * @return CountryInstance Fetched CountryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -65,8 +62,7 @@ class CountryContext extends InstanceContext
      *
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\Country\HighriskSpecialPrefixList
      */
-    protected function getHighriskSpecialPrefixes()
-    {
+    protected function getHighriskSpecialPrefixes() {
         if (!$this->_highriskSpecialPrefixes) {
             $this->_highriskSpecialPrefixes = new HighriskSpecialPrefixList(
                 $this->version,
@@ -84,8 +80,7 @@ class CountryContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -102,8 +97,7 @@ class CountryContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -117,8 +111,7 @@ class CountryContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

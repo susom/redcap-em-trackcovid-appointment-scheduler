@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class ParticipantOptions
-{
+abstract class ParticipantOptions {
     /**
      * @param string $friendlyName The string that you assigned to describe the
      *                             participant
@@ -25,17 +24,12 @@ abstract class ParticipantOptions
      * @param string $proxyIdentifierSid The Proxy Identifier Sid
      * @return CreateParticipantOptions Options builder
      */
-    public static function create(
-        $friendlyName = Values::NONE,
-        $proxyIdentifier = Values::NONE,
-        $proxyIdentifierSid = Values::NONE
-    ) {
+    public static function create($friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
         return new CreateParticipantOptions($friendlyName, $proxyIdentifier, $proxyIdentifierSid);
     }
 }
 
-class CreateParticipantOptions extends Options
-{
+class CreateParticipantOptions extends Options {
     /**
      * @param string $friendlyName The string that you assigned to describe the
      *                             participant
@@ -43,11 +37,7 @@ class CreateParticipantOptions extends Options
      *                                Participant
      * @param string $proxyIdentifierSid The Proxy Identifier Sid
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $proxyIdentifier = Values::NONE,
-        $proxyIdentifierSid = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['proxyIdentifier'] = $proxyIdentifier;
         $this->options['proxyIdentifierSid'] = $proxyIdentifierSid;
@@ -60,8 +50,7 @@ class CreateParticipantOptions extends Options
      *                             participant
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -73,8 +62,7 @@ class CreateParticipantOptions extends Options
      *                                Participant
      * @return $this Fluent Builder
      */
-    public function setProxyIdentifier($proxyIdentifier)
-    {
+    public function setProxyIdentifier($proxyIdentifier) {
         $this->options['proxyIdentifier'] = $proxyIdentifier;
         return $this;
     }
@@ -85,8 +73,7 @@ class CreateParticipantOptions extends Options
      * @param string $proxyIdentifierSid The Proxy Identifier Sid
      * @return $this Fluent Builder
      */
-    public function setProxyIdentifierSid($proxyIdentifierSid)
-    {
+    public function setProxyIdentifierSid($proxyIdentifierSid) {
         $this->options['proxyIdentifierSid'] = $proxyIdentifierSid;
         return $this;
     }
@@ -96,8 +83,7 @@ class CreateParticipantOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

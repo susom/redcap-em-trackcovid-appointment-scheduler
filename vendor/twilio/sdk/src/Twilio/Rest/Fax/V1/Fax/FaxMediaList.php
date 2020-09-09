@@ -16,8 +16,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class FaxMediaList extends ListResource
-{
+class FaxMediaList extends ListResource {
     /**
      * Construct the FaxMediaList
      *
@@ -26,12 +25,11 @@ class FaxMediaList extends ListResource
      *                       with
      * @return \Twilio\Rest\Fax\V1\Fax\FaxMediaList
      */
-    public function __construct(Version $version, $faxSid)
-    {
+    public function __construct(Version $version, $faxSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('faxSid' => $faxSid,);
+        $this->solution = array('faxSid' => $faxSid, );
 
         $this->uri = '/Faxes/' . \rawurlencode($faxSid) . '/Media';
     }
@@ -54,8 +52,7 @@ class FaxMediaList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -78,8 +75,7 @@ class FaxMediaList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return FaxMediaInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -92,8 +88,7 @@ class FaxMediaList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of FaxMediaInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -116,8 +111,7 @@ class FaxMediaList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of FaxMediaInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -132,8 +126,7 @@ class FaxMediaList extends ListResource
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Fax\V1\Fax\FaxMediaContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new FaxMediaContext($this->version, $this->solution['faxSid'], $sid);
     }
 
@@ -142,8 +135,7 @@ class FaxMediaList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Fax.V1.FaxMediaList]';
     }
 }

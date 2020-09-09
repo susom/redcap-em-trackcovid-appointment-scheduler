@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Preview\Marketplace\AvailableAddOn\AvailableAddOnExtensionList $extensions
  * @method \Twilio\Rest\Preview\Marketplace\AvailableAddOn\AvailableAddOnExtensionContext extensions(string $sid)
  */
-class AvailableAddOnContext extends InstanceContext
-{
+class AvailableAddOnContext extends InstanceContext {
     protected $_extensions = null;
 
     /**
@@ -32,12 +31,11 @@ class AvailableAddOnContext extends InstanceContext
      * @param string $sid The SID of the AvailableAddOn resource to fetch
      * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/AvailableAddOns/' . \rawurlencode($sid) . '';
     }
@@ -48,8 +46,7 @@ class AvailableAddOnContext extends InstanceContext
      * @return AvailableAddOnInstance Fetched AvailableAddOnInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -66,8 +63,7 @@ class AvailableAddOnContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOn\AvailableAddOnExtensionList
      */
-    protected function getExtensions()
-    {
+    protected function getExtensions() {
         if (!$this->_extensions) {
             $this->_extensions = new AvailableAddOnExtensionList($this->version, $this->solution['sid']);
         }
@@ -82,8 +78,7 @@ class AvailableAddOnContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -100,8 +95,7 @@ class AvailableAddOnContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -115,8 +109,7 @@ class AvailableAddOnContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

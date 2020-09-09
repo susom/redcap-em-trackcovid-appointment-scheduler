@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class MessageOptions
-{
+abstract class MessageOptions {
     /**
      * @param string $from The phone number that initiated the message
      * @param string $messagingServiceSid The SID of the Messaging Service you want
@@ -39,25 +38,8 @@ abstract class MessageOptions
      * @param string $persistentAction Rich actions for Channels Messages.
      * @return CreateMessageOptions Options builder
      */
-    public static function create(
-        $from = Values::NONE,
-        $messagingServiceSid = Values::NONE,
-        $body = Values::NONE,
-        $mediaUrl = Values::NONE,
-        $statusCallback = Values::NONE,
-        $applicationSid = Values::NONE,
-        $maxPrice = Values::NONE,
-        $provideFeedback = Values::NONE,
-        $validityPeriod = Values::NONE,
-        $forceDelivery = Values::NONE,
-        $contentRetention = Values::NONE,
-        $addressRetention = Values::NONE,
-        $smartEncoded = Values::NONE,
-        $persistentAction = Values::NONE
-    ) {
-        return new CreateMessageOptions($from, $messagingServiceSid, $body, $mediaUrl, $statusCallback, $applicationSid,
-            $maxPrice, $provideFeedback, $validityPeriod, $forceDelivery, $contentRetention, $addressRetention,
-            $smartEncoded, $persistentAction);
+    public static function create($from = Values::NONE, $messagingServiceSid = Values::NONE, $body = Values::NONE, $mediaUrl = Values::NONE, $statusCallback = Values::NONE, $applicationSid = Values::NONE, $maxPrice = Values::NONE, $provideFeedback = Values::NONE, $validityPeriod = Values::NONE, $forceDelivery = Values::NONE, $contentRetention = Values::NONE, $addressRetention = Values::NONE, $smartEncoded = Values::NONE, $persistentAction = Values::NONE) {
+        return new CreateMessageOptions($from, $messagingServiceSid, $body, $mediaUrl, $statusCallback, $applicationSid, $maxPrice, $provideFeedback, $validityPeriod, $forceDelivery, $contentRetention, $addressRetention, $smartEncoded, $persistentAction);
     }
 
     /**
@@ -68,19 +50,12 @@ abstract class MessageOptions
      * @param string $dateSentAfter Filter by date sent
      * @return ReadMessageOptions Options builder
      */
-    public static function read(
-        $to = Values::NONE,
-        $from = Values::NONE,
-        $dateSentBefore = Values::NONE,
-        $dateSent = Values::NONE,
-        $dateSentAfter = Values::NONE
-    ) {
+    public static function read($to = Values::NONE, $from = Values::NONE, $dateSentBefore = Values::NONE, $dateSent = Values::NONE, $dateSentAfter = Values::NONE) {
         return new ReadMessageOptions($to, $from, $dateSentBefore, $dateSent, $dateSentAfter);
     }
 }
 
-class CreateMessageOptions extends Options
-{
+class CreateMessageOptions extends Options {
     /**
      * @param string $from The phone number that initiated the message
      * @param string $messagingServiceSid The SID of the Messaging Service you want
@@ -105,22 +80,7 @@ class CreateMessageOptions extends Options
      *                           similar GSM-7 character and replace them
      * @param string $persistentAction Rich actions for Channels Messages.
      */
-    public function __construct(
-        $from = Values::NONE,
-        $messagingServiceSid = Values::NONE,
-        $body = Values::NONE,
-        $mediaUrl = Values::NONE,
-        $statusCallback = Values::NONE,
-        $applicationSid = Values::NONE,
-        $maxPrice = Values::NONE,
-        $provideFeedback = Values::NONE,
-        $validityPeriod = Values::NONE,
-        $forceDelivery = Values::NONE,
-        $contentRetention = Values::NONE,
-        $addressRetention = Values::NONE,
-        $smartEncoded = Values::NONE,
-        $persistentAction = Values::NONE
-    ) {
+    public function __construct($from = Values::NONE, $messagingServiceSid = Values::NONE, $body = Values::NONE, $mediaUrl = Values::NONE, $statusCallback = Values::NONE, $applicationSid = Values::NONE, $maxPrice = Values::NONE, $provideFeedback = Values::NONE, $validityPeriod = Values::NONE, $forceDelivery = Values::NONE, $contentRetention = Values::NONE, $addressRetention = Values::NONE, $smartEncoded = Values::NONE, $persistentAction = Values::NONE) {
         $this->options['from'] = $from;
         $this->options['messagingServiceSid'] = $messagingServiceSid;
         $this->options['body'] = $body;
@@ -143,8 +103,7 @@ class CreateMessageOptions extends Options
      * @param string $from The phone number that initiated the message
      * @return $this Fluent Builder
      */
-    public function setFrom($from)
-    {
+    public function setFrom($from) {
         $this->options['from'] = $from;
         return $this;
     }
@@ -156,8 +115,7 @@ class CreateMessageOptions extends Options
      *                                    to associate with the message.
      * @return $this Fluent Builder
      */
-    public function setMessagingServiceSid($messagingServiceSid)
-    {
+    public function setMessagingServiceSid($messagingServiceSid) {
         $this->options['messagingServiceSid'] = $messagingServiceSid;
         return $this;
     }
@@ -169,8 +127,7 @@ class CreateMessageOptions extends Options
      *                     1,600 characters in length.
      * @return $this Fluent Builder
      */
-    public function setBody($body)
-    {
+    public function setBody($body) {
         $this->options['body'] = $body;
         return $this;
     }
@@ -181,8 +138,7 @@ class CreateMessageOptions extends Options
      * @param string $mediaUrl The URL of the media to send with the message
      * @return $this Fluent Builder
      */
-    public function setMediaUrl($mediaUrl)
-    {
+    public function setMediaUrl($mediaUrl) {
         $this->options['mediaUrl'] = $mediaUrl;
         return $this;
     }
@@ -194,8 +150,7 @@ class CreateMessageOptions extends Options
      *                               information to your application
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -206,8 +161,7 @@ class CreateMessageOptions extends Options
      * @param string $applicationSid The application to use for callbacks
      * @return $this Fluent Builder
      */
-    public function setApplicationSid($applicationSid)
-    {
+    public function setApplicationSid($applicationSid) {
         $this->options['applicationSid'] = $applicationSid;
         return $this;
     }
@@ -219,8 +173,7 @@ class CreateMessageOptions extends Options
      *                         dollars acceptable for the message to be delivered.
      * @return $this Fluent Builder
      */
-    public function setMaxPrice($maxPrice)
-    {
+    public function setMaxPrice($maxPrice) {
         $this->options['maxPrice'] = $maxPrice;
         return $this;
     }
@@ -231,8 +184,7 @@ class CreateMessageOptions extends Options
      * @param bool $provideFeedback Whether to confirm delivery of the message
      * @return $this Fluent Builder
      */
-    public function setProvideFeedback($provideFeedback)
-    {
+    public function setProvideFeedback($provideFeedback) {
         $this->options['provideFeedback'] = $provideFeedback;
         return $this;
     }
@@ -244,8 +196,7 @@ class CreateMessageOptions extends Options
      *                            in our outgoing queue.
      * @return $this Fluent Builder
      */
-    public function setValidityPeriod($validityPeriod)
-    {
+    public function setValidityPeriod($validityPeriod) {
         $this->options['validityPeriod'] = $validityPeriod;
         return $this;
     }
@@ -256,8 +207,7 @@ class CreateMessageOptions extends Options
      * @param bool $forceDelivery Reserved
      * @return $this Fluent Builder
      */
-    public function setForceDelivery($forceDelivery)
-    {
+    public function setForceDelivery($forceDelivery) {
         $this->options['forceDelivery'] = $forceDelivery;
         return $this;
     }
@@ -269,8 +219,7 @@ class CreateMessageOptions extends Options
      *                                 stored or redacted based on privacy settings
      * @return $this Fluent Builder
      */
-    public function setContentRetention($contentRetention)
-    {
+    public function setContentRetention($contentRetention) {
         $this->options['contentRetention'] = $contentRetention;
         return $this;
     }
@@ -282,8 +231,7 @@ class CreateMessageOptions extends Options
      *                                 obfuscated based on privacy settings
      * @return $this Fluent Builder
      */
-    public function setAddressRetention($addressRetention)
-    {
+    public function setAddressRetention($addressRetention) {
         $this->options['addressRetention'] = $addressRetention;
         return $this;
     }
@@ -295,8 +243,7 @@ class CreateMessageOptions extends Options
      *                           similar GSM-7 character and replace them
      * @return $this Fluent Builder
      */
-    public function setSmartEncoded($smartEncoded)
-    {
+    public function setSmartEncoded($smartEncoded) {
         $this->options['smartEncoded'] = $smartEncoded;
         return $this;
     }
@@ -307,8 +254,7 @@ class CreateMessageOptions extends Options
      * @param string $persistentAction Rich actions for Channels Messages.
      * @return $this Fluent Builder
      */
-    public function setPersistentAction($persistentAction)
-    {
+    public function setPersistentAction($persistentAction) {
         $this->options['persistentAction'] = $persistentAction;
         return $this;
     }
@@ -318,8 +264,7 @@ class CreateMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -330,8 +275,7 @@ class CreateMessageOptions extends Options
     }
 }
 
-class ReadMessageOptions extends Options
-{
+class ReadMessageOptions extends Options {
     /**
      * @param string $to Filter by messages sent to this number
      * @param string $from Filter by from number
@@ -339,13 +283,7 @@ class ReadMessageOptions extends Options
      * @param string $dateSent Filter by date sent
      * @param string $dateSentAfter Filter by date sent
      */
-    public function __construct(
-        $to = Values::NONE,
-        $from = Values::NONE,
-        $dateSentBefore = Values::NONE,
-        $dateSent = Values::NONE,
-        $dateSentAfter = Values::NONE
-    ) {
+    public function __construct($to = Values::NONE, $from = Values::NONE, $dateSentBefore = Values::NONE, $dateSent = Values::NONE, $dateSentAfter = Values::NONE) {
         $this->options['to'] = $to;
         $this->options['from'] = $from;
         $this->options['dateSentBefore'] = $dateSentBefore;
@@ -359,8 +297,7 @@ class ReadMessageOptions extends Options
      * @param string $to Filter by messages sent to this number
      * @return $this Fluent Builder
      */
-    public function setTo($to)
-    {
+    public function setTo($to) {
         $this->options['to'] = $to;
         return $this;
     }
@@ -371,8 +308,7 @@ class ReadMessageOptions extends Options
      * @param string $from Filter by from number
      * @return $this Fluent Builder
      */
-    public function setFrom($from)
-    {
+    public function setFrom($from) {
         $this->options['from'] = $from;
         return $this;
     }
@@ -383,8 +319,7 @@ class ReadMessageOptions extends Options
      * @param string $dateSentBefore Filter by date sent
      * @return $this Fluent Builder
      */
-    public function setDateSentBefore($dateSentBefore)
-    {
+    public function setDateSentBefore($dateSentBefore) {
         $this->options['dateSentBefore'] = $dateSentBefore;
         return $this;
     }
@@ -395,8 +330,7 @@ class ReadMessageOptions extends Options
      * @param string $dateSent Filter by date sent
      * @return $this Fluent Builder
      */
-    public function setDateSent($dateSent)
-    {
+    public function setDateSent($dateSent) {
         $this->options['dateSent'] = $dateSent;
         return $this;
     }
@@ -407,8 +341,7 @@ class ReadMessageOptions extends Options
      * @param string $dateSentAfter Filter by date sent
      * @return $this Fluent Builder
      */
-    public function setDateSentAfter($dateSentAfter)
-    {
+    public function setDateSentAfter($dateSentAfter) {
         $this->options['dateSentAfter'] = $dateSentAfter;
         return $this;
     }
@@ -418,8 +351,7 @@ class ReadMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

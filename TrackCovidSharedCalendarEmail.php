@@ -25,7 +25,7 @@ require 'vendor/autoload.php';
  * @property PHPMailer $mail
  *
  */
-class TrackCovidCalendarEmail extends Message
+class TrackCovidSharedCalendarEmail extends Message
 {
 
     private $headers;

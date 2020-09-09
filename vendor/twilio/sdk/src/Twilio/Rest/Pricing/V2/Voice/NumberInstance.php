@@ -25,8 +25,7 @@ use Twilio\Version;
  * @property string $priceUnit
  * @property string $url
  */
-class NumberInstance extends InstanceResource
-{
+class NumberInstance extends InstanceResource {
     /**
      * Initialize the NumberInstance
      *
@@ -36,8 +35,7 @@ class NumberInstance extends InstanceResource
      *                                  pricing information
      * @return \Twilio\Rest\Pricing\V2\Voice\NumberInstance
      */
-    public function __construct(Version $version, array $payload, $destinationNumber = null)
-    {
+    public function __construct(Version $version, array $payload, $destinationNumber = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -64,8 +62,7 @@ class NumberInstance extends InstanceResource
      * @return \Twilio\Rest\Pricing\V2\Voice\NumberContext Context for this
      *                                                     NumberInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new NumberContext($this->version, $this->solution['destinationNumber']);
         }
@@ -80,8 +77,7 @@ class NumberInstance extends InstanceResource
      * @return NumberInstance Fetched NumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -92,8 +88,7 @@ class NumberInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -111,8 +106,7 @@ class NumberInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

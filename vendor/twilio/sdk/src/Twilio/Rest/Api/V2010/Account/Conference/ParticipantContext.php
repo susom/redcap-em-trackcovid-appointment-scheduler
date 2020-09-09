@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class ParticipantContext extends InstanceContext
-{
+class ParticipantContext extends InstanceContext {
     /**
      * Initialize the ParticipantContext
      *
@@ -29,8 +28,7 @@ class ParticipantContext extends InstanceContext
      * @param string $callSid The Call SID of the resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Conference\ParticipantContext
      */
-    public function __construct(Version $version, $accountSid, $conferenceSid, $callSid)
-    {
+    public function __construct(Version $version, $accountSid, $conferenceSid, $callSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -49,8 +47,7 @@ class ParticipantContext extends InstanceContext
      * @return ParticipantInstance Fetched ParticipantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -75,8 +72,7 @@ class ParticipantContext extends InstanceContext
      * @return ParticipantInstance Updated ParticipantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -116,8 +112,7 @@ class ParticipantContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -126,8 +121,7 @@ class ParticipantContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

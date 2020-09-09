@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class CountryInstance extends InstanceResource
-{
+class CountryInstance extends InstanceResource {
     protected $_highriskSpecialPrefixes = null;
 
     /**
@@ -39,8 +38,7 @@ class CountryInstance extends InstanceResource
      * @param string $isoCode The ISO country code
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\CountryInstance
      */
-    public function __construct(Version $version, array $payload, $isoCode = null)
-    {
+    public function __construct(Version $version, array $payload, $isoCode = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -56,7 +54,7 @@ class CountryInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('isoCode' => $isoCode ?: $this->properties['isoCode'],);
+        $this->solution = array('isoCode' => $isoCode ?: $this->properties['isoCode'], );
     }
 
     /**
@@ -67,8 +65,7 @@ class CountryInstance extends InstanceResource
      *                                                                 this
      *                                                                 CountryInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CountryContext($this->version, $this->solution['isoCode']);
         }
@@ -82,8 +79,7 @@ class CountryInstance extends InstanceResource
      * @return CountryInstance Fetched CountryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -92,8 +88,7 @@ class CountryInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\Country\HighriskSpecialPrefixList
      */
-    protected function getHighriskSpecialPrefixes()
-    {
+    protected function getHighriskSpecialPrefixes() {
         return $this->proxy()->highriskSpecialPrefixes;
     }
 
@@ -104,8 +99,7 @@ class CountryInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -123,8 +117,7 @@ class CountryInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

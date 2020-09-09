@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -44,13 +44,12 @@ use Kigkonsult\Icalcreator\Vcalendar;
  * DTSTART property functions
  *
  * @author Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
- * @since 2.29.16 2020-01-24
+ * @since 2.29.25 2020-08-26
  */
 trait DTSTARTtrait
 {
     /**
      * @var array component property DTSTART value
-     * @access protected
      */
     protected $dtstart = null;
 
@@ -58,24 +57,27 @@ trait DTSTARTtrait
      * Return formatted output for calendar component property dtstart
      *
      * @return string
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @since 2.29.1 2019-06-22
      */
     public function createDtstart()
     {
-        if (empty($this->dtstart)) {
+        if( empty( $this->dtstart )) {
             return null;
         }
-        if (empty($this->dtstart[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY))
-                ? StringFactory::createElement(self::DTSTART) : null;
+        if( empty( $this->dtstart[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::DTSTART )
+                : null;
         }
-        $isLocalTime = isset($this->dtstart[Util::$LCparams][Util::$ISLOCALTIME]);
+        $isLocalTime = isset( $this->dtstart[Util::$LCparams][Util::$ISLOCALTIME] );
         return StringFactory::createElement(
             self::DTSTART,
-            ParameterFactory::createParams($this->dtstart[Util::$LCparams]),
+            ParameterFactory::createParams( $this->dtstart[Util::$LCparams] ),
             DateTimeFactory::dateTime2Str(
                 $this->dtstart[Util::$LCvalue],
-                ParameterFactory::isParamsValueSet($this->dtstart, self::DATE),
+                ParameterFactory::isParamsValueSet( $this->dtstart, self::DATE ),
                 $isLocalTime
             )
         );
@@ -96,60 +98,75 @@ trait DTSTARTtrait
     /**
      * Return calendar component property dtstart
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|DateTime|array
      * @since 2.29.1 2019-06-22
      */
-    public function getDtstart($inclParam = false)
+    public function getDtstart( $inclParam = false )
     {
-        if (empty($this->dtstart)) {
+        if( empty( $this->dtstart )) {
             return false;
         }
-        return ($inclParam) ? $this->dtstart : $this->dtstart[Util::$LCvalue];
+        return ( $inclParam ) ? $this->dtstart : $this->dtstart[Util::$LCvalue];
     }
 
     /**
-     * Get calendar component property dtstart params
+     * Get calendar component property dtstart params, opt TZID only
      *
+     * @param bool $tzid   if true, only params TZID, if exists
      * @return array
-     * @access private
-     * @since 2.29.1 2019-06-22
+     * @since 2.29.25 2020-08-26
      */
-    private function getDtstartParams()
+    private function getDtstartParams( $tzid = true )
     {
-        return (empty($this->dtstart)) ? [] : $this->dtstart[Util::$LCparams];
+        if( ! $tzid ) {
+            return ( empty( $this->dtstart ) || empty( $this->dtstart[Util::$LCparams] ))
+                ? []
+                : $this->dtstart[Util::$LCparams];
+        }
+        if( empty( $this->dtstart ) ||
+            empty( $this->dtstart[Util::$LCparams] ) ||
+            ! isset( $this->dtstart[Util::$LCparams][Vcalendar::TZID] )) {
+            return [];
+        }
+        return isset( $this->dtstart[Util::$LCparams][Vcalendar::TZID] )
+            ? [ Vcalendar::TZID => $this->dtstart[Util::$LCparams][Vcalendar::TZID] ]
+            : [];
     }
 
     /**
      * Set calendar component property dtstart
      *
-     * @param string|DateTimeInterface $value
-     * @param array $params
+     * @param string|DateTimeInterface  $value
+     * @param array  $params
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.16 2020-01-24
      */
-    public function setDtstart($value = null, $params = [])
+    public function setDtstart( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::DTSTART);
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::DTSTART );
             $this->dtstart = [
-                Util::$LCvalue => Util::$SP0,
+                Util::$LCvalue  => Util::$SP0,
                 Util::$LCparams => [],
             ];
             return $this;
         }
         $compType = $this->getCompType();
-        $params = ParameterFactory::setParams($params, DateTimeFactory::$DEFAULTVALUEDATETIME);
-        if (Util::isCompInList($compType, self::$TZCOMPS)) {
+        $params   = ParameterFactory::setParams(
+            $params,
+            DateTimeFactory::$DEFAULTVALUEDATETIME
+        );
+        if( Util::isCompInList( $compType, self::$TZCOMPS )) {
             $params[Util::$ISLOCALTIME] = true;
-            $params[Vcalendar::VALUE] = Vcalendar::DATE_TIME;
+            $params[Vcalendar::VALUE]   = Vcalendar::DATE_TIME;
         }
         $this->dtstart = DateTimeFactory::setDate(
             $value,
             $params,
-            (Vcalendar::VFREEBUSY == $compType) // $forceUTC
+            ( Vcalendar::VFREEBUSY == $compType ) // $forceUTC
         );
         return $this;
     }

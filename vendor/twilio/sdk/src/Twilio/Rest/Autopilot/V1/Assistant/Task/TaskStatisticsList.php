@@ -15,8 +15,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class TaskStatisticsList extends ListResource
-{
+class TaskStatisticsList extends ListResource {
     /**
      * Construct the TaskStatisticsList
      *
@@ -27,12 +26,11 @@ class TaskStatisticsList extends ListResource
      *                        collected
      * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\TaskStatisticsList
      */
-    public function __construct(Version $version, $assistantSid, $taskSid)
-    {
+    public function __construct(Version $version, $assistantSid, $taskSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid, 'taskSid' => $taskSid,);
+        $this->solution = array('assistantSid' => $assistantSid, 'taskSid' => $taskSid, );
     }
 
     /**
@@ -40,8 +38,7 @@ class TaskStatisticsList extends ListResource
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\TaskStatisticsContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new TaskStatisticsContext(
             $this->version,
             $this->solution['assistantSid'],
@@ -54,8 +51,7 @@ class TaskStatisticsList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Autopilot.V1.TaskStatisticsList]';
     }
 }

@@ -18,8 +18,7 @@ use Twilio\Rest\Proxy\V1;
  * @property \Twilio\Rest\Proxy\V1\ServiceList $services
  * @method \Twilio\Rest\Proxy\V1\ServiceContext services(string $sid)
  */
-class Proxy extends Domain
-{
+class Proxy extends Domain {
     protected $_v1 = null;
 
     /**
@@ -29,8 +28,7 @@ class Proxy extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Proxy Domain for Proxy
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://proxy.twilio.com';
@@ -39,8 +37,7 @@ class Proxy extends Domain
     /**
      * @return \Twilio\Rest\Proxy\V1 Version v1 of proxy
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -54,8 +51,7 @@ class Proxy extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -72,8 +68,7 @@ class Proxy extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -85,8 +80,7 @@ class Proxy extends Domain
     /**
      * @return \Twilio\Rest\Proxy\V1\ServiceList
      */
-    protected function getServices()
-    {
+    protected function getServices() {
         return $this->v1->services;
     }
 
@@ -94,8 +88,7 @@ class Proxy extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Proxy\V1\ServiceContext
      */
-    protected function contextServices($sid)
-    {
+    protected function contextServices($sid) {
         return $this->v1->services($sid);
     }
 
@@ -104,8 +97,7 @@ class Proxy extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Proxy]';
     }
 }

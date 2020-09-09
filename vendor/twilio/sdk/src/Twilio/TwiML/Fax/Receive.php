@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Fax;
 
 use Twilio\TwiML\TwiML;
 
-class Receive extends TwiML
-{
+class Receive extends TwiML {
     /**
      * Receive constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Receive', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Receive extends TwiML
      * @param string $action Receive action URL
      * @return static $this.
      */
-    public function setAction($action)
-    {
+    public function setAction($action) {
         return $this->setAttribute('action', $action);
     }
 
@@ -40,8 +37,7 @@ class Receive extends TwiML
      * @param string $method Receive action URL method
      * @return static $this.
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         return $this->setAttribute('method', $method);
     }
 
@@ -52,8 +48,7 @@ class Receive extends TwiML
      *                          store
      * @return static $this.
      */
-    public function setMediaType($mediaType)
-    {
+    public function setMediaType($mediaType) {
         return $this->setAttribute('mediaType', $mediaType);
     }
 
@@ -63,8 +58,7 @@ class Receive extends TwiML
      * @param string $pageSize What size to interpret received pages as
      * @return static $this.
      */
-    public function setPageSize($pageSize)
-    {
+    public function setPageSize($pageSize) {
         return $this->setAttribute('pageSize', $pageSize);
     }
 
@@ -75,8 +69,7 @@ class Receive extends TwiML
      *                         media store
      * @return static $this.
      */
-    public function setStoreMedia($storeMedia)
-    {
+    public function setStoreMedia($storeMedia) {
         return $this->setAttribute('storeMedia', $storeMedia);
     }
 }

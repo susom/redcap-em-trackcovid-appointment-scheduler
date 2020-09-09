@@ -19,16 +19,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CompositionList extends ListResource
-{
+class CompositionList extends ListResource {
     /**
      * Construct the CompositionList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Video\V1\CompositionList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -56,8 +54,7 @@ class CompositionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -81,8 +78,7 @@ class CompositionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return CompositionInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -96,12 +92,7 @@ class CompositionList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of CompositionInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Status' => $options['status'],
@@ -129,8 +120,7 @@ class CompositionList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of CompositionInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -148,19 +138,14 @@ class CompositionList extends ListResource
      * @return CompositionInstance Newly created CompositionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($roomSid, $options = array())
-    {
+    public function create($roomSid, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
             'RoomSid' => $roomSid,
             'VideoLayout' => Serialize::jsonObject($options['videoLayout']),
-            'AudioSources' => Serialize::map($options['audioSources'], function ($e) {
-                return $e;
-            }),
-            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function ($e) {
-                return $e;
-            }),
+            'AudioSources' => Serialize::map($options['audioSources'], function($e) { return $e; }),
+            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function($e) { return $e; }),
             'Resolution' => $options['resolution'],
             'Format' => $options['format'],
             'StatusCallback' => $options['statusCallback'],
@@ -184,8 +169,7 @@ class CompositionList extends ListResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\CompositionContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new CompositionContext($this->version, $sid);
     }
 
@@ -194,8 +178,7 @@ class CompositionList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Video.V1.CompositionList]';
     }
 }

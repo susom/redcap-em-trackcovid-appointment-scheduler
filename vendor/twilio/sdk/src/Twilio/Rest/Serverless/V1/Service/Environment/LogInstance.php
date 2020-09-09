@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property string $url
  */
-class LogInstance extends InstanceResource
-{
+class LogInstance extends InstanceResource {
     /**
      * Initialize the LogInstance
      *
@@ -44,8 +43,7 @@ class LogInstance extends InstanceResource
      * @param string $sid The SID that identifies the Log resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\LogInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $environmentSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $environmentSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -78,8 +76,7 @@ class LogInstance extends InstanceResource
      *                                                                   for this
      *                                                                   LogInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new LogContext(
                 $this->version,
@@ -98,8 +95,7 @@ class LogInstance extends InstanceResource
      * @return LogInstance Fetched LogInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -110,8 +106,7 @@ class LogInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -129,8 +124,7 @@ class LogInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkflowCumulativeStatisticsContext extends InstanceContext
-{
+class WorkflowCumulativeStatisticsContext extends InstanceContext {
     /**
      * Initialize the WorkflowCumulativeStatisticsContext
      *
@@ -29,12 +28,11 @@ class WorkflowCumulativeStatisticsContext extends InstanceContext
      *                            value
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowCumulativeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid, $workflowSid)
-    {
+    public function __construct(Version $version, $workspaceSid, $workflowSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'workflowSid' => $workflowSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'workflowSid' => $workflowSid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workflows/' . \rawurlencode($workflowSid) . '/CumulativeStatistics';
     }
@@ -47,8 +45,7 @@ class WorkflowCumulativeStatisticsContext extends InstanceContext
      *                                              WorkflowCumulativeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
         $params = Values::of(array(
@@ -78,8 +75,7 @@ class WorkflowCumulativeStatisticsContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

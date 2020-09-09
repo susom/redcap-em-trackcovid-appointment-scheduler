@@ -31,8 +31,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class SessionInstance extends InstanceResource
-{
+class SessionInstance extends InstanceResource {
     protected $_participants = null;
     protected $_messages = null;
     protected $_webhooks = null;
@@ -45,8 +44,7 @@ class SessionInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Messaging\V1\SessionInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -64,7 +62,7 @@ class SessionInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -74,8 +72,7 @@ class SessionInstance extends InstanceResource
      * @return \Twilio\Rest\Messaging\V1\SessionContext Context for this
      *                                                  SessionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SessionContext($this->version, $this->solution['sid']);
         }
@@ -89,8 +86,7 @@ class SessionInstance extends InstanceResource
      * @return SessionInstance Fetched SessionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -100,8 +96,7 @@ class SessionInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -112,8 +107,7 @@ class SessionInstance extends InstanceResource
      * @return SessionInstance Updated SessionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -122,8 +116,7 @@ class SessionInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Messaging\V1\Session\ParticipantList
      */
-    protected function getParticipants()
-    {
+    protected function getParticipants() {
         return $this->proxy()->participants;
     }
 
@@ -132,8 +125,7 @@ class SessionInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Messaging\V1\Session\MessageList
      */
-    protected function getMessages()
-    {
+    protected function getMessages() {
         return $this->proxy()->messages;
     }
 
@@ -142,8 +134,7 @@ class SessionInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Messaging\V1\Session\WebhookList
      */
-    protected function getWebhooks()
-    {
+    protected function getWebhooks() {
         return $this->proxy()->webhooks;
     }
 
@@ -154,8 +145,7 @@ class SessionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -173,8 +163,7 @@ class SessionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

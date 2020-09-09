@@ -33,8 +33,7 @@ use Twilio\Version;
  * @property string $workspaceSid
  * @property array $links
  */
-class TaskQueueInstance extends InstanceResource
-{
+class TaskQueueInstance extends InstanceResource {
     protected $_statistics = null;
     protected $_realTimeStatistics = null;
     protected $_cumulativeStatistics = null;
@@ -49,8 +48,7 @@ class TaskQueueInstance extends InstanceResource
      * @param string $sid The SID of the resource to
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueueInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -72,7 +70,7 @@ class TaskQueueInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -83,8 +81,7 @@ class TaskQueueInstance extends InstanceResource
      *                                                               this
      *                                                               TaskQueueInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new TaskQueueContext(
                 $this->version,
@@ -102,8 +99,7 @@ class TaskQueueInstance extends InstanceResource
      * @return TaskQueueInstance Fetched TaskQueueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -114,8 +110,7 @@ class TaskQueueInstance extends InstanceResource
      * @return TaskQueueInstance Updated TaskQueueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -125,8 +120,7 @@ class TaskQueueInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -135,8 +129,7 @@ class TaskQueueInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsList
      */
-    protected function getStatistics()
-    {
+    protected function getStatistics() {
         return $this->proxy()->statistics;
     }
 
@@ -145,8 +138,7 @@ class TaskQueueInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueRealTimeStatisticsList
      */
-    protected function getRealTimeStatistics()
-    {
+    protected function getRealTimeStatistics() {
         return $this->proxy()->realTimeStatistics;
     }
 
@@ -155,8 +147,7 @@ class TaskQueueInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsList
      */
-    protected function getCumulativeStatistics()
-    {
+    protected function getCumulativeStatistics() {
         return $this->proxy()->cumulativeStatistics;
     }
 
@@ -167,8 +158,7 @@ class TaskQueueInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -186,8 +176,7 @@ class TaskQueueInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

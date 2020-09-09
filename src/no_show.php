@@ -1,8 +1,8 @@
 <?php
 
-namespace Stanford\TrackCovidAppointmentScheduler;
+namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
-/** @var \Stanford\TrackCovidAppointmentScheduler\TrackCovidAppointmentScheduler $module */
+/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 
 try {
@@ -50,9 +50,13 @@ try {
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
 
         if (empty($response['errors'])) {
-            $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());
-            // update booked spots
-            $module->getScheduler()->updateSlotBookedSpots($slot, -1);
+            // in case you are skipping not saved appt.
+            if($slotId){
+                $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());
+                // update booked spots
+                $module->getScheduler()->updateSlotBookedSpots($slot, -1);
+            }
+
 
 
             //notify user when canceled.

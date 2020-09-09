@@ -2,8 +2,7 @@
 
 namespace Twilio\Jwt\Grants;
 
-class TaskRouterGrant implements Grant
-{
+class TaskRouterGrant implements Grant {
     private $workspaceSid;
     private $workerSid;
     private $role;

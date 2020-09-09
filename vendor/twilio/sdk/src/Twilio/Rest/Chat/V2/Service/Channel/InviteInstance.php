@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $createdBy
  * @property string $url
  */
-class InviteInstance extends InstanceResource
-{
+class InviteInstance extends InstanceResource {
     /**
      * Initialize the InviteInstance
      *
@@ -40,8 +39,7 @@ class InviteInstance extends InstanceResource
      * @param string $sid The SID of the Invite resource to fetch
      * @return \Twilio\Rest\Chat\V2\Service\Channel\InviteInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $channelSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $channelSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -72,8 +70,7 @@ class InviteInstance extends InstanceResource
      * @return \Twilio\Rest\Chat\V2\Service\Channel\InviteContext Context for this
      *                                                            InviteInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new InviteContext(
                 $this->version,
@@ -92,8 +89,7 @@ class InviteInstance extends InstanceResource
      * @return InviteInstance Fetched InviteInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -103,8 +99,7 @@ class InviteInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -115,8 +110,7 @@ class InviteInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -134,8 +128,7 @@ class InviteInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

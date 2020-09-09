@@ -25,8 +25,7 @@ use Twilio\Version;
  * @property bool $enabled
  * @property string $url
  */
-class InstalledAddOnExtensionInstance extends InstanceResource
-{
+class InstalledAddOnExtensionInstance extends InstanceResource {
     /**
      * Initialize the InstalledAddOnExtensionInstance
      *
@@ -37,8 +36,7 @@ class InstalledAddOnExtensionInstance extends InstanceResource
      * @param string $sid The SID of the InstalledAddOn Extension resource to fetch
      * @return \Twilio\Rest\Preview\Marketplace\InstalledAddOn\InstalledAddOnExtensionInstance
      */
-    public function __construct(Version $version, array $payload, $installedAddOnSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $installedAddOnSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -65,8 +63,7 @@ class InstalledAddOnExtensionInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\Marketplace\InstalledAddOn\InstalledAddOnExtensionContext Context for this
      *                                                                                        InstalledAddOnExtensionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new InstalledAddOnExtensionContext(
                 $this->version,
@@ -85,8 +82,7 @@ class InstalledAddOnExtensionInstance extends InstanceResource
      *                                         InstalledAddOnExtensionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -98,8 +94,7 @@ class InstalledAddOnExtensionInstance extends InstanceResource
      *                                         InstalledAddOnExtensionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($enabled)
-    {
+    public function update($enabled) {
         return $this->proxy()->update($enabled);
     }
 
@@ -110,8 +105,7 @@ class InstalledAddOnExtensionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -129,8 +123,7 @@ class InstalledAddOnExtensionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

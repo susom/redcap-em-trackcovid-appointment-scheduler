@@ -34,8 +34,7 @@ use Twilio\Version;
  * @property string $sid
  * @property string $uri
  */
-class NotificationInstance extends InstanceResource
-{
+class NotificationInstance extends InstanceResource {
     /**
      * Initialize the NotificationInstance
      *
@@ -46,8 +45,7 @@ class NotificationInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\Call\NotificationInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $callSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $callSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -86,8 +84,7 @@ class NotificationInstance extends InstanceResource
      *                                                                 this
      *                                                                 NotificationInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new NotificationContext(
                 $this->version,
@@ -106,8 +103,7 @@ class NotificationInstance extends InstanceResource
      * @return NotificationInstance Fetched NotificationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -118,8 +114,7 @@ class NotificationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -137,8 +132,7 @@ class NotificationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

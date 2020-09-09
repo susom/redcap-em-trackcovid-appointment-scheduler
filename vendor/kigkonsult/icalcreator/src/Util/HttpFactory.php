@@ -1,11 +1,11 @@
 <?php
 /**
- * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
+  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.15
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -79,10 +79,10 @@ class HttpFactory
      * Return created, updated and/or parsed calendar, sending a HTTP redirect header.
      *
      * @param Vcalendar $calendar
-     * @param bool $utf8Encode
-     * @param bool $gzip
-     * @param bool $cdType true : Content-Disposition: attachment... (default), false : ...inline...
-     * @param string $fileName
+     * @param bool      $utf8Encode
+     * @param bool      $gzip
+     * @param bool      $cdType true : Content-Disposition: attachment... (default), false : ...inline...
+     * @param string    $fileName
      * @return bool true on success, false on error
      * @throws Exception
      * @static
@@ -91,43 +91,44 @@ class HttpFactory
     public static function returnCalendar(
         Vcalendar $calendar,
         $utf8Encode = false,
-        $gzip = false,
-        $cdType = true,
-        $fileName = null
+        $gzip       = false,
+        $cdType     = true,
+        $fileName   = null
     ) {
         static $ICR = 'iCr';
         $utf8Encode ?: false;
         $gzip ?: false;
         $cdType ?: false;
-        if (empty($fileName)) {
+        if( empty( $fileName ) ) {
             $fileName = self::getFakedFilename();
         }
-        $output = $calendar->createCalendar();
-        if ($utf8Encode) {
-            $output = utf8_encode($output);
+        $output   = $calendar->createCalendar();
+        if( $utf8Encode ) {
+            $output = utf8_encode( $output );
         }
         $fsize = null;
-        if ($gzip) {
-            $output = gzencode($output, 9);
-            $fsize = strlen($output);
-            header(self::$headers[0]);
-            header(self::$headers[1]);
-        } else {
-            if (false !== ($temp = tempnam(sys_get_temp_dir(), $ICR))) {
-                if (false !== file_put_contents($temp, $output)) {
-                    $fsize = @filesize($temp);
+        if( $gzip ) {
+            $output = gzencode( $output, 9 );
+            $fsize  = strlen( $output );
+            header( self::$headers[0] );
+            header( self::$headers[1] );
+        }
+        else {
+            if( false !== ( $temp = tempnam( sys_get_temp_dir(), $ICR ))) {
+                if( false !== file_put_contents( $temp, $output )) {
+                    $fsize = @filesize( $temp );
                 }
-                unlink($temp);
+                unlink( $temp );
                 clearstatcache();
             }
         } // end else
-        if (!empty($fsize)) {
-            header(sprintf(self::$headers[2], $fsize));
+        if( ! empty( $fsize )) {
+            header( sprintf( self::$headers[2], $fsize ));
         }
-        header(self::$headers[3]);
-        $cdType = ($cdType) ? 4 : 5;
-        header(sprintf(self::$headers[$cdType], $fileName));
-        header(self::$headers[6]);
+        header( self::$headers[3] );
+        $cdType = ( $cdType ) ? 4 : 5;
+        header( sprintf( self::$headers[$cdType], $fileName ));
+        header( self::$headers[6] );
         echo $output;
         return true;
     }
@@ -143,7 +144,10 @@ class HttpFactory
     private static function getFakedFilename()
     {
         static $DOTICS = '.ics';
-        return date(DateTimeFactory::$YmdHis, intval(microtime(true))) . $DOTICS;
+        return date(
+            DateTimeFactory::$YmdHis,
+            intval( microtime( true ))
+            ) . $DOTICS;
     }
 
     /**
@@ -154,31 +158,32 @@ class HttpFactory
      * @static
      * @since  2.27.3 - 2018-12-28
      */
-    public static function assertUrl($url)
+    public static function assertUrl( $url )
     {
-        static $UC = '_';
-        static $URN = 'urn';
+        static $UC   = '_';
+        static $URN  = 'urn';
         static $HTTP = 'http://';
-        static $MSG = 'URL validity error #%d, \'%s\'';
-        $url2 = (false !== strpos($url, $UC)) ? str_replace($UC, Util::$MINUS, $url) : $url;
-        $no = 0;
+        static $MSG  = 'URL validity error #%d, \'%s\'';
+        $url2 = ( false !== strpos( $url, $UC ))
+            ? str_replace( $UC, Util::$MINUS, $url )
+            : $url;
+        $no   = 0;
         do {
-            if (false !== filter_var($url2, FILTER_VALIDATE_URL)) {
+            if( false !== filter_var( $url2, FILTER_VALIDATE_URL )) {
                 break;
             }
-            if (empty(parse_url($url2, PHP_URL_SCHEME)) &&
-                (false !== filter_var($HTTP . $url2, FILTER_VALIDATE_URL))) {
+            if( empty( parse_url( $url2, PHP_URL_SCHEME)) &&
+                ( false !== filter_var( $HTTP . $url2, FILTER_VALIDATE_URL ))) {
                 break;
             }
             $no = 1;
-            if (0 != strcasecmp($URN, substr($url, 0, 3))) {
+            if( 0 != strcasecmp( $URN, substr( $url, 0, 3 ))) {
                 $no = 2;
             }
             break;
-        } while (true);
-        if (!empty($no)) {
-            throw new InvalidArgumentException(sprintf($MSG, $no, $url));
+        } while( true );
+        if( ! empty( $no )) {
+            throw new InvalidArgumentException( sprintf( $MSG, $no, $url ));
         }
     }
-
 }

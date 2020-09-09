@@ -1,11 +1,11 @@
 <?php
 /**
- * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
+  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -45,27 +45,33 @@ class GeoFactory
     /**
      * @var string  GEO vars: output format for geo latitude and longitude (before rtrim) etc
      * @access public
-     * @static
      */
-    public static $geoLatFmt = '%09.6f';
+    public static $geoLatFmt  = '%09.6f';
     public static $geoLongFmt = '%8.6f';
 
     /**
      * Return formatted geo output
      *
-     * @param float $ll
+     * @param float  $ll
      * @param string $format
      * @return string
      * @access public
-     * @static
      */
-    public static function geo2str2($ll, $format)
+    public static function geo2str2( $ll, $format )
     {
-        if (0.0 < $ll) {
+        if( 0.0 < $ll ) {
             $sign = Util::$PLUS;
-        } else {
-            $sign = (0.0 > $ll) ? Util::$MINUS : null;
         }
-        return rtrim(rtrim($sign . sprintf($format, abs($ll)), Util::$ZERO), Util::$DOT);
+        else {
+            $sign = ( 0.0 > $ll ) ? Util::$MINUS : null;
+        }
+        return
+            rtrim(
+                rtrim(
+                    $sign . sprintf( $format, abs( $ll )),
+                    Util::$ZERO
+                ),
+                Util::$DOT
+            );
     }
 }

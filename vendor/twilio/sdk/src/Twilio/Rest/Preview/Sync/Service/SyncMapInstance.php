@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $createdBy
  */
-class SyncMapInstance extends InstanceResource
-{
+class SyncMapInstance extends InstanceResource {
     protected $_syncMapItems = null;
     protected $_syncMapPermissions = null;
 
@@ -43,8 +42,7 @@ class SyncMapInstance extends InstanceResource
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Sync\Service\SyncMapInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -61,7 +59,7 @@ class SyncMapInstance extends InstanceResource
             'createdBy' => Values::array_get($payload, 'created_by'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -71,8 +69,7 @@ class SyncMapInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\Sync\Service\SyncMapContext Context for this
      *                                                          SyncMapInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SyncMapContext(
                 $this->version,
@@ -90,8 +87,7 @@ class SyncMapInstance extends InstanceResource
      * @return SyncMapInstance Fetched SyncMapInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -101,8 +97,7 @@ class SyncMapInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -111,8 +106,7 @@ class SyncMapInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Sync\Service\SyncMap\SyncMapItemList
      */
-    protected function getSyncMapItems()
-    {
+    protected function getSyncMapItems() {
         return $this->proxy()->syncMapItems;
     }
 
@@ -121,8 +115,7 @@ class SyncMapInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Sync\Service\SyncMap\SyncMapPermissionList
      */
-    protected function getSyncMapPermissions()
-    {
+    protected function getSyncMapPermissions() {
         return $this->proxy()->syncMapPermissions;
     }
 
@@ -133,8 +126,7 @@ class SyncMapInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -152,8 +144,7 @@ class SyncMapInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

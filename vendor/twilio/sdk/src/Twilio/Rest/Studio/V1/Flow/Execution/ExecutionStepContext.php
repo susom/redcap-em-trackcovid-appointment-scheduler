@@ -19,8 +19,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStep\ExecutionStepContextList $stepContext
  * @method \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStep\ExecutionStepContextContext stepContext()
  */
-class ExecutionStepContext extends InstanceContext
-{
+class ExecutionStepContext extends InstanceContext {
     protected $_stepContext = null;
 
     /**
@@ -32,12 +31,11 @@ class ExecutionStepContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStepContext
      */
-    public function __construct(Version $version, $flowSid, $executionSid, $sid)
-    {
+    public function __construct(Version $version, $flowSid, $executionSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('flowSid' => $flowSid, 'executionSid' => $executionSid, 'sid' => $sid,);
+        $this->solution = array('flowSid' => $flowSid, 'executionSid' => $executionSid, 'sid' => $sid, );
 
         $this->uri = '/Flows/' . \rawurlencode($flowSid) . '/Executions/' . \rawurlencode($executionSid) . '/Steps/' . \rawurlencode($sid) . '';
     }
@@ -48,8 +46,7 @@ class ExecutionStepContext extends InstanceContext
      * @return ExecutionStepInstance Fetched ExecutionStepInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -72,8 +69,7 @@ class ExecutionStepContext extends InstanceContext
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStep\ExecutionStepContextList
      */
-    protected function getStepContext()
-    {
+    protected function getStepContext() {
         if (!$this->_stepContext) {
             $this->_stepContext = new ExecutionStepContextList(
                 $this->version,
@@ -93,8 +89,7 @@ class ExecutionStepContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -111,8 +106,7 @@ class ExecutionStepContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -126,8 +120,7 @@ class ExecutionStepContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

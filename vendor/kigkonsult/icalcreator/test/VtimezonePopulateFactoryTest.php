@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -44,22 +44,18 @@ use Exception;
 class VtimezonePopulateFactoryTest extends DtBase
 {
     private static $ERRFMT = "%s Error in case #%s, %s, exp %s, got %s";
-    private static $STCPAR = ['X-Y-Z' => 'VaLuE'];
+    private static $STCPAR = [ 'X-Y-Z' => 'VaLuE' ];
 
     /**
      * set and restore local timezone from const
      */
     public static $oldTimeZone = null;
-
-    public static function setUpBeforeClass()
-    {
+    public static function setUpBeforeClass() {
         self::$oldTimeZone = date_default_timezone_get();
-        date_default_timezone_set(LTZ);
+        date_default_timezone_set( LTZ );
     }
-
-    public static function tearDownAfterClass()
-    {
-        date_default_timezone_set(self::$oldTimeZone);
+    public static function tearDownAfterClass() {
+        date_default_timezone_set( self::$oldTimeZone );
     }
 
     /**
@@ -69,27 +65,26 @@ class VtimezonePopulateFactoryTest extends DtBase
      * @throws Exception
      * @throws InvalidArgumentException;
      */
-    public function processTest1()
-    {
+    public function processTest1() {
         $calendar1 = new Vcalendar();
 
-        $event = $calendar1->newVevent()->setDtstart(DATEYmdTHis);
+        $event     = $calendar1->newVevent()->setDtstart( DATEYmdTHis );
         $vtimezone = $calendar1->newVtimezone();
 
-        $calendar2 = VtimezonePopulateFactory::process($calendar1);
+        $calendar2 = VtimezonePopulateFactory::process( $calendar1 );
 
-        $vtimezone = $calendar2->getComponent(Vcalendar::VTIMEZONE);
+        $vtimezone = $calendar2->getComponent( Vcalendar::VTIMEZONE );
 
-        $expTz = Vcalendar::UTC;
-        $vtTzid = $vtimezone->getTzid();
+        $expTz     = Vcalendar::UTC;
+        $vtTzid    = $vtimezone->getTzid();
         $this->assertEquals(
             $expTz,
             $vtTzid,
-            sprintf(self::$ERRFMT, __FUNCTION__, 11, Vcalendar::TZID, $expTz, $vtTzid)
+            sprintf( self::$ERRFMT, __FUNCTION__, 11, Vcalendar::TZID, $expTz, $vtTzid )
         );
-        $this->assertFalse($vtimezone->getComponent(Vcalendar::STANDARD));
+        $this->assertFalse( $vtimezone->getComponent( Vcalendar::STANDARD ));
 
-        $this->parseCalendarTest(12, $calendar1);
+        $this->parseCalendarTest( 12, $calendar1 );
     }
 
     /**
@@ -99,35 +94,33 @@ class VtimezonePopulateFactoryTest extends DtBase
      * @throws Exception
      * @throws InvalidArgumentException;
      */
-    public function processTest2()
-    {
+    public function processTest2() {
         $calendar1 = new Vcalendar();
 
-        $event = $calendar1->newVevent()->setDtstart(
+        $event     = $calendar1->newVevent()->setDtstart(
             DATEYmdTHis,
-            [Vcalendar::TZID => OFFSET]
+            [ Vcalendar::TZID => OFFSET ]
         );
         $calendar2 = $calendar1->vtimezonePopulate();
 
-        $vtimezone = $calendar2->getComponent(Vcalendar::VTIMEZONE);
+        $vtimezone = $calendar2->getComponent( Vcalendar::VTIMEZONE );
 
-        $expTz = Vcalendar::UTC;
-        $vtTzid = $vtimezone->getTzid();
+        $expTz     = Vcalendar::UTC;
+        $vtTzid    = $vtimezone->getTzid();
         $this->assertEquals(
             $expTz,
             $vtTzid,
-            sprintf(self::$ERRFMT, __FUNCTION__, 21, Vcalendar::TZID, $expTz, $vtTzid)
+            sprintf( self::$ERRFMT, __FUNCTION__, 21, Vcalendar::TZID, $expTz, $vtTzid )
         );
-        $this->assertFalse($vtimezone->getComponent(Vcalendar::STANDARD));
+        $this->assertFalse( $vtimezone->getComponent( Vcalendar::STANDARD ));
 
-        $this->parseCalendarTest(21, $calendar1);
+        $this->parseCalendarTest( 21, $calendar1 );
     }
 
     /**
      * processTest3 provider
      */
-    public function processTest3Provider()
-    {
+    public function processTest3Provider() {
 
         $dataArr = [];
 
@@ -137,8 +130,7 @@ class VtimezonePopulateFactoryTest extends DtBase
             1,
             $timezone,
             null,
-            null,
-            null,  // from/to
+            null, null,  // from/to
             []
         ];
 
@@ -146,109 +138,98 @@ class VtimezonePopulateFactoryTest extends DtBase
             2,
             $timezone,
             null,
-            null,
-            null,  // from/to
-            ['20170312']
+            null, null,  // from/to
+            [ '20170312' ]
         ];
 
         $dataArr[] = [ // param timezone in X-prop X_WR_TIMEZONE and TWO DTSTARTs
             3,
             $timezone,
             null,
-            null,
-            null,  // from/to
-            ['20160912', '20181113']
+            null, null,  // from/to
+            [ '20160912', '20181113' ]
         ];
 
         $dataArr[] = [ // method arg timezone and ONE DTSTART
             3,
             null,
             $timezone,
-            null,
-            null,  // from/to
-            ['20170312']
+            null, null,  // from/to
+            [ '20170312' ]
         ];
 
         $dataArr[] = [ // method arg timezone and NO DTSTART
             4,
             null,
             $timezone,
-            null,
-            null,  // from/to
-            ['20170312']
+            null, null,  // from/to
+            [ '20170312' ]
         ];
 
         $dataArr[] = [ // method arg timezone and TWO DTSTARTs
             5,
             null,
             $timezone,
-            null,
-            null,  // from/to
-            ['20160912', '20181113']
+            null, null,  // from/to
+            [ '20160912', '20181113' ]
         ];
 
 
-        $from = DateTimeFactory::factory('20161001', $timezone)->getTimestamp();
+        $from = DateTimeFactory::factory( '20161001', $timezone )->getTimestamp();
         $dataArr[] = [ // param timezone in X-prop X_WR_TIMEZONE and from
             6,
             $timezone,
             null,
-            $from,
-            null,  // from/to
+            $from, null,  // from/to
             []
         ];
 
-        $to = DateTimeFactory::factory('20170312', $timezone)->getTimestamp();
+        $to = DateTimeFactory::factory( '20170312', $timezone )->getTimestamp();
         $dataArr[] = [ // method arg timezone and from
             7,
             $timezone,
             null,
-            null,
-            $to,  // from/to
+            null, $to,  // from/to
             []
         ];
 
-        $from = DateTimeFactory::factory('20170312', $timezone)->modify('-7 month')->getTimestamp();
-        $to = DateTimeFactory::factory('20170312', $timezone)->modify('+18 month')->getTimestamp();
+        $from = DateTimeFactory::factory( '20170312', $timezone )->modify( '-7 month' )->getTimestamp();
+        $to   = DateTimeFactory::factory( '20170312', $timezone )->modify( '+18 month' )->getTimestamp();
         $dataArr[] = [ // param timezone in X-prop X_WR_TIMEZONE and from/to
             8,
             $timezone,
             null,
-            $from,
-            $to,  // from/to
+            $from, $to,  // from/to
             []
         ];
 
 
-        $from = DateTimeFactory::factory('20161001', $timezone)->getTimestamp();
+        $from = DateTimeFactory::factory( '20161001', $timezone )->getTimestamp();
         $dataArr[] = [ // param timezone in X-prop X_WR_TIMEZONE and from
             9,
             null,
             $timezone,
-            $from,
-            null,  // from/to
+            $from, null,  // from/to
             []
         ];
 
 //        $to = DateTimeFactory::factory( '20170312', $timezone )->getTimestamp();
-        $to = DateTimeFactory::factory('20170606', $timezone)->getTimestamp();
+        $to = DateTimeFactory::factory( '20170606', $timezone )->getTimestamp();
         $dataArr[] = [ // method arg timezone and from
             10,
             null,
             $timezone,
-            null,
-            $to,  // from/to
+            null, $to,  // from/to
             []
         ];
 
-        $from = DateTimeFactory::factory('20170312', $timezone)->modify('-7 month')->getTimestamp();
-        $to = DateTimeFactory::factory('20170312', $timezone)->modify('+18 month')->getTimestamp();
+        $from = DateTimeFactory::factory( '20170312', $timezone )->modify( '-7 month' )->getTimestamp();
+        $to   = DateTimeFactory::factory( '20170312', $timezone )->modify( '+18 month' )->getTimestamp();
         $dataArr[] = [ // param timezone in X-prop X_WR_TIMEZONE and from/to
             11,
             null,
             $timezone,
-            $from,
-            $to,  // from/to
+            $from, $to,  // from/to
             []
         ];
 
@@ -260,30 +241,29 @@ class VtimezonePopulateFactoryTest extends DtBase
      *
      * @test
      * @dataProvider processTest3Provider
-     * @param int $case
+     * @param int    $case
      * @param string $xParamTz
      * @param string $mParamTz
-     * @param int $from
-     * @param int $to
-     * @param array $dtstarts
+     * @param int    $from
+     * @param int    $to
+     * @param array  $dtstarts
      * @throws Exception
      * @throws InvalidArgumentException;
      */
-    public function processTest3($case, $xParamTz, $mParamTz, $from, $to, $dtstarts)
-    {
+    public function processTest3( $case, $xParamTz, $mParamTz, $from, $to, $dtstarts ) {
 
         $calendar1 = new Vcalendar();
 
-        if (!empty($xParamTz)) {
-            $calendar1->setXprop(Vcalendar::X_WR_TIMEZONE, $xParamTz);
+        if( ! empty( $xParamTz )) {
+            $calendar1->setXprop( Vcalendar::X_WR_TIMEZONE, $xParamTz );
         }
-        $params = ['X-case' => $case] + self::$STCPAR;
-        foreach ($params as $k => $v) {
-            $calendar1->setXprop($k, $v);
+        $params = ['X-case' => $case ] + self::$STCPAR;
+        foreach( $params as $k => $v ) {
+            $calendar1->setXprop( $k, $v );
         }
 
-        foreach ($dtstarts as $dtstartValue) {
-            $e = $calendar1->newVevent()->setDtstart($dtstartValue);
+        foreach( $dtstarts as $dtstartValue ) {
+            $e = $calendar1->newVevent()->setDtstart( $dtstartValue );
         }
 
         $c2 = VtimezonePopulateFactory::process(
@@ -294,17 +274,17 @@ class VtimezonePopulateFactoryTest extends DtBase
             $to ?: null
         );
 
-        $vtimezone = $c2->getComponent(Vcalendar::VTIMEZONE);
+        $vtimezone = $c2->getComponent( Vcalendar::VTIMEZONE );
 
-        $expTz = (!empty($mParamTz)) ? $mParamTz : $xParamTz;
+        $expTz  = ( ! empty( $mParamTz )) ? $mParamTz : $xParamTz;
         $vtTzid = $vtimezone->getTzid();
         $this->assertEquals(
             $expTz,
             $vtTzid,
-            sprintf(self::$ERRFMT, __FUNCTION__, $case . '-1', Vcalendar::TZID, $expTz, $vtTzid)
+            sprintf( self::$ERRFMT, __FUNCTION__, $case . '-1', Vcalendar::TZID, $expTz, $vtTzid )
         );
 
-        $standard = $vtimezone->getComponent(Vcalendar::STANDARD);
+        $standard = $vtimezone->getComponent( Vcalendar::STANDARD );
         $this->assertNotFalse(
             $standard,
             sprintf(
@@ -345,23 +325,23 @@ class VtimezonePopulateFactoryTest extends DtBase
             )
         );
 
-        $getValue = $standard->getRdate(1);
+        $getValue = $standard->getRdate( 1 );
         $this->assertTrue(
-            (false == $getValue) ||
-            ((10 == $getValue[0]->format('m')) &&
-                (3 == $getValue[0]->format('H')) &&
-                (0 == $getValue[0]->format('i'))),
+             ( false == $getValue ) ||
+            (( 10 == $getValue[0]->format( 'm' )) &&
+             (  3 == $getValue[0]->format( 'H' )) &&
+             (  0 == $getValue[0]->format( 'i' ) )),
             sprintf(
                 self::$ERRFMT,
                 __FUNCTION__,
                 $case . '-5',
                 Vcalendar::STANDARD . '::' . Vcalendar::RDATE,
                 '20xx-10-xx-03-00-00',
-                var_export($getValue[0], true)
+                var_export( $getValue[0], true )
             )
         );
 
-        $daylight = $vtimezone->getComponent(Vcalendar::DAYLIGHT);
+        $daylight = $vtimezone->getComponent( Vcalendar::DAYLIGHT );
         $this->assertNotFalse(
             $daylight,
             sprintf(
@@ -402,51 +382,51 @@ class VtimezonePopulateFactoryTest extends DtBase
             )
         );
 
-        $getValue = $daylight->getRdate(1);
+        $getValue = $daylight->getRdate( 1 );
         $this->assertTrue(
-            ((false == $getValue) ||
-                ((3 == $getValue[0]->format('m')) &&
-                    (2 == $getValue[0]->format('H')) &&
-                    (0 == $getValue[0]->format('i')))),
+            ( ( false == $getValue ) ||
+            (( 3 == $getValue[0]->format( 'm' )) &&
+             ( 2 == $getValue[0]->format( 'H' )) &&
+             ( 0 == $getValue[0]->format( 'i' ) ))),
             sprintf(
                 self::$ERRFMT,
                 __FUNCTION__,
                 $case . '-9',
                 Vcalendar::DAYLIGHT . '::' . Vcalendar::RDATE,
                 '20xx-03-xx-02-00-00',
-                var_export($getValue[0], true)
+                var_export( $getValue[0], true )
             )
         );
 
-        $this->parseCalendarTest(1, $calendar1);
+        $this->parseCalendarTest( 1, $calendar1 );
         $calendar1Str = $calendar1->createCalendar();
 
         // fetch all components
         $compArr = [];
-        while ($comp = $vtimezone->getComponent()) {
+        while( $comp = $vtimezone->getComponent()) {
             $compArr[] = $comp;
         }
         $x = 1;
-        while ($vtimezone->deleteComponent($x)) {
+        while( $vtimezone->deleteComponent( $x )) {
             $x += 1;
         }
         $this->assertTrue(
-            (0 == $vtimezone->countComponents()),
+            ( 0 == $vtimezone->countComponents()),
             'deleteComponent-error ' . $case . '-10, has ' . $vtimezone->countComponents()
         );
         // check components are set
-        foreach ($compArr as $comp) {
-            $vtimezone->setComponent($comp);
+        foreach( $compArr as $comp ) {
+            $vtimezone->setComponent( $comp );
         }
         // check number of components
         $this->assertTrue(
-            (count($compArr) == $vtimezone->countComponents()),
+            ( count( $compArr ) == $vtimezone->countComponents()),
             'setComponent-error ' . $case . '-11, has ' . $vtimezone->countComponents()
         );
 
-        $vtimezone2 = $calendar1->getComponent(Vcalendar::VTIMEZONE, 1);
+        $vtimezone2 = $calendar1->getComponent( Vcalendar::VTIMEZONE, 1 );
 
-        $calendar1->replaceComponent($vtimezone2);
+        $calendar1->replaceComponent( $vtimezone2 );
 
         $this->assertEquals(
             $calendar1Str,

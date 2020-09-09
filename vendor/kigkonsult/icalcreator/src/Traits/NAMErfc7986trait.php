@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait NAMErfc7986trait
 {
     /**
      * @var array component property NAME value
-     * @access protected
      */
     protected $name = null;
 
@@ -57,22 +56,26 @@ trait NAMErfc7986trait
      */
     public function createName()
     {
-        if (empty($this->name)) {
+        if( empty( $this->name )) {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->name as $cx => $namePart) {
-            if (empty($namePart[Util::$LCvalue])) {
-                if ($this->getConfig(self::ALLOWEMPTY)) {
-                    $output .= StringFactory::createElement(self::NAME);
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->name as $cx => $namePart ) {
+            if( empty( $namePart[Util::$LCvalue] )) {
+                if( $this->getConfig( self::ALLOWEMPTY )) {
+                    $output .= StringFactory::createElement( self::NAME );
                 }
                 continue;
             }
             $output .= StringFactory::createElement(
                 self::NAME,
-                ParameterFactory::createParams($namePart[Util::$LCparams], self::$ALTRPLANGARR, $lang),
-                StringFactory::strrep($namePart[Util::$LCvalue])
+                ParameterFactory::createParams(
+                    $namePart[Util::$LCparams],
+                    self::$ALTRPLANGARR,
+                    $lang
+                ),
+                StringFactory::strrep( $namePart[Util::$LCvalue] )
             );
         }
         return $output;
@@ -81,56 +84,57 @@ trait NAMErfc7986trait
     /**
      * Delete calendar component property name
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since 2.29.5 2019-06-16
      */
-    public function deleteName($propDelIx = null)
+    public function deleteName( $propDelIx = null )
     {
-        if (empty($this->name)) {
-            unset($this->propDelIx[self::NAME]);
+        if( empty( $this->name )) {
+            unset( $this->propDelIx[self::NAME] );
             return false;
         }
-        return $this->deletePropertyM($this->name, self::NAME, $propDelIx);
+        return $this->deletePropertyM( $this->name, self::NAME, $propDelIx );
     }
 
     /**
      * Get calendar component property name
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since 2.29.5 2019-06-16
      */
-    public function getName($propIx = null, $inclParam = false)
+    public function getName( $propIx = null, $inclParam = false )
     {
-        if (empty($this->name)) {
-            unset($this->propIx[self::NAME]);
+        if( empty( $this->name )) {
+            unset( $this->propIx[self::NAME] );
             return false;
         }
-        return $this->getPropertyM($this->name, self::NAME, $propIx, $inclParam);
+        return $this->getPropertyM( $this->name, self::NAME, $propIx, $inclParam );
     }
 
     /**
      * Set calendar component property name
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setName($value = null, $params = [], $index = null)
+    public function setName( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::NAME);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::NAME );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            Util::assertString($value, self::NAME);
         }
-        $this->setMval($this->name, $value, $params, null, $index);
+        else {
+            Util::assertString( $value, self::NAME );
+        }
+        $this->setMval( $this->name, $value, $params, null, $index );
         return $this;
     }
 }

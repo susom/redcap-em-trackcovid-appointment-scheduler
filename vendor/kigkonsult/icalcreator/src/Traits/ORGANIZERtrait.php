@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -48,7 +48,6 @@ trait ORGANIZERtrait
 {
     /**
      * @var array component property ORGANIZER value
-     * @access protected
      */
     protected $organizer = null;
 
@@ -59,12 +58,13 @@ trait ORGANIZERtrait
      */
     public function createOrganizer()
     {
-        if (empty($this->organizer)) {
+        if( empty( $this->organizer )) {
             return null;
         }
-        if (empty($this->organizer[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY))
-                ? StringFactory::createElement(self::ORGANIZER) : null;
+        if( empty( $this->organizer[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::ORGANIZER )
+                : null;
         }
         return StringFactory::createElement(
             self::ORGANIZER,
@@ -76,7 +76,7 @@ trait ORGANIZERtrait
                     self::SENT_BY,
                     self::LANGUAGE,
                 ],
-                $this->getConfig(self::LANGUAGE)
+                $this->getConfig( self::LANGUAGE )
             ),
             $this->organizer[Util::$LCvalue]
         );
@@ -97,50 +97,50 @@ trait ORGANIZERtrait
     /**
      * Get calendar component property organizer
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getOrganizer($inclParam = false)
+    public function getOrganizer( $inclParam = false )
     {
-        if (empty($this->organizer)) {
+        if( empty( $this->organizer )) {
             return false;
         }
-        return ($inclParam) ? $this->organizer : $this->organizer[Util::$LCvalue];
+        return ( $inclParam ) ? $this->organizer : $this->organizer[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property organizer
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since  2.29.5 - 2019-08-30
      */
-    public function setOrganizer($value = null, $params = [])
+    public function setOrganizer( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::ORGANIZER);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::ORGANIZER );
+            $value  = Util::$SP0;
             $params = [];
         }
-        $value = CalAddressFactory::conformCalAddress($value);
-        if (!empty($value)) {
-            CalAddressFactory::assertCalAddress($value);
+        $value = CalAddressFactory::conformCalAddress( $value );
+        if( ! empty( $value )) {
+            CalAddressFactory::assertCalAddress( $value );
         }
-        $params = array_change_key_case((array)$params, CASE_UPPER);
-        CalAddressFactory::sameValueAndEMAILparam($value, $params);
+        $params = array_change_key_case( (array) $params, CASE_UPPER );
+        CalAddressFactory::sameValueAndEMAILparam( $value, $params );
         $this->organizer = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => $value,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
-        foreach ([self::EMAIL, self::SENT_BY] as $key) {
-            if (isset($this->organizer[Util::$LCparams][$key])) {
+        foreach( [ self::EMAIL, self::SENT_BY ] as $key ) {
+            if( isset( $this->organizer[Util::$LCparams][$key] )) {
                 $pVal = CalAddressFactory::conformCalAddress(
-                    trim($this->organizer[Util::$LCparams][$key], StringFactory::$QQ)
+                    trim( $this->organizer[Util::$LCparams][$key], StringFactory::$QQ )
                 );
-                CalAddressFactory::assertCalAddress($pVal);
+                CalAddressFactory::assertCalAddress( $pVal );
                 $this->organizer[Util::$LCparams][$key] = $pVal;
             }
         } // end foreach

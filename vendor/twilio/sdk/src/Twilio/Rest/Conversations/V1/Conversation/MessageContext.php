@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class MessageContext extends InstanceContext
-{
+class MessageContext extends InstanceContext {
     /**
      * Initialize the MessageContext
      *
@@ -31,12 +30,11 @@ class MessageContext extends InstanceContext
      *                    resource.
      * @return \Twilio\Rest\Conversations\V1\Conversation\MessageContext
      */
-    public function __construct(Version $version, $conversationSid, $sid)
-    {
+    public function __construct(Version $version, $conversationSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('conversationSid' => $conversationSid, 'sid' => $sid,);
+        $this->solution = array('conversationSid' => $conversationSid, 'sid' => $sid, );
 
         $this->uri = '/Conversations/' . \rawurlencode($conversationSid) . '/Messages/' . \rawurlencode($sid) . '';
     }
@@ -48,8 +46,7 @@ class MessageContext extends InstanceContext
      * @return MessageInstance Updated MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -81,8 +78,7 @@ class MessageContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -92,8 +88,7 @@ class MessageContext extends InstanceContext
      * @return MessageInstance Fetched MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -115,8 +110,7 @@ class MessageContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

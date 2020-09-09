@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class SyncMapOptions
-{
+abstract class SyncMapOptions {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
@@ -25,8 +24,7 @@ abstract class SyncMapOptions
      *                           and is deleted
      * @return CreateSyncMapOptions Options builder
      */
-    public static function create($uniqueName = Values::NONE, $ttl = Values::NONE, $collectionTtl = Values::NONE)
-    {
+    public static function create($uniqueName = Values::NONE, $ttl = Values::NONE, $collectionTtl = Values::NONE) {
         return new CreateSyncMapOptions($uniqueName, $ttl, $collectionTtl);
     }
 
@@ -36,14 +34,12 @@ abstract class SyncMapOptions
      *                           and is deleted
      * @return UpdateSyncMapOptions Options builder
      */
-    public static function update($ttl = Values::NONE, $collectionTtl = Values::NONE)
-    {
+    public static function update($ttl = Values::NONE, $collectionTtl = Values::NONE) {
         return new UpdateSyncMapOptions($ttl, $collectionTtl);
     }
 }
 
-class CreateSyncMapOptions extends Options
-{
+class CreateSyncMapOptions extends Options {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
@@ -51,8 +47,7 @@ class CreateSyncMapOptions extends Options
      * @param int $collectionTtl How long, in seconds, before the Sync Map expires
      *                           and is deleted
      */
-    public function __construct($uniqueName = Values::NONE, $ttl = Values::NONE, $collectionTtl = Values::NONE)
-    {
+    public function __construct($uniqueName = Values::NONE, $ttl = Values::NONE, $collectionTtl = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['ttl'] = $ttl;
         $this->options['collectionTtl'] = $collectionTtl;
@@ -65,8 +60,7 @@ class CreateSyncMapOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -77,8 +71,7 @@ class CreateSyncMapOptions extends Options
      * @param int $ttl An alias for collection_ttl
      * @return $this Fluent Builder
      */
-    public function setTtl($ttl)
-    {
+    public function setTtl($ttl) {
         $this->options['ttl'] = $ttl;
         return $this;
     }
@@ -90,8 +83,7 @@ class CreateSyncMapOptions extends Options
      *                           and is deleted
      * @return $this Fluent Builder
      */
-    public function setCollectionTtl($collectionTtl)
-    {
+    public function setCollectionTtl($collectionTtl) {
         $this->options['collectionTtl'] = $collectionTtl;
         return $this;
     }
@@ -101,8 +93,7 @@ class CreateSyncMapOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -113,15 +104,13 @@ class CreateSyncMapOptions extends Options
     }
 }
 
-class UpdateSyncMapOptions extends Options
-{
+class UpdateSyncMapOptions extends Options {
     /**
      * @param int $ttl An alias for collection_ttl
      * @param int $collectionTtl How long, in seconds, before the Sync Map expires
      *                           and is deleted
      */
-    public function __construct($ttl = Values::NONE, $collectionTtl = Values::NONE)
-    {
+    public function __construct($ttl = Values::NONE, $collectionTtl = Values::NONE) {
         $this->options['ttl'] = $ttl;
         $this->options['collectionTtl'] = $collectionTtl;
     }
@@ -132,8 +121,7 @@ class UpdateSyncMapOptions extends Options
      * @param int $ttl An alias for collection_ttl
      * @return $this Fluent Builder
      */
-    public function setTtl($ttl)
-    {
+    public function setTtl($ttl) {
         $this->options['ttl'] = $ttl;
         return $this;
     }
@@ -145,8 +133,7 @@ class UpdateSyncMapOptions extends Options
      *                           and is deleted
      * @return $this Fluent Builder
      */
-    public function setCollectionTtl($collectionTtl)
-    {
+    public function setCollectionTtl($collectionTtl) {
         $this->options['collectionTtl'] = $collectionTtl;
         return $this;
     }
@@ -156,8 +143,7 @@ class UpdateSyncMapOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

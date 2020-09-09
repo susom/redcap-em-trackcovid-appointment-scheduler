@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Sip extends TwiML
-{
+class Sip extends TwiML {
     /**
      * Sip constructor.
      *
      * @param string $sipUrl SIP URL
      * @param array $attributes Optional attributes
      */
-    public function __construct($sipUrl, $attributes = array())
-    {
+    public function __construct($sipUrl, $attributes = array()) {
         parent::__construct('Sip', $sipUrl, $attributes);
     }
 
@@ -30,8 +28,7 @@ class Sip extends TwiML
      * @param string $username SIP Username
      * @return static $this.
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         return $this->setAttribute('username', $username);
     }
 
@@ -41,8 +38,7 @@ class Sip extends TwiML
      * @param string $password SIP Password
      * @return static $this.
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         return $this->setAttribute('password', $password);
     }
 
@@ -52,8 +48,7 @@ class Sip extends TwiML
      * @param string $url Action URL
      * @return static $this.
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         return $this->setAttribute('url', $url);
     }
 
@@ -63,8 +58,7 @@ class Sip extends TwiML
      * @param string $method Action URL method
      * @return static $this.
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         return $this->setAttribute('method', $method);
     }
 
@@ -74,8 +68,7 @@ class Sip extends TwiML
      * @param string $statusCallbackEvent Status callback events
      * @return static $this.
      */
-    public function setStatusCallbackEvent($statusCallbackEvent)
-    {
+    public function setStatusCallbackEvent($statusCallbackEvent) {
         return $this->setAttribute('statusCallbackEvent', $statusCallbackEvent);
     }
 
@@ -85,8 +78,7 @@ class Sip extends TwiML
      * @param string $statusCallback Status callback URL
      * @return static $this.
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         return $this->setAttribute('statusCallback', $statusCallback);
     }
 
@@ -96,8 +88,7 @@ class Sip extends TwiML
      * @param string $statusCallbackMethod Status callback URL method
      * @return static $this.
      */
-    public function setStatusCallbackMethod($statusCallbackMethod)
-    {
+    public function setStatusCallbackMethod($statusCallbackMethod) {
         return $this->setAttribute('statusCallbackMethod', $statusCallbackMethod);
     }
 }

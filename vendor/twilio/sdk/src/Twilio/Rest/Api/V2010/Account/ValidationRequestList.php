@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class ValidationRequestList extends ListResource
-{
+class ValidationRequestList extends ListResource {
     /**
      * Construct the ValidationRequestList
      *
@@ -24,12 +23,11 @@ class ValidationRequestList extends ListResource
      * @param string $accountSid The SID of the Account that created the resource
      * @return \Twilio\Rest\Api\V2010\Account\ValidationRequestList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/OutgoingCallerIds.json';
     }
@@ -42,8 +40,7 @@ class ValidationRequestList extends ListResource
      * @return ValidationRequestInstance Newly created ValidationRequestInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($phoneNumber, $options = array())
-    {
+    public function create($phoneNumber, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -70,8 +67,7 @@ class ValidationRequestList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.ValidationRequestList]';
     }
 }

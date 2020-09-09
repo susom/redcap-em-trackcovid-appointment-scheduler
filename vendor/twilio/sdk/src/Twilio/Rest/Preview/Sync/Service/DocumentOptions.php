@@ -15,27 +15,23 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class DocumentOptions
-{
+abstract class DocumentOptions {
     /**
      * @param string $uniqueName The unique_name
      * @param array $data The data
      * @return CreateDocumentOptions Options builder
      */
-    public static function create($uniqueName = Values::NONE, $data = Values::NONE)
-    {
+    public static function create($uniqueName = Values::NONE, $data = Values::NONE) {
         return new CreateDocumentOptions($uniqueName, $data);
     }
 }
 
-class CreateDocumentOptions extends Options
-{
+class CreateDocumentOptions extends Options {
     /**
      * @param string $uniqueName The unique_name
      * @param array $data The data
      */
-    public function __construct($uniqueName = Values::NONE, $data = Values::NONE)
-    {
+    public function __construct($uniqueName = Values::NONE, $data = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['data'] = $data;
     }
@@ -46,8 +42,7 @@ class CreateDocumentOptions extends Options
      * @param string $uniqueName The unique_name
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -58,8 +53,7 @@ class CreateDocumentOptions extends Options
      * @param array $data The data
      * @return $this Fluent Builder
      */
-    public function setData($data)
-    {
+    public function setData($data) {
         $this->options['data'] = $data;
         return $this;
     }
@@ -69,8 +63,7 @@ class CreateDocumentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -16,8 +16,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DayList extends ListResource
-{
+class DayList extends ListResource {
     /**
      * Construct the DayList
      *
@@ -25,12 +24,11 @@ class DayList extends ListResource
      * @param string $resourceType The type of communication – Messages, Calls
      * @return \Twilio\Rest\Preview\BulkExports\Export\DayList
      */
-    public function __construct(Version $version, $resourceType)
-    {
+    public function __construct(Version $version, $resourceType) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('resourceType' => $resourceType,);
+        $this->solution = array('resourceType' => $resourceType, );
 
         $this->uri = '/Exports/' . \rawurlencode($resourceType) . '/Days';
     }
@@ -53,8 +51,7 @@ class DayList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -77,8 +74,7 @@ class DayList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return DayInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -91,8 +87,7 @@ class DayList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of DayInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -115,8 +110,7 @@ class DayList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of DayInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -130,8 +124,7 @@ class DayList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.BulkExports.DayList]';
     }
 }

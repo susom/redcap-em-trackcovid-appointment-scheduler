@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Serverless\V1\Service\TwilioFunction\FunctionVersionList $functionVersions
  * @method \Twilio\Rest\Serverless\V1\Service\TwilioFunction\FunctionVersionContext functionVersions(string $sid)
  */
-class FunctionContext extends InstanceContext
-{
+class FunctionContext extends InstanceContext {
     protected $_functionVersions = null;
 
     /**
@@ -34,12 +33,11 @@ class FunctionContext extends InstanceContext
      * @param string $sid The SID of the Function resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\FunctionContext
      */
-    public function __construct(Version $version, $serviceSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Functions/' . \rawurlencode($sid) . '';
     }
@@ -50,8 +48,7 @@ class FunctionContext extends InstanceContext
      * @return FunctionInstance Fetched FunctionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -74,8 +71,7 @@ class FunctionContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -86,9 +82,8 @@ class FunctionContext extends InstanceContext
      * @return FunctionInstance Updated FunctionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($friendlyName)
-    {
-        $data = Values::of(array('FriendlyName' => $friendlyName,));
+    public function update($friendlyName) {
+        $data = Values::of(array('FriendlyName' => $friendlyName, ));
 
         $payload = $this->version->update(
             'POST',
@@ -110,8 +105,7 @@ class FunctionContext extends InstanceContext
      *
      * @return \Twilio\Rest\Serverless\V1\Service\TwilioFunction\FunctionVersionList
      */
-    protected function getFunctionVersions()
-    {
+    protected function getFunctionVersions() {
         if (!$this->_functionVersions) {
             $this->_functionVersions = new FunctionVersionList(
                 $this->version,
@@ -130,8 +124,7 @@ class FunctionContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -148,8 +141,7 @@ class FunctionContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -163,8 +155,7 @@ class FunctionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

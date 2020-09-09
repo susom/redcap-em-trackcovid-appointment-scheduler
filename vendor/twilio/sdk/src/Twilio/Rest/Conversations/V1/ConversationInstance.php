@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class ConversationInstance extends InstanceResource
-{
+class ConversationInstance extends InstanceResource {
     protected $_participants = null;
     protected $_messages = null;
     protected $_webhooks = null;
@@ -45,8 +44,7 @@ class ConversationInstance extends InstanceResource
      *                    resource.
      * @return \Twilio\Rest\Conversations\V1\ConversationInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -63,7 +61,7 @@ class ConversationInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -73,8 +71,7 @@ class ConversationInstance extends InstanceResource
      * @return \Twilio\Rest\Conversations\V1\ConversationContext Context for this
      *                                                           ConversationInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ConversationContext($this->version, $this->solution['sid']);
         }
@@ -89,8 +86,7 @@ class ConversationInstance extends InstanceResource
      * @return ConversationInstance Updated ConversationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -100,8 +96,7 @@ class ConversationInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -111,8 +106,7 @@ class ConversationInstance extends InstanceResource
      * @return ConversationInstance Fetched ConversationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -121,8 +115,7 @@ class ConversationInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Conversations\V1\Conversation\ParticipantList
      */
-    protected function getParticipants()
-    {
+    protected function getParticipants() {
         return $this->proxy()->participants;
     }
 
@@ -131,8 +124,7 @@ class ConversationInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Conversations\V1\Conversation\MessageList
      */
-    protected function getMessages()
-    {
+    protected function getMessages() {
         return $this->proxy()->messages;
     }
 
@@ -141,8 +133,7 @@ class ConversationInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Conversations\V1\Conversation\WebhookList
      */
-    protected function getWebhooks()
-    {
+    protected function getWebhooks() {
         return $this->proxy()->webhooks;
     }
 
@@ -153,8 +144,7 @@ class ConversationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -172,8 +162,7 @@ class ConversationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -12,8 +12,7 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue;
 use Twilio\ListResource;
 use Twilio\Version;
 
-class TaskQueueStatisticsList extends ListResource
-{
+class TaskQueueStatisticsList extends ListResource {
     /**
      * Construct the TaskQueueStatisticsList
      *
@@ -24,12 +23,11 @@ class TaskQueueStatisticsList extends ListResource
      *                             statistics were calculated
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsList
      */
-    public function __construct(Version $version, $workspaceSid, $taskQueueSid)
-    {
+    public function __construct(Version $version, $workspaceSid, $taskQueueSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'taskQueueSid' => $taskQueueSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'taskQueueSid' => $taskQueueSid, );
     }
 
     /**
@@ -37,8 +35,7 @@ class TaskQueueStatisticsList extends ListResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new TaskQueueStatisticsContext(
             $this->version,
             $this->solution['workspaceSid'],
@@ -51,8 +48,7 @@ class TaskQueueStatisticsList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Taskrouter.V1.TaskQueueStatisticsList]';
     }
 }

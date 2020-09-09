@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class IpAddressList extends ListResource
-{
+class IpAddressList extends ListResource {
     /**
      * Construct the IpAddressList
      *
@@ -28,8 +27,7 @@ class IpAddressList extends ListResource
      *                                       includes this resource.
      * @return \Twilio\Rest\Api\V2010\Account\Sip\IpAccessControlList\IpAddressList
      */
-    public function __construct(Version $version, $accountSid, $ipAccessControlListSid)
-    {
+    public function __construct(Version $version, $accountSid, $ipAccessControlListSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -59,8 +57,7 @@ class IpAddressList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -83,8 +80,7 @@ class IpAddressList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return IpAddressInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -97,8 +93,7 @@ class IpAddressList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of IpAddressInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -121,8 +116,7 @@ class IpAddressList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of IpAddressInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -144,8 +138,7 @@ class IpAddressList extends ListResource
      * @return IpAddressInstance Newly created IpAddressInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($friendlyName, $ipAddress, $options = array())
-    {
+    public function create($friendlyName, $ipAddress, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -175,8 +168,7 @@ class IpAddressList extends ListResource
      * @param string $sid A string that identifies the IpAddress resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Sip\IpAccessControlList\IpAddressContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new IpAddressContext(
             $this->version,
             $this->solution['accountSid'],
@@ -190,8 +182,7 @@ class IpAddressList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.IpAddressList]';
     }
 }

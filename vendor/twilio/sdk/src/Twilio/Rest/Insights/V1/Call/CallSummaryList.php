@@ -15,8 +15,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CallSummaryList extends ListResource
-{
+class CallSummaryList extends ListResource {
     /**
      * Construct the CallSummaryList
      *
@@ -24,12 +23,11 @@ class CallSummaryList extends ListResource
      * @param string $callSid The call_sid
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryList
      */
-    public function __construct(Version $version, $callSid)
-    {
+    public function __construct(Version $version, $callSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('callSid' => $callSid,);
+        $this->solution = array('callSid' => $callSid, );
     }
 
     /**
@@ -37,8 +35,7 @@ class CallSummaryList extends ListResource
      *
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new CallSummaryContext($this->version, $this->solution['callSid']);
     }
 
@@ -47,8 +44,7 @@ class CallSummaryList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Insights.V1.CallSummaryList]';
     }
 }

@@ -38,8 +38,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class InteractionInstance extends InstanceResource
-{
+class InteractionInstance extends InstanceResource {
     /**
      * Initialize the InteractionInstance
      *
@@ -50,8 +49,7 @@ class InteractionInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Proxy\V1\Service\Session\InteractionInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sessionSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sessionSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -92,8 +90,7 @@ class InteractionInstance extends InstanceResource
      *                                                                  this
      *                                                                  InteractionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new InteractionContext(
                 $this->version,
@@ -112,8 +109,7 @@ class InteractionInstance extends InstanceResource
      * @return InteractionInstance Fetched InteractionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -123,8 +119,7 @@ class InteractionInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -135,8 +130,7 @@ class InteractionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -154,8 +148,7 @@ class InteractionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

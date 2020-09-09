@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class BucketInstance extends InstanceResource
-{
+class BucketInstance extends InstanceResource {
     /**
      * Initialize the BucketInstance
      *
@@ -40,8 +39,7 @@ class BucketInstance extends InstanceResource
      * @param string $sid A string that uniquely identifies this Bucket.
      * @return \Twilio\Rest\Verify\V2\Service\RateLimit\BucketInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $rateLimitSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $rateLimitSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -72,8 +70,7 @@ class BucketInstance extends InstanceResource
      *                                                                this
      *                                                                BucketInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new BucketContext(
                 $this->version,
@@ -93,8 +90,7 @@ class BucketInstance extends InstanceResource
      * @return BucketInstance Updated BucketInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -104,8 +100,7 @@ class BucketInstance extends InstanceResource
      * @return BucketInstance Fetched BucketInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -115,8 +110,7 @@ class BucketInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -127,8 +121,7 @@ class BucketInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -146,8 +139,7 @@ class BucketInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

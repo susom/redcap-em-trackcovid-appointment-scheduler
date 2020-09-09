@@ -15,16 +15,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class BusinessList extends ListResource
-{
+class BusinessList extends ListResource {
     /**
      * Construct the BusinessList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\TrustedComms\BusinessList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -37,8 +35,7 @@ class BusinessList extends ListResource
      * @param string $sid A string that uniquely identifies this Business.
      * @return \Twilio\Rest\Preview\TrustedComms\BusinessContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new BusinessContext($this->version, $sid);
     }
 
@@ -47,8 +44,7 @@ class BusinessList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.BusinessList]';
     }
 }

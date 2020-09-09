@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class VariableInstance extends InstanceResource
-{
+class VariableInstance extends InstanceResource {
     /**
      * Initialize the VariableInstance
      *
@@ -43,8 +42,7 @@ class VariableInstance extends InstanceResource
      * @param string $sid The SID of the Variable resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $environmentSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $environmentSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -73,8 +71,7 @@ class VariableInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableContext Context for this VariableInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new VariableContext(
                 $this->version,
@@ -93,8 +90,7 @@ class VariableInstance extends InstanceResource
      * @return VariableInstance Fetched VariableInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -105,8 +101,7 @@ class VariableInstance extends InstanceResource
      * @return VariableInstance Updated VariableInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -116,8 +111,7 @@ class VariableInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -128,8 +122,7 @@ class VariableInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -147,8 +140,7 @@ class VariableInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

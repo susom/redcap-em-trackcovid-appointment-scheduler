@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait CATEGORIEStrait
 {
     /**
      * @var array component property CATEGORIES value
-     * @access protected
      */
     protected $categories = null;
 
@@ -60,9 +59,9 @@ trait CATEGORIEStrait
         return self::createCatRes(
             self::CATEGORIES,
             $this->categories,
-            $this->getConfig(self::LANGUAGE),
-            $this->getConfig(self::ALLOWEMPTY),
-            [self::LANGUAGE]
+            $this->getConfig( self::LANGUAGE ),
+            $this->getConfig( self::ALLOWEMPTY ),
+            [ self::LANGUAGE ]
         );
     }
 
@@ -70,30 +69,39 @@ trait CATEGORIEStrait
      * Return formatted output for calendar component properties categories/resources
      *
      * @param string $propName
-     * @param array $pValArr
+     * @param array  $pValArr
      * @param string $lang
-     * @param bool $allowEmpty
-     * @param array $specPkeys
+     * @param bool   $allowEmpty
+     * @param array  $specPkeys
      * @return string
      * @since  2.29.13 - 2019-09-03
      */
-    private static function createCatRes($propName, $pValArr, $lang, $allowEmpty, $specPkeys)
-    {
-        if (empty($pValArr)) {
+    private static function createCatRes(
+        $propName,
+        $pValArr,
+        $lang,
+        $allowEmpty,
+        $specPkeys
+    ) {
+        if( empty( $pValArr )) {
             return null;
         }
         $output = null;
-        foreach ($pValArr as $cx => $valuePart) {
-            if (empty($valuePart[Util::$LCvalue])) {
-                if ($allowEmpty) {
-                    $output .= StringFactory::createElement($propName);
+        foreach( $pValArr as $cx => $valuePart ) {
+            if( empty( $valuePart[Util::$LCvalue] )) {
+                if( $allowEmpty) {
+                    $output .= StringFactory::createElement( $propName );
                 }
                 continue;
             }
-            $content = StringFactory::strrep($valuePart[Util::$LCvalue]);
+            $content = StringFactory::strrep( $valuePart[Util::$LCvalue] );
             $output .= StringFactory::createElement(
                 $propName,
-                ParameterFactory::createParams($valuePart[Util::$LCparams], $specPkeys, $lang),
+                ParameterFactory::createParams(
+                    $valuePart[Util::$LCparams],
+                    $specPkeys,
+                    $lang
+                ),
                 $content
             );
         }
@@ -103,55 +111,63 @@ trait CATEGORIEStrait
     /**
      * Delete calendar component property categories
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteCategories($propDelIx = null)
+    public function deleteCategories( $propDelIx = null )
     {
-        if (empty($this->categories)) {
-            unset($this->propDelIx[self::CATEGORIES]);
+        if( empty( $this->categories )) {
+            unset( $this->propDelIx[self::CATEGORIES] );
             return false;
         }
-        return $this->deletePropertyM($this->categories, self::CATEGORIES, $propDelIx);
+        return $this->deletePropertyM(
+            $this->categories,
+            self::CATEGORIES,
+            $propDelIx
+        );
     }
 
     /**
      * Get calendar component property categories
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getCategories($propIx = null, $inclParam = false)
+    public function getCategories( $propIx = null, $inclParam = false )
     {
-        if (empty($this->categories)) {
-            unset($this->propIx[self::CATEGORIES]);
+        if( empty( $this->categories )) {
+            unset( $this->propIx[self::CATEGORIES] );
             return false;
         }
-        return $this->getPropertyM($this->categories, self::CATEGORIES, $propIx, $inclParam);
+        return $this->getPropertyM( $this->categories,
+            self::CATEGORIES,
+            $propIx,
+            $inclParam
+        );
     }
 
     /**
      * Set calendar component property categories
      *
-     * @param mixed $value
-     * @param array $params
+     * @param mixed   $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setCategories($value = null, $params = [], $index = null)
+    public function setCategories( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::CATEGORIES);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::CATEGORIES );
+            $value  = Util::$SP0;
             $params = [];
         }
-        Util::assertString($value, self::CATEGORIES);
-        $this->setMval($this->categories, (string)$value, $params, null, $index);
+        Util::assertString( $value, self::CATEGORIES );
+        $this->setMval( $this->categories, (string) $value, $params, null, $index );
         return $this;
     }
 }

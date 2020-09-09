@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -46,7 +46,6 @@ trait TZURLtrait
 {
     /**
      * @var array component property TZURL value
-     * @access protected
      */
     protected $tzurl = null;
 
@@ -57,15 +56,17 @@ trait TZURLtrait
      */
     public function createTzurl()
     {
-        if (empty($this->tzurl)) {
+        if( empty( $this->tzurl )) {
             return null;
         }
-        if (empty($this->tzurl[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::TZURL) : null;
+        if( empty( $this->tzurl[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::TZURL )
+                : null;
         }
         return StringFactory::createElement(
             self::TZURL,
-            ParameterFactory::createParams($this->tzurl[Util::$LCparams]),
+            ParameterFactory::createParams( $this->tzurl[Util::$LCparams] ),
             $this->tzurl[Util::$LCvalue]
         );
     }
@@ -85,23 +86,23 @@ trait TZURLtrait
     /**
      * Get calendar component property tzurl
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-13
      */
-    public function getTzurl($inclParam = false)
+    public function getTzurl( $inclParam = false )
     {
-        if (empty($this->tzurl)) {
+        if( empty( $this->tzurl )) {
             return false;
         }
-        return ($inclParam) ? $this->tzurl : $this->tzurl[Util::$LCvalue];
+        return ( $inclParam ) ? $this->tzurl : $this->tzurl[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property tzurl
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.27.3 2018-12-22
@@ -109,18 +110,19 @@ trait TZURLtrait
      * This URI form can be useful within an organization, but is problematic
      * in the Internet.
      */
-    public function setTzurl($value = null, $params = [])
+    public function setTzurl( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::TZURL);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::TZURL );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            HttpFactory::assertUrl($value);
+        }
+        else {
+            HttpFactory::assertUrl( $value );
         }
         $this->tzurl = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => $value,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

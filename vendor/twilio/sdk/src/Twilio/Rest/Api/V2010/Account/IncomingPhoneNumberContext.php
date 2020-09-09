@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOnList $assignedAddOns
  * @method \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOnContext assignedAddOns(string $sid)
  */
-class IncomingPhoneNumberContext extends InstanceContext
-{
+class IncomingPhoneNumberContext extends InstanceContext {
     protected $_assignedAddOns = null;
 
     /**
@@ -34,12 +33,11 @@ class IncomingPhoneNumberContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/IncomingPhoneNumbers/' . \rawurlencode($sid) . '.json';
     }
@@ -51,8 +49,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      * @return IncomingPhoneNumberInstance Updated IncomingPhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -102,8 +99,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      * @return IncomingPhoneNumberInstance Fetched IncomingPhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -126,8 +122,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -136,8 +131,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      *
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOnList
      */
-    protected function getAssignedAddOns()
-    {
+    protected function getAssignedAddOns() {
         if (!$this->_assignedAddOns) {
             $this->_assignedAddOns = new AssignedAddOnList(
                 $this->version,
@@ -156,8 +150,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -174,8 +167,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -189,8 +181,7 @@ class IncomingPhoneNumberContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

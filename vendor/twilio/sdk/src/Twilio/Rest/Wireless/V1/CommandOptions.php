@@ -12,8 +12,7 @@ namespace Twilio\Rest\Wireless\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class CommandOptions
-{
+abstract class CommandOptions {
     /**
      * @param string $sim The sid or unique_name of the Sim resources to read
      * @param string $status The status of the resources to read
@@ -21,12 +20,7 @@ abstract class CommandOptions
      * @param string $transport Only return Commands with this transport value
      * @return ReadCommandOptions Options builder
      */
-    public static function read(
-        $sim = Values::NONE,
-        $status = Values::NONE,
-        $direction = Values::NONE,
-        $transport = Values::NONE
-    ) {
+    public static function read($sim = Values::NONE, $status = Values::NONE, $direction = Values::NONE, $transport = Values::NONE) {
         return new ReadCommandOptions($sim, $status, $direction, $transport);
     }
 
@@ -42,33 +36,19 @@ abstract class CommandOptions
      *                                       from the recipient
      * @return CreateCommandOptions Options builder
      */
-    public static function create(
-        $sim = Values::NONE,
-        $callbackMethod = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $commandMode = Values::NONE,
-        $includeSid = Values::NONE,
-        $deliveryReceiptRequested = Values::NONE
-    ) {
-        return new CreateCommandOptions($sim, $callbackMethod, $callbackUrl, $commandMode, $includeSid,
-            $deliveryReceiptRequested);
+    public static function create($sim = Values::NONE, $callbackMethod = Values::NONE, $callbackUrl = Values::NONE, $commandMode = Values::NONE, $includeSid = Values::NONE, $deliveryReceiptRequested = Values::NONE) {
+        return new CreateCommandOptions($sim, $callbackMethod, $callbackUrl, $commandMode, $includeSid, $deliveryReceiptRequested);
     }
 }
 
-class ReadCommandOptions extends Options
-{
+class ReadCommandOptions extends Options {
     /**
      * @param string $sim The sid or unique_name of the Sim resources to read
      * @param string $status The status of the resources to read
      * @param string $direction Only return Commands with this direction value
      * @param string $transport Only return Commands with this transport value
      */
-    public function __construct(
-        $sim = Values::NONE,
-        $status = Values::NONE,
-        $direction = Values::NONE,
-        $transport = Values::NONE
-    ) {
+    public function __construct($sim = Values::NONE, $status = Values::NONE, $direction = Values::NONE, $transport = Values::NONE) {
         $this->options['sim'] = $sim;
         $this->options['status'] = $status;
         $this->options['direction'] = $direction;
@@ -81,8 +61,7 @@ class ReadCommandOptions extends Options
      * @param string $sim The sid or unique_name of the Sim resources to read
      * @return $this Fluent Builder
      */
-    public function setSim($sim)
-    {
+    public function setSim($sim) {
         $this->options['sim'] = $sim;
         return $this;
     }
@@ -93,8 +72,7 @@ class ReadCommandOptions extends Options
      * @param string $status The status of the resources to read
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -105,8 +83,7 @@ class ReadCommandOptions extends Options
      * @param string $direction Only return Commands with this direction value
      * @return $this Fluent Builder
      */
-    public function setDirection($direction)
-    {
+    public function setDirection($direction) {
         $this->options['direction'] = $direction;
         return $this;
     }
@@ -117,8 +94,7 @@ class ReadCommandOptions extends Options
      * @param string $transport Only return Commands with this transport value
      * @return $this Fluent Builder
      */
-    public function setTransport($transport)
-    {
+    public function setTransport($transport) {
         $this->options['transport'] = $transport;
         return $this;
     }
@@ -128,8 +104,7 @@ class ReadCommandOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -140,8 +115,7 @@ class ReadCommandOptions extends Options
     }
 }
 
-class CreateCommandOptions extends Options
-{
+class CreateCommandOptions extends Options {
     /**
      * @param string $sim The sid or unique_name of the SIM to send the Command to
      * @param string $callbackMethod The HTTP method we use to call callback_url
@@ -153,14 +127,7 @@ class CreateCommandOptions extends Options
      * @param bool $deliveryReceiptRequested Whether to request delivery receipt
      *                                       from the recipient
      */
-    public function __construct(
-        $sim = Values::NONE,
-        $callbackMethod = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $commandMode = Values::NONE,
-        $includeSid = Values::NONE,
-        $deliveryReceiptRequested = Values::NONE
-    ) {
+    public function __construct($sim = Values::NONE, $callbackMethod = Values::NONE, $callbackUrl = Values::NONE, $commandMode = Values::NONE, $includeSid = Values::NONE, $deliveryReceiptRequested = Values::NONE) {
         $this->options['sim'] = $sim;
         $this->options['callbackMethod'] = $callbackMethod;
         $this->options['callbackUrl'] = $callbackUrl;
@@ -175,8 +142,7 @@ class CreateCommandOptions extends Options
      * @param string $sim The sid or unique_name of the SIM to send the Command to
      * @return $this Fluent Builder
      */
-    public function setSim($sim)
-    {
+    public function setSim($sim) {
         $this->options['sim'] = $sim;
         return $this;
     }
@@ -187,8 +153,7 @@ class CreateCommandOptions extends Options
      * @param string $callbackMethod The HTTP method we use to call callback_url
      * @return $this Fluent Builder
      */
-    public function setCallbackMethod($callbackMethod)
-    {
+    public function setCallbackMethod($callbackMethod) {
         $this->options['callbackMethod'] = $callbackMethod;
         return $this;
     }
@@ -200,8 +165,7 @@ class CreateCommandOptions extends Options
      *                            sending
      * @return $this Fluent Builder
      */
-    public function setCallbackUrl($callbackUrl)
-    {
+    public function setCallbackUrl($callbackUrl) {
         $this->options['callbackUrl'] = $callbackUrl;
         return $this;
     }
@@ -212,8 +176,7 @@ class CreateCommandOptions extends Options
      * @param string $commandMode The mode to use when sending the SMS message
      * @return $this Fluent Builder
      */
-    public function setCommandMode($commandMode)
-    {
+    public function setCommandMode($commandMode) {
         $this->options['commandMode'] = $commandMode;
         return $this;
     }
@@ -225,8 +188,7 @@ class CreateCommandOptions extends Options
      *                           message body
      * @return $this Fluent Builder
      */
-    public function setIncludeSid($includeSid)
-    {
+    public function setIncludeSid($includeSid) {
         $this->options['includeSid'] = $includeSid;
         return $this;
     }
@@ -238,8 +200,7 @@ class CreateCommandOptions extends Options
      *                                       from the recipient
      * @return $this Fluent Builder
      */
-    public function setDeliveryReceiptRequested($deliveryReceiptRequested)
-    {
+    public function setDeliveryReceiptRequested($deliveryReceiptRequested) {
         $this->options['deliveryReceiptRequested'] = $deliveryReceiptRequested;
         return $this;
     }
@@ -249,8 +210,7 @@ class CreateCommandOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

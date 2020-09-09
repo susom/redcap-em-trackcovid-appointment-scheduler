@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class FeedbackContext extends InstanceContext
-{
+class FeedbackContext extends InstanceContext {
     /**
      * Initialize the FeedbackContext
      *
@@ -26,12 +25,11 @@ class FeedbackContext extends InstanceContext
      * @param string $callSid The call sid that uniquely identifies the call
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackContext
      */
-    public function __construct(Version $version, $accountSid, $callSid)
-    {
+    public function __construct(Version $version, $accountSid, $callSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid,);
+        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/' . \rawurlencode($callSid) . '/Feedback.json';
     }
@@ -44,15 +42,12 @@ class FeedbackContext extends InstanceContext
      * @return FeedbackInstance Newly created FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($qualityScore, $options = array())
-    {
+    public function create($qualityScore, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
             'QualityScore' => $qualityScore,
-            'Issue' => Serialize::map($options['issue'], function ($e) {
-                return $e;
-            }),
+            'Issue' => Serialize::map($options['issue'], function($e) { return $e; }),
         ));
 
         $payload = $this->version->create(
@@ -76,8 +71,7 @@ class FeedbackContext extends InstanceContext
      * @return FeedbackInstance Fetched FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -102,15 +96,12 @@ class FeedbackContext extends InstanceContext
      * @return FeedbackInstance Updated FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($qualityScore, $options = array())
-    {
+    public function update($qualityScore, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
             'QualityScore' => $qualityScore,
-            'Issue' => Serialize::map($options['issue'], function ($e) {
-                return $e;
-            }),
+            'Issue' => Serialize::map($options['issue'], function($e) { return $e; }),
         ));
 
         $payload = $this->version->update(
@@ -133,8 +124,7 @@ class FeedbackContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

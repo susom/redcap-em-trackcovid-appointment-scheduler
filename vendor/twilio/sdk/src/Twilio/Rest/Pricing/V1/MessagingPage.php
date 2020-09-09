@@ -11,18 +11,15 @@ namespace Twilio\Rest\Pricing\V1;
 
 use Twilio\Page;
 
-class MessagingPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class MessagingPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new MessagingInstance($this->version, $payload);
     }
 
@@ -31,8 +28,7 @@ class MessagingPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Pricing.V1.MessagingPage]';
     }
 }

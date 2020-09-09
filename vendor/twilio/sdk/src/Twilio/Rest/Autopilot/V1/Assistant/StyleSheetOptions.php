@@ -15,27 +15,23 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class StyleSheetOptions
-{
+abstract class StyleSheetOptions {
     /**
      * @param array $styleSheet The JSON string that describes the style sheet
      *                          object
      * @return UpdateStyleSheetOptions Options builder
      */
-    public static function update($styleSheet = Values::NONE)
-    {
+    public static function update($styleSheet = Values::NONE) {
         return new UpdateStyleSheetOptions($styleSheet);
     }
 }
 
-class UpdateStyleSheetOptions extends Options
-{
+class UpdateStyleSheetOptions extends Options {
     /**
      * @param array $styleSheet The JSON string that describes the style sheet
      *                          object
      */
-    public function __construct($styleSheet = Values::NONE)
-    {
+    public function __construct($styleSheet = Values::NONE) {
         $this->options['styleSheet'] = $styleSheet;
     }
 
@@ -46,8 +42,7 @@ class UpdateStyleSheetOptions extends Options
      *                          object
      * @return $this Fluent Builder
      */
-    public function setStyleSheet($styleSheet)
-    {
+    public function setStyleSheet($styleSheet) {
         $this->options['styleSheet'] = $styleSheet;
         return $this;
     }
@@ -57,8 +52,7 @@ class UpdateStyleSheetOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

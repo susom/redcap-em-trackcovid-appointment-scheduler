@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class StepContextContext extends InstanceContext
-{
+class StepContextContext extends InstanceContext {
     /**
      * Initialize the StepContextContext
      *
@@ -25,8 +24,7 @@ class StepContextContext extends InstanceContext
      * @param string $stepSid Step SID
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\Step\StepContextContext
      */
-    public function __construct(Version $version, $flowSid, $engagementSid, $stepSid)
-    {
+    public function __construct(Version $version, $flowSid, $engagementSid, $stepSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -45,8 +43,7 @@ class StepContextContext extends InstanceContext
      * @return StepContextInstance Fetched StepContextInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,8 +66,7 @@ class StepContextContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

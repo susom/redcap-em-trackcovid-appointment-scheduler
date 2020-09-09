@@ -12,29 +12,25 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace\Worker;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class WorkerChannelOptions
-{
+abstract class WorkerChannelOptions {
     /**
      * @param int $capacity The total number of Tasks that the Worker should handle
      *                      for the TaskChannel type
      * @param bool $available Whether the WorkerChannel is available
      * @return UpdateWorkerChannelOptions Options builder
      */
-    public static function update($capacity = Values::NONE, $available = Values::NONE)
-    {
+    public static function update($capacity = Values::NONE, $available = Values::NONE) {
         return new UpdateWorkerChannelOptions($capacity, $available);
     }
 }
 
-class UpdateWorkerChannelOptions extends Options
-{
+class UpdateWorkerChannelOptions extends Options {
     /**
      * @param int $capacity The total number of Tasks that the Worker should handle
      *                      for the TaskChannel type
      * @param bool $available Whether the WorkerChannel is available
      */
-    public function __construct($capacity = Values::NONE, $available = Values::NONE)
-    {
+    public function __construct($capacity = Values::NONE, $available = Values::NONE) {
         $this->options['capacity'] = $capacity;
         $this->options['available'] = $available;
     }
@@ -46,8 +42,7 @@ class UpdateWorkerChannelOptions extends Options
      *                      for the TaskChannel type
      * @return $this Fluent Builder
      */
-    public function setCapacity($capacity)
-    {
+    public function setCapacity($capacity) {
         $this->options['capacity'] = $capacity;
         return $this;
     }
@@ -58,8 +53,7 @@ class UpdateWorkerChannelOptions extends Options
      * @param bool $available Whether the WorkerChannel is available
      * @return $this Fluent Builder
      */
-    public function setAvailable($available)
-    {
+    public function setAvailable($available) {
         $this->options['available'] = $available;
         return $this;
     }
@@ -69,8 +63,7 @@ class UpdateWorkerChannelOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class AssetVersionContext extends InstanceContext
-{
+class AssetVersionContext extends InstanceContext {
     /**
      * Initialize the AssetVersionContext
      *
@@ -31,12 +30,11 @@ class AssetVersionContext extends InstanceContext
      *                    fetch
      * @return \Twilio\Rest\Serverless\V1\Service\Asset\AssetVersionContext
      */
-    public function __construct(Version $version, $serviceSid, $assetSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $assetSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'assetSid' => $assetSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'assetSid' => $assetSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Assets/' . \rawurlencode($assetSid) . '/Versions/' . \rawurlencode($sid) . '';
     }
@@ -47,8 +45,7 @@ class AssetVersionContext extends InstanceContext
      * @return AssetVersionInstance Fetched AssetVersionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -71,8 +68,7 @@ class AssetVersionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $uri
  */
-class IpAddressInstance extends InstanceResource
-{
+class IpAddressInstance extends InstanceResource {
     /**
      * Initialize the IpAddressInstance
      *
@@ -42,8 +41,7 @@ class IpAddressInstance extends InstanceResource
      * @param string $sid A string that identifies the IpAddress resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Sip\IpAccessControlList\IpAddressInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $ipAccessControlListSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $ipAccessControlListSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -73,8 +71,7 @@ class IpAddressInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\Sip\IpAccessControlList\IpAddressContext Context for this
      *                                                                                 IpAddressInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new IpAddressContext(
                 $this->version,
@@ -93,8 +90,7 @@ class IpAddressInstance extends InstanceResource
      * @return IpAddressInstance Fetched IpAddressInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -105,8 +101,7 @@ class IpAddressInstance extends InstanceResource
      * @return IpAddressInstance Updated IpAddressInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -116,8 +111,7 @@ class IpAddressInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -128,8 +122,7 @@ class IpAddressInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -147,8 +140,7 @@ class IpAddressInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

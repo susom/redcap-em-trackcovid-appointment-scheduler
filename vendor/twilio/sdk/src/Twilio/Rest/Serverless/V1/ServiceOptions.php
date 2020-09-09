@@ -15,15 +15,13 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class ServiceOptions
-{
+abstract class ServiceOptions {
     /**
      * @param bool $includeCredentials Whether to inject Account credentials into a
      *                                 function invocation context
      * @return CreateServiceOptions Options builder
      */
-    public static function create($includeCredentials = Values::NONE)
-    {
+    public static function create($includeCredentials = Values::NONE) {
         return new CreateServiceOptions($includeCredentials);
     }
 
@@ -33,20 +31,17 @@ abstract class ServiceOptions
      * @param string $friendlyName A string to describe the Service resource
      * @return UpdateServiceOptions Options builder
      */
-    public static function update($includeCredentials = Values::NONE, $friendlyName = Values::NONE)
-    {
+    public static function update($includeCredentials = Values::NONE, $friendlyName = Values::NONE) {
         return new UpdateServiceOptions($includeCredentials, $friendlyName);
     }
 }
 
-class CreateServiceOptions extends Options
-{
+class CreateServiceOptions extends Options {
     /**
      * @param bool $includeCredentials Whether to inject Account credentials into a
      *                                 function invocation context
      */
-    public function __construct($includeCredentials = Values::NONE)
-    {
+    public function __construct($includeCredentials = Values::NONE) {
         $this->options['includeCredentials'] = $includeCredentials;
     }
 
@@ -57,8 +52,7 @@ class CreateServiceOptions extends Options
      *                                 function invocation context
      * @return $this Fluent Builder
      */
-    public function setIncludeCredentials($includeCredentials)
-    {
+    public function setIncludeCredentials($includeCredentials) {
         $this->options['includeCredentials'] = $includeCredentials;
         return $this;
     }
@@ -68,8 +62,7 @@ class CreateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -80,15 +73,13 @@ class CreateServiceOptions extends Options
     }
 }
 
-class UpdateServiceOptions extends Options
-{
+class UpdateServiceOptions extends Options {
     /**
      * @param bool $includeCredentials Whether to inject Account credentials into a
      *                                 function invocation context
      * @param string $friendlyName A string to describe the Service resource
      */
-    public function __construct($includeCredentials = Values::NONE, $friendlyName = Values::NONE)
-    {
+    public function __construct($includeCredentials = Values::NONE, $friendlyName = Values::NONE) {
         $this->options['includeCredentials'] = $includeCredentials;
         $this->options['friendlyName'] = $friendlyName;
     }
@@ -100,8 +91,7 @@ class UpdateServiceOptions extends Options
      *                                 function invocation context
      * @return $this Fluent Builder
      */
-    public function setIncludeCredentials($includeCredentials)
-    {
+    public function setIncludeCredentials($includeCredentials) {
         $this->options['includeCredentials'] = $includeCredentials;
         return $this;
     }
@@ -112,8 +102,7 @@ class UpdateServiceOptions extends Options
      * @param string $friendlyName A string to describe the Service resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -123,8 +112,7 @@ class UpdateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

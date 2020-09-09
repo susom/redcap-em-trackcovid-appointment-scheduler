@@ -12,8 +12,7 @@ namespace Twilio\Rest\Verify\V2\Service;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class VerificationOptions
-{
+abstract class VerificationOptions {
     /**
      * @param string $customMessage The text of a custom message to use for the
      *                              verification
@@ -30,24 +29,12 @@ abstract class VerificationOptions
      * @param string $appHash App Hash to be included at the end of an SMS.
      * @return CreateVerificationOptions Options builder
      */
-    public static function create(
-        $customMessage = Values::NONE,
-        $sendDigits = Values::NONE,
-        $locale = Values::NONE,
-        $customCode = Values::NONE,
-        $amount = Values::NONE,
-        $payee = Values::NONE,
-        $rateLimits = Values::NONE,
-        $channelConfiguration = Values::NONE,
-        $appHash = Values::NONE
-    ) {
-        return new CreateVerificationOptions($customMessage, $sendDigits, $locale, $customCode, $amount, $payee,
-            $rateLimits, $channelConfiguration, $appHash);
+    public static function create($customMessage = Values::NONE, $sendDigits = Values::NONE, $locale = Values::NONE, $customCode = Values::NONE, $amount = Values::NONE, $payee = Values::NONE, $rateLimits = Values::NONE, $channelConfiguration = Values::NONE, $appHash = Values::NONE) {
+        return new CreateVerificationOptions($customMessage, $sendDigits, $locale, $customCode, $amount, $payee, $rateLimits, $channelConfiguration, $appHash);
     }
 }
 
-class CreateVerificationOptions extends Options
-{
+class CreateVerificationOptions extends Options {
     /**
      * @param string $customMessage The text of a custom message to use for the
      *                              verification
@@ -63,17 +50,7 @@ class CreateVerificationOptions extends Options
      *                                    format.
      * @param string $appHash App Hash to be included at the end of an SMS.
      */
-    public function __construct(
-        $customMessage = Values::NONE,
-        $sendDigits = Values::NONE,
-        $locale = Values::NONE,
-        $customCode = Values::NONE,
-        $amount = Values::NONE,
-        $payee = Values::NONE,
-        $rateLimits = Values::NONE,
-        $channelConfiguration = Values::NONE,
-        $appHash = Values::NONE
-    ) {
+    public function __construct($customMessage = Values::NONE, $sendDigits = Values::NONE, $locale = Values::NONE, $customCode = Values::NONE, $amount = Values::NONE, $payee = Values::NONE, $rateLimits = Values::NONE, $channelConfiguration = Values::NONE, $appHash = Values::NONE) {
         $this->options['customMessage'] = $customMessage;
         $this->options['sendDigits'] = $sendDigits;
         $this->options['locale'] = $locale;
@@ -92,8 +69,7 @@ class CreateVerificationOptions extends Options
      *                              verification
      * @return $this Fluent Builder
      */
-    public function setCustomMessage($customMessage)
-    {
+    public function setCustomMessage($customMessage) {
         $this->options['customMessage'] = $customMessage;
         return $this;
     }
@@ -104,8 +80,7 @@ class CreateVerificationOptions extends Options
      * @param string $sendDigits The digits to send after a phone call is answered
      * @return $this Fluent Builder
      */
-    public function setSendDigits($sendDigits)
-    {
+    public function setSendDigits($sendDigits) {
         $this->options['sendDigits'] = $sendDigits;
         return $this;
     }
@@ -116,8 +91,7 @@ class CreateVerificationOptions extends Options
      * @param string $locale The locale to use for the verification SMS or call
      * @return $this Fluent Builder
      */
-    public function setLocale($locale)
-    {
+    public function setLocale($locale) {
         $this->options['locale'] = $locale;
         return $this;
     }
@@ -128,8 +102,7 @@ class CreateVerificationOptions extends Options
      * @param string $customCode A pre-generated code
      * @return $this Fluent Builder
      */
-    public function setCustomCode($customCode)
-    {
+    public function setCustomCode($customCode) {
         $this->options['customCode'] = $customCode;
         return $this;
     }
@@ -141,8 +114,7 @@ class CreateVerificationOptions extends Options
      *                       transaction.
      * @return $this Fluent Builder
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->options['amount'] = $amount;
         return $this;
     }
@@ -153,8 +125,7 @@ class CreateVerificationOptions extends Options
      * @param string $payee The payee of the associated PSD2 compliant transaction
      * @return $this Fluent Builder
      */
-    public function setPayee($payee)
-    {
+    public function setPayee($payee) {
         $this->options['payee'] = $payee;
         return $this;
     }
@@ -166,8 +137,7 @@ class CreateVerificationOptions extends Options
      *                          Limits.
      * @return $this Fluent Builder
      */
-    public function setRateLimits($rateLimits)
-    {
+    public function setRateLimits($rateLimits) {
         $this->options['rateLimits'] = $rateLimits;
         return $this;
     }
@@ -179,8 +149,7 @@ class CreateVerificationOptions extends Options
      *                                    format.
      * @return $this Fluent Builder
      */
-    public function setChannelConfiguration($channelConfiguration)
-    {
+    public function setChannelConfiguration($channelConfiguration) {
         $this->options['channelConfiguration'] = $channelConfiguration;
         return $this;
     }
@@ -191,8 +160,7 @@ class CreateVerificationOptions extends Options
      * @param string $appHash App Hash to be included at the end of an SMS.
      * @return $this Fluent Builder
      */
-    public function setAppHash($appHash)
-    {
+    public function setAppHash($appHash) {
         $this->options['appHash'] = $appHash;
         return $this;
     }
@@ -202,8 +170,7 @@ class CreateVerificationOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

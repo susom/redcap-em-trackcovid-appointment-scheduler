@@ -12,14 +12,12 @@ namespace Twilio\Rest\Api\V2010;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class AccountOptions
-{
+abstract class AccountOptions {
     /**
      * @param string $friendlyName A human readable description of the account
      * @return CreateAccountOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE)
-    {
+    public static function create($friendlyName = Values::NONE) {
         return new CreateAccountOptions($friendlyName);
     }
 
@@ -28,8 +26,7 @@ abstract class AccountOptions
      * @param string $status Status to filter on
      * @return ReadAccountOptions Options builder
      */
-    public static function read($friendlyName = Values::NONE, $status = Values::NONE)
-    {
+    public static function read($friendlyName = Values::NONE, $status = Values::NONE) {
         return new ReadAccountOptions($friendlyName, $status);
     }
 
@@ -38,19 +35,16 @@ abstract class AccountOptions
      * @param string $status Status to update the Account with
      * @return UpdateAccountOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $status = Values::NONE)
-    {
+    public static function update($friendlyName = Values::NONE, $status = Values::NONE) {
         return new UpdateAccountOptions($friendlyName, $status);
     }
 }
 
-class CreateAccountOptions extends Options
-{
+class CreateAccountOptions extends Options {
     /**
      * @param string $friendlyName A human readable description of the account
      */
-    public function __construct($friendlyName = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
     }
 
@@ -60,8 +54,7 @@ class CreateAccountOptions extends Options
      * @param string $friendlyName A human readable description of the account
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -71,8 +64,7 @@ class CreateAccountOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -83,14 +75,12 @@ class CreateAccountOptions extends Options
     }
 }
 
-class ReadAccountOptions extends Options
-{
+class ReadAccountOptions extends Options {
     /**
      * @param string $friendlyName FriendlyName to filter on
      * @param string $status Status to filter on
      */
-    public function __construct($friendlyName = Values::NONE, $status = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $status = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['status'] = $status;
     }
@@ -101,8 +91,7 @@ class ReadAccountOptions extends Options
      * @param string $friendlyName FriendlyName to filter on
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -113,8 +102,7 @@ class ReadAccountOptions extends Options
      * @param string $status Status to filter on
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -124,8 +112,7 @@ class ReadAccountOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -136,14 +123,12 @@ class ReadAccountOptions extends Options
     }
 }
 
-class UpdateAccountOptions extends Options
-{
+class UpdateAccountOptions extends Options {
     /**
      * @param string $friendlyName FriendlyName to update
      * @param string $status Status to update the Account with
      */
-    public function __construct($friendlyName = Values::NONE, $status = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $status = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['status'] = $status;
     }
@@ -154,8 +139,7 @@ class UpdateAccountOptions extends Options
      * @param string $friendlyName FriendlyName to update
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -166,8 +150,7 @@ class UpdateAccountOptions extends Options
      * @param string $status Status to update the Account with
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -177,8 +160,7 @@ class UpdateAccountOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

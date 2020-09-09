@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ConnectAppOptions
-{
+abstract class ConnectAppOptions {
     /**
      * @param string $authorizeRedirectUrl The URL to redirect the user to after
      *                                     authorization
@@ -30,23 +29,12 @@ abstract class ConnectAppOptions
      *                            request
      * @return UpdateConnectAppOptions Options builder
      */
-    public static function update(
-        $authorizeRedirectUrl = Values::NONE,
-        $companyName = Values::NONE,
-        $deauthorizeCallbackMethod = Values::NONE,
-        $deauthorizeCallbackUrl = Values::NONE,
-        $description = Values::NONE,
-        $friendlyName = Values::NONE,
-        $homepageUrl = Values::NONE,
-        $permissions = Values::NONE
-    ) {
-        return new UpdateConnectAppOptions($authorizeRedirectUrl, $companyName, $deauthorizeCallbackMethod,
-            $deauthorizeCallbackUrl, $description, $friendlyName, $homepageUrl, $permissions);
+    public static function update($authorizeRedirectUrl = Values::NONE, $companyName = Values::NONE, $deauthorizeCallbackMethod = Values::NONE, $deauthorizeCallbackUrl = Values::NONE, $description = Values::NONE, $friendlyName = Values::NONE, $homepageUrl = Values::NONE, $permissions = Values::NONE) {
+        return new UpdateConnectAppOptions($authorizeRedirectUrl, $companyName, $deauthorizeCallbackMethod, $deauthorizeCallbackUrl, $description, $friendlyName, $homepageUrl, $permissions);
     }
 }
 
-class UpdateConnectAppOptions extends Options
-{
+class UpdateConnectAppOptions extends Options {
     /**
      * @param string $authorizeRedirectUrl The URL to redirect the user to after
      *                                     authorization
@@ -62,16 +50,7 @@ class UpdateConnectAppOptions extends Options
      * @param string $permissions The set of permissions that your ConnectApp will
      *                            request
      */
-    public function __construct(
-        $authorizeRedirectUrl = Values::NONE,
-        $companyName = Values::NONE,
-        $deauthorizeCallbackMethod = Values::NONE,
-        $deauthorizeCallbackUrl = Values::NONE,
-        $description = Values::NONE,
-        $friendlyName = Values::NONE,
-        $homepageUrl = Values::NONE,
-        $permissions = Values::NONE
-    ) {
+    public function __construct($authorizeRedirectUrl = Values::NONE, $companyName = Values::NONE, $deauthorizeCallbackMethod = Values::NONE, $deauthorizeCallbackUrl = Values::NONE, $description = Values::NONE, $friendlyName = Values::NONE, $homepageUrl = Values::NONE, $permissions = Values::NONE) {
         $this->options['authorizeRedirectUrl'] = $authorizeRedirectUrl;
         $this->options['companyName'] = $companyName;
         $this->options['deauthorizeCallbackMethod'] = $deauthorizeCallbackMethod;
@@ -89,8 +68,7 @@ class UpdateConnectAppOptions extends Options
      *                                     authorization
      * @return $this Fluent Builder
      */
-    public function setAuthorizeRedirectUrl($authorizeRedirectUrl)
-    {
+    public function setAuthorizeRedirectUrl($authorizeRedirectUrl) {
         $this->options['authorizeRedirectUrl'] = $authorizeRedirectUrl;
         return $this;
     }
@@ -101,8 +79,7 @@ class UpdateConnectAppOptions extends Options
      * @param string $companyName The company name to set for the Connect App
      * @return $this Fluent Builder
      */
-    public function setCompanyName($companyName)
-    {
+    public function setCompanyName($companyName) {
         $this->options['companyName'] = $companyName;
         return $this;
     }
@@ -114,8 +91,7 @@ class UpdateConnectAppOptions extends Options
      *                                          deauthorize_callback_url
      * @return $this Fluent Builder
      */
-    public function setDeauthorizeCallbackMethod($deauthorizeCallbackMethod)
-    {
+    public function setDeauthorizeCallbackMethod($deauthorizeCallbackMethod) {
         $this->options['deauthorizeCallbackMethod'] = $deauthorizeCallbackMethod;
         return $this;
     }
@@ -127,8 +103,7 @@ class UpdateConnectAppOptions extends Options
      *                                       Connect App
      * @return $this Fluent Builder
      */
-    public function setDeauthorizeCallbackUrl($deauthorizeCallbackUrl)
-    {
+    public function setDeauthorizeCallbackUrl($deauthorizeCallbackUrl) {
         $this->options['deauthorizeCallbackUrl'] = $deauthorizeCallbackUrl;
         return $this;
     }
@@ -139,8 +114,7 @@ class UpdateConnectAppOptions extends Options
      * @param string $description A description of the Connect App
      * @return $this Fluent Builder
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->options['description'] = $description;
         return $this;
     }
@@ -151,8 +125,7 @@ class UpdateConnectAppOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -164,8 +137,7 @@ class UpdateConnectAppOptions extends Options
      *                            information
      * @return $this Fluent Builder
      */
-    public function setHomepageUrl($homepageUrl)
-    {
+    public function setHomepageUrl($homepageUrl) {
         $this->options['homepageUrl'] = $homepageUrl;
         return $this;
     }
@@ -177,8 +149,7 @@ class UpdateConnectAppOptions extends Options
      *                            request
      * @return $this Fluent Builder
      */
-    public function setPermissions($permissions)
-    {
+    public function setPermissions($permissions) {
         $this->options['permissions'] = $permissions;
         return $this;
     }
@@ -188,8 +159,7 @@ class UpdateConnectAppOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -12,8 +12,7 @@ namespace Twilio\Rest\IpMessaging\V2\Service;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class UserOptions
-{
+abstract class UserOptions {
     /**
      * @param string $roleSid The SID of the Role assigned to this user
      * @param string $attributes A valid JSON string that contains
@@ -21,8 +20,7 @@ abstract class UserOptions
      * @param string $friendlyName A string to describe the new resource
      * @return CreateUserOptions Options builder
      */
-    public static function create($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE)
-    {
+    public static function create($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE) {
         return new CreateUserOptions($roleSid, $attributes, $friendlyName);
     }
 
@@ -33,22 +31,19 @@ abstract class UserOptions
      * @param string $friendlyName A string to describe the resource
      * @return UpdateUserOptions Options builder
      */
-    public static function update($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE)
-    {
+    public static function update($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE) {
         return new UpdateUserOptions($roleSid, $attributes, $friendlyName);
     }
 }
 
-class CreateUserOptions extends Options
-{
+class CreateUserOptions extends Options {
     /**
      * @param string $roleSid The SID of the Role assigned to this user
      * @param string $attributes A valid JSON string that contains
      *                           application-specific data
      * @param string $friendlyName A string to describe the new resource
      */
-    public function __construct($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE)
-    {
+    public function __construct($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE) {
         $this->options['roleSid'] = $roleSid;
         $this->options['attributes'] = $attributes;
         $this->options['friendlyName'] = $friendlyName;
@@ -60,8 +55,7 @@ class CreateUserOptions extends Options
      * @param string $roleSid The SID of the Role assigned to this user
      * @return $this Fluent Builder
      */
-    public function setRoleSid($roleSid)
-    {
+    public function setRoleSid($roleSid) {
         $this->options['roleSid'] = $roleSid;
         return $this;
     }
@@ -73,8 +67,7 @@ class CreateUserOptions extends Options
      *                           application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -85,8 +78,7 @@ class CreateUserOptions extends Options
      * @param string $friendlyName A string to describe the new resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -96,8 +88,7 @@ class CreateUserOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -108,16 +99,14 @@ class CreateUserOptions extends Options
     }
 }
 
-class UpdateUserOptions extends Options
-{
+class UpdateUserOptions extends Options {
     /**
      * @param string $roleSid The SID id of the Role assigned to this user
      * @param string $attributes A valid JSON string that contains
      *                           application-specific data
      * @param string $friendlyName A string to describe the resource
      */
-    public function __construct($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE)
-    {
+    public function __construct($roleSid = Values::NONE, $attributes = Values::NONE, $friendlyName = Values::NONE) {
         $this->options['roleSid'] = $roleSid;
         $this->options['attributes'] = $attributes;
         $this->options['friendlyName'] = $friendlyName;
@@ -129,8 +118,7 @@ class UpdateUserOptions extends Options
      * @param string $roleSid The SID id of the Role assigned to this user
      * @return $this Fluent Builder
      */
-    public function setRoleSid($roleSid)
-    {
+    public function setRoleSid($roleSid) {
         $this->options['roleSid'] = $roleSid;
         return $this;
     }
@@ -142,8 +130,7 @@ class UpdateUserOptions extends Options
      *                           application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -154,8 +141,7 @@ class UpdateUserOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -165,8 +151,7 @@ class UpdateUserOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

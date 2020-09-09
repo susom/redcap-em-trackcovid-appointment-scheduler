@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Queue extends TwiML
-{
+class Queue extends TwiML {
     /**
      * Queue constructor.
      *
      * @param string $name Queue name
      * @param array $attributes Optional attributes
      */
-    public function __construct($name, $attributes = array())
-    {
+    public function __construct($name, $attributes = array()) {
         parent::__construct('Queue', $name, $attributes);
     }
 
@@ -30,8 +28,7 @@ class Queue extends TwiML
      * @param string $url Action URL
      * @return static $this.
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         return $this->setAttribute('url', $url);
     }
 
@@ -41,8 +38,7 @@ class Queue extends TwiML
      * @param string $method Action URL method
      * @return static $this.
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         return $this->setAttribute('method', $method);
     }
 
@@ -52,8 +48,7 @@ class Queue extends TwiML
      * @param string $reservationSid TaskRouter Reservation SID
      * @return static $this.
      */
-    public function setReservationSid($reservationSid)
-    {
+    public function setReservationSid($reservationSid) {
         return $this->setAttribute('reservationSid', $reservationSid);
     }
 
@@ -63,8 +58,7 @@ class Queue extends TwiML
      * @param string $postWorkActivitySid TaskRouter Activity SID
      * @return static $this.
      */
-    public function setPostWorkActivitySid($postWorkActivitySid)
-    {
+    public function setPostWorkActivitySid($postWorkActivitySid) {
         return $this->setAttribute('postWorkActivitySid', $postWorkActivitySid);
     }
 }

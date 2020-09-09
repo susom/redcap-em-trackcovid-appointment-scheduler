@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Siprec extends TwiML
-{
+class Siprec extends TwiML {
     /**
      * Siprec constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Siprec', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Siprec extends TwiML
      * @param array $attributes Optional attributes
      * @return Parameter Child element.
      */
-    public function parameter($attributes = array())
-    {
+    public function parameter($attributes = array()) {
         return $this->nest(new Parameter($attributes));
     }
 
@@ -40,8 +37,7 @@ class Siprec extends TwiML
      * @param string $name Friendly name given to SIPREC
      * @return static $this.
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         return $this->setAttribute('name', $name);
     }
 
@@ -51,8 +47,7 @@ class Siprec extends TwiML
      * @param string $connectorName Unique name for Connector
      * @return static $this.
      */
-    public function setConnectorName($connectorName)
-    {
+    public function setConnectorName($connectorName) {
         return $this->setAttribute('connectorName', $connectorName);
     }
 
@@ -62,8 +57,7 @@ class Siprec extends TwiML
      * @param string $track Track to be streamed to remote service
      * @return static $this.
      */
-    public function setTrack($track)
-    {
+    public function setTrack($track) {
         return $this->setAttribute('track', $track);
     }
 }

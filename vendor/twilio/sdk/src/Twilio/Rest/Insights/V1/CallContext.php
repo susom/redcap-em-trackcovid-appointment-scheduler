@@ -25,8 +25,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Insights\V1\Call\CallSummaryList $summary
  * @method \Twilio\Rest\Insights\V1\Call\CallSummaryContext summary()
  */
-class CallContext extends InstanceContext
-{
+class CallContext extends InstanceContext {
     protected $_events = null;
     protected $_metrics = null;
     protected $_summary = null;
@@ -38,12 +37,11 @@ class CallContext extends InstanceContext
      * @param string $sid The sid
      * @return \Twilio\Rest\Insights\V1\CallContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Voice/' . \rawurlencode($sid) . '';
     }
@@ -54,8 +52,7 @@ class CallContext extends InstanceContext
      * @return CallInstance Fetched CallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -72,8 +69,7 @@ class CallContext extends InstanceContext
      *
      * @return \Twilio\Rest\Insights\V1\Call\EventList
      */
-    protected function getEvents()
-    {
+    protected function getEvents() {
         if (!$this->_events) {
             $this->_events = new EventList($this->version, $this->solution['sid']);
         }
@@ -86,8 +82,7 @@ class CallContext extends InstanceContext
      *
      * @return \Twilio\Rest\Insights\V1\Call\MetricList
      */
-    protected function getMetrics()
-    {
+    protected function getMetrics() {
         if (!$this->_metrics) {
             $this->_metrics = new MetricList($this->version, $this->solution['sid']);
         }
@@ -100,8 +95,7 @@ class CallContext extends InstanceContext
      *
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryList
      */
-    protected function getSummary()
-    {
+    protected function getSummary() {
         if (!$this->_summary) {
             $this->_summary = new CallSummaryList($this->version, $this->solution['sid']);
         }
@@ -116,8 +110,7 @@ class CallContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -134,8 +127,7 @@ class CallContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -149,8 +141,7 @@ class CallContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

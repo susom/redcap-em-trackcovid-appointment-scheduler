@@ -43,8 +43,7 @@ use Twilio\Version;
  * @property string $voiceMethod
  * @property string $voiceUrl
  */
-class PhoneNumberInstance extends InstanceResource
-{
+class PhoneNumberInstance extends InstanceResource {
     /**
      * Initialize the PhoneNumberInstance
      *
@@ -55,8 +54,7 @@ class PhoneNumberInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Trunking\V1\Trunk\PhoneNumberInstance
      */
-    public function __construct(Version $version, array $payload, $trunkSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $trunkSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -89,7 +87,7 @@ class PhoneNumberInstance extends InstanceResource
             'voiceUrl' => Values::array_get($payload, 'voice_url'),
         );
 
-        $this->solution = array('trunkSid' => $trunkSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('trunkSid' => $trunkSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -99,8 +97,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return \Twilio\Rest\Trunking\V1\Trunk\PhoneNumberContext Context for this
      *                                                           PhoneNumberInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new PhoneNumberContext(
                 $this->version,
@@ -118,8 +115,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return PhoneNumberInstance Fetched PhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -129,8 +125,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -141,8 +136,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -160,8 +154,7 @@ class PhoneNumberInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

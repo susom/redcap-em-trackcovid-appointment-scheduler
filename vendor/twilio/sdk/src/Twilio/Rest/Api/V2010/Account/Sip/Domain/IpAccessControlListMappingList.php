@@ -14,8 +14,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class IpAccessControlListMappingList extends ListResource
-{
+class IpAccessControlListMappingList extends ListResource {
     /**
      * Construct the IpAccessControlListMappingList
      *
@@ -25,12 +24,11 @@ class IpAccessControlListMappingList extends ListResource
      * @param string $domainSid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingList
      */
-    public function __construct(Version $version, $accountSid, $domainSid)
-    {
+    public function __construct(Version $version, $accountSid, $domainSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'domainSid' => $domainSid,);
+        $this->solution = array('accountSid' => $accountSid, 'domainSid' => $domainSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/SIP/Domains/' . \rawurlencode($domainSid) . '/IpAccessControlListMappings.json';
     }
@@ -44,9 +42,8 @@ class IpAccessControlListMappingList extends ListResource
      *                                            IpAccessControlListMappingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($ipAccessControlListSid)
-    {
-        $data = Values::of(array('IpAccessControlListSid' => $ipAccessControlListSid,));
+    public function create($ipAccessControlListSid) {
+        $data = Values::of(array('IpAccessControlListSid' => $ipAccessControlListSid, ));
 
         $payload = $this->version->create(
             'POST',
@@ -82,8 +79,7 @@ class IpAccessControlListMappingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -106,8 +102,7 @@ class IpAccessControlListMappingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return IpAccessControlListMappingInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -121,8 +116,7 @@ class IpAccessControlListMappingList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of IpAccessControlListMappingInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -146,8 +140,7 @@ class IpAccessControlListMappingList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of IpAccessControlListMappingInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -163,8 +156,7 @@ class IpAccessControlListMappingList extends ListResource
      *                    resource to fetch.
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new IpAccessControlListMappingContext(
             $this->version,
             $this->solution['accountSid'],
@@ -178,8 +170,7 @@ class IpAccessControlListMappingList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.IpAccessControlListMappingList]';
     }
 }

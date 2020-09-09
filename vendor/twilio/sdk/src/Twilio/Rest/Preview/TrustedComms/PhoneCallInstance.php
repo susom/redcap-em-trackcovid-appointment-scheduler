@@ -37,8 +37,7 @@ use Twilio\Version;
  * @property string $url
  * @property string $useCase
  */
-class PhoneCallInstance extends InstanceResource
-{
+class PhoneCallInstance extends InstanceResource {
     /**
      * Initialize the PhoneCallInstance
      *
@@ -46,8 +45,7 @@ class PhoneCallInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Preview\TrustedComms\PhoneCallInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -82,8 +80,7 @@ class PhoneCallInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -101,8 +98,7 @@ class PhoneCallInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.PhoneCallInstance]';
     }
 }

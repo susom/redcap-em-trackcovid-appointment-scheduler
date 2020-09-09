@@ -22,8 +22,7 @@ use Twilio\Version;
  * @property array $formMeta
  * @property string $url
  */
-class FormInstance extends InstanceResource
-{
+class FormInstance extends InstanceResource {
     /**
      * Initialize the FormInstance
      *
@@ -32,8 +31,7 @@ class FormInstance extends InstanceResource
      * @param string $formType The Type of this Form
      * @return \Twilio\Rest\Authy\V1\FormInstance
      */
-    public function __construct(Version $version, array $payload, $formType = null)
-    {
+    public function __construct(Version $version, array $payload, $formType = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -44,7 +42,7 @@ class FormInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('formType' => $formType ?: $this->properties['formType'],);
+        $this->solution = array('formType' => $formType ?: $this->properties['formType'], );
     }
 
     /**
@@ -53,8 +51,7 @@ class FormInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Authy\V1\FormContext Context for this FormInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FormContext($this->version, $this->solution['formType']);
         }
@@ -68,8 +65,7 @@ class FormInstance extends InstanceResource
      * @return FormInstance Fetched FormInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -80,8 +76,7 @@ class FormInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -99,8 +94,7 @@ class FormInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

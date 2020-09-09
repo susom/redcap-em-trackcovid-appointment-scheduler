@@ -60,8 +60,7 @@ use Twilio\Rest\Api\V2010;
  * @method \Twilio\Rest\Api\V2010\Account\TranscriptionContext transcriptions(string $sid)
  * @method \Twilio\Rest\Api\V2010\AccountContext accounts(string $sid)
  */
-class Api extends Domain
-{
+class Api extends Domain {
     protected $_v2010 = null;
 
     /**
@@ -71,8 +70,7 @@ class Api extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Api Domain for Api
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://api.twilio.com';
@@ -81,8 +79,7 @@ class Api extends Domain
     /**
      * @return \Twilio\Rest\Api\V2010 Version v2010 of api
      */
-    protected function getV2010()
-    {
+    protected function getV2010() {
         if (!$this->_v2010) {
             $this->_v2010 = new V2010($this);
         }
@@ -96,8 +93,7 @@ class Api extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -114,8 +110,7 @@ class Api extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -128,16 +123,14 @@ class Api extends Domain
      * @return \Twilio\Rest\Api\V2010\AccountContext Account provided as the
      *                                               authenticating account
      */
-    protected function getAccount()
-    {
+    protected function getAccount() {
         return $this->v2010->account;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\AccountList
      */
-    protected function getAccounts()
-    {
+    protected function getAccounts() {
         return $this->v2010->accounts;
     }
 
@@ -145,16 +138,14 @@ class Api extends Domain
      * @param string $sid Fetch by unique Account Sid
      * @return \Twilio\Rest\Api\V2010\AccountContext
      */
-    protected function contextAccounts($sid)
-    {
+    protected function contextAccounts($sid) {
         return $this->v2010->accounts($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\AddressList
      */
-    protected function getAddresses()
-    {
+    protected function getAddresses() {
         return $this->v2010->account->addresses;
     }
 
@@ -162,16 +153,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\AddressContext
      */
-    protected function contextAddresses($sid)
-    {
+    protected function contextAddresses($sid) {
         return $this->v2010->account->addresses($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ApplicationList
      */
-    protected function getApplications()
-    {
+    protected function getApplications() {
         return $this->v2010->account->applications;
     }
 
@@ -179,16 +168,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\ApplicationContext
      */
-    protected function contextApplications($sid)
-    {
+    protected function contextApplications($sid) {
         return $this->v2010->account->applications($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppList
      */
-    protected function getAuthorizedConnectApps()
-    {
+    protected function getAuthorizedConnectApps() {
         return $this->v2010->account->authorizedConnectApps;
     }
 
@@ -196,16 +183,14 @@ class Api extends Domain
      * @param string $connectAppSid The SID of the Connect App to fetch
      * @return \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppContext
      */
-    protected function contextAuthorizedConnectApps($connectAppSid)
-    {
+    protected function contextAuthorizedConnectApps($connectAppSid) {
         return $this->v2010->account->authorizedConnectApps($connectAppSid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountryList
      */
-    protected function getAvailablePhoneNumbers()
-    {
+    protected function getAvailablePhoneNumbers() {
         return $this->v2010->account->availablePhoneNumbers;
     }
 
@@ -214,24 +199,21 @@ class Api extends Domain
      *                            available phone number information about
      * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountryContext
      */
-    protected function contextAvailablePhoneNumbers($countryCode)
-    {
+    protected function contextAvailablePhoneNumbers($countryCode) {
         return $this->v2010->account->availablePhoneNumbers($countryCode);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\BalanceList
      */
-    protected function getBalance()
-    {
+    protected function getBalance() {
         return $this->v2010->account->balance;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\CallList
      */
-    protected function getCalls()
-    {
+    protected function getCalls() {
         return $this->v2010->account->calls;
     }
 
@@ -239,16 +221,14 @@ class Api extends Domain
      * @param string $sid The SID of the Call resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\CallContext
      */
-    protected function contextCalls($sid)
-    {
+    protected function contextCalls($sid) {
         return $this->v2010->account->calls($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ConferenceList
      */
-    protected function getConferences()
-    {
+    protected function getConferences() {
         return $this->v2010->account->conferences;
     }
 
@@ -256,16 +236,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\ConferenceContext
      */
-    protected function contextConferences($sid)
-    {
+    protected function contextConferences($sid) {
         return $this->v2010->account->conferences($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ConnectAppList
      */
-    protected function getConnectApps()
-    {
+    protected function getConnectApps() {
         return $this->v2010->account->connectApps;
     }
 
@@ -273,16 +251,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\ConnectAppContext
      */
-    protected function contextConnectApps($sid)
-    {
+    protected function contextConnectApps($sid) {
         return $this->v2010->account->connectApps($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberList
      */
-    protected function getIncomingPhoneNumbers()
-    {
+    protected function getIncomingPhoneNumbers() {
         return $this->v2010->account->incomingPhoneNumbers;
     }
 
@@ -290,16 +266,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberContext
      */
-    protected function contextIncomingPhoneNumbers($sid)
-    {
+    protected function contextIncomingPhoneNumbers($sid) {
         return $this->v2010->account->incomingPhoneNumbers($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\KeyList
      */
-    protected function getKeys()
-    {
+    protected function getKeys() {
         return $this->v2010->account->keys;
     }
 
@@ -307,16 +281,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\KeyContext
      */
-    protected function contextKeys($sid)
-    {
+    protected function contextKeys($sid) {
         return $this->v2010->account->keys($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\MessageList
      */
-    protected function getMessages()
-    {
+    protected function getMessages() {
         return $this->v2010->account->messages;
     }
 
@@ -324,32 +296,28 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\MessageContext
      */
-    protected function contextMessages($sid)
-    {
+    protected function contextMessages($sid) {
         return $this->v2010->account->messages($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\NewKeyList
      */
-    protected function getNewKeys()
-    {
+    protected function getNewKeys() {
         return $this->v2010->account->newKeys;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\NewSigningKeyList
      */
-    protected function getNewSigningKeys()
-    {
+    protected function getNewSigningKeys() {
         return $this->v2010->account->newSigningKeys;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\NotificationList
      */
-    protected function getNotifications()
-    {
+    protected function getNotifications() {
         return $this->v2010->account->notifications;
     }
 
@@ -357,16 +325,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\NotificationContext
      */
-    protected function contextNotifications($sid)
-    {
+    protected function contextNotifications($sid) {
         return $this->v2010->account->notifications($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\OutgoingCallerIdList
      */
-    protected function getOutgoingCallerIds()
-    {
+    protected function getOutgoingCallerIds() {
         return $this->v2010->account->outgoingCallerIds;
     }
 
@@ -374,16 +340,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\OutgoingCallerIdContext
      */
-    protected function contextOutgoingCallerIds($sid)
-    {
+    protected function contextOutgoingCallerIds($sid) {
         return $this->v2010->account->outgoingCallerIds($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\QueueList
      */
-    protected function getQueues()
-    {
+    protected function getQueues() {
         return $this->v2010->account->queues;
     }
 
@@ -391,16 +355,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\QueueContext
      */
-    protected function contextQueues($sid)
-    {
+    protected function contextQueues($sid) {
         return $this->v2010->account->queues($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\RecordingList
      */
-    protected function getRecordings()
-    {
+    protected function getRecordings() {
         return $this->v2010->account->recordings;
     }
 
@@ -408,16 +370,14 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\RecordingContext
      */
-    protected function contextRecordings($sid)
-    {
+    protected function contextRecordings($sid) {
         return $this->v2010->account->recordings($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\SigningKeyList
      */
-    protected function getSigningKeys()
-    {
+    protected function getSigningKeys() {
         return $this->v2010->account->signingKeys;
     }
 
@@ -425,24 +385,21 @@ class Api extends Domain
      * @param string $sid The sid
      * @return \Twilio\Rest\Api\V2010\Account\SigningKeyContext
      */
-    protected function contextSigningKeys($sid)
-    {
+    protected function contextSigningKeys($sid) {
         return $this->v2010->account->signingKeys($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\SipList
      */
-    protected function getSip()
-    {
+    protected function getSip() {
         return $this->v2010->account->sip;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ShortCodeList
      */
-    protected function getShortCodes()
-    {
+    protected function getShortCodes() {
         return $this->v2010->account->shortCodes;
     }
 
@@ -450,24 +407,21 @@ class Api extends Domain
      * @param string $sid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\ShortCodeContext
      */
-    protected function contextShortCodes($sid)
-    {
+    protected function contextShortCodes($sid) {
         return $this->v2010->account->shortCodes($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\TokenList
      */
-    protected function getTokens()
-    {
+    protected function getTokens() {
         return $this->v2010->account->tokens;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\TranscriptionList
      */
-    protected function getTranscriptions()
-    {
+    protected function getTranscriptions() {
         return $this->v2010->account->transcriptions;
     }
 
@@ -475,24 +429,21 @@ class Api extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\TranscriptionContext
      */
-    protected function contextTranscriptions($sid)
-    {
+    protected function contextTranscriptions($sid) {
         return $this->v2010->account->transcriptions($sid);
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\UsageList
      */
-    protected function getUsage()
-    {
+    protected function getUsage() {
         return $this->v2010->account->usage;
     }
 
     /**
      * @return \Twilio\Rest\Api\V2010\Account\ValidationRequestList
      */
-    protected function getValidationRequests()
-    {
+    protected function getValidationRequests() {
         return $this->v2010->account->validationRequests;
     }
 
@@ -501,8 +452,7 @@ class Api extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api]';
     }
 }

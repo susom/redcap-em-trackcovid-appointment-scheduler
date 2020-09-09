@@ -26,8 +26,7 @@ use Twilio\Version;
  * @property string $kind
  * @property string $url
  */
-class PublishedTrackInstance extends InstanceResource
-{
+class PublishedTrackInstance extends InstanceResource {
     /**
      * Initialize the PublishedTrackInstance
      *
@@ -40,8 +39,7 @@ class PublishedTrackInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\Room\Participant\PublishedTrackInstance
      */
-    public function __construct(Version $version, array $payload, $roomSid, $participantSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $roomSid, $participantSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -73,8 +71,7 @@ class PublishedTrackInstance extends InstanceResource
      *                                                                      this
      *                                                                      PublishedTrackInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new PublishedTrackContext(
                 $this->version,
@@ -93,8 +90,7 @@ class PublishedTrackInstance extends InstanceResource
      * @return PublishedTrackInstance Fetched PublishedTrackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -105,8 +101,7 @@ class PublishedTrackInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -124,8 +119,7 @@ class PublishedTrackInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

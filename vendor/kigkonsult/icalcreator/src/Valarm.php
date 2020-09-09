@@ -1,11 +1,11 @@
 <?php
 /**
- * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
+  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -54,8 +54,6 @@ final class Valarm extends CalendarComponent
 
     /**
      * @var string
-     * @access protected
-     * @static
      */
     protected static $compSgn = 'a';
 
@@ -100,18 +98,17 @@ final class Valarm extends CalendarComponent
      */
     public function createComponent()
     {
-        $compType = strtoupper($this->getCompType());
-        $component = sprintf(self::$FMTBEGIN, $compType);
-        $component .= $this->createAction();
-        $component .= $this->createAttach();
-        $component .= $this->createAttendee();
-        $component .= $this->createDescription();
-        $component .= $this->createDuration();
-        $component .= $this->createRepeat();
-        $component .= $this->createSummary();
-        $component .= $this->createTrigger();
-        $component .= $this->createXprop();
-        return $component . sprintf(self::$FMTEND, $compType);
+        $compType    = strtoupper( $this->getCompType());
+        $component   = sprintf( self::$FMTBEGIN, $compType );
+        $component  .= $this->createAction();
+        $component  .= $this->createAttach();
+        $component  .= $this->createAttendee();
+        $component  .= $this->createDescription();
+        $component  .= $this->createDuration();
+        $component  .= $this->createRepeat();
+        $component  .= $this->createSummary();
+        $component  .= $this->createTrigger();
+        $component  .= $this->createXprop();
+        return $component . sprintf( self::$FMTEND, $compType );
     }
-
 }

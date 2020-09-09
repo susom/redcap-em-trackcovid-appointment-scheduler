@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -52,7 +52,6 @@ trait CREATEDtrait
 {
     /**
      * @var array component property CREATED value
-     * @access protected
      */
     protected $created = null;
 
@@ -60,17 +59,19 @@ trait CREATEDtrait
      * Return formatted output for calendar component property created
      *
      * @return string
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @since 2.29.1 2019-06-22
      */
     public function createCreated()
     {
-        if (empty($this->created)) {
+        if( empty( $this->created )) {
             return null;
         }
         return StringFactory::createElement(
             self::CREATED,
-            ParameterFactory::createParams($this->created[Util::$LCparams]),
-            DateTimeFactory::dateTime2Str($this->created[Util::$LCvalue])
+            ParameterFactory::createParams( $this->created[Util::$LCparams] ),
+            DateTimeFactory::dateTime2Str( $this->created[Util::$LCvalue] )
         );
     }
 
@@ -89,40 +90,40 @@ trait CREATEDtrait
     /**
      * Return calendar component property created
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|DateTime|array
      * @since  2.27.14 - 2019-01-27
      */
-    public function getCreated($inclParam = false)
+    public function getCreated( $inclParam = false )
     {
-        if (empty($this->created)) {
+        if( empty( $this->created )) {
             return false;
         }
-        return ($inclParam) ? $this->created : $this->created[Util::$LCvalue];
+        return ( $inclParam ) ? $this->created : $this->created[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property created
      *
      * @param string|DateTimeInterface $value
-     * @param mixed $params
+     * @param mixed  $params
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.16 2020-01-24
      */
-    public function setCreated($value = null, $params = [])
+    public function setCreated(  $value  = null, $params = [] )
     {
-        if (empty($value)) {
+        if( empty( $value )) {
             $this->created = [
-                Util::$LCvalue => DateTimeFactory::factory(null, self::UTC),
+                Util::$LCvalue  => DateTimeFactory::factory( null, self::UTC ),
                 Util::$LCparams => [],
             ];
             return $this;
         }
-        $params = array_change_key_case($params, CASE_UPPER);
+        $params = array_change_key_case( $params, CASE_UPPER );
         $params[Vcalendar::VALUE] = Vcalendar::DATE_TIME;
-        $this->created = DateTimeFactory::setDate($value, $params, true); // $forceUTC
+        $this->created = DateTimeFactory::setDate( $value, $params, true ); // $forceUTC
         return $this;
     }
 }

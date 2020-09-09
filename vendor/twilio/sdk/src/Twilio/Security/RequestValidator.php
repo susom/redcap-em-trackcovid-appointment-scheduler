@@ -11,8 +11,8 @@ use Twilio\Values;
  * $isFromTwilio = $validator->validate($_SERVER['HTTP_X_TWILIO_SIGNATURE'], 'https://your-example-url.com/api/route/', $_REQUEST);
  * $isFromTwilio // <- if this is true, the request did come from Twilio, if not, it didn't
  */
-final class RequestValidator
-{
+
+final class RequestValidator {
 
     /**
      * @access private
@@ -27,8 +27,7 @@ final class RequestValidator
      * Sets the account auth token to be used by the rest of the class
      */
 
-    public function __construct($authToken)
-    {
+    public function __construct($authToken) {
         $this->authToken = $authToken;
     }
 
@@ -39,8 +38,7 @@ final class RequestValidator
      * @return string
      */
 
-    public function computeSignature($url, $data = array())
-    {
+    public function computeSignature($url, $data = array()) {
 
         // sort the array by keys
         \ksort($data);
@@ -48,7 +46,7 @@ final class RequestValidator
         // append them to the data string in order
         // with no delimiters
         foreach ($data as $key => $value) {
-            $url .= $key . $value;
+            $url .= $key.$value;
         }
 
         // sha1 then base64 the url to the auth token and return the base64-ed string
@@ -62,8 +60,7 @@ final class RequestValidator
      * @return string
      */
 
-    public static function computeBodyHash($data = '')
-    {
+    public static function computeBodyHash($data = '') {
         return \bin2hex(\hash('sha256', $data, true));
     }
 
@@ -75,8 +72,7 @@ final class RequestValidator
      * @return bool
      */
 
-    public function validate($expectedSignature, $url, $data = array())
-    {
+    public function validate($expectedSignature, $url, $data = array()) {
 
         $parsedUrl = \parse_url($url);
 
@@ -118,8 +114,7 @@ final class RequestValidator
      * @param $b string Second part of the comparison pair
      * @return bool True if $a === $b, false otherwise.
      */
-    public static function compare($a, $b)
-    {
+    public static function compare($a, $b) {
 
         // if the strings are different lengths, obviously they're invalid
         if (\strlen($a) !== \strlen($b)) {
@@ -149,8 +144,7 @@ final class RequestValidator
      * @param $parsedURL array
      * @returns string Full URL without the port number
      */
-    private static function removePort($parsedUrl)
-    {
+    private static function removePort($parsedUrl) {
         unset($parsedUrl['port']);
         return RequestValidator::buildUrl($parsedUrl);
     }
@@ -160,8 +154,7 @@ final class RequestValidator
      * @param $parsedURL array
      * @returns string Full URL with the port number
      */
-    private static function addPort($parsedUrl)
-    {
+    private static function addPort($parsedUrl) {
         if (!isset($parsedUrl['port'])) {
             $port = ($parsedUrl['scheme'] === 'https') ? 443 : 80;
             $parsedUrl['port'] = $port;
@@ -174,8 +167,7 @@ final class RequestValidator
      * @param $parsedURL array
      * @returns string Full URL
      */
-    private static function buildUrl($parsedUrl)
-    {
+    private static function buildUrl($parsedUrl) {
         $url = '';
         $parts = array();
 

@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SyncMapList extends ListResource
-{
+class SyncMapList extends ListResource {
     /**
      * Construct the SyncMapList
      *
@@ -28,12 +27,11 @@ class SyncMapList extends ListResource
      *                           associated with
      * @return \Twilio\Rest\Sync\V1\Service\SyncMapList
      */
-    public function __construct(Version $version, $serviceSid)
-    {
+    public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Maps';
     }
@@ -45,8 +43,7 @@ class SyncMapList extends ListResource
      * @return SyncMapInstance Newly created SyncMapInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -83,8 +80,7 @@ class SyncMapList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -107,8 +103,7 @@ class SyncMapList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return SyncMapInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -121,8 +116,7 @@ class SyncMapList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of SyncMapInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -145,8 +139,7 @@ class SyncMapList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of SyncMapInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -161,8 +154,7 @@ class SyncMapList extends ListResource
      * @param string $sid The SID of the Sync Map resource to fetch
      * @return \Twilio\Rest\Sync\V1\Service\SyncMapContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new SyncMapContext($this->version, $this->solution['serviceSid'], $sid);
     }
 
@@ -171,8 +163,7 @@ class SyncMapList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Sync.V1.SyncMapList]';
     }
 }

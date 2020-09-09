@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class InviteContext extends InstanceContext
-{
+class InviteContext extends InstanceContext {
     /**
      * Initialize the InviteContext
      *
@@ -26,12 +25,11 @@ class InviteContext extends InstanceContext
      * @param string $sid The SID of the Invite resource to fetch
      * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\InviteContext
      */
-    public function __construct(Version $version, $serviceSid, $channelSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $channelSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Channels/' . \rawurlencode($channelSid) . '/Invites/' . \rawurlencode($sid) . '';
     }
@@ -42,8 +40,7 @@ class InviteContext extends InstanceContext
      * @return InviteInstance Fetched InviteInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class InviteContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -77,8 +73,7 @@ class InviteContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

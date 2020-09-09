@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class AuthorizationDocumentOptions
-{
+abstract class AuthorizationDocumentOptions {
     /**
      * @param string $hostedNumberOrderSids A list of HostedNumberOrder sids.
      * @param string $addressSid Address sid.
@@ -28,17 +27,8 @@ abstract class AuthorizationDocumentOptions
      *                                   number.
      * @return UpdateAuthorizationDocumentOptions Options builder
      */
-    public static function update(
-        $hostedNumberOrderSids = Values::NONE,
-        $addressSid = Values::NONE,
-        $email = Values::NONE,
-        $ccEmails = Values::NONE,
-        $status = Values::NONE,
-        $contactTitle = Values::NONE,
-        $contactPhoneNumber = Values::NONE
-    ) {
-        return new UpdateAuthorizationDocumentOptions($hostedNumberOrderSids, $addressSid, $email, $ccEmails, $status,
-            $contactTitle, $contactPhoneNumber);
+    public static function update($hostedNumberOrderSids = Values::NONE, $addressSid = Values::NONE, $email = Values::NONE, $ccEmails = Values::NONE, $status = Values::NONE, $contactTitle = Values::NONE, $contactPhoneNumber = Values::NONE) {
+        return new UpdateAuthorizationDocumentOptions($hostedNumberOrderSids, $addressSid, $email, $ccEmails, $status, $contactTitle, $contactPhoneNumber);
     }
 
     /**
@@ -46,8 +36,7 @@ abstract class AuthorizationDocumentOptions
      * @param string $status The Status of this AuthorizationDocument.
      * @return ReadAuthorizationDocumentOptions Options builder
      */
-    public static function read($email = Values::NONE, $status = Values::NONE)
-    {
+    public static function read($email = Values::NONE, $status = Values::NONE) {
         return new ReadAuthorizationDocumentOptions($email, $status);
     }
 
@@ -55,14 +44,12 @@ abstract class AuthorizationDocumentOptions
      * @param string $ccEmails A list of emails.
      * @return CreateAuthorizationDocumentOptions Options builder
      */
-    public static function create($ccEmails = Values::NONE)
-    {
+    public static function create($ccEmails = Values::NONE) {
         return new CreateAuthorizationDocumentOptions($ccEmails);
     }
 }
 
-class UpdateAuthorizationDocumentOptions extends Options
-{
+class UpdateAuthorizationDocumentOptions extends Options {
     /**
      * @param string $hostedNumberOrderSids A list of HostedNumberOrder sids.
      * @param string $addressSid Address sid.
@@ -73,15 +60,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $contactPhoneNumber Authorization Document's signee's phone
      *                                   number.
      */
-    public function __construct(
-        $hostedNumberOrderSids = Values::NONE,
-        $addressSid = Values::NONE,
-        $email = Values::NONE,
-        $ccEmails = Values::NONE,
-        $status = Values::NONE,
-        $contactTitle = Values::NONE,
-        $contactPhoneNumber = Values::NONE
-    ) {
+    public function __construct($hostedNumberOrderSids = Values::NONE, $addressSid = Values::NONE, $email = Values::NONE, $ccEmails = Values::NONE, $status = Values::NONE, $contactTitle = Values::NONE, $contactPhoneNumber = Values::NONE) {
         $this->options['hostedNumberOrderSids'] = $hostedNumberOrderSids;
         $this->options['addressSid'] = $addressSid;
         $this->options['email'] = $email;
@@ -97,8 +76,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $hostedNumberOrderSids A list of HostedNumberOrder sids.
      * @return $this Fluent Builder
      */
-    public function setHostedNumberOrderSids($hostedNumberOrderSids)
-    {
+    public function setHostedNumberOrderSids($hostedNumberOrderSids) {
         $this->options['hostedNumberOrderSids'] = $hostedNumberOrderSids;
         return $this;
     }
@@ -109,8 +87,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $addressSid Address sid.
      * @return $this Fluent Builder
      */
-    public function setAddressSid($addressSid)
-    {
+    public function setAddressSid($addressSid) {
         $this->options['addressSid'] = $addressSid;
         return $this;
     }
@@ -121,8 +98,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $email Email.
      * @return $this Fluent Builder
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->options['email'] = $email;
         return $this;
     }
@@ -133,8 +109,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $ccEmails A list of emails.
      * @return $this Fluent Builder
      */
-    public function setCcEmails($ccEmails)
-    {
+    public function setCcEmails($ccEmails) {
         $this->options['ccEmails'] = $ccEmails;
         return $this;
     }
@@ -145,8 +120,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $status The Status of this AuthorizationDocument.
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -157,8 +131,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      * @param string $contactTitle Title of signee of this Authorization Document.
      * @return $this Fluent Builder
      */
-    public function setContactTitle($contactTitle)
-    {
+    public function setContactTitle($contactTitle) {
         $this->options['contactTitle'] = $contactTitle;
         return $this;
     }
@@ -170,8 +143,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      *                                   number.
      * @return $this Fluent Builder
      */
-    public function setContactPhoneNumber($contactPhoneNumber)
-    {
+    public function setContactPhoneNumber($contactPhoneNumber) {
         $this->options['contactPhoneNumber'] = $contactPhoneNumber;
         return $this;
     }
@@ -181,8 +153,7 @@ class UpdateAuthorizationDocumentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -193,14 +164,12 @@ class UpdateAuthorizationDocumentOptions extends Options
     }
 }
 
-class ReadAuthorizationDocumentOptions extends Options
-{
+class ReadAuthorizationDocumentOptions extends Options {
     /**
      * @param string $email Email.
      * @param string $status The Status of this AuthorizationDocument.
      */
-    public function __construct($email = Values::NONE, $status = Values::NONE)
-    {
+    public function __construct($email = Values::NONE, $status = Values::NONE) {
         $this->options['email'] = $email;
         $this->options['status'] = $status;
     }
@@ -211,8 +180,7 @@ class ReadAuthorizationDocumentOptions extends Options
      * @param string $email Email.
      * @return $this Fluent Builder
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->options['email'] = $email;
         return $this;
     }
@@ -223,8 +191,7 @@ class ReadAuthorizationDocumentOptions extends Options
      * @param string $status The Status of this AuthorizationDocument.
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -234,8 +201,7 @@ class ReadAuthorizationDocumentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -246,13 +212,11 @@ class ReadAuthorizationDocumentOptions extends Options
     }
 }
 
-class CreateAuthorizationDocumentOptions extends Options
-{
+class CreateAuthorizationDocumentOptions extends Options {
     /**
      * @param string $ccEmails A list of emails.
      */
-    public function __construct($ccEmails = Values::NONE)
-    {
+    public function __construct($ccEmails = Values::NONE) {
         $this->options['ccEmails'] = $ccEmails;
     }
 
@@ -262,8 +226,7 @@ class CreateAuthorizationDocumentOptions extends Options
      * @param string $ccEmails A list of emails.
      * @return $this Fluent Builder
      */
-    public function setCcEmails($ccEmails)
-    {
+    public function setCcEmails($ccEmails) {
         $this->options['ccEmails'] = $ccEmails;
         return $this;
     }
@@ -273,8 +236,7 @@ class CreateAuthorizationDocumentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

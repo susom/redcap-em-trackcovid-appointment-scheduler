@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class FieldValueList extends ListResource
-{
+class FieldValueList extends ListResource {
     /**
      * Construct the FieldValueList
      *
@@ -30,12 +29,11 @@ class FieldValueList extends ListResource
      *                             Field Value
      * @return \Twilio\Rest\Autopilot\V1\Assistant\FieldType\FieldValueList
      */
-    public function __construct(Version $version, $assistantSid, $fieldTypeSid)
-    {
+    public function __construct(Version $version, $assistantSid, $fieldTypeSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid, 'fieldTypeSid' => $fieldTypeSid,);
+        $this->solution = array('assistantSid' => $assistantSid, 'fieldTypeSid' => $fieldTypeSid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/FieldTypes/' . \rawurlencode($fieldTypeSid) . '/FieldValues';
     }
@@ -59,8 +57,7 @@ class FieldValueList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -84,8 +81,7 @@ class FieldValueList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return FieldValueInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -99,12 +95,7 @@ class FieldValueList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of FieldValueInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Language' => $options['language'],
@@ -129,8 +120,7 @@ class FieldValueList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of FieldValueInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -149,8 +139,7 @@ class FieldValueList extends ListResource
      * @return FieldValueInstance Newly created FieldValueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($language, $value, $options = array())
-    {
+    public function create($language, $value, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -180,8 +169,7 @@ class FieldValueList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\FieldType\FieldValueContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new FieldValueContext(
             $this->version,
             $this->solution['assistantSid'],
@@ -195,8 +183,7 @@ class FieldValueList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Autopilot.V1.FieldValueList]';
     }
 }

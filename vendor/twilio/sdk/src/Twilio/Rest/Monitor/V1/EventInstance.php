@@ -31,8 +31,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class EventInstance extends InstanceResource
-{
+class EventInstance extends InstanceResource {
     /**
      * Initialize the EventInstance
      *
@@ -41,8 +40,7 @@ class EventInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Monitor\V1\EventInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -63,7 +61,7 @@ class EventInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -72,8 +70,7 @@ class EventInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Monitor\V1\EventContext Context for this EventInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new EventContext($this->version, $this->solution['sid']);
         }
@@ -87,8 +84,7 @@ class EventInstance extends InstanceResource
      * @return EventInstance Fetched EventInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -99,8 +95,7 @@ class EventInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -118,8 +113,7 @@ class EventInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

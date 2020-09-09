@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class KeyList extends ListResource
-{
+class KeyList extends ListResource {
     /**
      * Construct the KeyList
      *
@@ -27,12 +26,11 @@ class KeyList extends ListResource
      * @param string $fleetSid The unique identifier of the Fleet.
      * @return \Twilio\Rest\Preview\DeployedDevices\Fleet\KeyList
      */
-    public function __construct(Version $version, $fleetSid)
-    {
+    public function __construct(Version $version, $fleetSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('fleetSid' => $fleetSid,);
+        $this->solution = array('fleetSid' => $fleetSid, );
 
         $this->uri = '/Fleets/' . \rawurlencode($fleetSid) . '/Keys';
     }
@@ -44,8 +42,7 @@ class KeyList extends ListResource
      * @return KeyInstance Newly created KeyInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -82,8 +79,7 @@ class KeyList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -107,8 +103,7 @@ class KeyList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return KeyInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -122,12 +117,7 @@ class KeyList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of KeyInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'DeviceSid' => $options['deviceSid'],
@@ -152,8 +142,7 @@ class KeyList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of KeyInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -168,8 +157,7 @@ class KeyList extends ListResource
      * @param string $sid A string that uniquely identifies the Key.
      * @return \Twilio\Rest\Preview\DeployedDevices\Fleet\KeyContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new KeyContext($this->version, $this->solution['fleetSid'], $sid);
     }
 
@@ -178,8 +166,7 @@ class KeyList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.DeployedDevices.KeyList]';
     }
 }

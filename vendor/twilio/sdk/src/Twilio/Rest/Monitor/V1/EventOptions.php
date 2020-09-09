@@ -12,8 +12,7 @@ namespace Twilio\Rest\Monitor\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class EventOptions
-{
+abstract class EventOptions {
     /**
      * @param string $actorSid Only include events initiated by this Actor
      * @param string $eventType Only include events of this Event Type
@@ -26,20 +25,12 @@ abstract class EventOptions
      *                           this date
      * @return ReadEventOptions Options builder
      */
-    public static function read(
-        $actorSid = Values::NONE,
-        $eventType = Values::NONE,
-        $resourceSid = Values::NONE,
-        $sourceIpAddress = Values::NONE,
-        $startDate = Values::NONE,
-        $endDate = Values::NONE
-    ) {
+    public static function read($actorSid = Values::NONE, $eventType = Values::NONE, $resourceSid = Values::NONE, $sourceIpAddress = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
         return new ReadEventOptions($actorSid, $eventType, $resourceSid, $sourceIpAddress, $startDate, $endDate);
     }
 }
 
-class ReadEventOptions extends Options
-{
+class ReadEventOptions extends Options {
     /**
      * @param string $actorSid Only include events initiated by this Actor
      * @param string $eventType Only include events of this Event Type
@@ -51,14 +42,7 @@ class ReadEventOptions extends Options
      * @param \DateTime $endDate Only include events that occurred on or before
      *                           this date
      */
-    public function __construct(
-        $actorSid = Values::NONE,
-        $eventType = Values::NONE,
-        $resourceSid = Values::NONE,
-        $sourceIpAddress = Values::NONE,
-        $startDate = Values::NONE,
-        $endDate = Values::NONE
-    ) {
+    public function __construct($actorSid = Values::NONE, $eventType = Values::NONE, $resourceSid = Values::NONE, $sourceIpAddress = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
         $this->options['actorSid'] = $actorSid;
         $this->options['eventType'] = $eventType;
         $this->options['resourceSid'] = $resourceSid;
@@ -73,8 +57,7 @@ class ReadEventOptions extends Options
      * @param string $actorSid Only include events initiated by this Actor
      * @return $this Fluent Builder
      */
-    public function setActorSid($actorSid)
-    {
+    public function setActorSid($actorSid) {
         $this->options['actorSid'] = $actorSid;
         return $this;
     }
@@ -85,8 +68,7 @@ class ReadEventOptions extends Options
      * @param string $eventType Only include events of this Event Type
      * @return $this Fluent Builder
      */
-    public function setEventType($eventType)
-    {
+    public function setEventType($eventType) {
         $this->options['eventType'] = $eventType;
         return $this;
     }
@@ -97,8 +79,7 @@ class ReadEventOptions extends Options
      * @param string $resourceSid Only include events that refer to this resource
      * @return $this Fluent Builder
      */
-    public function setResourceSid($resourceSid)
-    {
+    public function setResourceSid($resourceSid) {
         $this->options['resourceSid'] = $resourceSid;
         return $this;
     }
@@ -110,8 +91,7 @@ class ReadEventOptions extends Options
      *                                IP address
      * @return $this Fluent Builder
      */
-    public function setSourceIpAddress($sourceIpAddress)
-    {
+    public function setSourceIpAddress($sourceIpAddress) {
         $this->options['sourceIpAddress'] = $sourceIpAddress;
         return $this;
     }
@@ -123,8 +103,7 @@ class ReadEventOptions extends Options
      *                             this date
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -136,8 +115,7 @@ class ReadEventOptions extends Options
      *                           this date
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -147,8 +125,7 @@ class ReadEventOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

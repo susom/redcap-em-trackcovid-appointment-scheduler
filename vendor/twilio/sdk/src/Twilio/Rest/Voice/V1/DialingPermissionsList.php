@@ -25,8 +25,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Voice\V1\DialingPermissions\CountryContext countries(string $isoCode)
  * @method \Twilio\Rest\Voice\V1\DialingPermissions\SettingsContext settings()
  */
-class DialingPermissionsList extends ListResource
-{
+class DialingPermissionsList extends ListResource {
     protected $_countries = null;
     protected $_settings = null;
     protected $_bulkCountryUpdates = null;
@@ -37,8 +36,7 @@ class DialingPermissionsList extends ListResource
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Voice\V1\DialingPermissionsList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -48,8 +46,7 @@ class DialingPermissionsList extends ListResource
     /**
      * Access the countries
      */
-    protected function getCountries()
-    {
+    protected function getCountries() {
         if (!$this->_countries) {
             $this->_countries = new CountryList($this->version);
         }
@@ -60,8 +57,7 @@ class DialingPermissionsList extends ListResource
     /**
      * Access the settings
      */
-    protected function getSettings()
-    {
+    protected function getSettings() {
         if (!$this->_settings) {
             $this->_settings = new SettingsList($this->version);
         }
@@ -72,8 +68,7 @@ class DialingPermissionsList extends ListResource
     /**
      * Access the bulkCountryUpdates
      */
-    protected function getBulkCountryUpdates()
-    {
+    protected function getBulkCountryUpdates() {
         if (!$this->_bulkCountryUpdates) {
             $this->_bulkCountryUpdates = new BulkCountryUpdateList($this->version);
         }
@@ -88,8 +83,7 @@ class DialingPermissionsList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -106,8 +100,7 @@ class DialingPermissionsList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -121,8 +114,7 @@ class DialingPermissionsList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Voice.V1.DialingPermissionsList]';
     }
 }

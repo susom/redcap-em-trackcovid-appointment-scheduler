@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Start extends TwiML
-{
+class Start extends TwiML {
     /**
      * Start constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Start', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Start extends TwiML
      * @param array $attributes Optional attributes
      * @return Stream Child element.
      */
-    public function stream($attributes = array())
-    {
+    public function stream($attributes = array()) {
         return $this->nest(new Stream($attributes));
     }
 
@@ -40,8 +37,7 @@ class Start extends TwiML
      * @param array $attributes Optional attributes
      * @return Siprec Child element.
      */
-    public function siprec($attributes = array())
-    {
+    public function siprec($attributes = array()) {
         return $this->nest(new Siprec($attributes));
     }
 
@@ -51,8 +47,7 @@ class Start extends TwiML
      * @param string $action Action URL
      * @return static $this.
      */
-    public function setAction($action)
-    {
+    public function setAction($action) {
         return $this->setAttribute('action', $action);
     }
 
@@ -62,8 +57,7 @@ class Start extends TwiML
      * @param string $method Action URL method
      * @return static $this.
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         return $this->setAttribute('method', $method);
     }
 }

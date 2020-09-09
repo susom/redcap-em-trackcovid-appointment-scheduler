@@ -31,8 +31,7 @@ use Twilio\Version;
  * @property \DateTime $startDate
  * @property string $status
  */
-class FeedbackSummaryInstance extends InstanceResource
-{
+class FeedbackSummaryInstance extends InstanceResource {
     /**
      * Initialize the FeedbackSummaryInstance
      *
@@ -43,8 +42,7 @@ class FeedbackSummaryInstance extends InstanceResource
      *                    resource
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -65,7 +63,7 @@ class FeedbackSummaryInstance extends InstanceResource
             'status' => Values::array_get($payload, 'status'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -76,8 +74,7 @@ class FeedbackSummaryInstance extends InstanceResource
      *                                                                    for this
      *                                                                    FeedbackSummaryInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FeedbackSummaryContext(
                 $this->version,
@@ -95,8 +92,7 @@ class FeedbackSummaryInstance extends InstanceResource
      * @return FeedbackSummaryInstance Fetched FeedbackSummaryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -106,8 +102,7 @@ class FeedbackSummaryInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -118,8 +113,7 @@ class FeedbackSummaryInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -137,8 +131,7 @@ class FeedbackSummaryInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

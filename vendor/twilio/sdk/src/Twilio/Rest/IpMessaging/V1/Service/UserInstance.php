@@ -32,8 +32,7 @@ use Twilio\Version;
  * @property array $links
  * @property string $url
  */
-class UserInstance extends InstanceResource
-{
+class UserInstance extends InstanceResource {
     protected $_userChannels = null;
 
     /**
@@ -46,8 +45,7 @@ class UserInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\IpMessaging\V1\Service\UserInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -68,7 +66,7 @@ class UserInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -78,8 +76,7 @@ class UserInstance extends InstanceResource
      * @return \Twilio\Rest\IpMessaging\V1\Service\UserContext Context for this
      *                                                         UserInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new UserContext(
                 $this->version,
@@ -97,8 +94,7 @@ class UserInstance extends InstanceResource
      * @return UserInstance Fetched UserInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -108,8 +104,7 @@ class UserInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -120,8 +115,7 @@ class UserInstance extends InstanceResource
      * @return UserInstance Updated UserInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -130,8 +124,7 @@ class UserInstance extends InstanceResource
      *
      * @return \Twilio\Rest\IpMessaging\V1\Service\User\UserChannelList
      */
-    protected function getUserChannels()
-    {
+    protected function getUserChannels() {
         return $this->proxy()->userChannels;
     }
 
@@ -142,8 +135,7 @@ class UserInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -161,8 +153,7 @@ class UserInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

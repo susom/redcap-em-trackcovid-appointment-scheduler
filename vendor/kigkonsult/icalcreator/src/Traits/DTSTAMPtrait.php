@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -52,7 +52,6 @@ trait DTSTAMPtrait
 {
     /**
      * @var array component property DTSTAMP value
-     * @access protected
      */
     protected $dtstamp = null;
 
@@ -66,16 +65,17 @@ trait DTSTAMPtrait
      */
     public function createDtstamp()
     {
-        if (empty($this->dtstamp[Util::$LCvalue])) {
+        if( empty( $this->dtstamp[Util::$LCvalue] ))
+        {
             $this->dtstamp = [
-                Util::$LCvalue => DateTimeFactory::factory(null, self::UTC),
+                Util::$LCvalue  => DateTimeFactory::factory( null, self::UTC ),
                 Util::$LCparams => [],
             ];
         }
         return StringFactory::createElement(
             self::DTSTAMP,
-            ParameterFactory::createParams($this->dtstamp[Util::$LCparams]),
-            DateTimeFactory::dateTime2Str($this->dtstamp[Util::$LCvalue])
+            ParameterFactory::createParams( $this->dtstamp[Util::$LCparams] ),
+            DateTimeFactory::dateTime2Str( $this->dtstamp[Util::$LCvalue] )
         );
     }
 
@@ -94,48 +94,48 @@ trait DTSTAMPtrait
     /**
      * Return calendar component property dtstamp
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|DateTime|array
      * @throws InvalidArgumentException
      * @throws Exception
      * @since 2.29.1 2019-06-22
      */
-    public function getDtstamp($inclParam = false)
+    public function getDtstamp( $inclParam = false )
     {
-        if (Util::isCompInList($this->getCompType(), self::$SUBCOMPS)) {
+        if( Util::isCompInList( $this->getCompType(), self::$SUBCOMPS )) {
             return false;
         }
-        if (empty($this->dtstamp)) {
+        if( empty( $this->dtstamp )) {
             $this->dtstamp = [
-                Util::$LCvalue => DateTimeFactory::factory(null, self::UTC),
+                Util::$LCvalue  => DateTimeFactory::factory( null, self::UTC ),
                 Util::$LCparams => [],
             ];
         }
-        return ($inclParam) ? $this->dtstamp : $this->dtstamp[Util::$LCvalue];
+        return ( $inclParam ) ? $this->dtstamp : $this->dtstamp[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property dtstamp
      *
-     * @param string|DateTimeInterface $value
-     * @param array $params
+     * @param string|DateTimeInterface  $value
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @throws Exception
      * @since 2.29.16 2020-01-24
      */
-    public function setDtstamp($value = null, $params = [])
+    public function setDtstamp( $value  = null, $params = [] )
     {
-        if (empty($value)) {
+        if( empty( $value )) {
             $this->dtstamp = [
-                Util::$LCvalue => DateTimeFactory::factory(null, self::UTC),
+                Util::$LCvalue  => DateTimeFactory::factory( null, self::UTC ),
                 Util::$LCparams => [],
             ];
             return $this;
         }
-        $params = array_change_key_case($params, CASE_UPPER);
+        $params = array_change_key_case( $params, CASE_UPPER );
         $params[Vcalendar::VALUE] = Vcalendar::DATE_TIME;
-        $this->dtstamp = DateTimeFactory::setDate($value, $params, true); // $forceUTC
+        $this->dtstamp = DateTimeFactory::setDate( $value, $params, true ); // $forceUTC
         return $this;
     }
 }

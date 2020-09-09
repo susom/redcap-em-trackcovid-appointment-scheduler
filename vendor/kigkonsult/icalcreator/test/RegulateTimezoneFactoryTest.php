@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -50,13 +50,12 @@ class RegulateTimezoneFactoryTest extends DtBase
     /**
      * TzTest1 provider
      */
-    public function TzTest1Provider()
-    {
+    public function TzTest1Provider() {
 
         $dataArr = [];
 
         $case = 100;
-        foreach (RegulateTimezoneFactory::$MStimezoneToOffset as $otherTimezone => $offset) {
+        foreach( RegulateTimezoneFactory::$MStimezoneToOffset as $otherTimezone => $offset ) {
             $dataArr[] = [
                 ++$case,
                 $otherTimezone,
@@ -66,8 +65,8 @@ class RegulateTimezoneFactoryTest extends DtBase
 
         $case = 200;
         $timezoneIdentifiers = DateTimeZone::listIdentifiers();
-        foreach ($timezoneIdentifiers as $tix => $timezoneIdentifier) {
-            if (0 != ($tix % 10)) {
+        foreach( $timezoneIdentifiers as $tix => $timezoneIdentifier ) {
+            if( 0 != ( $tix % 10 )) {
                 continue;
             }
             $dataArr[] = [
@@ -87,13 +86,12 @@ class RegulateTimezoneFactoryTest extends DtBase
      *
      * @test
      * @dataProvider TzTest1Provider
-     * @param int $case
+     * @param int    $case
      * @param string $otherTimezone
-     * @param int $hitsAfterProcess
+     * @param int    $hitsAfterProcess
      * @throws Exception
      */
-    public function TzTest1($case, $otherTimezone, $hitsAfterProcess)
-    {
+    public function TzTest1( $case, $otherTimezone, $hitsAfterProcess ) {
         $case += 1000;
         static $CALFMT =
             'BEGIN:VCALENDAR
@@ -138,21 +136,21 @@ RDATE;TZID=%1$s;VALUE=PERIOD:20080808T080801/20080808T080802,20080808T080803/PT8
 END:VEVENT
 END:VCALENDAR
 ';
-        $calendar = sprintf($CALFMT, $otherTimezone);
-        $calendar2 = RegulateTimezoneFactory::process($calendar);
+        $calendar  = sprintf( $CALFMT, $otherTimezone );
+        $calendar2 = RegulateTimezoneFactory::process( $calendar );
 
-        if ('UTC' == $otherTimezone) {
+        if( 'UTC' == $otherTimezone ) {
             $hitsAfterProcess = 3;
         }
         $this->assertEquals(
             $hitsAfterProcess,
-            substr_count($calendar2, $otherTimezone),
+            substr_count( $calendar2, $otherTimezone ),
             'error in case #' . $case . ', timezone : ' . $otherTimezone . PHP_EOL . $calendar2
         );
 
         $this->parseCalendarTest(
             $case,
-            Vcalendar::factory()->parse($calendar2)
+            Vcalendar::factory()->parse( $calendar2 )
         );
     }
 
@@ -162,10 +160,9 @@ END:VCALENDAR
      * @test
      * @throws Exception
      */
-    public function TzTest2()
-    {
+    public function TzTest2() {
         $calendar =
-            'BEGIN:VCALENDAR
+'BEGIN:VCALENDAR
 METHOD:PUBLISH
 PRODID:Microsoft Exchange Server 2010
 VERSION:2.0
@@ -226,27 +223,27 @@ END:VEVENT
 END:VCALENDAR
 ';
         $tzFactory = RegulateTimezoneFactory::factory();
-        $this->assertFalse($tzFactory->isInputiCalSet());
+        $this->assertFalse( $tzFactory->isInputiCalSet());
 
-        $tzFactory->setInputiCal($calendar);
-        $this->assertTrue($tzFactory->isInputiCalSet());
+        $tzFactory->setInputiCal( $calendar );
+        $this->assertTrue( $tzFactory->isInputiCalSet());
 
-        $this->assertFalse($tzFactory->hasOtherTzPHPtzMap('otherTimezone'));
-        $tzFactory->addOtherTzPhpRelation('otherTimezone', 'Europe/Stockholm');
-        $this->assertTrue($tzFactory->hasOtherTzPHPtzMap('otherTimezone'));
+        $this->assertFalse( $tzFactory->hasOtherTzPHPtzMap( 'otherTimezone' ));
+        $tzFactory->addOtherTzPhpRelation( 'otherTimezone', 'Europe/Stockholm' );
+        $this->assertTrue( $tzFactory->hasOtherTzPHPtzMap( 'otherTimezone' ));
 
-        $calendar2 = $tzFactory->processCalendar($calendar)->getOutputiCal();
+        $calendar2 = $tzFactory->processCalendar( $calendar )->getOutputiCal();
 
         $this->assertFalse(
-            stripos($calendar2, 'W. Europe Standard Time')
+            stripos( $calendar2, 'W. Europe Standard Time' )
         );
         $this->assertFalse(
-            stripos($calendar2, 'Customized Time Zone')
+            stripos( $calendar2, 'Customized Time Zone' )
         );
 
         $this->parseCalendarTest(
             100,
-            Vcalendar::factory()->parse($calendar2)
+            Vcalendar::factory()->parse( $calendar2 )
         );
 
     }
@@ -273,30 +270,30 @@ END:VCALENDAR
      *
      * @test
      * @dataProvider TzTest1Provider
-     * @param int $case
+     * @param int    $case
      * @param string $otherTimezone
-     * @param int $hitsAfterProcess
+     * @param int    $hitsAfterProcess
      * @throws Exception
      */
-    public function TzTest3($case, $otherTimezone, $hitsAfterProcess)
-    {
+    public function TzTest3( $case, $otherTimezone, $hitsAfterProcess ) {
         $case += 3000;
-        $calendar = sprintf(self::$calendar2, $otherTimezone);
-        $calendar2 = RegulateTimezoneFactory::process($calendar);
+        $calendar = sprintf( self::$calendar2, $otherTimezone );
+        $calendar2 = RegulateTimezoneFactory::process( $calendar );
 
-        if (3200 > $case) {
+        if( 3200 > $case ) {
             $this->assertFalse(
-                strpos($calendar2, $otherTimezone)
+                strpos( $calendar2, $otherTimezone )
             );
-        } else {
+        }
+        else {
             $this->assertTrue(
-                (false !== strpos($calendar2, $otherTimezone))
+                ( false !== strpos( $calendar2, $otherTimezone ))
             );
         }
 
         $this->parseCalendarTest(
             $case,
-            Vcalendar::factory()->parse($calendar2)
+            Vcalendar::factory()->parse( $calendar2 )
         );
     }
 
@@ -306,24 +303,23 @@ END:VCALENDAR
      * @test
      * @throws Exception
      */
-    public function TzTest5()
-    {
-        RegulateTimezoneFactory::addMStimezoneToOffset('otherTimezone', 12345);
+    public function TzTest5() {
+        RegulateTimezoneFactory::addMStimezoneToOffset( 'otherTimezone', 12345 );
         $this->assertArrayHasKey(
             'otherTimezone',
             RegulateTimezoneFactory::$MStimezoneToOffset
         );
 
-        RegulateTimezoneFactory::addOtherTzMapToPhpTz('otherTimezone', 'Europe/Stockholm');
+        RegulateTimezoneFactory::addOtherTzMapToPhpTz( 'otherTimezone', 'Europe/Stockholm' );
         $this->assertArrayHasKey(
             'otherTimezone',
             RegulateTimezoneFactory::$otherTzToPhpTz
         );
 
-        $calendar = sprintf(self::$calendar2, 'W. Europe Standard Time');
+        $calendar = sprintf( self::$calendar2, 'W. Europe Standard Time' );
         $otherTzToPhpTz = RegulateTimezoneFactory::$otherTzToPhpTz;
-        $tzFactory = new RegulateTimezoneFactory(self::$calendar2);
-        $tzFactory->addOtherTzPhpRelation('otherTimezone', 'Europe/Stockholm');
+        $tzFactory = new RegulateTimezoneFactory( self::$calendar2 );
+        $tzFactory->addOtherTzPhpRelation( 'otherTimezone', 'Europe/Stockholm' );
         $this->assertEquals(
             $otherTzToPhpTz + ['otherTimezone' => 'Europe/Stockholm'],
             $tzFactory->getOtherTzPhpRelations()
@@ -337,11 +333,10 @@ END:VCALENDAR
      * @expectedException InvalidArgumentException
      * @throws Exception
      */
-    public function TzTest6()
-    {
+    public function TzTest6() {
         $calendar2 = RegulateTimezoneFactory::process(
-            sprintf(self::$calendar2, '̈́Europe/Stockholm'),
-            ['otherTimezone' => 'phpTimezone']
+            sprintf( self::$calendar2, '̈́Europe/Stockholm' ),
+            [ 'otherTimezone' => 'phpTimezone' ]
         );
     }
 
@@ -352,10 +347,9 @@ END:VCALENDAR
      * @expectedException InvalidArgumentException
      * @throws Exception
      */
-    public function TzTest7()
-    {
+    public function TzTest7() {
         $tzFactory = RegulateTimezoneFactory::factory();
-        $this->assertFalse($tzFactory->isInputiCalSet());
+        $this->assertFalse( $tzFactory->isInputiCalSet());
 
         $tzFactory->processCalendar();
     }
@@ -367,9 +361,8 @@ END:VCALENDAR
      * @expectedException UnexpectedValueException
      * @throws Exception
      */
-    public function TzTest8()
-    {
-        $calendar2 = RegulateTimezoneFactory::process('grodan boll');
+    public function TzTest8() {
+        $calendar2 = RegulateTimezoneFactory::process( 'grodan boll' );
     }
 
 }

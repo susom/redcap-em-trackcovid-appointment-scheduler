@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -50,7 +50,6 @@ trait REQUEST_STATUStrait
 {
     /**
      * @var array component property REQUEST-STATUS value
-     * @access protected
      */
     protected $requeststatus = null;
 
@@ -62,108 +61,123 @@ trait REQUEST_STATUStrait
      */
     public function createRequeststatus()
     {
-        if (empty($this->requeststatus)) {
+        if( empty( $this->requeststatus )) {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->requeststatus as $rx => $rStat) {
-            if (empty($rStat[Util::$LCvalue][self::STATCODE])) {
-                if ($this->getConfig(self::ALLOWEMPTY)) {
-                    $output .= StringFactory::createElement(self::REQUEST_STATUS);
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->requeststatus as $rx => $rStat ) {
+            if( empty( $rStat[Util::$LCvalue][self::STATCODE] )) {
+                if( $this->getConfig( self::ALLOWEMPTY )) {
+                    $output .= StringFactory::createElement( self::REQUEST_STATUS );
                 }
                 continue;
             }
             $content =
                 $rStat[Util::$LCvalue][self::STATCODE] .
                 Util::$SEMIC .
-                StringFactory::strrep($rStat[Util::$LCvalue][self::STATDESC]);
-            if (isset($rStat[Util::$LCvalue][self::EXTDATA])) {
-                $content .= Util::$SEMIC . StringFactory::strrep($rStat[Util::$LCvalue][self::EXTDATA]);
+                StringFactory::strrep( $rStat[Util::$LCvalue][self::STATDESC] );
+            if( isset( $rStat[Util::$LCvalue][self::EXTDATA] )) {
+                $content .= Util::$SEMIC .
+                    StringFactory::strrep( $rStat[Util::$LCvalue][self::EXTDATA] );
             }
             $output .= StringFactory::createElement(
                 self::REQUEST_STATUS,
-                ParameterFactory::createParams($rStat[Util::$LCparams], [self::LANGUAGE], $lang),
+                ParameterFactory::createParams(
+                    $rStat[Util::$LCparams],
+                    [ self::LANGUAGE ],
+                    $lang
+                ),
                 $content
             );
-        }
+        } // end foreach
         return $output;
     }
 
     /**
      * Delete calendar component property request-status
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteRequeststatus($propDelIx = null)
+    public function deleteRequeststatus( $propDelIx = null )
     {
-        if (empty($this->requeststatus)) {
-            unset($this->propDelIx[self::REQUEST_STATUS]);
+        if( empty( $this->requeststatus )) {
+            unset( $this->propDelIx[self::REQUEST_STATUS] );
             return false;
         }
-        return $this->deletePropertyM($this->requeststatus, self::REQUEST_STATUS, $propDelIx);
+        return $this->deletePropertyM(
+            $this->requeststatus,
+            self::REQUEST_STATUS,
+            $propDelIx
+        );
     }
 
     /**
      * Get calendar component property request-status
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since 2.29.9 2019-08-05
      */
-    public function getRequeststatus($propIx = null, $inclParam = false)
+    public function getRequeststatus( $propIx = null, $inclParam = false )
     {
-        if (empty($this->requeststatus)) {
-            unset($this->propIx[self::REQUEST_STATUS]);
+        if( empty( $this->requeststatus )) {
+            unset( $this->propIx[self::REQUEST_STATUS] );
             return false;
         }
-        return $this->getPropertyM($this->requeststatus, self::REQUEST_STATUS, $propIx, $inclParam);
+        return $this->getPropertyM(
+            $this->requeststatus,
+            self::REQUEST_STATUS,
+            $propIx,
+            $inclParam
+        );
     }
 
     /**
      * Set calendar component property request-status
      *
      * @param array|float $statCode 1*DIGIT 1*2("." 1*DIGIT)
-     * @param string $text
-     * @param string $extData
-     * @param array $params
-     * @param integer $index
+     * @param string      $text
+     * @param string      $extData
+     * @param array       $params
+     * @param integer     $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
     public function setRequeststatus(
         $statCode = null,
-        $text = null,
-        $extData = null,
-        $params = null,
-        $index = null
+        $text     = null,
+        $extData  = null,
+        $params   = null,
+        $index    = null
     ) {
         static $ERR = 'Invalid %s status code value %s';
-        if (empty($statCode) || empty($text)) {
-            $this->assertEmptyValue(Util::$SP0, self::REQUEST_STATUS);
+        if( empty( $statCode ) || empty( $text )) {
+            $this->assertEmptyValue( Util::$SP0, self::REQUEST_STATUS );
             $statCode = $text = Util::$SP0;
             $params = [];
-        } else {
-            if (false === ($cmp = filter_var($statCode, FILTER_VALIDATE_FLOAT))) {
+        }
+        else {
+            if( false === ( $cmp = filter_var( $statCode, FILTER_VALIDATE_FLOAT ))) {
                 throw new InvalidArgumentException(
-                    sprintf($ERR, self::REQUEST_STATUS, var_export($statCode, true))
+                    sprintf( $ERR, self::REQUEST_STATUS, var_export( $statCode, true ) )
                 );
             }
-            Util::assertString($text, self::REQUEST_STATUS);
+            Util::assertString( $text, self::REQUEST_STATUS );
         }
         $input = [
-            self::STATCODE => number_format((float)$statCode, 2, Util::$DOT, null),
-            self::STATDESC => StringFactory::trimTrailNL($text),
+            self::STATCODE => number_format( (float) $statCode, 2, Util::$DOT, null ),
+            self::STATDESC => StringFactory::trimTrailNL( $text ),
         ];
-        if (!empty($extData)) {
-            Util::assertString($extData, self::REQUEST_STATUS);
-            $input[self::EXTDATA] = StringFactory::trimTrailNL($extData);
+        if( ! empty( $extData )) {
+            Util::assertString( $extData, self::REQUEST_STATUS );
+            $input[self::EXTDATA] = StringFactory::trimTrailNL( $extData );
         }
-        $this->setMval($this->requeststatus, $input, $params, null, $index);
+        $this->setMval( $this->requeststatus, $input, $params, null, $index );
         return $this;
     }
 }

@@ -15,15 +15,13 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class WebhookOptions
-{
+abstract class WebhookOptions {
     /**
      * @param string $webhookMethod The method to be used when calling the
      *                              webhook's URL.
      * @return CreateWebhookOptions Options builder
      */
-    public static function create($webhookMethod = Values::NONE)
-    {
+    public static function create($webhookMethod = Values::NONE) {
         return new CreateWebhookOptions($webhookMethod);
     }
 
@@ -37,24 +35,17 @@ abstract class WebhookOptions
      *                              webhook's URL.
      * @return UpdateWebhookOptions Options builder
      */
-    public static function update(
-        $uniqueName = Values::NONE,
-        $events = Values::NONE,
-        $webhookUrl = Values::NONE,
-        $webhookMethod = Values::NONE
-    ) {
+    public static function update($uniqueName = Values::NONE, $events = Values::NONE, $webhookUrl = Values::NONE, $webhookMethod = Values::NONE) {
         return new UpdateWebhookOptions($uniqueName, $events, $webhookUrl, $webhookMethod);
     }
 }
 
-class CreateWebhookOptions extends Options
-{
+class CreateWebhookOptions extends Options {
     /**
      * @param string $webhookMethod The method to be used when calling the
      *                              webhook's URL.
      */
-    public function __construct($webhookMethod = Values::NONE)
-    {
+    public function __construct($webhookMethod = Values::NONE) {
         $this->options['webhookMethod'] = $webhookMethod;
     }
 
@@ -65,8 +56,7 @@ class CreateWebhookOptions extends Options
      *                              webhook's URL.
      * @return $this Fluent Builder
      */
-    public function setWebhookMethod($webhookMethod)
-    {
+    public function setWebhookMethod($webhookMethod) {
         $this->options['webhookMethod'] = $webhookMethod;
         return $this;
     }
@@ -76,8 +66,7 @@ class CreateWebhookOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -88,8 +77,7 @@ class CreateWebhookOptions extends Options
     }
 }
 
-class UpdateWebhookOptions extends Options
-{
+class UpdateWebhookOptions extends Options {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
@@ -99,12 +87,7 @@ class UpdateWebhookOptions extends Options
      * @param string $webhookMethod The method to be used when calling the
      *                              webhook's URL.
      */
-    public function __construct(
-        $uniqueName = Values::NONE,
-        $events = Values::NONE,
-        $webhookUrl = Values::NONE,
-        $webhookMethod = Values::NONE
-    ) {
+    public function __construct($uniqueName = Values::NONE, $events = Values::NONE, $webhookUrl = Values::NONE, $webhookMethod = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['events'] = $events;
         $this->options['webhookUrl'] = $webhookUrl;
@@ -118,8 +101,7 @@ class UpdateWebhookOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -131,8 +113,7 @@ class UpdateWebhookOptions extends Options
      *                       will subscribe to.
      * @return $this Fluent Builder
      */
-    public function setEvents($events)
-    {
+    public function setEvents($events) {
         $this->options['events'] = $events;
         return $this;
     }
@@ -143,8 +124,7 @@ class UpdateWebhookOptions extends Options
      * @param string $webhookUrl The URL associated with this Webhook.
      * @return $this Fluent Builder
      */
-    public function setWebhookUrl($webhookUrl)
-    {
+    public function setWebhookUrl($webhookUrl) {
         $this->options['webhookUrl'] = $webhookUrl;
         return $this;
     }
@@ -156,8 +136,7 @@ class UpdateWebhookOptions extends Options
      *                              webhook's URL.
      * @return $this Fluent Builder
      */
-    public function setWebhookMethod($webhookMethod)
-    {
+    public function setWebhookMethod($webhookMethod) {
         $this->options['webhookMethod'] = $webhookMethod;
         return $this;
     }
@@ -167,8 +146,7 @@ class UpdateWebhookOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

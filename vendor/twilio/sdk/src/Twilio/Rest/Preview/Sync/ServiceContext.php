@@ -29,8 +29,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Preview\Sync\Service\SyncListContext syncLists(string $sid)
  * @method \Twilio\Rest\Preview\Sync\Service\SyncMapContext syncMaps(string $sid)
  */
-class ServiceContext extends InstanceContext
-{
+class ServiceContext extends InstanceContext {
     protected $_documents = null;
     protected $_syncLists = null;
     protected $_syncMaps = null;
@@ -42,12 +41,11 @@ class ServiceContext extends InstanceContext
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Sync\ServiceContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($sid) . '';
     }
@@ -58,8 +56,7 @@ class ServiceContext extends InstanceContext
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -77,8 +74,7 @@ class ServiceContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -89,8 +85,7 @@ class ServiceContext extends InstanceContext
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -115,8 +110,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Sync\Service\DocumentList
      */
-    protected function getDocuments()
-    {
+    protected function getDocuments() {
         if (!$this->_documents) {
             $this->_documents = new DocumentList($this->version, $this->solution['sid']);
         }
@@ -129,8 +123,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Sync\Service\SyncListList
      */
-    protected function getSyncLists()
-    {
+    protected function getSyncLists() {
         if (!$this->_syncLists) {
             $this->_syncLists = new SyncListList($this->version, $this->solution['sid']);
         }
@@ -143,8 +136,7 @@ class ServiceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Sync\Service\SyncMapList
      */
-    protected function getSyncMaps()
-    {
+    protected function getSyncMaps() {
         if (!$this->_syncMaps) {
             $this->_syncMaps = new SyncMapList($this->version, $this->solution['sid']);
         }
@@ -159,8 +151,7 @@ class ServiceContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -177,8 +168,7 @@ class ServiceContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -192,8 +182,7 @@ class ServiceContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -15,8 +15,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class BindingList extends ListResource
-{
+class BindingList extends ListResource {
     /**
      * Construct the BindingList
      *
@@ -25,12 +24,11 @@ class BindingList extends ListResource
      *                           is associated with
      * @return \Twilio\Rest\Chat\V2\Service\BindingList
      */
-    public function __construct(Version $version, $serviceSid)
-    {
+    public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Bindings';
     }
@@ -54,8 +52,7 @@ class BindingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -79,8 +76,7 @@ class BindingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return BindingInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -94,20 +90,11 @@ class BindingList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of BindingInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
-            'BindingType' => Serialize::map($options['bindingType'], function ($e) {
-                return $e;
-            }),
-            'Identity' => Serialize::map($options['identity'], function ($e) {
-                return $e;
-            }),
+            'BindingType' => Serialize::map($options['bindingType'], function($e) { return $e; }),
+            'Identity' => Serialize::map($options['identity'], function($e) { return $e; }),
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
             'PageSize' => $pageSize,
@@ -129,8 +116,7 @@ class BindingList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of BindingInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -145,8 +131,7 @@ class BindingList extends ListResource
      * @param string $sid The SID of the resource to fetch
      * @return \Twilio\Rest\Chat\V2\Service\BindingContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new BindingContext($this->version, $this->solution['serviceSid'], $sid);
     }
 
@@ -155,8 +140,7 @@ class BindingList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Chat.V2.BindingList]';
     }
 }

@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CompositionHookContext extends InstanceContext
-{
+class CompositionHookContext extends InstanceContext {
     /**
      * Initialize the CompositionHookContext
      *
@@ -28,12 +27,11 @@ class CompositionHookContext extends InstanceContext
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\CompositionHookContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/CompositionHooks/' . \rawurlencode($sid) . '';
     }
@@ -44,8 +42,7 @@ class CompositionHookContext extends InstanceContext
      * @return CompositionHookInstance Fetched CompositionHookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -63,8 +60,7 @@ class CompositionHookContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -76,20 +72,15 @@ class CompositionHookContext extends InstanceContext
      * @return CompositionHookInstance Updated CompositionHookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($friendlyName, $options = array())
-    {
+    public function update($friendlyName, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
             'FriendlyName' => $friendlyName,
             'Enabled' => Serialize::booleanToString($options['enabled']),
             'VideoLayout' => Serialize::jsonObject($options['videoLayout']),
-            'AudioSources' => Serialize::map($options['audioSources'], function ($e) {
-                return $e;
-            }),
-            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function ($e) {
-                return $e;
-            }),
+            'AudioSources' => Serialize::map($options['audioSources'], function($e) { return $e; }),
+            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function($e) { return $e; }),
             'Trim' => Serialize::booleanToString($options['trim']),
             'Format' => $options['format'],
             'Resolution' => $options['resolution'],
@@ -112,8 +103,7 @@ class CompositionHookContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

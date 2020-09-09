@@ -15,25 +15,21 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class CallSummaryOptions
-{
+abstract class CallSummaryOptions {
     /**
      * @param string $processingState The processing_state
      * @return FetchCallSummaryOptions Options builder
      */
-    public static function fetch($processingState = Values::NONE)
-    {
+    public static function fetch($processingState = Values::NONE) {
         return new FetchCallSummaryOptions($processingState);
     }
 }
 
-class FetchCallSummaryOptions extends Options
-{
+class FetchCallSummaryOptions extends Options {
     /**
      * @param string $processingState The processing_state
      */
-    public function __construct($processingState = Values::NONE)
-    {
+    public function __construct($processingState = Values::NONE) {
         $this->options['processingState'] = $processingState;
     }
 
@@ -43,8 +39,7 @@ class FetchCallSummaryOptions extends Options
      * @param string $processingState The processing_state
      * @return $this Fluent Builder
      */
-    public function setProcessingState($processingState)
-    {
+    public function setProcessingState($processingState) {
         $this->options['processingState'] = $processingState;
         return $this;
     }
@@ -54,8 +49,7 @@ class FetchCallSummaryOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

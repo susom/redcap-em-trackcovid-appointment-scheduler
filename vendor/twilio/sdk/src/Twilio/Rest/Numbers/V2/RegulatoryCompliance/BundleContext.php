@@ -20,8 +20,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentList $itemAssignments
  * @method \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentContext itemAssignments(string $sid)
  */
-class BundleContext extends InstanceContext
-{
+class BundleContext extends InstanceContext {
     protected $_itemAssignments = null;
 
     /**
@@ -31,12 +30,11 @@ class BundleContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource.
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\BundleContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/RegulatoryCompliance/Bundles/' . \rawurlencode($sid) . '';
     }
@@ -47,8 +45,7 @@ class BundleContext extends InstanceContext
      * @return BundleInstance Fetched BundleInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class BundleContext extends InstanceContext
      * @return BundleInstance Updated BundleInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -93,8 +89,7 @@ class BundleContext extends InstanceContext
      *
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentList
      */
-    protected function getItemAssignments()
-    {
+    protected function getItemAssignments() {
         if (!$this->_itemAssignments) {
             $this->_itemAssignments = new ItemAssignmentList($this->version, $this->solution['sid']);
         }
@@ -109,8 +104,7 @@ class BundleContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -127,8 +121,7 @@ class BundleContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -142,8 +135,7 @@ class BundleContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

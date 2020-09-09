@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $data
  */
-class TaskActionsInstance extends InstanceResource
-{
+class TaskActionsInstance extends InstanceResource {
     /**
      * Initialize the TaskActionsInstance
      *
@@ -35,8 +34,7 @@ class TaskActionsInstance extends InstanceResource
      * @param string $taskSid The unique ID of the Task.
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\TaskActionsInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $taskSid)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid, $taskSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -48,7 +46,7 @@ class TaskActionsInstance extends InstanceResource
             'data' => Values::array_get($payload, 'data'),
         );
 
-        $this->solution = array('assistantSid' => $assistantSid, 'taskSid' => $taskSid,);
+        $this->solution = array('assistantSid' => $assistantSid, 'taskSid' => $taskSid, );
     }
 
     /**
@@ -57,8 +55,7 @@ class TaskActionsInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\TaskActionsContext Context for this TaskActionsInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new TaskActionsContext(
                 $this->version,
@@ -76,8 +73,7 @@ class TaskActionsInstance extends InstanceResource
      * @return TaskActionsInstance Fetched TaskActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -88,8 +84,7 @@ class TaskActionsInstance extends InstanceResource
      * @return TaskActionsInstance Updated TaskActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -100,8 +95,7 @@ class TaskActionsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -119,8 +113,7 @@ class TaskActionsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

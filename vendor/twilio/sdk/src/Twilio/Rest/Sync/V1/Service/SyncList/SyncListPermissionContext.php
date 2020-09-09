@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SyncListPermissionContext extends InstanceContext
-{
+class SyncListPermissionContext extends InstanceContext {
     /**
      * Initialize the SyncListPermissionContext
      *
@@ -33,8 +32,7 @@ class SyncListPermissionContext extends InstanceContext
      *                         to fetch
      * @return \Twilio\Rest\Sync\V1\Service\SyncList\SyncListPermissionContext
      */
-    public function __construct(Version $version, $serviceSid, $listSid, $identity)
-    {
+    public function __construct(Version $version, $serviceSid, $listSid, $identity) {
         parent::__construct($version);
 
         // Path Solution
@@ -53,8 +51,7 @@ class SyncListPermissionContext extends InstanceContext
      * @return SyncListPermissionInstance Fetched SyncListPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -78,8 +75,7 @@ class SyncListPermissionContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -92,8 +88,7 @@ class SyncListPermissionContext extends InstanceContext
      * @return SyncListPermissionInstance Updated SyncListPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($read, $write, $manage)
-    {
+    public function update($read, $write, $manage) {
         $data = Values::of(array(
             'Read' => Serialize::booleanToString($read),
             'Write' => Serialize::booleanToString($write),
@@ -121,8 +116,7 @@ class SyncListPermissionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

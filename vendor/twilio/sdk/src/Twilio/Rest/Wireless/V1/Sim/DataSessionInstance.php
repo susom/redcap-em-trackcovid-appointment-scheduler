@@ -33,8 +33,7 @@ use Twilio\Version;
  * @property \DateTime $end
  * @property string $imei
  */
-class DataSessionInstance extends InstanceResource
-{
+class DataSessionInstance extends InstanceResource {
     /**
      * Initialize the DataSessionInstance
      *
@@ -44,8 +43,7 @@ class DataSessionInstance extends InstanceResource
      *                       for
      * @return \Twilio\Rest\Wireless\V1\Sim\DataSessionInstance
      */
-    public function __construct(Version $version, array $payload, $simSid)
-    {
+    public function __construct(Version $version, array $payload, $simSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -68,7 +66,7 @@ class DataSessionInstance extends InstanceResource
             'imei' => Values::array_get($payload, 'imei'),
         );
 
-        $this->solution = array('simSid' => $simSid,);
+        $this->solution = array('simSid' => $simSid, );
     }
 
     /**
@@ -78,8 +76,7 @@ class DataSessionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -97,8 +94,7 @@ class DataSessionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Wireless.V1.DataSessionInstance]';
     }
 }

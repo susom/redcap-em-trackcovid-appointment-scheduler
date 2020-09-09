@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -47,7 +47,6 @@ trait REPEATtrait
 {
     /**
      * @var array component property REPEAT value
-     * @access protected
      */
     protected $repeat = null;
 
@@ -58,16 +57,19 @@ trait REPEATtrait
      */
     public function createRepeat()
     {
-        if (empty($this->repeat)) {
+        if( empty( $this->repeat )) {
             return null;
         }
-        if (!isset($this->repeat[Util::$LCvalue]) ||
-            (empty($this->repeat[Util::$LCvalue]) && !is_numeric($this->repeat[Util::$LCvalue]))) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::REPEAT) : null;
+        if( ! isset( $this->repeat[Util::$LCvalue] ) ||
+            ( empty( $this->repeat[Util::$LCvalue] ) &&
+                ! is_numeric( $this->repeat[Util::$LCvalue] ))) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::REPEAT )
+                : null;
         }
         return StringFactory::createElement(
             self::REPEAT,
-            ParameterFactory::createParams($this->repeat[Util::$LCparams]),
+            ParameterFactory::createParams( $this->repeat[Util::$LCparams] ),
             $this->repeat[Util::$LCvalue]
         );
     }
@@ -87,39 +89,40 @@ trait REPEATtrait
     /**
      * Get calendar component property repeat
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-13
      */
-    public function getRepeat($inclParam = false)
+    public function getRepeat( $inclParam = false )
     {
-        if (empty($this->repeat)) {
+        if( empty( $this->repeat )) {
             return false;
         }
-        return ($inclParam) ? $this->repeat : $this->repeat[Util::$LCvalue];
+        return ( $inclParam ) ? $this->repeat : $this->repeat[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property repeat
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.27.3 2018-12-22
      */
-    public function setRepeat($value = null, $params = [])
+    public function setRepeat( $value = null, $params = [] )
     {
-        if (empty($value) && (Util::$ZERO != $value)) {
-            $this->assertEmptyValue($value, self::REPEAT);
-            $value = Util::$SP0;
+        if( empty( $value ) && ( Util::$ZERO != $value )) {
+            $this->assertEmptyValue( $value, self::REPEAT );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            Util::assertInteger($value, self::REPEAT);
+        }
+        else {
+            Util::assertInteger( $value, self::REPEAT );
         }
         $this->repeat = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => $value,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

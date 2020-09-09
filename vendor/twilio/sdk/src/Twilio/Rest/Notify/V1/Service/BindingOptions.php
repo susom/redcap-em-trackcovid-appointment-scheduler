@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class BindingOptions
-{
+abstract class BindingOptions {
     /**
      * @param string $tag A tag that can be used to select the Bindings to notify
      * @param string $notificationProtocolVersion The protocol version to use to
@@ -26,12 +25,7 @@ abstract class BindingOptions
      * @param string $endpoint Deprecated
      * @return CreateBindingOptions Options builder
      */
-    public static function create(
-        $tag = Values::NONE,
-        $notificationProtocolVersion = Values::NONE,
-        $credentialSid = Values::NONE,
-        $endpoint = Values::NONE
-    ) {
+    public static function create($tag = Values::NONE, $notificationProtocolVersion = Values::NONE, $credentialSid = Values::NONE, $endpoint = Values::NONE) {
         return new CreateBindingOptions($tag, $notificationProtocolVersion, $credentialSid, $endpoint);
     }
 
@@ -44,18 +38,12 @@ abstract class BindingOptions
      * @param string $tag Only list Bindings that have all of the specified Tags
      * @return ReadBindingOptions Options builder
      */
-    public static function read(
-        $startDate = Values::NONE,
-        $endDate = Values::NONE,
-        $identity = Values::NONE,
-        $tag = Values::NONE
-    ) {
+    public static function read($startDate = Values::NONE, $endDate = Values::NONE, $identity = Values::NONE, $tag = Values::NONE) {
         return new ReadBindingOptions($startDate, $endDate, $identity, $tag);
     }
 }
 
-class CreateBindingOptions extends Options
-{
+class CreateBindingOptions extends Options {
     /**
      * @param string $tag A tag that can be used to select the Bindings to notify
      * @param string $notificationProtocolVersion The protocol version to use to
@@ -64,12 +52,7 @@ class CreateBindingOptions extends Options
      *                              to send notifications to this Binding
      * @param string $endpoint Deprecated
      */
-    public function __construct(
-        $tag = Values::NONE,
-        $notificationProtocolVersion = Values::NONE,
-        $credentialSid = Values::NONE,
-        $endpoint = Values::NONE
-    ) {
+    public function __construct($tag = Values::NONE, $notificationProtocolVersion = Values::NONE, $credentialSid = Values::NONE, $endpoint = Values::NONE) {
         $this->options['tag'] = $tag;
         $this->options['notificationProtocolVersion'] = $notificationProtocolVersion;
         $this->options['credentialSid'] = $credentialSid;
@@ -82,8 +65,7 @@ class CreateBindingOptions extends Options
      * @param string $tag A tag that can be used to select the Bindings to notify
      * @return $this Fluent Builder
      */
-    public function setTag($tag)
-    {
+    public function setTag($tag) {
         $this->options['tag'] = $tag;
         return $this;
     }
@@ -95,8 +77,7 @@ class CreateBindingOptions extends Options
      *                                            send the notification
      * @return $this Fluent Builder
      */
-    public function setNotificationProtocolVersion($notificationProtocolVersion)
-    {
+    public function setNotificationProtocolVersion($notificationProtocolVersion) {
         $this->options['notificationProtocolVersion'] = $notificationProtocolVersion;
         return $this;
     }
@@ -108,8 +89,7 @@ class CreateBindingOptions extends Options
      *                              to send notifications to this Binding
      * @return $this Fluent Builder
      */
-    public function setCredentialSid($credentialSid)
-    {
+    public function setCredentialSid($credentialSid) {
         $this->options['credentialSid'] = $credentialSid;
         return $this;
     }
@@ -120,8 +100,7 @@ class CreateBindingOptions extends Options
      * @param string $endpoint Deprecated
      * @return $this Fluent Builder
      */
-    public function setEndpoint($endpoint)
-    {
+    public function setEndpoint($endpoint) {
         $this->options['endpoint'] = $endpoint;
         return $this;
     }
@@ -131,8 +110,7 @@ class CreateBindingOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -143,8 +121,7 @@ class CreateBindingOptions extends Options
     }
 }
 
-class ReadBindingOptions extends Options
-{
+class ReadBindingOptions extends Options {
     /**
      * @param \DateTime $startDate Only include usage that has occurred on or after
      *                             this date
@@ -153,12 +130,7 @@ class ReadBindingOptions extends Options
      * @param string $identity The `identity` value of the resources to read
      * @param string $tag Only list Bindings that have all of the specified Tags
      */
-    public function __construct(
-        $startDate = Values::NONE,
-        $endDate = Values::NONE,
-        $identity = Values::NONE,
-        $tag = Values::NONE
-    ) {
+    public function __construct($startDate = Values::NONE, $endDate = Values::NONE, $identity = Values::NONE, $tag = Values::NONE) {
         $this->options['startDate'] = $startDate;
         $this->options['endDate'] = $endDate;
         $this->options['identity'] = $identity;
@@ -172,8 +144,7 @@ class ReadBindingOptions extends Options
      *                             this date
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -185,8 +156,7 @@ class ReadBindingOptions extends Options
      *                           date
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -197,8 +167,7 @@ class ReadBindingOptions extends Options
      * @param string $identity The `identity` value of the resources to read
      * @return $this Fluent Builder
      */
-    public function setIdentity($identity)
-    {
+    public function setIdentity($identity) {
         $this->options['identity'] = $identity;
         return $this;
     }
@@ -209,8 +178,7 @@ class ReadBindingOptions extends Options
      * @param string $tag Only list Bindings that have all of the specified Tags
      * @return $this Fluent Builder
      */
-    public function setTag($tag)
-    {
+    public function setTag($tag) {
         $this->options['tag'] = $tag;
         return $this;
     }
@@ -220,8 +188,7 @@ class ReadBindingOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

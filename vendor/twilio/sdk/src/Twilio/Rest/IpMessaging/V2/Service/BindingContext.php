@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class BindingContext extends InstanceContext
-{
+class BindingContext extends InstanceContext {
     /**
      * Initialize the BindingContext
      *
@@ -24,12 +23,11 @@ class BindingContext extends InstanceContext
      * @param string $sid The SID of the resource to fetch
      * @return \Twilio\Rest\IpMessaging\V2\Service\BindingContext
      */
-    public function __construct(Version $version, $serviceSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Bindings/' . \rawurlencode($sid) . '';
     }
@@ -40,8 +38,7 @@ class BindingContext extends InstanceContext
      * @return BindingInstance Fetched BindingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -64,8 +61,7 @@ class BindingContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -74,8 +70,7 @@ class BindingContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

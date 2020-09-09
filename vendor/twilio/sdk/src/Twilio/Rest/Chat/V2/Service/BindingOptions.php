@@ -12,29 +12,25 @@ namespace Twilio\Rest\Chat\V2\Service;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class BindingOptions
-{
+abstract class BindingOptions {
     /**
      * @param string $bindingType The push technology used by the Binding resources
      *                            to read
      * @param string $identity The `identity` value of the resources to read
      * @return ReadBindingOptions Options builder
      */
-    public static function read($bindingType = Values::NONE, $identity = Values::NONE)
-    {
+    public static function read($bindingType = Values::NONE, $identity = Values::NONE) {
         return new ReadBindingOptions($bindingType, $identity);
     }
 }
 
-class ReadBindingOptions extends Options
-{
+class ReadBindingOptions extends Options {
     /**
      * @param string $bindingType The push technology used by the Binding resources
      *                            to read
      * @param string $identity The `identity` value of the resources to read
      */
-    public function __construct($bindingType = Values::NONE, $identity = Values::NONE)
-    {
+    public function __construct($bindingType = Values::NONE, $identity = Values::NONE) {
         $this->options['bindingType'] = $bindingType;
         $this->options['identity'] = $identity;
     }
@@ -46,8 +42,7 @@ class ReadBindingOptions extends Options
      *                            to read
      * @return $this Fluent Builder
      */
-    public function setBindingType($bindingType)
-    {
+    public function setBindingType($bindingType) {
         $this->options['bindingType'] = $bindingType;
         return $this;
     }
@@ -58,8 +53,7 @@ class ReadBindingOptions extends Options
      * @param string $identity The `identity` value of the resources to read
      * @return $this Fluent Builder
      */
-    public function setIdentity($identity)
-    {
+    public function setIdentity($identity) {
         $this->options['identity'] = $identity;
         return $this;
     }
@@ -69,8 +63,7 @@ class ReadBindingOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

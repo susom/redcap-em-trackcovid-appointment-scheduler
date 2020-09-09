@@ -14,18 +14,15 @@ use Twilio\Page;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class FlowPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class FlowPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new FlowInstance($this->version, $payload);
     }
 
@@ -34,8 +31,7 @@ class FlowPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Studio.V2.FlowPage]';
     }
 }

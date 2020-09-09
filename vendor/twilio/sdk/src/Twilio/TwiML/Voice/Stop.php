@@ -11,13 +11,11 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Stop extends TwiML
-{
+class Stop extends TwiML {
     /**
      * Stop constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct('Stop', null);
     }
 
@@ -27,8 +25,7 @@ class Stop extends TwiML
      * @param array $attributes Optional attributes
      * @return Stream Child element.
      */
-    public function stream($attributes = array())
-    {
+    public function stream($attributes = array()) {
         return $this->nest(new Stream($attributes));
     }
 
@@ -38,8 +35,7 @@ class Stop extends TwiML
      * @param array $attributes Optional attributes
      * @return Siprec Child element.
      */
-    public function siprec($attributes = array())
-    {
+    public function siprec($attributes = array()) {
         return $this->nest(new Siprec($attributes));
     }
 }

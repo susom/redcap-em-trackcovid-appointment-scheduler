@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class RecordingSettingsOptions
-{
+abstract class RecordingSettingsOptions {
     /**
      * @param string $awsCredentialsSid The SID of the stored Credential resource
      * @param string $encryptionKeySid The SID of the Public Key resource to use
@@ -29,20 +28,12 @@ abstract class RecordingSettingsOptions
      *                                encrypted form
      * @return CreateRecordingSettingsOptions Options builder
      */
-    public static function create(
-        $awsCredentialsSid = Values::NONE,
-        $encryptionKeySid = Values::NONE,
-        $awsS3Url = Values::NONE,
-        $awsStorageEnabled = Values::NONE,
-        $encryptionEnabled = Values::NONE
-    ) {
-        return new CreateRecordingSettingsOptions($awsCredentialsSid, $encryptionKeySid, $awsS3Url, $awsStorageEnabled,
-            $encryptionEnabled);
+    public static function create($awsCredentialsSid = Values::NONE, $encryptionKeySid = Values::NONE, $awsS3Url = Values::NONE, $awsStorageEnabled = Values::NONE, $encryptionEnabled = Values::NONE) {
+        return new CreateRecordingSettingsOptions($awsCredentialsSid, $encryptionKeySid, $awsS3Url, $awsStorageEnabled, $encryptionEnabled);
     }
 }
 
-class CreateRecordingSettingsOptions extends Options
-{
+class CreateRecordingSettingsOptions extends Options {
     /**
      * @param string $awsCredentialsSid The SID of the stored Credential resource
      * @param string $encryptionKeySid The SID of the Public Key resource to use
@@ -54,13 +45,7 @@ class CreateRecordingSettingsOptions extends Options
      * @param bool $encryptionEnabled Whether all recordings should be stored in an
      *                                encrypted form
      */
-    public function __construct(
-        $awsCredentialsSid = Values::NONE,
-        $encryptionKeySid = Values::NONE,
-        $awsS3Url = Values::NONE,
-        $awsStorageEnabled = Values::NONE,
-        $encryptionEnabled = Values::NONE
-    ) {
+    public function __construct($awsCredentialsSid = Values::NONE, $encryptionKeySid = Values::NONE, $awsS3Url = Values::NONE, $awsStorageEnabled = Values::NONE, $encryptionEnabled = Values::NONE) {
         $this->options['awsCredentialsSid'] = $awsCredentialsSid;
         $this->options['encryptionKeySid'] = $encryptionKeySid;
         $this->options['awsS3Url'] = $awsS3Url;
@@ -74,8 +59,7 @@ class CreateRecordingSettingsOptions extends Options
      * @param string $awsCredentialsSid The SID of the stored Credential resource
      * @return $this Fluent Builder
      */
-    public function setAwsCredentialsSid($awsCredentialsSid)
-    {
+    public function setAwsCredentialsSid($awsCredentialsSid) {
         $this->options['awsCredentialsSid'] = $awsCredentialsSid;
         return $this;
     }
@@ -87,8 +71,7 @@ class CreateRecordingSettingsOptions extends Options
      *                                 for encryption
      * @return $this Fluent Builder
      */
-    public function setEncryptionKeySid($encryptionKeySid)
-    {
+    public function setEncryptionKeySid($encryptionKeySid) {
         $this->options['encryptionKeySid'] = $encryptionKeySid;
         return $this;
     }
@@ -100,8 +83,7 @@ class CreateRecordingSettingsOptions extends Options
      *                         should be stored
      * @return $this Fluent Builder
      */
-    public function setAwsS3Url($awsS3Url)
-    {
+    public function setAwsS3Url($awsS3Url) {
         $this->options['awsS3Url'] = $awsS3Url;
         return $this;
     }
@@ -113,8 +95,7 @@ class CreateRecordingSettingsOptions extends Options
      *                                the aws_s3_url
      * @return $this Fluent Builder
      */
-    public function setAwsStorageEnabled($awsStorageEnabled)
-    {
+    public function setAwsStorageEnabled($awsStorageEnabled) {
         $this->options['awsStorageEnabled'] = $awsStorageEnabled;
         return $this;
     }
@@ -126,8 +107,7 @@ class CreateRecordingSettingsOptions extends Options
      *                                encrypted form
      * @return $this Fluent Builder
      */
-    public function setEncryptionEnabled($encryptionEnabled)
-    {
+    public function setEncryptionEnabled($encryptionEnabled) {
         $this->options['encryptionEnabled'] = $encryptionEnabled;
         return $this;
     }
@@ -137,8 +117,7 @@ class CreateRecordingSettingsOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

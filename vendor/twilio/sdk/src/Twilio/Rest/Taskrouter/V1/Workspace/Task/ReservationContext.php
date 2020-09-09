@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class ReservationContext extends InstanceContext
-{
+class ReservationContext extends InstanceContext {
     /**
      * Initialize the ReservationContext
      *
@@ -29,12 +28,11 @@ class ReservationContext extends InstanceContext
      * @param string $sid The SID of the TaskReservation resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Task\ReservationContext
      */
-    public function __construct(Version $version, $workspaceSid, $taskSid, $sid)
-    {
+    public function __construct(Version $version, $workspaceSid, $taskSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'taskSid' => $taskSid, 'sid' => $sid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'taskSid' => $taskSid, 'sid' => $sid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Tasks/' . \rawurlencode($taskSid) . '/Reservations/' . \rawurlencode($sid) . '';
     }
@@ -45,8 +43,7 @@ class ReservationContext extends InstanceContext
      * @return ReservationInstance Fetched ReservationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -71,8 +68,7 @@ class ReservationContext extends InstanceContext
      * @return ReservationInstance Updated ReservationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -99,9 +95,7 @@ class ReservationContext extends InstanceContext
             'From' => $options['from'],
             'StatusCallback' => $options['statusCallback'],
             'StatusCallbackMethod' => $options['statusCallbackMethod'],
-            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function($e) { return $e; }),
             'Timeout' => $options['timeout'],
             'Record' => Serialize::booleanToString($options['record']),
             'Muted' => Serialize::booleanToString($options['muted']),
@@ -114,9 +108,7 @@ class ReservationContext extends InstanceContext
             'MaxParticipants' => $options['maxParticipants'],
             'ConferenceStatusCallback' => $options['conferenceStatusCallback'],
             'ConferenceStatusCallbackMethod' => $options['conferenceStatusCallbackMethod'],
-            'ConferenceStatusCallbackEvent' => Serialize::map($options['conferenceStatusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'ConferenceStatusCallbackEvent' => Serialize::map($options['conferenceStatusCallbackEvent'], function($e) { return $e; }),
             'ConferenceRecord' => $options['conferenceRecord'],
             'ConferenceTrim' => $options['conferenceTrim'],
             'RecordingChannels' => $options['recordingChannels'],
@@ -127,9 +119,7 @@ class ReservationContext extends InstanceContext
             'Region' => $options['region'],
             'SipAuthUsername' => $options['sipAuthUsername'],
             'SipAuthPassword' => $options['sipAuthPassword'],
-            'DequeueStatusCallbackEvent' => Serialize::map($options['dequeueStatusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'DequeueStatusCallbackEvent' => Serialize::map($options['dequeueStatusCallbackEvent'], function($e) { return $e; }),
             'PostWorkActivitySid' => $options['postWorkActivitySid'],
             'SupervisorMode' => $options['supervisorMode'],
             'Supervisor' => $options['supervisor'],
@@ -158,8 +148,7 @@ class ReservationContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

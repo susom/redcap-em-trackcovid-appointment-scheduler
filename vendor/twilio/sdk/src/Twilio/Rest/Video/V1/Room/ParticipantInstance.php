@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class ParticipantInstance extends InstanceResource
-{
+class ParticipantInstance extends InstanceResource {
     protected $_publishedTracks = null;
     protected $_subscribedTracks = null;
     protected $_subscribeRules = null;
@@ -45,8 +44,7 @@ class ParticipantInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\Room\ParticipantInstance
      */
-    public function __construct(Version $version, array $payload, $roomSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $roomSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -65,7 +63,7 @@ class ParticipantInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('roomSid' => $roomSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('roomSid' => $roomSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -75,8 +73,7 @@ class ParticipantInstance extends InstanceResource
      * @return \Twilio\Rest\Video\V1\Room\ParticipantContext Context for this
      *                                                       ParticipantInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ParticipantContext(
                 $this->version,
@@ -94,8 +91,7 @@ class ParticipantInstance extends InstanceResource
      * @return ParticipantInstance Fetched ParticipantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -106,8 +102,7 @@ class ParticipantInstance extends InstanceResource
      * @return ParticipantInstance Updated ParticipantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -116,8 +111,7 @@ class ParticipantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Video\V1\Room\Participant\PublishedTrackList
      */
-    protected function getPublishedTracks()
-    {
+    protected function getPublishedTracks() {
         return $this->proxy()->publishedTracks;
     }
 
@@ -126,8 +120,7 @@ class ParticipantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribedTrackList
      */
-    protected function getSubscribedTracks()
-    {
+    protected function getSubscribedTracks() {
         return $this->proxy()->subscribedTracks;
     }
 
@@ -136,8 +129,7 @@ class ParticipantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribeRulesList
      */
-    protected function getSubscribeRules()
-    {
+    protected function getSubscribeRules() {
         return $this->proxy()->subscribeRules;
     }
 
@@ -148,8 +140,7 @@ class ParticipantInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -167,8 +158,7 @@ class ParticipantInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

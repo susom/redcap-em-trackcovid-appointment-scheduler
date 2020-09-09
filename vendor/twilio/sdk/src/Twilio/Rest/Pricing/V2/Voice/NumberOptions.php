@@ -12,27 +12,23 @@ namespace Twilio\Rest\Pricing\V2\Voice;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class NumberOptions
-{
+abstract class NumberOptions {
     /**
      * @param string $originationNumber The origination number for which to fetch
      *                                  pricing information
      * @return FetchNumberOptions Options builder
      */
-    public static function fetch($originationNumber = Values::NONE)
-    {
+    public static function fetch($originationNumber = Values::NONE) {
         return new FetchNumberOptions($originationNumber);
     }
 }
 
-class FetchNumberOptions extends Options
-{
+class FetchNumberOptions extends Options {
     /**
      * @param string $originationNumber The origination number for which to fetch
      *                                  pricing information
      */
-    public function __construct($originationNumber = Values::NONE)
-    {
+    public function __construct($originationNumber = Values::NONE) {
         $this->options['originationNumber'] = $originationNumber;
     }
 
@@ -43,8 +39,7 @@ class FetchNumberOptions extends Options
      *                                  pricing information
      * @return $this Fluent Builder
      */
-    public function setOriginationNumber($originationNumber)
-    {
+    public function setOriginationNumber($originationNumber) {
         $this->options['originationNumber'] = $originationNumber;
         return $this;
     }
@@ -54,8 +49,7 @@ class FetchNumberOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

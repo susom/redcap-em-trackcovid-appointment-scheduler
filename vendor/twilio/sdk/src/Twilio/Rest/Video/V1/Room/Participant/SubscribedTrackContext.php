@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class SubscribedTrackContext extends InstanceContext
-{
+class SubscribedTrackContext extends InstanceContext {
     /**
      * Initialize the SubscribedTrackContext
      *
@@ -27,12 +26,11 @@ class SubscribedTrackContext extends InstanceContext
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribedTrackContext
      */
-    public function __construct(Version $version, $roomSid, $participantSid, $sid)
-    {
+    public function __construct(Version $version, $roomSid, $participantSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('roomSid' => $roomSid, 'participantSid' => $participantSid, 'sid' => $sid,);
+        $this->solution = array('roomSid' => $roomSid, 'participantSid' => $participantSid, 'sid' => $sid, );
 
         $this->uri = '/Rooms/' . \rawurlencode($roomSid) . '/Participants/' . \rawurlencode($participantSid) . '/SubscribedTracks/' . \rawurlencode($sid) . '';
     }
@@ -43,8 +41,7 @@ class SubscribedTrackContext extends InstanceContext
      * @return SubscribedTrackInstance Fetched SubscribedTrackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class SubscribedTrackContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

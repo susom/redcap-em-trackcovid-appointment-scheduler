@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DeviceContext extends InstanceContext
-{
+class DeviceContext extends InstanceContext {
     /**
      * Initialize the DeviceContext
      *
@@ -29,12 +28,11 @@ class DeviceContext extends InstanceContext
      * @param string $sid A string that uniquely identifies the Device.
      * @return \Twilio\Rest\Preview\DeployedDevices\Fleet\DeviceContext
      */
-    public function __construct(Version $version, $fleetSid, $sid)
-    {
+    public function __construct(Version $version, $fleetSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('fleetSid' => $fleetSid, 'sid' => $sid,);
+        $this->solution = array('fleetSid' => $fleetSid, 'sid' => $sid, );
 
         $this->uri = '/Fleets/' . \rawurlencode($fleetSid) . '/Devices/' . \rawurlencode($sid) . '';
     }
@@ -45,8 +43,7 @@ class DeviceContext extends InstanceContext
      * @return DeviceInstance Fetched DeviceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,8 +66,7 @@ class DeviceContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -81,8 +77,7 @@ class DeviceContext extends InstanceContext
      * @return DeviceInstance Updated DeviceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -112,8 +107,7 @@ class DeviceContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

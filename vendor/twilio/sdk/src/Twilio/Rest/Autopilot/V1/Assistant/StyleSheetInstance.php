@@ -23,8 +23,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $data
  */
-class StyleSheetInstance extends InstanceResource
-{
+class StyleSheetInstance extends InstanceResource {
     /**
      * Initialize the StyleSheetInstance
      *
@@ -34,8 +33,7 @@ class StyleSheetInstance extends InstanceResource
      *                             the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\StyleSheetInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -46,7 +44,7 @@ class StyleSheetInstance extends InstanceResource
             'data' => Values::array_get($payload, 'data'),
         );
 
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
     }
 
     /**
@@ -57,8 +55,7 @@ class StyleSheetInstance extends InstanceResource
      *                                                               this
      *                                                               StyleSheetInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new StyleSheetContext($this->version, $this->solution['assistantSid']);
         }
@@ -72,8 +69,7 @@ class StyleSheetInstance extends InstanceResource
      * @return StyleSheetInstance Fetched StyleSheetInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -84,8 +80,7 @@ class StyleSheetInstance extends InstanceResource
      * @return StyleSheetInstance Updated StyleSheetInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -96,8 +91,7 @@ class StyleSheetInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -115,8 +109,7 @@ class StyleSheetInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

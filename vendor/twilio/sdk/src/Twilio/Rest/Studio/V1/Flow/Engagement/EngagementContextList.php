@@ -12,8 +12,7 @@ namespace Twilio\Rest\Studio\V1\Flow\Engagement;
 use Twilio\ListResource;
 use Twilio\Version;
 
-class EngagementContextList extends ListResource
-{
+class EngagementContextList extends ListResource {
     /**
      * Construct the EngagementContextList
      *
@@ -22,12 +21,11 @@ class EngagementContextList extends ListResource
      * @param string $engagementSid Engagement SID
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextList
      */
-    public function __construct(Version $version, $flowSid, $engagementSid)
-    {
+    public function __construct(Version $version, $flowSid, $engagementSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('flowSid' => $flowSid, 'engagementSid' => $engagementSid,);
+        $this->solution = array('flowSid' => $flowSid, 'engagementSid' => $engagementSid, );
     }
 
     /**
@@ -35,8 +33,7 @@ class EngagementContextList extends ListResource
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new EngagementContextContext(
             $this->version,
             $this->solution['flowSid'],
@@ -49,8 +46,7 @@ class EngagementContextList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Studio.V1.EngagementContextList]';
     }
 }

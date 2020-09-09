@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait LOCATIONtrait
 {
     /**
      * @var array component property LOCATION value
-     * @access protected
      */
     protected $location = null;
 
@@ -56,20 +55,22 @@ trait LOCATIONtrait
      */
     public function createLocation()
     {
-        if (empty($this->location)) {
+        if( empty( $this->location )) {
             return null;
         }
-        if (empty($this->location[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::LOCATION) : null;
+        if( empty( $this->location[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::LOCATION )
+                : null;
         }
         return StringFactory::createElement(
             self::LOCATION,
             ParameterFactory::createParams(
                 $this->location[Util::$LCparams],
                 self::$ALTRPLANGARR,
-                $this->getConfig(self::LANGUAGE)
+                $this->getConfig( self::LANGUAGE )
             ),
-            StringFactory::strrep($this->location[Util::$LCvalue])
+            StringFactory::strrep( $this->location[Util::$LCvalue] )
         );
     }
 
@@ -88,38 +89,40 @@ trait LOCATIONtrait
     /**
      * Get calendar component property location
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getLocation($inclParam = false)
+    public function getLocation( $inclParam = false )
     {
-        if (empty($this->location)) {
+        if( empty( $this->location )) {
             return false;
         }
-        return ($inclParam) ? $this->location : $this->location[Util::$LCvalue];
+        return ( $inclParam )
+            ? $this->location
+            : $this->location[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property location
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setLocation($value = null, $params = [])
+    public function setLocation( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::LOCATION);
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::LOCATION );
             $value = Util::$SP0;
-            $params = [];
+            $params    = [];
         }
-        Util::assertString($value, self::LOCATION);
+        Util::assertString( $value, self::LOCATION );
         $this->location = [
-            Util::$LCvalue => StringFactory::trimTrailNL($value),
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => StringFactory::trimTrailNL( $value ),
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

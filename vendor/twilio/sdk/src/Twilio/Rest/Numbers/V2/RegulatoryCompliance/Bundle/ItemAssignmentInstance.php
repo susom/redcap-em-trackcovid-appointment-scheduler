@@ -23,8 +23,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property string $url
  */
-class ItemAssignmentInstance extends InstanceResource
-{
+class ItemAssignmentInstance extends InstanceResource {
     /**
      * Initialize the ItemAssignmentInstance
      *
@@ -35,8 +34,7 @@ class ItemAssignmentInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentInstance
      */
-    public function __construct(Version $version, array $payload, $bundleSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $bundleSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,7 +47,7 @@ class ItemAssignmentInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('bundleSid' => $bundleSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('bundleSid' => $bundleSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -59,8 +57,7 @@ class ItemAssignmentInstance extends InstanceResource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentContext Context for this
      *                                                                                   ItemAssignmentInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ItemAssignmentContext(
                 $this->version,
@@ -78,8 +75,7 @@ class ItemAssignmentInstance extends InstanceResource
      * @return ItemAssignmentInstance Fetched ItemAssignmentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -89,8 +85,7 @@ class ItemAssignmentInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -101,8 +96,7 @@ class ItemAssignmentInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -120,8 +114,7 @@ class ItemAssignmentInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

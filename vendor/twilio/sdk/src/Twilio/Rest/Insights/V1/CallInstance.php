@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class CallInstance extends InstanceResource
-{
+class CallInstance extends InstanceResource {
     protected $_events = null;
     protected $_metrics = null;
     protected $_summary = null;
@@ -35,8 +34,7 @@ class CallInstance extends InstanceResource
      * @param string $sid The sid
      * @return \Twilio\Rest\Insights\V1\CallInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -46,7 +44,7 @@ class CallInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -55,8 +53,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Insights\V1\CallContext Context for this CallInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CallContext($this->version, $this->solution['sid']);
         }
@@ -70,8 +67,7 @@ class CallInstance extends InstanceResource
      * @return CallInstance Fetched CallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -80,8 +76,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Insights\V1\Call\EventList
      */
-    protected function getEvents()
-    {
+    protected function getEvents() {
         return $this->proxy()->events;
     }
 
@@ -90,8 +85,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Insights\V1\Call\MetricList
      */
-    protected function getMetrics()
-    {
+    protected function getMetrics() {
         return $this->proxy()->metrics;
     }
 
@@ -100,8 +94,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryList
      */
-    protected function getSummary()
-    {
+    protected function getSummary() {
         return $this->proxy()->summary;
     }
 
@@ -112,8 +105,7 @@ class CallInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -131,8 +123,7 @@ class CallInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

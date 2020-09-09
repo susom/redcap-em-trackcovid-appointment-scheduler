@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class VariableContext extends InstanceContext
-{
+class VariableContext extends InstanceContext {
     /**
      * Initialize the VariableContext
      *
@@ -31,8 +30,7 @@ class VariableContext extends InstanceContext
      * @param string $sid The SID of the Variable resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableContext
      */
-    public function __construct(Version $version, $serviceSid, $environmentSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $environmentSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -51,8 +49,7 @@ class VariableContext extends InstanceContext
      * @return VariableInstance Fetched VariableInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -77,11 +74,10 @@ class VariableContext extends InstanceContext
      * @return VariableInstance Updated VariableInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Key' => $options['key'], 'Value' => $options['value'],));
+        $data = Values::of(array('Key' => $options['key'], 'Value' => $options['value'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -105,8 +101,7 @@ class VariableContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -115,8 +110,7 @@ class VariableContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

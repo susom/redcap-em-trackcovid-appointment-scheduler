@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class CompositionOptions
-{
+abstract class CompositionOptions {
     /**
      * @param string $status Read only Composition resources with this status
      * @param \DateTime $dateCreatedAfter Read only Composition resources created
@@ -28,12 +27,7 @@ abstract class CompositionOptions
      * @param string $roomSid Read only Composition resources with this Room SID
      * @return ReadCompositionOptions Options builder
      */
-    public static function read(
-        $status = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE,
-        $roomSid = Values::NONE
-    ) {
+    public static function read($status = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE, $roomSid = Values::NONE) {
         return new ReadCompositionOptions($status, $dateCreatedAfter, $dateCreatedBefore, $roomSid);
     }
 
@@ -55,23 +49,12 @@ abstract class CompositionOptions
      *                   media in the composition
      * @return CreateCompositionOptions Options builder
      */
-    public static function create(
-        $videoLayout = Values::NONE,
-        $audioSources = Values::NONE,
-        $audioSourcesExcluded = Values::NONE,
-        $resolution = Values::NONE,
-        $format = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $trim = Values::NONE
-    ) {
-        return new CreateCompositionOptions($videoLayout, $audioSources, $audioSourcesExcluded, $resolution, $format,
-            $statusCallback, $statusCallbackMethod, $trim);
+    public static function create($videoLayout = Values::NONE, $audioSources = Values::NONE, $audioSourcesExcluded = Values::NONE, $resolution = Values::NONE, $format = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $trim = Values::NONE) {
+        return new CreateCompositionOptions($videoLayout, $audioSources, $audioSourcesExcluded, $resolution, $format, $statusCallback, $statusCallbackMethod, $trim);
     }
 }
 
-class ReadCompositionOptions extends Options
-{
+class ReadCompositionOptions extends Options {
     /**
      * @param string $status Read only Composition resources with this status
      * @param \DateTime $dateCreatedAfter Read only Composition resources created
@@ -82,12 +65,7 @@ class ReadCompositionOptions extends Options
      *                                     zone
      * @param string $roomSid Read only Composition resources with this Room SID
      */
-    public function __construct(
-        $status = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE,
-        $roomSid = Values::NONE
-    ) {
+    public function __construct($status = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE, $roomSid = Values::NONE) {
         $this->options['status'] = $status;
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
@@ -100,8 +78,7 @@ class ReadCompositionOptions extends Options
      * @param string $status Read only Composition resources with this status
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -114,8 +91,7 @@ class ReadCompositionOptions extends Options
      *                                    8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone
      * @return $this Fluent Builder
      */
-    public function setDateCreatedAfter($dateCreatedAfter)
-    {
+    public function setDateCreatedAfter($dateCreatedAfter) {
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
         return $this;
     }
@@ -128,8 +104,7 @@ class ReadCompositionOptions extends Options
      *                                     zone
      * @return $this Fluent Builder
      */
-    public function setDateCreatedBefore($dateCreatedBefore)
-    {
+    public function setDateCreatedBefore($dateCreatedBefore) {
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
         return $this;
     }
@@ -140,8 +115,7 @@ class ReadCompositionOptions extends Options
      * @param string $roomSid Read only Composition resources with this Room SID
      * @return $this Fluent Builder
      */
-    public function setRoomSid($roomSid)
-    {
+    public function setRoomSid($roomSid) {
         $this->options['roomSid'] = $roomSid;
         return $this;
     }
@@ -151,8 +125,7 @@ class ReadCompositionOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -163,8 +136,7 @@ class ReadCompositionOptions extends Options
     }
 }
 
-class CreateCompositionOptions extends Options
-{
+class CreateCompositionOptions extends Options {
     /**
      * @param array $videoLayout An object that describes the video layout of the
      *                           composition
@@ -182,16 +154,7 @@ class CreateCompositionOptions extends Options
      * @param bool $trim Whether to clip the intervals where there is no active
      *                   media in the composition
      */
-    public function __construct(
-        $videoLayout = Values::NONE,
-        $audioSources = Values::NONE,
-        $audioSourcesExcluded = Values::NONE,
-        $resolution = Values::NONE,
-        $format = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $trim = Values::NONE
-    ) {
+    public function __construct($videoLayout = Values::NONE, $audioSources = Values::NONE, $audioSourcesExcluded = Values::NONE, $resolution = Values::NONE, $format = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $trim = Values::NONE) {
         $this->options['videoLayout'] = $videoLayout;
         $this->options['audioSources'] = $audioSources;
         $this->options['audioSourcesExcluded'] = $audioSourcesExcluded;
@@ -209,8 +172,7 @@ class CreateCompositionOptions extends Options
      *                           composition
      * @return $this Fluent Builder
      */
-    public function setVideoLayout($videoLayout)
-    {
+    public function setVideoLayout($videoLayout) {
         $this->options['videoLayout'] = $videoLayout;
         return $this;
     }
@@ -222,8 +184,7 @@ class CreateCompositionOptions extends Options
      *                             to merge
      * @return $this Fluent Builder
      */
-    public function setAudioSources($audioSources)
-    {
+    public function setAudioSources($audioSources) {
         $this->options['audioSources'] = $audioSources;
         return $this;
     }
@@ -234,34 +195,34 @@ class CreateCompositionOptions extends Options
      * @param string $audioSourcesExcluded An array of track names to exclude
      * @return $this Fluent Builder
      */
-    public function setAudioSourcesExcluded($audioSourcesExcluded)
-    {
+    public function setAudioSourcesExcluded($audioSourcesExcluded) {
         $this->options['audioSourcesExcluded'] = $audioSourcesExcluded;
         return $this;
     }
 
     /**
      * A string that describes the columns (width) and rows (height) of the generated composed video in pixels. Defaults to `640x480`.
-     * The string's format is `{width}x{height}` where:
-     * 16 <= `{width}` <= 1280
-     * 16 <= `{height}` <= 1280
-     * `{width}` * `{height}` <= 921,600
-     *
-     * Typical values are:
-     * HD = `1280x720`
-     * PAL = `1024x576`
-     * VGA = `640x480`
-     * CIF = `320x240`
-     *
-     * Note that the `resolution` imposes an aspect ratio to the resulting composition. When the original video tracks are constrained by the aspect ratio, they are scaled to fit. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+    The string's format is `{width}x{height}` where:
+
+    * 16 <= `{width}` <= 1280
+    * 16 <= `{height}` <= 1280
+    * `{width}` * `{height}` <= 921,600
+
+    Typical values are:
+
+    * HD = `1280x720`
+    * PAL = `1024x576`
+    * VGA = `640x480`
+    * CIF = `320x240`
+
+    Note that the `resolution` imposes an aspect ratio to the resulting composition. When the original video tracks are constrained by the aspect ratio, they are scaled to fit. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
      *
      * @param string $resolution A string that describes the columns (width) and
      *                           rows (height) of the generated composed video in
      *                           pixels
      * @return $this Fluent Builder
      */
-    public function setResolution($resolution)
-    {
+    public function setResolution($resolution) {
         $this->options['resolution'] = $resolution;
         return $this;
     }
@@ -272,8 +233,7 @@ class CreateCompositionOptions extends Options
      * @param string $format The container format of the composition's media files
      * @return $this Fluent Builder
      */
-    public function setFormat($format)
-    {
+    public function setFormat($format) {
         $this->options['format'] = $format;
         return $this;
     }
@@ -285,8 +245,7 @@ class CreateCompositionOptions extends Options
      *                               information to your application
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -298,8 +257,7 @@ class CreateCompositionOptions extends Options
      *                                     status_callback
      * @return $this Fluent Builder
      */
-    public function setStatusCallbackMethod($statusCallbackMethod)
-    {
+    public function setStatusCallbackMethod($statusCallbackMethod) {
         $this->options['statusCallbackMethod'] = $statusCallbackMethod;
         return $this;
     }
@@ -311,8 +269,7 @@ class CreateCompositionOptions extends Options
      *                   media in the composition
      * @return $this Fluent Builder
      */
-    public function setTrim($trim)
-    {
+    public function setTrim($trim) {
         $this->options['trim'] = $trim;
         return $this;
     }
@@ -322,8 +279,7 @@ class CreateCompositionOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

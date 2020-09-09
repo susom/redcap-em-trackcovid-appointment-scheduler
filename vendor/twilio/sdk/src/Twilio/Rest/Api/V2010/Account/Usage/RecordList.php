@@ -34,8 +34,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Api\V2010\Account\Usage\Record\YearlyList $yearly
  * @property \Twilio\Rest\Api\V2010\Account\Usage\Record\YesterdayList $yesterday
  */
-class RecordList extends ListResource
-{
+class RecordList extends ListResource {
     protected $_allTime = null;
     protected $_daily = null;
     protected $_lastMonth = null;
@@ -53,12 +52,11 @@ class RecordList extends ListResource
      *                           this resource.
      * @return \Twilio\Rest\Api\V2010\Account\Usage\RecordList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Usage/Records.json';
     }
@@ -82,8 +80,7 @@ class RecordList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -107,8 +104,7 @@ class RecordList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return RecordInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -122,12 +118,7 @@ class RecordList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of RecordInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Category' => $options['category'],
@@ -155,8 +146,7 @@ class RecordList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of RecordInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -168,8 +158,7 @@ class RecordList extends ListResource
     /**
      * Access the allTime
      */
-    protected function getAllTime()
-    {
+    protected function getAllTime() {
         if (!$this->_allTime) {
             $this->_allTime = new AllTimeList($this->version, $this->solution['accountSid']);
         }
@@ -180,8 +169,7 @@ class RecordList extends ListResource
     /**
      * Access the daily
      */
-    protected function getDaily()
-    {
+    protected function getDaily() {
         if (!$this->_daily) {
             $this->_daily = new DailyList($this->version, $this->solution['accountSid']);
         }
@@ -192,8 +180,7 @@ class RecordList extends ListResource
     /**
      * Access the lastMonth
      */
-    protected function getLastMonth()
-    {
+    protected function getLastMonth() {
         if (!$this->_lastMonth) {
             $this->_lastMonth = new LastMonthList($this->version, $this->solution['accountSid']);
         }
@@ -204,8 +191,7 @@ class RecordList extends ListResource
     /**
      * Access the monthly
      */
-    protected function getMonthly()
-    {
+    protected function getMonthly() {
         if (!$this->_monthly) {
             $this->_monthly = new MonthlyList($this->version, $this->solution['accountSid']);
         }
@@ -216,8 +202,7 @@ class RecordList extends ListResource
     /**
      * Access the thisMonth
      */
-    protected function getThisMonth()
-    {
+    protected function getThisMonth() {
         if (!$this->_thisMonth) {
             $this->_thisMonth = new ThisMonthList($this->version, $this->solution['accountSid']);
         }
@@ -228,8 +213,7 @@ class RecordList extends ListResource
     /**
      * Access the today
      */
-    protected function getToday()
-    {
+    protected function getToday() {
         if (!$this->_today) {
             $this->_today = new TodayList($this->version, $this->solution['accountSid']);
         }
@@ -240,8 +224,7 @@ class RecordList extends ListResource
     /**
      * Access the yearly
      */
-    protected function getYearly()
-    {
+    protected function getYearly() {
         if (!$this->_yearly) {
             $this->_yearly = new YearlyList($this->version, $this->solution['accountSid']);
         }
@@ -252,8 +235,7 @@ class RecordList extends ListResource
     /**
      * Access the yesterday
      */
-    protected function getYesterday()
-    {
+    protected function getYesterday() {
         if (!$this->_yesterday) {
             $this->_yesterday = new YesterdayList($this->version, $this->solution['accountSid']);
         }
@@ -268,8 +250,7 @@ class RecordList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -286,8 +267,7 @@ class RecordList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -301,8 +281,7 @@ class RecordList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.RecordList]';
     }
 }

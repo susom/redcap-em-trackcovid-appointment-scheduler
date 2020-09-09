@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class AssetInstance extends InstanceResource
-{
+class AssetInstance extends InstanceResource {
     protected $_assetVersions = null;
 
     /**
@@ -41,8 +40,7 @@ class AssetInstance extends InstanceResource
      * @param string $sid The SID that identifies the Asset resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\AssetInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -57,7 +55,7 @@ class AssetInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -67,8 +65,7 @@ class AssetInstance extends InstanceResource
      * @return \Twilio\Rest\Serverless\V1\Service\AssetContext Context for this
      *                                                         AssetInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new AssetContext(
                 $this->version,
@@ -86,8 +83,7 @@ class AssetInstance extends InstanceResource
      * @return AssetInstance Fetched AssetInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -97,8 +93,7 @@ class AssetInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -109,8 +104,7 @@ class AssetInstance extends InstanceResource
      * @return AssetInstance Updated AssetInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($friendlyName)
-    {
+    public function update($friendlyName) {
         return $this->proxy()->update($friendlyName);
     }
 
@@ -119,8 +113,7 @@ class AssetInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Asset\AssetVersionList
      */
-    protected function getAssetVersions()
-    {
+    protected function getAssetVersions() {
         return $this->proxy()->assetVersions;
     }
 
@@ -131,8 +124,7 @@ class AssetInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -150,8 +142,7 @@ class AssetInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

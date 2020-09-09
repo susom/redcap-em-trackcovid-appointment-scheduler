@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkersCumulativeStatisticsContext extends InstanceContext
-{
+class WorkersCumulativeStatisticsContext extends InstanceContext {
     /**
      * Initialize the WorkersCumulativeStatisticsContext
      *
@@ -26,12 +25,11 @@ class WorkersCumulativeStatisticsContext extends InstanceContext
      *                             fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid)
-    {
+    public function __construct(Version $version, $workspaceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workers/CumulativeStatistics';
     }
@@ -44,8 +42,7 @@ class WorkersCumulativeStatisticsContext extends InstanceContext
      *                                             WorkersCumulativeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
         $params = Values::of(array(
@@ -73,8 +70,7 @@ class WorkersCumulativeStatisticsContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

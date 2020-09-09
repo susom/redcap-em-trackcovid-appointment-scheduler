@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class DependentHostedNumberOrderOptions
-{
+abstract class DependentHostedNumberOrderOptions {
     /**
      * @param string $status The Status of this HostedNumberOrder.
      * @param string $phoneNumber An E164 formatted phone number.
@@ -26,20 +25,12 @@ abstract class DependentHostedNumberOrderOptions
      *                           HostedNumberOrder.
      * @return ReadDependentHostedNumberOrderOptions Options builder
      */
-    public static function read(
-        $status = Values::NONE,
-        $phoneNumber = Values::NONE,
-        $incomingPhoneNumberSid = Values::NONE,
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE
-    ) {
-        return new ReadDependentHostedNumberOrderOptions($status, $phoneNumber, $incomingPhoneNumberSid, $friendlyName,
-            $uniqueName);
+    public static function read($status = Values::NONE, $phoneNumber = Values::NONE, $incomingPhoneNumberSid = Values::NONE, $friendlyName = Values::NONE, $uniqueName = Values::NONE) {
+        return new ReadDependentHostedNumberOrderOptions($status, $phoneNumber, $incomingPhoneNumberSid, $friendlyName, $uniqueName);
     }
 }
 
-class ReadDependentHostedNumberOrderOptions extends Options
-{
+class ReadDependentHostedNumberOrderOptions extends Options {
     /**
      * @param string $status The Status of this HostedNumberOrder.
      * @param string $phoneNumber An E164 formatted phone number.
@@ -48,13 +39,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      * @param string $uniqueName A unique, developer assigned name of this
      *                           HostedNumberOrder.
      */
-    public function __construct(
-        $status = Values::NONE,
-        $phoneNumber = Values::NONE,
-        $incomingPhoneNumberSid = Values::NONE,
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE
-    ) {
+    public function __construct($status = Values::NONE, $phoneNumber = Values::NONE, $incomingPhoneNumberSid = Values::NONE, $friendlyName = Values::NONE, $uniqueName = Values::NONE) {
         $this->options['status'] = $status;
         $this->options['phoneNumber'] = $phoneNumber;
         $this->options['incomingPhoneNumberSid'] = $incomingPhoneNumberSid;
@@ -68,8 +53,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      * @param string $status The Status of this HostedNumberOrder.
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -80,8 +64,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      * @param string $phoneNumber An E164 formatted phone number.
      * @return $this Fluent Builder
      */
-    public function setPhoneNumber($phoneNumber)
-    {
+    public function setPhoneNumber($phoneNumber) {
         $this->options['phoneNumber'] = $phoneNumber;
         return $this;
     }
@@ -92,8 +75,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      * @param string $incomingPhoneNumberSid IncomingPhoneNumber sid.
      * @return $this Fluent Builder
      */
-    public function setIncomingPhoneNumberSid($incomingPhoneNumberSid)
-    {
+    public function setIncomingPhoneNumberSid($incomingPhoneNumberSid) {
         $this->options['incomingPhoneNumberSid'] = $incomingPhoneNumberSid;
         return $this;
     }
@@ -104,8 +86,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      * @param string $friendlyName A human readable description of this resource.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -117,8 +98,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      *                           HostedNumberOrder.
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -128,8 +108,7 @@ class ReadDependentHostedNumberOrderOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

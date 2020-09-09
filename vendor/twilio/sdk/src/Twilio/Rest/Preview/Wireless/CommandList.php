@@ -18,16 +18,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CommandList extends ListResource
-{
+class CommandList extends ListResource {
     /**
      * Construct the CommandList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\Wireless\CommandList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -55,8 +53,7 @@ class CommandList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -80,8 +77,7 @@ class CommandList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return CommandInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -95,12 +91,7 @@ class CommandList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of CommandInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Device' => $options['device'],
@@ -128,8 +119,7 @@ class CommandList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of CommandInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -146,8 +136,7 @@ class CommandList extends ListResource
      * @return CommandInstance Newly created CommandInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($command, $options = array())
-    {
+    public function create($command, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -176,8 +165,7 @@ class CommandList extends ListResource
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Wireless\CommandContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new CommandContext($this->version, $sid);
     }
 
@@ -186,8 +174,7 @@ class CommandList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.Wireless.CommandList]';
     }
 }

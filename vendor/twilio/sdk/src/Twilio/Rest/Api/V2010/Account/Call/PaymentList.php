@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class PaymentList extends ListResource
-{
+class PaymentList extends ListResource {
     /**
      * Construct the PaymentList
      *
@@ -30,12 +29,11 @@ class PaymentList extends ListResource
      * @param string $callSid The SID of the Call the resource is associated with.
      * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentList
      */
-    public function __construct(Version $version, $accountSid, $callSid)
-    {
+    public function __construct(Version $version, $accountSid, $callSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid,);
+        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/' . \rawurlencode($callSid) . '/Payments.json';
     }
@@ -52,8 +50,7 @@ class PaymentList extends ListResource
      * @return PaymentInstance Newly created PaymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($idempotencyKey, $statusCallback, $options = array())
-    {
+    public function create($idempotencyKey, $statusCallback, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -96,8 +93,7 @@ class PaymentList extends ListResource
      * @param string $sid The SID of Payments session
      * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new PaymentContext(
             $this->version,
             $this->solution['accountSid'],
@@ -111,8 +107,7 @@ class PaymentList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.PaymentList]';
     }
 }

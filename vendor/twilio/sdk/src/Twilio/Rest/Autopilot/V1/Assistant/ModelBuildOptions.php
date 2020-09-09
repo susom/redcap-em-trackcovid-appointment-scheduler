@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class ModelBuildOptions
-{
+abstract class ModelBuildOptions {
     /**
      * @param string $statusCallback The URL we should call using a POST method to
      *                               send status information to your application
@@ -24,8 +23,7 @@ abstract class ModelBuildOptions
      *                           identifies the new resource
      * @return CreateModelBuildOptions Options builder
      */
-    public static function create($statusCallback = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public static function create($statusCallback = Values::NONE, $uniqueName = Values::NONE) {
         return new CreateModelBuildOptions($statusCallback, $uniqueName);
     }
 
@@ -34,22 +32,19 @@ abstract class ModelBuildOptions
      *                           identifies the resource
      * @return UpdateModelBuildOptions Options builder
      */
-    public static function update($uniqueName = Values::NONE)
-    {
+    public static function update($uniqueName = Values::NONE) {
         return new UpdateModelBuildOptions($uniqueName);
     }
 }
 
-class CreateModelBuildOptions extends Options
-{
+class CreateModelBuildOptions extends Options {
     /**
      * @param string $statusCallback The URL we should call using a POST method to
      *                               send status information to your application
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the new resource
      */
-    public function __construct($statusCallback = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public function __construct($statusCallback = Values::NONE, $uniqueName = Values::NONE) {
         $this->options['statusCallback'] = $statusCallback;
         $this->options['uniqueName'] = $uniqueName;
     }
@@ -61,8 +56,7 @@ class CreateModelBuildOptions extends Options
      *                               send status information to your application
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -74,8 +68,7 @@ class CreateModelBuildOptions extends Options
      *                           identifies the new resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -85,8 +78,7 @@ class CreateModelBuildOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -97,14 +89,12 @@ class CreateModelBuildOptions extends Options
     }
 }
 
-class UpdateModelBuildOptions extends Options
-{
+class UpdateModelBuildOptions extends Options {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
      */
-    public function __construct($uniqueName = Values::NONE)
-    {
+    public function __construct($uniqueName = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
     }
 
@@ -115,8 +105,7 @@ class UpdateModelBuildOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -126,8 +115,7 @@ class UpdateModelBuildOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -12,15 +12,13 @@ namespace Twilio\Rest\Numbers\V2\RegulatoryCompliance;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class SupportingDocumentOptions
-{
+abstract class SupportingDocumentOptions {
     /**
      * @param array $attributes The set of parameters that compose the Supporting
      *                          Documents resource
      * @return CreateSupportingDocumentOptions Options builder
      */
-    public static function create($attributes = Values::NONE)
-    {
+    public static function create($attributes = Values::NONE) {
         return new CreateSupportingDocumentOptions($attributes);
     }
 
@@ -31,20 +29,17 @@ abstract class SupportingDocumentOptions
      *                          Document resource
      * @return UpdateSupportingDocumentOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $attributes = Values::NONE)
-    {
+    public static function update($friendlyName = Values::NONE, $attributes = Values::NONE) {
         return new UpdateSupportingDocumentOptions($friendlyName, $attributes);
     }
 }
 
-class CreateSupportingDocumentOptions extends Options
-{
+class CreateSupportingDocumentOptions extends Options {
     /**
      * @param array $attributes The set of parameters that compose the Supporting
      *                          Documents resource
      */
-    public function __construct($attributes = Values::NONE)
-    {
+    public function __construct($attributes = Values::NONE) {
         $this->options['attributes'] = $attributes;
     }
 
@@ -55,8 +50,7 @@ class CreateSupportingDocumentOptions extends Options
      *                          Documents resource
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -66,8 +60,7 @@ class CreateSupportingDocumentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -78,16 +71,14 @@ class CreateSupportingDocumentOptions extends Options
     }
 }
 
-class UpdateSupportingDocumentOptions extends Options
-{
+class UpdateSupportingDocumentOptions extends Options {
     /**
      * @param string $friendlyName The string that you assigned to describe the
      *                             resource
      * @param array $attributes The set of parameters that compose the Supporting
      *                          Document resource
      */
-    public function __construct($friendlyName = Values::NONE, $attributes = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $attributes = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['attributes'] = $attributes;
     }
@@ -99,8 +90,7 @@ class UpdateSupportingDocumentOptions extends Options
      *                             resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -112,8 +102,7 @@ class UpdateSupportingDocumentOptions extends Options
      *                          Document resource
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -123,8 +112,7 @@ class UpdateSupportingDocumentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

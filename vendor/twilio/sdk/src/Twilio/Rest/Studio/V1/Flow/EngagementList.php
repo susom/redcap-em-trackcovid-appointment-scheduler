@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class EngagementList extends ListResource
-{
+class EngagementList extends ListResource {
     /**
      * Construct the EngagementList
      *
@@ -25,12 +24,11 @@ class EngagementList extends ListResource
      * @param string $flowSid The SID of the Flow
      * @return \Twilio\Rest\Studio\V1\Flow\EngagementList
      */
-    public function __construct(Version $version, $flowSid)
-    {
+    public function __construct(Version $version, $flowSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('flowSid' => $flowSid,);
+        $this->solution = array('flowSid' => $flowSid, );
 
         $this->uri = '/Flows/' . \rawurlencode($flowSid) . '/Engagements';
     }
@@ -53,8 +51,7 @@ class EngagementList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -77,8 +74,7 @@ class EngagementList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return EngagementInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -91,8 +87,7 @@ class EngagementList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of EngagementInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -115,8 +110,7 @@ class EngagementList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of EngagementInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -135,8 +129,7 @@ class EngagementList extends ListResource
      * @return EngagementInstance Newly created EngagementInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($to, $from, $options = array())
-    {
+    public function create($to, $from, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -161,8 +154,7 @@ class EngagementList extends ListResource
      * @param string $sid The SID of the Engagement resource to fetch
      * @return \Twilio\Rest\Studio\V1\Flow\EngagementContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new EngagementContext($this->version, $this->solution['flowSid'], $sid);
     }
 
@@ -171,8 +163,7 @@ class EngagementList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Studio.V1.EngagementList]';
     }
 }

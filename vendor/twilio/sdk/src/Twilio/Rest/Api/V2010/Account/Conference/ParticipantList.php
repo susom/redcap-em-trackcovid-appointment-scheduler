@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class ParticipantList extends ListResource
-{
+class ParticipantList extends ListResource {
     /**
      * Construct the ParticipantList
      *
@@ -26,12 +25,11 @@ class ParticipantList extends ListResource
      * @param string $conferenceSid The SID of the conference the participant is in
      * @return \Twilio\Rest\Api\V2010\Account\Conference\ParticipantList
      */
-    public function __construct(Version $version, $accountSid, $conferenceSid)
-    {
+    public function __construct(Version $version, $accountSid, $conferenceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'conferenceSid' => $conferenceSid,);
+        $this->solution = array('accountSid' => $accountSid, 'conferenceSid' => $conferenceSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Conferences/' . \rawurlencode($conferenceSid) . '/Participants.json';
     }
@@ -46,8 +44,7 @@ class ParticipantList extends ListResource
      * @return ParticipantInstance Newly created ParticipantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($from, $to, $options = array())
-    {
+    public function create($from, $to, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -55,9 +52,7 @@ class ParticipantList extends ListResource
             'To' => $to,
             'StatusCallback' => $options['statusCallback'],
             'StatusCallbackMethod' => $options['statusCallbackMethod'],
-            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function($e) { return $e; }),
             'Timeout' => $options['timeout'],
             'Record' => Serialize::booleanToString($options['record']),
             'Muted' => Serialize::booleanToString($options['muted']),
@@ -72,9 +67,7 @@ class ParticipantList extends ListResource
             'ConferenceTrim' => $options['conferenceTrim'],
             'ConferenceStatusCallback' => $options['conferenceStatusCallback'],
             'ConferenceStatusCallbackMethod' => $options['conferenceStatusCallbackMethod'],
-            'ConferenceStatusCallbackEvent' => Serialize::map($options['conferenceStatusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'ConferenceStatusCallbackEvent' => Serialize::map($options['conferenceStatusCallbackEvent'], function($e) { return $e; }),
             'RecordingChannels' => $options['recordingChannels'],
             'RecordingStatusCallback' => $options['recordingStatusCallback'],
             'RecordingStatusCallbackMethod' => $options['recordingStatusCallbackMethod'],
@@ -83,13 +76,8 @@ class ParticipantList extends ListResource
             'Region' => $options['region'],
             'ConferenceRecordingStatusCallback' => $options['conferenceRecordingStatusCallback'],
             'ConferenceRecordingStatusCallbackMethod' => $options['conferenceRecordingStatusCallbackMethod'],
-            'RecordingStatusCallbackEvent' => Serialize::map($options['recordingStatusCallbackEvent'], function ($e) {
-                return $e;
-            }),
-            'ConferenceRecordingStatusCallbackEvent' => Serialize::map($options['conferenceRecordingStatusCallbackEvent'],
-                function ($e) {
-                    return $e;
-                }),
+            'RecordingStatusCallbackEvent' => Serialize::map($options['recordingStatusCallbackEvent'], function($e) { return $e; }),
+            'ConferenceRecordingStatusCallbackEvent' => Serialize::map($options['conferenceRecordingStatusCallbackEvent'], function($e) { return $e; }),
             'Coaching' => Serialize::booleanToString($options['coaching']),
             'CallSidToCoach' => $options['callSidToCoach'],
         ));
@@ -128,8 +116,7 @@ class ParticipantList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -153,8 +140,7 @@ class ParticipantList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return ParticipantInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -168,12 +154,7 @@ class ParticipantList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of ParticipantInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Muted' => Serialize::booleanToString($options['muted']),
@@ -200,8 +181,7 @@ class ParticipantList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of ParticipantInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -216,8 +196,7 @@ class ParticipantList extends ListResource
      * @param string $callSid The Call SID of the resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Conference\ParticipantContext
      */
-    public function getContext($callSid)
-    {
+    public function getContext($callSid) {
         return new ParticipantContext(
             $this->version,
             $this->solution['accountSid'],
@@ -231,8 +210,7 @@ class ParticipantList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.ParticipantList]';
     }
 }

@@ -32,8 +32,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class ParticipantInstance extends InstanceResource
-{
+class ParticipantInstance extends InstanceResource {
     protected $_messageInteractions = null;
 
     /**
@@ -46,8 +45,7 @@ class ParticipantInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Proxy\V1\Service\Session\ParticipantInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sessionSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sessionSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -82,8 +80,7 @@ class ParticipantInstance extends InstanceResource
      *                                                                  this
      *                                                                  ParticipantInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ParticipantContext(
                 $this->version,
@@ -102,8 +99,7 @@ class ParticipantInstance extends InstanceResource
      * @return ParticipantInstance Fetched ParticipantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -113,8 +109,7 @@ class ParticipantInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -123,8 +118,7 @@ class ParticipantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Proxy\V1\Service\Session\Participant\MessageInteractionList
      */
-    protected function getMessageInteractions()
-    {
+    protected function getMessageInteractions() {
         return $this->proxy()->messageInteractions;
     }
 
@@ -135,8 +129,7 @@ class ParticipantInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -154,8 +147,7 @@ class ParticipantInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

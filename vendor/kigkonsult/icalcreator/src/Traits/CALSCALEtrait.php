@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -46,7 +46,6 @@ trait CALSCALEtrait
 {
     /**
      * @var string calendar property CALSCALE
-     * @access protected
      */
     protected $calscale = null;
 
@@ -57,10 +56,10 @@ trait CALSCALEtrait
      */
     public function createCalscale()
     {
-        if (empty($this->calscale)) {
+        if( empty( $this->calscale )) {
             $this->calscale = Vcalendar::GREGORIAN;
         }
-        return sprintf(self::$FMTICAL, self::CALSCALE, $this->calscale);
+        return sprintf( self::$FMTICAL, self::CALSCALE, $this->calscale );
     }
 
     /**
@@ -83,7 +82,7 @@ trait CALSCALEtrait
      */
     public function getCalscale()
     {
-        if (empty($this->calscale)) {
+        if( empty( $this->calscale )) {
             $this->calscale = Vcalendar::GREGORIAN;
         }
         return $this->calscale;
@@ -97,13 +96,13 @@ trait CALSCALEtrait
      * @throws InvalidArgumentException;
      * @since  2.29.14 - 2019-09-03
      */
-    public function setCalscale($value)
+    public function setCalscale( $value )
     {
-        if (empty($value)) {
+        if( empty( $value )) {
             $value = Vcalendar::GREGORIAN;
         }
-        Util::assertString($value, self::CALSCALE);
-        $this->calscale = (string)$value;
+        Util::assertString( $value, self::CALSCALE );
+        $this->calscale = (string) $value;
         return $this;
     }
 }

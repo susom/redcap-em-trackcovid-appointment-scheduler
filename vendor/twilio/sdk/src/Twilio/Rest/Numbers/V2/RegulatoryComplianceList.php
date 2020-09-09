@@ -30,8 +30,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentContext supportingDocuments(string $sid)
  * @method \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentTypeContext supportingDocumentTypes(string $sid)
  */
-class RegulatoryComplianceList extends ListResource
-{
+class RegulatoryComplianceList extends ListResource {
     protected $_bundles = null;
     protected $_endUsers = null;
     protected $_endUserTypes = null;
@@ -44,8 +43,7 @@ class RegulatoryComplianceList extends ListResource
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryComplianceList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -55,8 +53,7 @@ class RegulatoryComplianceList extends ListResource
     /**
      * Access the bundles
      */
-    protected function getBundles()
-    {
+    protected function getBundles() {
         if (!$this->_bundles) {
             $this->_bundles = new BundleList($this->version);
         }
@@ -67,8 +64,7 @@ class RegulatoryComplianceList extends ListResource
     /**
      * Access the endUsers
      */
-    protected function getEndUsers()
-    {
+    protected function getEndUsers() {
         if (!$this->_endUsers) {
             $this->_endUsers = new EndUserList($this->version);
         }
@@ -79,8 +75,7 @@ class RegulatoryComplianceList extends ListResource
     /**
      * Access the endUserTypes
      */
-    protected function getEndUserTypes()
-    {
+    protected function getEndUserTypes() {
         if (!$this->_endUserTypes) {
             $this->_endUserTypes = new EndUserTypeList($this->version);
         }
@@ -91,8 +86,7 @@ class RegulatoryComplianceList extends ListResource
     /**
      * Access the supportingDocuments
      */
-    protected function getSupportingDocuments()
-    {
+    protected function getSupportingDocuments() {
         if (!$this->_supportingDocuments) {
             $this->_supportingDocuments = new SupportingDocumentList($this->version);
         }
@@ -103,8 +97,7 @@ class RegulatoryComplianceList extends ListResource
     /**
      * Access the supportingDocumentTypes
      */
-    protected function getSupportingDocumentTypes()
-    {
+    protected function getSupportingDocumentTypes() {
         if (!$this->_supportingDocumentTypes) {
             $this->_supportingDocumentTypes = new SupportingDocumentTypeList($this->version);
         }
@@ -119,8 +112,7 @@ class RegulatoryComplianceList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -137,8 +129,7 @@ class RegulatoryComplianceList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -152,8 +143,7 @@ class RegulatoryComplianceList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Numbers.V2.RegulatoryComplianceList]';
     }
 }

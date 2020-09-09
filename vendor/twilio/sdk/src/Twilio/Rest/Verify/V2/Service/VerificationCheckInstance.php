@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property \DateTime $dateUpdated
  */
-class VerificationCheckInstance extends InstanceResource
-{
+class VerificationCheckInstance extends InstanceResource {
     /**
      * Initialize the VerificationCheckInstance
      *
@@ -39,8 +38,7 @@ class VerificationCheckInstance extends InstanceResource
      *                           associated with
      * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -58,7 +56,7 @@ class VerificationCheckInstance extends InstanceResource
             'dateUpdated' => Deserialize::dateTime(Values::array_get($payload, 'date_updated')),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
     }
 
     /**
@@ -68,8 +66,7 @@ class VerificationCheckInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -87,8 +84,7 @@ class VerificationCheckInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Verify.V2.VerificationCheckInstance]';
     }
 }

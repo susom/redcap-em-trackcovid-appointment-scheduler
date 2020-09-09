@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class MediaContext extends InstanceContext
-{
+class MediaContext extends InstanceContext {
     /**
      * Initialize the MediaContext
      *
@@ -27,12 +26,11 @@ class MediaContext extends InstanceContext
      * @param string $sid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\Message\MediaContext
      */
-    public function __construct(Version $version, $accountSid, $messageSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $messageSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'messageSid' => $messageSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'messageSid' => $messageSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Messages/' . \rawurlencode($messageSid) . '/Media/' . \rawurlencode($sid) . '.json';
     }
@@ -43,8 +41,7 @@ class MediaContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -54,8 +51,7 @@ class MediaContext extends InstanceContext
      * @return MediaInstance Fetched MediaInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -78,8 +74,7 @@ class MediaContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

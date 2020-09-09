@@ -18,8 +18,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Preview\DeployedDevices\FleetList $fleets
  * @method \Twilio\Rest\Preview\DeployedDevices\FleetContext fleets(string $sid)
  */
-class DeployedDevices extends Version
-{
+class DeployedDevices extends Version {
     protected $_fleets = null;
 
     /**
@@ -29,8 +28,7 @@ class DeployedDevices extends Version
      * @return \Twilio\Rest\Preview\DeployedDevices DeployedDevices version of
      *                                              Preview
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'DeployedDevices';
     }
@@ -38,8 +36,7 @@ class DeployedDevices extends Version
     /**
      * @return \Twilio\Rest\Preview\DeployedDevices\FleetList
      */
-    protected function getFleets()
-    {
+    protected function getFleets() {
         if (!$this->_fleets) {
             $this->_fleets = new FleetList($this);
         }
@@ -53,8 +50,7 @@ class DeployedDevices extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -71,8 +67,7 @@ class DeployedDevices extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -86,8 +81,7 @@ class DeployedDevices extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.DeployedDevices]';
     }
 }

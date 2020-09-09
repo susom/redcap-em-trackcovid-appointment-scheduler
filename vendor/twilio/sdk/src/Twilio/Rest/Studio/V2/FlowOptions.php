@@ -15,14 +15,12 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class FlowOptions
-{
+abstract class FlowOptions {
     /**
      * @param string $commitMessage Description on change made in the revision
      * @return CreateFlowOptions Options builder
      */
-    public static function create($commitMessage = Values::NONE)
-    {
+    public static function create($commitMessage = Values::NONE) {
         return new CreateFlowOptions($commitMessage);
     }
 
@@ -32,22 +30,16 @@ abstract class FlowOptions
      * @param string $commitMessage Description on change made in the revision
      * @return UpdateFlowOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $definition = Values::NONE,
-        $commitMessage = Values::NONE
-    ) {
+    public static function update($friendlyName = Values::NONE, $definition = Values::NONE, $commitMessage = Values::NONE) {
         return new UpdateFlowOptions($friendlyName, $definition, $commitMessage);
     }
 }
 
-class CreateFlowOptions extends Options
-{
+class CreateFlowOptions extends Options {
     /**
      * @param string $commitMessage Description on change made in the revision
      */
-    public function __construct($commitMessage = Values::NONE)
-    {
+    public function __construct($commitMessage = Values::NONE) {
         $this->options['commitMessage'] = $commitMessage;
     }
 
@@ -57,8 +49,7 @@ class CreateFlowOptions extends Options
      * @param string $commitMessage Description on change made in the revision
      * @return $this Fluent Builder
      */
-    public function setCommitMessage($commitMessage)
-    {
+    public function setCommitMessage($commitMessage) {
         $this->options['commitMessage'] = $commitMessage;
         return $this;
     }
@@ -68,8 +59,7 @@ class CreateFlowOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -80,15 +70,13 @@ class CreateFlowOptions extends Options
     }
 }
 
-class UpdateFlowOptions extends Options
-{
+class UpdateFlowOptions extends Options {
     /**
      * @param string $friendlyName The string that you assigned to describe the Flow
      * @param array $definition JSON representation of flow definition
      * @param string $commitMessage Description on change made in the revision
      */
-    public function __construct($friendlyName = Values::NONE, $definition = Values::NONE, $commitMessage = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $definition = Values::NONE, $commitMessage = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['definition'] = $definition;
         $this->options['commitMessage'] = $commitMessage;
@@ -100,8 +88,7 @@ class UpdateFlowOptions extends Options
      * @param string $friendlyName The string that you assigned to describe the Flow
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -112,8 +99,7 @@ class UpdateFlowOptions extends Options
      * @param array $definition JSON representation of flow definition
      * @return $this Fluent Builder
      */
-    public function setDefinition($definition)
-    {
+    public function setDefinition($definition) {
         $this->options['definition'] = $definition;
         return $this;
     }
@@ -124,8 +110,7 @@ class UpdateFlowOptions extends Options
      * @param string $commitMessage Description on change made in the revision
      * @return $this Fluent Builder
      */
-    public function setCommitMessage($commitMessage)
-    {
+    public function setCommitMessage($commitMessage) {
         $this->options['commitMessage'] = $commitMessage;
         return $this;
     }
@@ -135,8 +120,7 @@ class UpdateFlowOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

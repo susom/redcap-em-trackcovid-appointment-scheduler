@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class BuildList extends ListResource
-{
+class BuildList extends ListResource {
     /**
      * Construct the BuildList
      *
@@ -29,12 +28,11 @@ class BuildList extends ListResource
      *                           associated with
      * @return \Twilio\Rest\Serverless\V1\Service\BuildList
      */
-    public function __construct(Version $version, $serviceSid)
-    {
+    public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Builds';
     }
@@ -57,8 +55,7 @@ class BuildList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -81,8 +78,7 @@ class BuildList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return BuildInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -95,8 +91,7 @@ class BuildList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of BuildInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -119,8 +114,7 @@ class BuildList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of BuildInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -136,17 +130,12 @@ class BuildList extends ListResource
      * @return BuildInstance Newly created BuildInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
-            'AssetVersions' => Serialize::map($options['assetVersions'], function ($e) {
-                return $e;
-            }),
-            'FunctionVersions' => Serialize::map($options['functionVersions'], function ($e) {
-                return $e;
-            }),
+            'AssetVersions' => Serialize::map($options['assetVersions'], function($e) { return $e; }),
+            'FunctionVersions' => Serialize::map($options['functionVersions'], function($e) { return $e; }),
             'Dependencies' => $options['dependencies'],
         ));
 
@@ -166,8 +155,7 @@ class BuildList extends ListResource
      * @param string $sid The SID of the Build resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\BuildContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new BuildContext($this->version, $this->solution['serviceSid'], $sid);
     }
 
@@ -176,8 +164,7 @@ class BuildList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Serverless.V1.BuildList]';
     }
 }

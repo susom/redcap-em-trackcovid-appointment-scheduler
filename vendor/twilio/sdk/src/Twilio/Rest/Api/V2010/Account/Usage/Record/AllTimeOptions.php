@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account\Usage\Record;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class AllTimeOptions
-{
+abstract class AllTimeOptions {
     /**
      * @param string $category The usage category of the UsageRecord resources to
      *                         read
@@ -25,18 +24,12 @@ abstract class AllTimeOptions
      *                                 account and all its subaccounts
      * @return ReadAllTimeOptions Options builder
      */
-    public static function read(
-        $category = Values::NONE,
-        $startDate = Values::NONE,
-        $endDate = Values::NONE,
-        $includeSubaccounts = Values::NONE
-    ) {
+    public static function read($category = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE, $includeSubaccounts = Values::NONE) {
         return new ReadAllTimeOptions($category, $startDate, $endDate, $includeSubaccounts);
     }
 }
 
-class ReadAllTimeOptions extends Options
-{
+class ReadAllTimeOptions extends Options {
     /**
      * @param string $category The usage category of the UsageRecord resources to
      *                         read
@@ -47,12 +40,7 @@ class ReadAllTimeOptions extends Options
      * @param bool $includeSubaccounts Whether to include usage from the master
      *                                 account and all its subaccounts
      */
-    public function __construct(
-        $category = Values::NONE,
-        $startDate = Values::NONE,
-        $endDate = Values::NONE,
-        $includeSubaccounts = Values::NONE
-    ) {
+    public function __construct($category = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE, $includeSubaccounts = Values::NONE) {
         $this->options['category'] = $category;
         $this->options['startDate'] = $startDate;
         $this->options['endDate'] = $endDate;
@@ -66,8 +54,7 @@ class ReadAllTimeOptions extends Options
      *                         read
      * @return $this Fluent Builder
      */
-    public function setCategory($category)
-    {
+    public function setCategory($category) {
         $this->options['category'] = $category;
         return $this;
     }
@@ -79,8 +66,7 @@ class ReadAllTimeOptions extends Options
      *                             this date
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -92,8 +78,7 @@ class ReadAllTimeOptions extends Options
      *                           date
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -105,8 +90,7 @@ class ReadAllTimeOptions extends Options
      *                                 account and all its subaccounts
      * @return $this Fluent Builder
      */
-    public function setIncludeSubaccounts($includeSubaccounts)
-    {
+    public function setIncludeSubaccounts($includeSubaccounts) {
         $this->options['includeSubaccounts'] = $includeSubaccounts;
         return $this;
     }
@@ -116,8 +100,7 @@ class ReadAllTimeOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

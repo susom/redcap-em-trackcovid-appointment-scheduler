@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $permissions
  * @property string $uri
  */
-class AuthorizedConnectAppInstance extends InstanceResource
-{
+class AuthorizedConnectAppInstance extends InstanceResource {
     /**
      * Initialize the AuthorizedConnectAppInstance
      *
@@ -38,8 +37,7 @@ class AuthorizedConnectAppInstance extends InstanceResource
      * @param string $connectAppSid The SID of the Connect App to fetch
      * @return \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $connectAppSid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $connectAppSid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -70,8 +68,7 @@ class AuthorizedConnectAppInstance extends InstanceResource
      *                                                                    for this
      *                                                                    AuthorizedConnectAppInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new AuthorizedConnectAppContext(
                 $this->version,
@@ -89,8 +86,7 @@ class AuthorizedConnectAppInstance extends InstanceResource
      * @return AuthorizedConnectAppInstance Fetched AuthorizedConnectAppInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -101,8 +97,7 @@ class AuthorizedConnectAppInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -120,8 +115,7 @@ class AuthorizedConnectAppInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SessionList extends ListResource
-{
+class SessionList extends ListResource {
     /**
      * Construct the SessionList
      *
@@ -28,12 +27,11 @@ class SessionList extends ListResource
      * @param string $serviceSid The SID of the resource's parent Service
      * @return \Twilio\Rest\Proxy\V1\Service\SessionList
      */
-    public function __construct(Version $version, $serviceSid)
-    {
+    public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Sessions';
     }
@@ -56,8 +54,7 @@ class SessionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -80,8 +77,7 @@ class SessionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return SessionInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -94,8 +90,7 @@ class SessionList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of SessionInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -118,8 +113,7 @@ class SessionList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of SessionInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -135,8 +129,7 @@ class SessionList extends ListResource
      * @return SessionInstance Newly created SessionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -145,9 +138,7 @@ class SessionList extends ListResource
             'Ttl' => $options['ttl'],
             'Mode' => $options['mode'],
             'Status' => $options['status'],
-            'Participants' => Serialize::map($options['participants'], function ($e) {
-                return Serialize::jsonObject($e);
-            }),
+            'Participants' => Serialize::map($options['participants'], function($e) { return Serialize::jsonObject($e); }),
         ));
 
         $payload = $this->version->create(
@@ -166,8 +157,7 @@ class SessionList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Proxy\V1\Service\SessionContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new SessionContext($this->version, $this->solution['serviceSid'], $sid);
     }
 
@@ -176,8 +166,7 @@ class SessionList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Proxy.V1.SessionList]';
     }
 }

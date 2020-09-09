@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class RecordingContext extends InstanceContext
-{
+class RecordingContext extends InstanceContext {
     /**
      * Initialize the RecordingContext
      *
@@ -23,12 +22,11 @@ class RecordingContext extends InstanceContext
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\RecordingContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Recordings/' . \rawurlencode($sid) . '';
     }
@@ -39,8 +37,7 @@ class RecordingContext extends InstanceContext
      * @return RecordingInstance Fetched RecordingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -58,8 +55,7 @@ class RecordingContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -68,8 +64,7 @@ class RecordingContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

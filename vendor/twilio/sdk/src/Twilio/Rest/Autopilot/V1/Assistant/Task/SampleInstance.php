@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $url
  * @property string $sourceChannel
  */
-class SampleInstance extends InstanceResource
-{
+class SampleInstance extends InstanceResource {
     /**
      * Initialize the SampleInstance
      *
@@ -43,8 +42,7 @@ class SampleInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\SampleInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $taskSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid, $taskSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -76,8 +74,7 @@ class SampleInstance extends InstanceResource
      *                                                                this
      *                                                                SampleInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SampleContext(
                 $this->version,
@@ -96,8 +93,7 @@ class SampleInstance extends InstanceResource
      * @return SampleInstance Fetched SampleInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -108,8 +104,7 @@ class SampleInstance extends InstanceResource
      * @return SampleInstance Updated SampleInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -119,8 +114,7 @@ class SampleInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -131,8 +125,7 @@ class SampleInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -150,8 +143,7 @@ class SampleInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

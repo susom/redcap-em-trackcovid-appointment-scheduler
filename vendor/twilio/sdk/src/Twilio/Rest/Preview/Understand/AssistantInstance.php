@@ -32,8 +32,7 @@ use Twilio\Version;
  * @property string $callbackUrl
  * @property string $callbackEvents
  */
-class AssistantInstance extends InstanceResource
-{
+class AssistantInstance extends InstanceResource {
     protected $_fieldTypes = null;
     protected $_tasks = null;
     protected $_modelBuilds = null;
@@ -52,8 +51,7 @@ class AssistantInstance extends InstanceResource
      *                    resource.
      * @return \Twilio\Rest\Preview\Understand\AssistantInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -72,7 +70,7 @@ class AssistantInstance extends InstanceResource
             'callbackEvents' => Values::array_get($payload, 'callback_events'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -82,8 +80,7 @@ class AssistantInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\Understand\AssistantContext Context for this
      *                                                          AssistantInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new AssistantContext($this->version, $this->solution['sid']);
         }
@@ -97,8 +94,7 @@ class AssistantInstance extends InstanceResource
      * @return AssistantInstance Fetched AssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -109,8 +105,7 @@ class AssistantInstance extends InstanceResource
      * @return AssistantInstance Updated AssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -120,8 +115,7 @@ class AssistantInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -130,8 +124,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\FieldTypeList
      */
-    protected function getFieldTypes()
-    {
+    protected function getFieldTypes() {
         return $this->proxy()->fieldTypes;
     }
 
@@ -140,8 +133,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\TaskList
      */
-    protected function getTasks()
-    {
+    protected function getTasks() {
         return $this->proxy()->tasks;
     }
 
@@ -150,8 +142,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\ModelBuildList
      */
-    protected function getModelBuilds()
-    {
+    protected function getModelBuilds() {
         return $this->proxy()->modelBuilds;
     }
 
@@ -160,8 +151,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\QueryList
      */
-    protected function getQueries()
-    {
+    protected function getQueries() {
         return $this->proxy()->queries;
     }
 
@@ -170,8 +160,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantFallbackActionsList
      */
-    protected function getAssistantFallbackActions()
-    {
+    protected function getAssistantFallbackActions() {
         return $this->proxy()->assistantFallbackActions;
     }
 
@@ -180,8 +169,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantInitiationActionsList
      */
-    protected function getAssistantInitiationActions()
-    {
+    protected function getAssistantInitiationActions() {
         return $this->proxy()->assistantInitiationActions;
     }
 
@@ -190,8 +178,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueList
      */
-    protected function getDialogues()
-    {
+    protected function getDialogues() {
         return $this->proxy()->dialogues;
     }
 
@@ -200,8 +187,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\StyleSheetList
      */
-    protected function getStyleSheet()
-    {
+    protected function getStyleSheet() {
         return $this->proxy()->styleSheet;
     }
 
@@ -212,8 +198,7 @@ class AssistantInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -231,8 +216,7 @@ class AssistantInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

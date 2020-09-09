@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class BuildOptions
-{
+abstract class BuildOptions {
     /**
      * @param string $assetVersions The list of Asset Version resource SIDs to
      *                              include in the build
@@ -26,17 +25,12 @@ abstract class BuildOptions
      *                             included in the build
      * @return CreateBuildOptions Options builder
      */
-    public static function create(
-        $assetVersions = Values::NONE,
-        $functionVersions = Values::NONE,
-        $dependencies = Values::NONE
-    ) {
+    public static function create($assetVersions = Values::NONE, $functionVersions = Values::NONE, $dependencies = Values::NONE) {
         return new CreateBuildOptions($assetVersions, $functionVersions, $dependencies);
     }
 }
 
-class CreateBuildOptions extends Options
-{
+class CreateBuildOptions extends Options {
     /**
      * @param string $assetVersions The list of Asset Version resource SIDs to
      *                              include in the build
@@ -45,11 +39,7 @@ class CreateBuildOptions extends Options
      * @param string $dependencies A list of objects that describe the Dependencies
      *                             included in the build
      */
-    public function __construct(
-        $assetVersions = Values::NONE,
-        $functionVersions = Values::NONE,
-        $dependencies = Values::NONE
-    ) {
+    public function __construct($assetVersions = Values::NONE, $functionVersions = Values::NONE, $dependencies = Values::NONE) {
         $this->options['assetVersions'] = $assetVersions;
         $this->options['functionVersions'] = $functionVersions;
         $this->options['dependencies'] = $dependencies;
@@ -62,8 +52,7 @@ class CreateBuildOptions extends Options
      *                              include in the build
      * @return $this Fluent Builder
      */
-    public function setAssetVersions($assetVersions)
-    {
+    public function setAssetVersions($assetVersions) {
         $this->options['assetVersions'] = $assetVersions;
         return $this;
     }
@@ -75,8 +64,7 @@ class CreateBuildOptions extends Options
      *                                 include in the build
      * @return $this Fluent Builder
      */
-    public function setFunctionVersions($functionVersions)
-    {
+    public function setFunctionVersions($functionVersions) {
         $this->options['functionVersions'] = $functionVersions;
         return $this;
     }
@@ -88,8 +76,7 @@ class CreateBuildOptions extends Options
      *                             included in the build
      * @return $this Fluent Builder
      */
-    public function setDependencies($dependencies)
-    {
+    public function setDependencies($dependencies) {
         $this->options['dependencies'] = $dependencies;
         return $this;
     }
@@ -99,8 +86,7 @@ class CreateBuildOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $kind
  * @property string $url
  */
-class SubscribedTrackInstance extends InstanceResource
-{
+class SubscribedTrackInstance extends InstanceResource {
     /**
      * Initialize the SubscribedTrackInstance
      *
@@ -40,8 +39,7 @@ class SubscribedTrackInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribedTrackInstance
      */
-    public function __construct(Version $version, array $payload, $roomSid, $participantSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $roomSid, $participantSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -71,8 +69,7 @@ class SubscribedTrackInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribedTrackContext Context for this SubscribedTrackInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SubscribedTrackContext(
                 $this->version,
@@ -91,8 +88,7 @@ class SubscribedTrackInstance extends InstanceResource
      * @return SubscribedTrackInstance Fetched SubscribedTrackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -103,8 +99,7 @@ class SubscribedTrackInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -122,8 +117,7 @@ class SubscribedTrackInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

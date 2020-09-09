@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property int $qualityScore
  * @property string $sid
  */
-class FeedbackInstance extends InstanceResource
-{
+class FeedbackInstance extends InstanceResource {
     /**
      * Initialize the FeedbackInstance
      *
@@ -35,8 +34,7 @@ class FeedbackInstance extends InstanceResource
      * @param string $callSid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $callSid)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $callSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,7 +47,7 @@ class FeedbackInstance extends InstanceResource
             'sid' => Values::array_get($payload, 'sid'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid,);
+        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, );
     }
 
     /**
@@ -59,8 +57,7 @@ class FeedbackInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackContext Context for this
      *                                                             FeedbackInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FeedbackContext(
                 $this->version,
@@ -80,8 +77,7 @@ class FeedbackInstance extends InstanceResource
      * @return FeedbackInstance Newly created FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($qualityScore, $options = array())
-    {
+    public function create($qualityScore, $options = array()) {
         return $this->proxy()->create($qualityScore, $options);
     }
 
@@ -91,8 +87,7 @@ class FeedbackInstance extends InstanceResource
      * @return FeedbackInstance Fetched FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -104,8 +99,7 @@ class FeedbackInstance extends InstanceResource
      * @return FeedbackInstance Updated FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($qualityScore, $options = array())
-    {
+    public function update($qualityScore, $options = array()) {
         return $this->proxy()->update($qualityScore, $options);
     }
 
@@ -116,8 +110,7 @@ class FeedbackInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -135,8 +128,7 @@ class FeedbackInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

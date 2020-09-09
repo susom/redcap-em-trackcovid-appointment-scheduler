@@ -18,8 +18,7 @@ use Twilio\Rest\Autopilot\V1;
  * @property \Twilio\Rest\Autopilot\V1\AssistantList $assistants
  * @method \Twilio\Rest\Autopilot\V1\AssistantContext assistants(string $sid)
  */
-class Autopilot extends Domain
-{
+class Autopilot extends Domain {
     protected $_v1 = null;
 
     /**
@@ -29,8 +28,7 @@ class Autopilot extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Autopilot Domain for Autopilot
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://autopilot.twilio.com';
@@ -39,8 +37,7 @@ class Autopilot extends Domain
     /**
      * @return \Twilio\Rest\Autopilot\V1 Version v1 of autopilot
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -54,8 +51,7 @@ class Autopilot extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -72,8 +68,7 @@ class Autopilot extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -85,8 +80,7 @@ class Autopilot extends Domain
     /**
      * @return \Twilio\Rest\Autopilot\V1\AssistantList
      */
-    protected function getAssistants()
-    {
+    protected function getAssistants() {
         return $this->v1->assistants;
     }
 
@@ -94,8 +88,7 @@ class Autopilot extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\AssistantContext
      */
-    protected function contextAssistants($sid)
-    {
+    protected function contextAssistants($sid) {
         return $this->v1->assistants($sid);
     }
 
@@ -104,8 +97,7 @@ class Autopilot extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Autopilot]';
     }
 }

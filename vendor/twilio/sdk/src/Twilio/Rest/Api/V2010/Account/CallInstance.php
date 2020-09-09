@@ -43,8 +43,7 @@ use Twilio\Version;
  * @property string $toFormatted
  * @property string $uri
  */
-class CallInstance extends InstanceResource
-{
+class CallInstance extends InstanceResource {
     protected $_recordings = null;
     protected $_notifications = null;
     protected $_feedback = null;
@@ -59,8 +58,7 @@ class CallInstance extends InstanceResource
      * @param string $sid The SID of the Call resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\CallInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -92,7 +90,7 @@ class CallInstance extends InstanceResource
             'uri' => Values::array_get($payload, 'uri'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -102,8 +100,7 @@ class CallInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\CallContext Context for this
      *                                                    CallInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CallContext(
                 $this->version,
@@ -121,8 +118,7 @@ class CallInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -132,8 +128,7 @@ class CallInstance extends InstanceResource
      * @return CallInstance Fetched CallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -144,8 +139,7 @@ class CallInstance extends InstanceResource
      * @return CallInstance Updated CallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -154,8 +148,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Call\RecordingList
      */
-    protected function getRecordings()
-    {
+    protected function getRecordings() {
         return $this->proxy()->recordings;
     }
 
@@ -164,8 +157,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Call\NotificationList
      */
-    protected function getNotifications()
-    {
+    protected function getNotifications() {
         return $this->proxy()->notifications;
     }
 
@@ -174,8 +166,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackList
      */
-    protected function getFeedback()
-    {
+    protected function getFeedback() {
         return $this->proxy()->feedback;
     }
 
@@ -184,8 +175,7 @@ class CallInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentList
      */
-    protected function getPayments()
-    {
+    protected function getPayments() {
         return $this->proxy()->payments;
     }
 
@@ -196,8 +186,7 @@ class CallInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -215,8 +204,7 @@ class CallInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

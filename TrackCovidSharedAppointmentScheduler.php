@@ -1,13 +1,13 @@
 <?php
 
-namespace Stanford\TrackCovidAppointmentScheduler;
+namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 use REDCap;
 
 include_once 'emLoggerTrait.php';
 include_once 'Participant.php';
 include_once 'Scheduler.php';
-include_once 'TrackCovidCalendarEmail.php';
+include_once 'TrackCovidSharedCalendarEmail.php';
 
 if (file_exists(__DIR__ . '../vendor/autoload.php')) {
     // Required if your environment does not handle autoloading
@@ -88,15 +88,15 @@ define("LOCATION", "location");
 define("PARTICIPANT_STATUS", "reservation_participant_status");
 
 /**
- * Class TrackCovidAppointmentScheduler
- * @package Stanford\TrackCovidAppointmentScheduler
- * @property \TrackCovidCalendarEmail $emailClient
+ * Class TrackCovidSharedAppointmentScheduler
+ * @package Stanford\TrackCovidSharedAppointmentScheduler
+ * @property \TrackCovidSharedCalendarEmail $emailClient
  * @property Client $twilioClient
  * @property  array $instances
  * @property int $eventId
  * @property array $eventInstance
  * @property array $calendarParams
- * @property \Stanford\TrackCovidAppointmentScheduler\Participant $participant
+ * @property \Stanford\TrackCovidSharedAppointmentScheduler\Participant $participant
  * @property \Monolog\Logger $logger
  * @property string $suffix
  * @property int $mainSurveyId
@@ -107,16 +107,16 @@ define("PARTICIPANT_STATUS", "reservation_participant_status");
  * @property string $baseLineDate
  * @property array $locationRecords
  * @property int $defaultAffiliation
- * @property \Stanford\TrackCovidAppointmentScheduler\Scheduler $scheduler
+ * @property \Stanford\TrackCovidSharedAppointmentScheduler\Scheduler $scheduler
  */
-class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalModule
+class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExternalModule
 {
 
 
     use emLoggerTrait;
 
     /**
-     * @var \TrackCovidCalendarEmail|null
+     * @var \TrackCovidSharedCalendarEmail|null
      */
     private $emailClient = null;
 
@@ -183,7 +183,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     private $scheduler;
 
     /**
-     * TrackCovidAppointmentScheduler constructor.
+     * TrackCovidSharedAppointmentScheduler constructor.
      */
     public function __construct()
     {
@@ -245,7 +245,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             /**
              * Initiate Email Participant
              */
-            $this->setParticipant(new  \Stanford\TrackCovidAppointmentScheduler\Participant());
+            $this->setParticipant(new  \Stanford\TrackCovidSharedAppointmentScheduler\Participant());
 
             /**
              * Only call this class when event is provided.
@@ -1363,7 +1363,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 $end = date('Y-m-d', strtotime('+30 days'));
             }
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-success">Schedule</button><br><small>(Schedule between ' . $start . ' and ' . $end . ')</small>';
+            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . $start . ' and ' . $end . ')</small>';
         } else {
             return 'Please schedule Baseline Visit First to be able to schedule other visits!';
         }
@@ -1372,12 +1372,12 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getCancelActionButton($user, $eventId, $slot)
     {
-        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $slot[$this->getScheduler()->getProject()->table_pk] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
+        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $slot[$this->getScheduler()->getProject()->table_pk] . '" class="cancel-appointment btn btn-sm btn-danger">Cancel</button>';
     }
 
     public function getSkipActionButton($user, $eventId)
     {
-        return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '"  class="skip-appointment btn btn-warning">Skip</button>';
+        return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '"  class="skip-appointment btn btn-sm btn-warning">Skip</button>';
     }
 
     public function getBaseLineEventID()
@@ -1668,7 +1668,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
-     * @return \TrackCovidCalendarEmail
+     * @return \TrackCovidSharedCalendarEmail
      */
     public function getEmailClient()
     {
@@ -1676,16 +1676,16 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
-     * @param \TrackCovidCalendarEmail $emailClient
+     * @param \TrackCovidSharedCalendarEmail $emailClient
      */
     public function setEmailClient()
     {
-        $this->emailClient = new \TrackCovidCalendarEmail;
+        $this->emailClient = new \TrackCovidSharedCalendarEmail;
     }
 
 
     /**
-     * @return \Stanford\TrackCovidAppointmentScheduler\Participant
+     * @return \Stanford\TrackCovidSharedAppointmentScheduler\Participant
      */
     public function getParticipant()
     {
@@ -1693,7 +1693,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
-     * @param \Stanford\TrackCovidAppointmentScheduler\Participant $participant
+     * @param \Stanford\TrackCovidSharedAppointmentScheduler\Participant $participant
      */
     public function setParticipant($participant)
     {

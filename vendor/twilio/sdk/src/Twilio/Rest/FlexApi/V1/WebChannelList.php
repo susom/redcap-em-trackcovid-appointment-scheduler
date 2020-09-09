@@ -15,16 +15,14 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class WebChannelList extends ListResource
-{
+class WebChannelList extends ListResource {
     /**
      * Construct the WebChannelList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\FlexApi\V1\WebChannelList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -51,8 +49,7 @@ class WebChannelList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -75,8 +72,7 @@ class WebChannelList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return WebChannelInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -89,8 +85,7 @@ class WebChannelList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of WebChannelInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -113,8 +108,7 @@ class WebChannelList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of WebChannelInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -134,8 +128,7 @@ class WebChannelList extends ListResource
      * @return WebChannelInstance Newly created WebChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($flexFlowSid, $identity, $customerFriendlyName, $chatFriendlyName, $options = array())
-    {
+    public function create($flexFlowSid, $identity, $customerFriendlyName, $chatFriendlyName, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -163,8 +156,7 @@ class WebChannelList extends ListResource
      * @param string $sid The SID of the WebChannel resource to fetch
      * @return \Twilio\Rest\FlexApi\V1\WebChannelContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new WebChannelContext($this->version, $sid);
     }
 
@@ -173,8 +165,7 @@ class WebChannelList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.FlexApi.V1.WebChannelList]';
     }
 }

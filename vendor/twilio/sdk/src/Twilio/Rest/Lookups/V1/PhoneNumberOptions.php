@@ -12,8 +12,7 @@ namespace Twilio\Rest\Lookups\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class PhoneNumberOptions
-{
+abstract class PhoneNumberOptions {
     /**
      * @param string $countryCode The ISO country code of the phone number
      * @param string $type The type of information to return
@@ -22,18 +21,12 @@ abstract class PhoneNumberOptions
      *                           invoke
      * @return FetchPhoneNumberOptions Options builder
      */
-    public static function fetch(
-        $countryCode = Values::NONE,
-        $type = Values::NONE,
-        $addOns = Values::NONE,
-        $addOnsData = Values::NONE
-    ) {
+    public static function fetch($countryCode = Values::NONE, $type = Values::NONE, $addOns = Values::NONE, $addOnsData = Values::NONE) {
         return new FetchPhoneNumberOptions($countryCode, $type, $addOns, $addOnsData);
     }
 }
 
-class FetchPhoneNumberOptions extends Options
-{
+class FetchPhoneNumberOptions extends Options {
     /**
      * @param string $countryCode The ISO country code of the phone number
      * @param string $type The type of information to return
@@ -41,12 +34,7 @@ class FetchPhoneNumberOptions extends Options
      * @param string $addOnsData Data specific to the add-on you would like to
      *                           invoke
      */
-    public function __construct(
-        $countryCode = Values::NONE,
-        $type = Values::NONE,
-        $addOns = Values::NONE,
-        $addOnsData = Values::NONE
-    ) {
+    public function __construct($countryCode = Values::NONE, $type = Values::NONE, $addOns = Values::NONE, $addOnsData = Values::NONE) {
         $this->options['countryCode'] = $countryCode;
         $this->options['type'] = $type;
         $this->options['addOns'] = $addOns;
@@ -59,8 +47,7 @@ class FetchPhoneNumberOptions extends Options
      * @param string $countryCode The ISO country code of the phone number
      * @return $this Fluent Builder
      */
-    public function setCountryCode($countryCode)
-    {
+    public function setCountryCode($countryCode) {
         $this->options['countryCode'] = $countryCode;
         return $this;
     }
@@ -71,8 +58,7 @@ class FetchPhoneNumberOptions extends Options
      * @param string $type The type of information to return
      * @return $this Fluent Builder
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->options['type'] = $type;
         return $this;
     }
@@ -83,8 +69,7 @@ class FetchPhoneNumberOptions extends Options
      * @param string $addOns The unique_name of an Add-on you would like to invoke
      * @return $this Fluent Builder
      */
-    public function setAddOns($addOns)
-    {
+    public function setAddOns($addOns) {
         $this->options['addOns'] = $addOns;
         return $this;
     }
@@ -96,8 +81,7 @@ class FetchPhoneNumberOptions extends Options
      *                           invoke
      * @return $this Fluent Builder
      */
-    public function setAddOnsData($addOnsData)
-    {
+    public function setAddOnsData($addOnsData) {
         $this->options['addOnsData'] = $addOnsData;
         return $this;
     }
@@ -107,8 +91,7 @@ class FetchPhoneNumberOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

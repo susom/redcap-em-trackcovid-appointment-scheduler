@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class SsmlW extends TwiML
-{
+class SsmlW extends TwiML {
     /**
      * SsmlW constructor.
      *
      * @param string $words Words to speak
      * @param array $attributes Optional attributes
      */
-    public function __construct($words, $attributes = array())
-    {
+    public function __construct($words, $attributes = array()) {
         parent::__construct('w', $words, $attributes);
     }
 
@@ -31,8 +29,7 @@ class SsmlW extends TwiML
      *                     word’s part of speech or alternate meaning
      * @return static $this.
      */
-    public function setRole($role)
-    {
+    public function setRole($role) {
         return $this->setAttribute('role', $role);
     }
 }

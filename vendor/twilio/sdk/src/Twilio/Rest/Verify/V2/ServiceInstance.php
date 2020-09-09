@@ -32,8 +32,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class ServiceInstance extends InstanceResource
-{
+class ServiceInstance extends InstanceResource {
     protected $_verifications = null;
     protected $_verificationChecks = null;
     protected $_rateLimits = null;
@@ -47,8 +46,7 @@ class ServiceInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Verify\V2\ServiceInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -69,7 +67,7 @@ class ServiceInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -79,8 +77,7 @@ class ServiceInstance extends InstanceResource
      * @return \Twilio\Rest\Verify\V2\ServiceContext Context for this
      *                                               ServiceInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ServiceContext($this->version, $this->solution['sid']);
         }
@@ -94,8 +91,7 @@ class ServiceInstance extends InstanceResource
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -105,8 +101,7 @@ class ServiceInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -117,8 +112,7 @@ class ServiceInstance extends InstanceResource
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -127,8 +121,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Verify\V2\Service\VerificationList
      */
-    protected function getVerifications()
-    {
+    protected function getVerifications() {
         return $this->proxy()->verifications;
     }
 
@@ -137,8 +130,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckList
      */
-    protected function getVerificationChecks()
-    {
+    protected function getVerificationChecks() {
         return $this->proxy()->verificationChecks;
     }
 
@@ -147,8 +139,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Verify\V2\Service\RateLimitList
      */
-    protected function getRateLimits()
-    {
+    protected function getRateLimits() {
         return $this->proxy()->rateLimits;
     }
 
@@ -157,8 +148,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Verify\V2\Service\MessagingConfigurationList
      */
-    protected function getMessagingConfigurations()
-    {
+    protected function getMessagingConfigurations() {
         return $this->proxy()->messagingConfigurations;
     }
 
@@ -169,8 +159,7 @@ class ServiceInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -188,8 +177,7 @@ class ServiceInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

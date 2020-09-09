@@ -15,16 +15,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class FormList extends ListResource
-{
+class FormList extends ListResource {
     /**
      * Construct the FormList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Authy\V1\FormList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -37,8 +35,7 @@ class FormList extends ListResource
      * @param string $formType The Type of this Form
      * @return \Twilio\Rest\Authy\V1\FormContext
      */
-    public function getContext($formType)
-    {
+    public function getContext($formType) {
         return new FormContext($this->version, $formType);
     }
 
@@ -47,8 +44,7 @@ class FormList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Authy.V1.FormList]';
     }
 }

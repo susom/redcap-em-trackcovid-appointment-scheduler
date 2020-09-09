@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class WebhookList extends ListResource
-{
+class WebhookList extends ListResource {
     /**
      * Construct the WebhookList
      *
@@ -28,12 +27,11 @@ class WebhookList extends ListResource
      *                           resource belongs to
      * @return \Twilio\Rest\Chat\V2\Service\Channel\WebhookList
      */
-    public function __construct(Version $version, $serviceSid, $channelSid)
-    {
+    public function __construct(Version $version, $serviceSid, $channelSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Channels/' . \rawurlencode($channelSid) . '/Webhooks';
     }
@@ -56,8 +54,7 @@ class WebhookList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -80,8 +77,7 @@ class WebhookList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return WebhookInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -94,8 +90,7 @@ class WebhookList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of WebhookInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -118,8 +113,7 @@ class WebhookList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of WebhookInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -136,20 +130,15 @@ class WebhookList extends ListResource
      * @return WebhookInstance Newly created WebhookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($type, $options = array())
-    {
+    public function create($type, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
             'Type' => $type,
             'Configuration.Url' => $options['configurationUrl'],
             'Configuration.Method' => $options['configurationMethod'],
-            'Configuration.Filters' => Serialize::map($options['configurationFilters'], function ($e) {
-                return $e;
-            }),
-            'Configuration.Triggers' => Serialize::map($options['configurationTriggers'], function ($e) {
-                return $e;
-            }),
+            'Configuration.Filters' => Serialize::map($options['configurationFilters'], function($e) { return $e; }),
+            'Configuration.Triggers' => Serialize::map($options['configurationTriggers'], function($e) { return $e; }),
             'Configuration.FlowSid' => $options['configurationFlowSid'],
             'Configuration.RetryCount' => $options['configurationRetryCount'],
         ));
@@ -175,8 +164,7 @@ class WebhookList extends ListResource
      * @param string $sid The SID of the Channel Webhook resource to fetch
      * @return \Twilio\Rest\Chat\V2\Service\Channel\WebhookContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new WebhookContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -190,8 +178,7 @@ class WebhookList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Chat.V2.WebhookList]';
     }
 }

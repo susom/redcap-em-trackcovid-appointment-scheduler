@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class AssistantFallbackActionsContext extends InstanceContext
-{
+class AssistantFallbackActionsContext extends InstanceContext {
     /**
      * Initialize the AssistantFallbackActionsContext
      *
@@ -28,12 +27,11 @@ class AssistantFallbackActionsContext extends InstanceContext
      * @param string $assistantSid The assistant_sid
      * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantFallbackActionsContext
      */
-    public function __construct(Version $version, $assistantSid)
-    {
+    public function __construct(Version $version, $assistantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/FallbackActions';
     }
@@ -45,8 +43,7 @@ class AssistantFallbackActionsContext extends InstanceContext
      *                                          AssistantFallbackActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -70,11 +67,10 @@ class AssistantFallbackActionsContext extends InstanceContext
      *                                          AssistantFallbackActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('FallbackActions' => Serialize::jsonObject($options['fallbackActions']),));
+        $data = Values::of(array('FallbackActions' => Serialize::jsonObject($options['fallbackActions']), ));
 
         $payload = $this->version->update(
             'POST',
@@ -95,8 +91,7 @@ class AssistantFallbackActionsContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

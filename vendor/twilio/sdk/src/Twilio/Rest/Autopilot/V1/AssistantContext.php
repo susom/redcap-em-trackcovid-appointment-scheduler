@@ -47,8 +47,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Autopilot\V1\Assistant\WebhookContext webhooks(string $sid)
  * @method \Twilio\Rest\Autopilot\V1\Assistant\ExportAssistantContext exportAssistant()
  */
-class AssistantContext extends InstanceContext
-{
+class AssistantContext extends InstanceContext {
     protected $_fieldTypes = null;
     protected $_tasks = null;
     protected $_modelBuilds = null;
@@ -66,12 +65,11 @@ class AssistantContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\AssistantContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($sid) . '';
     }
@@ -82,8 +80,7 @@ class AssistantContext extends InstanceContext
      * @return AssistantInstance Fetched AssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -102,8 +99,7 @@ class AssistantContext extends InstanceContext
      * @return AssistantInstance Updated AssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -133,8 +129,7 @@ class AssistantContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -143,8 +138,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\FieldTypeList
      */
-    protected function getFieldTypes()
-    {
+    protected function getFieldTypes() {
         if (!$this->_fieldTypes) {
             $this->_fieldTypes = new FieldTypeList($this->version, $this->solution['sid']);
         }
@@ -157,8 +151,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\TaskList
      */
-    protected function getTasks()
-    {
+    protected function getTasks() {
         if (!$this->_tasks) {
             $this->_tasks = new TaskList($this->version, $this->solution['sid']);
         }
@@ -171,8 +164,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\ModelBuildList
      */
-    protected function getModelBuilds()
-    {
+    protected function getModelBuilds() {
         if (!$this->_modelBuilds) {
             $this->_modelBuilds = new ModelBuildList($this->version, $this->solution['sid']);
         }
@@ -185,8 +177,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\QueryList
      */
-    protected function getQueries()
-    {
+    protected function getQueries() {
         if (!$this->_queries) {
             $this->_queries = new QueryList($this->version, $this->solution['sid']);
         }
@@ -199,8 +190,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\StyleSheetList
      */
-    protected function getStyleSheet()
-    {
+    protected function getStyleSheet() {
         if (!$this->_styleSheet) {
             $this->_styleSheet = new StyleSheetList($this->version, $this->solution['sid']);
         }
@@ -213,8 +203,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\DefaultsList
      */
-    protected function getDefaults()
-    {
+    protected function getDefaults() {
         if (!$this->_defaults) {
             $this->_defaults = new DefaultsList($this->version, $this->solution['sid']);
         }
@@ -227,8 +216,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\DialogueList
      */
-    protected function getDialogues()
-    {
+    protected function getDialogues() {
         if (!$this->_dialogues) {
             $this->_dialogues = new DialogueList($this->version, $this->solution['sid']);
         }
@@ -241,8 +229,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\WebhookList
      */
-    protected function getWebhooks()
-    {
+    protected function getWebhooks() {
         if (!$this->_webhooks) {
             $this->_webhooks = new WebhookList($this->version, $this->solution['sid']);
         }
@@ -255,8 +242,7 @@ class AssistantContext extends InstanceContext
      *
      * @return \Twilio\Rest\Autopilot\V1\Assistant\ExportAssistantList
      */
-    protected function getExportAssistant()
-    {
+    protected function getExportAssistant() {
         if (!$this->_exportAssistant) {
             $this->_exportAssistant = new ExportAssistantList($this->version, $this->solution['sid']);
         }
@@ -271,8 +257,7 @@ class AssistantContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -289,8 +274,7 @@ class AssistantContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -304,8 +288,7 @@ class AssistantContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

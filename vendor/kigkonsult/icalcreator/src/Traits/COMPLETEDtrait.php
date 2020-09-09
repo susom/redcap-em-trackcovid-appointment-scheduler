@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -52,7 +52,6 @@ trait COMPLETEDtrait
 {
     /**
      * @var array component property COMPLETED value
-     * @access protected
      */
     protected $completed = null;
 
@@ -60,20 +59,24 @@ trait COMPLETEDtrait
      * Return formatted output for calendar component property completed
      *
      * @return string
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @since 2.29.1 2019-06-22
      */
     public function createCompleted()
     {
-        if (empty($this->completed)) {
+        if( empty( $this->completed )) {
             return null;
         }
-        if (empty($this->completed[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::COMPLETED) : null;
+        if( empty( $this->completed[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::COMPLETED )
+                : null;
         }
         return StringFactory::createElement(
             self::COMPLETED,
-            ParameterFactory::createParams($this->completed[Util::$LCparams]),
-            DateTimeFactory::dateTime2Str($this->completed[Util::$LCvalue])
+            ParameterFactory::createParams( $this->completed[Util::$LCparams] ),
+            DateTimeFactory::dateTime2Str( $this->completed[Util::$LCvalue] )
         );
     }
 
@@ -83,7 +86,7 @@ trait COMPLETEDtrait
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteCompleted()
+    public function deleteCompleted( )
     {
         $this->completed = null;
         return true;
@@ -92,41 +95,41 @@ trait COMPLETEDtrait
     /**
      * Return calendar component property completed
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|DateTime|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getCompleted($inclParam = false)
+    public function getCompleted( $inclParam = false )
     {
-        if (empty($this->completed)) {
+        if( empty( $this->completed )) {
             return false;
         }
-        return ($inclParam) ? $this->completed : $this->completed[Util::$LCvalue];
+        return ( $inclParam ) ? $this->completed : $this->completed[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property completed
      *
      * @param string|DateTimeInterface $value
-     * @param array $params
+     * @param array           $params
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.16 2020-01-24
      */
-    public function setCompleted($value = null, $params = [])
+    public function setCompleted( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::COMPLETED);
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::COMPLETED );
             $this->completed = [
-                Util::$LCvalue => Util::$SP0,
+                Util::$LCvalue  => Util::$SP0,
                 Util::$LCparams => [],
             ];
             return $this;
         }
-        $params = array_change_key_case($params, CASE_UPPER);
+        $params = array_change_key_case( $params, CASE_UPPER );
         $params[Vcalendar::VALUE] = Vcalendar::DATE_TIME;
-        $this->completed = DateTimeFactory::setDate($value, $params, true); // $forceUTC
+        $this->completed = DateTimeFactory::setDate( $value, $params, true ); // $forceUTC
         return $this;
     }
 }

@@ -12,27 +12,23 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace\Worker;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class WorkersRealTimeStatisticsOptions
-{
+abstract class WorkersRealTimeStatisticsOptions {
     /**
      * @param string $taskChannel Only calculate real-time statistics on this
      *                            TaskChannel
      * @return FetchWorkersRealTimeStatisticsOptions Options builder
      */
-    public static function fetch($taskChannel = Values::NONE)
-    {
+    public static function fetch($taskChannel = Values::NONE) {
         return new FetchWorkersRealTimeStatisticsOptions($taskChannel);
     }
 }
 
-class FetchWorkersRealTimeStatisticsOptions extends Options
-{
+class FetchWorkersRealTimeStatisticsOptions extends Options {
     /**
      * @param string $taskChannel Only calculate real-time statistics on this
      *                            TaskChannel
      */
-    public function __construct($taskChannel = Values::NONE)
-    {
+    public function __construct($taskChannel = Values::NONE) {
         $this->options['taskChannel'] = $taskChannel;
     }
 
@@ -43,8 +39,7 @@ class FetchWorkersRealTimeStatisticsOptions extends Options
      *                            TaskChannel
      * @return $this Fluent Builder
      */
-    public function setTaskChannel($taskChannel)
-    {
+    public function setTaskChannel($taskChannel) {
         $this->options['taskChannel'] = $taskChannel;
         return $this;
     }
@@ -54,8 +49,7 @@ class FetchWorkersRealTimeStatisticsOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

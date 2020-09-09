@@ -23,8 +23,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Api\V2010\Account\Conference\ParticipantContext participants(string $callSid)
  * @method \Twilio\Rest\Api\V2010\Account\Conference\RecordingContext recordings(string $sid)
  */
-class ConferenceContext extends InstanceContext
-{
+class ConferenceContext extends InstanceContext {
     protected $_participants = null;
     protected $_recordings = null;
 
@@ -37,12 +36,11 @@ class ConferenceContext extends InstanceContext
      * @param string $sid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\ConferenceContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Conferences/' . \rawurlencode($sid) . '.json';
     }
@@ -53,8 +51,7 @@ class ConferenceContext extends InstanceContext
      * @return ConferenceInstance Fetched ConferenceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -78,8 +75,7 @@ class ConferenceContext extends InstanceContext
      * @return ConferenceInstance Updated ConferenceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -108,8 +104,7 @@ class ConferenceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Api\V2010\Account\Conference\ParticipantList
      */
-    protected function getParticipants()
-    {
+    protected function getParticipants() {
         if (!$this->_participants) {
             $this->_participants = new ParticipantList(
                 $this->version,
@@ -126,8 +121,7 @@ class ConferenceContext extends InstanceContext
      *
      * @return \Twilio\Rest\Api\V2010\Account\Conference\RecordingList
      */
-    protected function getRecordings()
-    {
+    protected function getRecordings() {
         if (!$this->_recordings) {
             $this->_recordings = new RecordingList(
                 $this->version,
@@ -146,8 +140,7 @@ class ConferenceContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -164,8 +157,7 @@ class ConferenceContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -179,8 +171,7 @@ class ConferenceContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

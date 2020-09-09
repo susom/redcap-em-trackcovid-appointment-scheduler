@@ -4,7 +4,6 @@
 namespace Twilio\Exceptions;
 
 
-class EnvironmentException extends TwilioException
-{
+class EnvironmentException extends TwilioException {
 
 }

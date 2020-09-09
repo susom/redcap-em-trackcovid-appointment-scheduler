@@ -15,14 +15,12 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class FieldTypeOptions
-{
+abstract class FieldTypeOptions {
     /**
      * @param string $friendlyName A string to describe the new resource
      * @return CreateFieldTypeOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE)
-    {
+    public static function create($friendlyName = Values::NONE) {
         return new CreateFieldTypeOptions($friendlyName);
     }
 
@@ -32,19 +30,16 @@ abstract class FieldTypeOptions
      *                           identifies the resource
      * @return UpdateFieldTypeOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public static function update($friendlyName = Values::NONE, $uniqueName = Values::NONE) {
         return new UpdateFieldTypeOptions($friendlyName, $uniqueName);
     }
 }
 
-class CreateFieldTypeOptions extends Options
-{
+class CreateFieldTypeOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the new resource
      */
-    public function __construct($friendlyName = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
     }
 
@@ -54,8 +49,7 @@ class CreateFieldTypeOptions extends Options
      * @param string $friendlyName A string to describe the new resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -65,8 +59,7 @@ class CreateFieldTypeOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -77,15 +70,13 @@ class CreateFieldTypeOptions extends Options
     }
 }
 
-class UpdateFieldTypeOptions extends Options
-{
+class UpdateFieldTypeOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
      */
-    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['uniqueName'] = $uniqueName;
     }
@@ -96,8 +87,7 @@ class UpdateFieldTypeOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -109,8 +99,7 @@ class UpdateFieldTypeOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -120,8 +109,7 @@ class UpdateFieldTypeOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

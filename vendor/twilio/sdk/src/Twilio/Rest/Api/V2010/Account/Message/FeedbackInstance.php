@@ -23,8 +23,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $uri
  */
-class FeedbackInstance extends InstanceResource
-{
+class FeedbackInstance extends InstanceResource {
     /**
      * Initialize the FeedbackInstance
      *
@@ -35,8 +34,7 @@ class FeedbackInstance extends InstanceResource
      *                           feedback was provided
      * @return \Twilio\Rest\Api\V2010\Account\Message\FeedbackInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $messageSid)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $messageSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,7 +47,7 @@ class FeedbackInstance extends InstanceResource
             'uri' => Values::array_get($payload, 'uri'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'messageSid' => $messageSid,);
+        $this->solution = array('accountSid' => $accountSid, 'messageSid' => $messageSid, );
     }
 
     /**
@@ -59,8 +57,7 @@ class FeedbackInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -78,8 +75,7 @@ class FeedbackInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.FeedbackInstance]';
     }
 }

@@ -22,8 +22,7 @@ use Twilio\Version;
  *
  * @property \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocument\DependentHostedNumberOrderList $dependentHostedNumberOrders
  */
-class AuthorizationDocumentContext extends InstanceContext
-{
+class AuthorizationDocumentContext extends InstanceContext {
     protected $_dependentHostedNumberOrders = null;
 
     /**
@@ -33,12 +32,11 @@ class AuthorizationDocumentContext extends InstanceContext
      * @param string $sid AuthorizationDocument sid.
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/AuthorizationDocuments/' . \rawurlencode($sid) . '';
     }
@@ -49,8 +47,7 @@ class AuthorizationDocumentContext extends InstanceContext
      * @return AuthorizationDocumentInstance Fetched AuthorizationDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,19 +66,14 @@ class AuthorizationDocumentContext extends InstanceContext
      * @return AuthorizationDocumentInstance Updated AuthorizationDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
-            'HostedNumberOrderSids' => Serialize::map($options['hostedNumberOrderSids'], function ($e) {
-                return $e;
-            }),
+            'HostedNumberOrderSids' => Serialize::map($options['hostedNumberOrderSids'], function($e) { return $e; }),
             'AddressSid' => $options['addressSid'],
             'Email' => $options['email'],
-            'CcEmails' => Serialize::map($options['ccEmails'], function ($e) {
-                return $e;
-            }),
+            'CcEmails' => Serialize::map($options['ccEmails'], function($e) { return $e; }),
             'Status' => $options['status'],
             'ContactTitle' => $options['contactTitle'],
             'ContactPhoneNumber' => $options['contactPhoneNumber'],
@@ -102,8 +94,7 @@ class AuthorizationDocumentContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocument\DependentHostedNumberOrderList
      */
-    protected function getDependentHostedNumberOrders()
-    {
+    protected function getDependentHostedNumberOrders() {
         if (!$this->_dependentHostedNumberOrders) {
             $this->_dependentHostedNumberOrders = new DependentHostedNumberOrderList(
                 $this->version,
@@ -121,8 +112,7 @@ class AuthorizationDocumentContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -139,8 +129,7 @@ class AuthorizationDocumentContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -154,8 +143,7 @@ class AuthorizationDocumentContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

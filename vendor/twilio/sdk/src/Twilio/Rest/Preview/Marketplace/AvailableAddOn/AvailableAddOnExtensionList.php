@@ -16,8 +16,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class AvailableAddOnExtensionList extends ListResource
-{
+class AvailableAddOnExtensionList extends ListResource {
     /**
      * Construct the AvailableAddOnExtensionList
      *
@@ -26,12 +25,11 @@ class AvailableAddOnExtensionList extends ListResource
      *                                  which this extension applies
      * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOn\AvailableAddOnExtensionList
      */
-    public function __construct(Version $version, $availableAddOnSid)
-    {
+    public function __construct(Version $version, $availableAddOnSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('availableAddOnSid' => $availableAddOnSid,);
+        $this->solution = array('availableAddOnSid' => $availableAddOnSid, );
 
         $this->uri = '/AvailableAddOns/' . \rawurlencode($availableAddOnSid) . '/Extensions';
     }
@@ -55,8 +53,7 @@ class AvailableAddOnExtensionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -79,8 +76,7 @@ class AvailableAddOnExtensionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return AvailableAddOnExtensionInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -94,8 +90,7 @@ class AvailableAddOnExtensionList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of AvailableAddOnExtensionInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -119,8 +114,7 @@ class AvailableAddOnExtensionList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of AvailableAddOnExtensionInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -135,8 +129,7 @@ class AvailableAddOnExtensionList extends ListResource
      * @param string $sid The SID of the AvailableAddOn Extension resource to fetch
      * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOn\AvailableAddOnExtensionContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new AvailableAddOnExtensionContext(
             $this->version,
             $this->solution['availableAddOnSid'],
@@ -149,8 +142,7 @@ class AvailableAddOnExtensionList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.Marketplace.AvailableAddOnExtensionList]';
     }
 }

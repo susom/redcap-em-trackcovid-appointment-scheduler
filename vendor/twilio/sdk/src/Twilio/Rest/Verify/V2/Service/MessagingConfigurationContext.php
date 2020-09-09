@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class MessagingConfigurationContext extends InstanceContext
-{
+class MessagingConfigurationContext extends InstanceContext {
     /**
      * Initialize the MessagingConfigurationContext
      *
@@ -25,12 +24,11 @@ class MessagingConfigurationContext extends InstanceContext
      * @param string $country The ISO-3166-1 country code of the country or `all`.
      * @return \Twilio\Rest\Verify\V2\Service\MessagingConfigurationContext
      */
-    public function __construct(Version $version, $serviceSid, $country)
-    {
+    public function __construct(Version $version, $serviceSid, $country) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'country' => $country,);
+        $this->solution = array('serviceSid' => $serviceSid, 'country' => $country, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/MessagingConfigurations/' . \rawurlencode($country) . '';
     }
@@ -43,9 +41,8 @@ class MessagingConfigurationContext extends InstanceContext
      * @return MessagingConfigurationInstance Updated MessagingConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($messagingServiceSid)
-    {
-        $data = Values::of(array('MessagingServiceSid' => $messagingServiceSid,));
+    public function update($messagingServiceSid) {
+        $data = Values::of(array('MessagingServiceSid' => $messagingServiceSid, ));
 
         $payload = $this->version->update(
             'POST',
@@ -68,8 +65,7 @@ class MessagingConfigurationContext extends InstanceContext
      * @return MessagingConfigurationInstance Fetched MessagingConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -92,8 +88,7 @@ class MessagingConfigurationContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -102,8 +97,7 @@ class MessagingConfigurationContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

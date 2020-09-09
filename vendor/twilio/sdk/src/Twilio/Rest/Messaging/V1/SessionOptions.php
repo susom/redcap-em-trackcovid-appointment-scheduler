@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class SessionOptions
-{
+abstract class SessionOptions {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $attributes A JSON string that stores application-specific data
@@ -27,13 +26,7 @@ abstract class SessionOptions
      * @param string $createdBy The Identity of the session's creator
      * @return CreateSessionOptions Options builder
      */
-    public static function create(
-        $friendlyName = Values::NONE,
-        $attributes = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $createdBy = Values::NONE
-    ) {
+    public static function create($friendlyName = Values::NONE, $attributes = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $createdBy = Values::NONE) {
         return new CreateSessionOptions($friendlyName, $attributes, $dateCreated, $dateUpdated, $createdBy);
     }
 
@@ -47,19 +40,12 @@ abstract class SessionOptions
      * @param string $createdBy The Identity of the session's creator
      * @return UpdateSessionOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $attributes = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $createdBy = Values::NONE
-    ) {
+    public static function update($friendlyName = Values::NONE, $attributes = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $createdBy = Values::NONE) {
         return new UpdateSessionOptions($friendlyName, $attributes, $dateCreated, $dateUpdated, $createdBy);
     }
 }
 
-class CreateSessionOptions extends Options
-{
+class CreateSessionOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $attributes A JSON string that stores application-specific data
@@ -69,13 +55,7 @@ class CreateSessionOptions extends Options
      *                               resource was updated
      * @param string $createdBy The Identity of the session's creator
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $attributes = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $createdBy = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $attributes = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $createdBy = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['attributes'] = $attributes;
         $this->options['dateCreated'] = $dateCreated;
@@ -89,8 +69,7 @@ class CreateSessionOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -101,8 +80,7 @@ class CreateSessionOptions extends Options
      * @param string $attributes A JSON string that stores application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -114,8 +92,7 @@ class CreateSessionOptions extends Options
      *                               resource was created
      * @return $this Fluent Builder
      */
-    public function setDateCreated($dateCreated)
-    {
+    public function setDateCreated($dateCreated) {
         $this->options['dateCreated'] = $dateCreated;
         return $this;
     }
@@ -127,8 +104,7 @@ class CreateSessionOptions extends Options
      *                               resource was updated
      * @return $this Fluent Builder
      */
-    public function setDateUpdated($dateUpdated)
-    {
+    public function setDateUpdated($dateUpdated) {
         $this->options['dateUpdated'] = $dateUpdated;
         return $this;
     }
@@ -139,8 +115,7 @@ class CreateSessionOptions extends Options
      * @param string $createdBy The Identity of the session's creator
      * @return $this Fluent Builder
      */
-    public function setCreatedBy($createdBy)
-    {
+    public function setCreatedBy($createdBy) {
         $this->options['createdBy'] = $createdBy;
         return $this;
     }
@@ -150,8 +125,7 @@ class CreateSessionOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -162,8 +136,7 @@ class CreateSessionOptions extends Options
     }
 }
 
-class UpdateSessionOptions extends Options
-{
+class UpdateSessionOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $attributes A JSON string that stores application-specific data
@@ -173,13 +146,7 @@ class UpdateSessionOptions extends Options
      *                               resource was updated
      * @param string $createdBy The Identity of the session's creator
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $attributes = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $createdBy = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $attributes = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $createdBy = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['attributes'] = $attributes;
         $this->options['dateCreated'] = $dateCreated;
@@ -193,8 +160,7 @@ class UpdateSessionOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -205,8 +171,7 @@ class UpdateSessionOptions extends Options
      * @param string $attributes A JSON string that stores application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -218,8 +183,7 @@ class UpdateSessionOptions extends Options
      *                               resource was created
      * @return $this Fluent Builder
      */
-    public function setDateCreated($dateCreated)
-    {
+    public function setDateCreated($dateCreated) {
         $this->options['dateCreated'] = $dateCreated;
         return $this;
     }
@@ -231,8 +195,7 @@ class UpdateSessionOptions extends Options
      *                               resource was updated
      * @return $this Fluent Builder
      */
-    public function setDateUpdated($dateUpdated)
-    {
+    public function setDateUpdated($dateUpdated) {
         $this->options['dateUpdated'] = $dateUpdated;
         return $this;
     }
@@ -243,8 +206,7 @@ class UpdateSessionOptions extends Options
      * @param string $createdBy The Identity of the session's creator
      * @return $this Fluent Builder
      */
-    public function setCreatedBy($createdBy)
-    {
+    public function setCreatedBy($createdBy) {
         $this->options['createdBy'] = $createdBy;
         return $this;
     }
@@ -254,8 +216,7 @@ class UpdateSessionOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

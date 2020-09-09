@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property string $priceUnit
  * @property string $url
  */
-class CountryInstance extends InstanceResource
-{
+class CountryInstance extends InstanceResource {
     /**
      * Initialize the CountryInstance
      *
@@ -31,8 +30,7 @@ class CountryInstance extends InstanceResource
      * @param string $isoCountry The ISO country code
      * @return \Twilio\Rest\Pricing\V1\PhoneNumber\CountryInstance
      */
-    public function __construct(Version $version, array $payload, $isoCountry = null)
-    {
+    public function __construct(Version $version, array $payload, $isoCountry = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -44,7 +42,7 @@ class CountryInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('isoCountry' => $isoCountry ?: $this->properties['isoCountry'],);
+        $this->solution = array('isoCountry' => $isoCountry ?: $this->properties['isoCountry'], );
     }
 
     /**
@@ -54,8 +52,7 @@ class CountryInstance extends InstanceResource
      * @return \Twilio\Rest\Pricing\V1\PhoneNumber\CountryContext Context for this
      *                                                            CountryInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CountryContext($this->version, $this->solution['isoCountry']);
         }
@@ -69,8 +66,7 @@ class CountryInstance extends InstanceResource
      * @return CountryInstance Fetched CountryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -81,8 +77,7 @@ class CountryInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -100,8 +95,7 @@ class CountryInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

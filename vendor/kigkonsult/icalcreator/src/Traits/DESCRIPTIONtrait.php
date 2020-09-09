@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -48,16 +48,14 @@ trait DESCRIPTIONtrait
 {
     /**
      * @var array component property DESCRIPTION value
-     * @access protected
      */
     protected $description = null;
 
     /**
      * @var array
-     * @access private
      * @static
      */
-    private static $MULTIDESCRCOMPS = [Vcalendar::VCALENDAR, Vcalendar::VJOURNAL];
+    private static $MULTIDESCRCOMPS = [ Vcalendar::VCALENDAR, Vcalendar::VJOURNAL ];
 
     /**
      * Return formatted output for calendar component property description
@@ -67,20 +65,25 @@ trait DESCRIPTIONtrait
      */
     public function createDescription()
     {
-        if (empty($this->description)) {
+        if( empty( $this->description )) {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->description as $dx => $description) {
-            if (!empty($description[Util::$LCvalue])) {
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->description as $dx => $description ) {
+            if( ! empty( $description[Util::$LCvalue] )) {
                 $output .= StringFactory::createElement(
                     self::DESCRIPTION,
-                    ParameterFactory::createParams($description[Util::$LCparams], self::$ALTRPLANGARR, $lang),
-                    StringFactory::strrep($description[Util::$LCvalue])
+                    ParameterFactory::createParams(
+                        $description[Util::$LCparams],
+                        self::$ALTRPLANGARR,
+                        $lang
+                    ),
+                    StringFactory::strrep( $description[Util::$LCvalue] )
                 );
-            } elseif ($this->getConfig(self::ALLOWEMPTY)) {
-                $output .= StringFactory::createElement(self::DESCRIPTION);
+            }
+            elseif( $this->getConfig( self::ALLOWEMPTY )) {
+                $output .= StringFactory::createElement( self::DESCRIPTION );
             }
         }
         return $output;
@@ -89,67 +92,76 @@ trait DESCRIPTIONtrait
     /**
      * Delete calendar component property description
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since 2.29.5 2019-07-03
      */
-    public function deleteDescription($propDelIx = null)
+    public function deleteDescription( $propDelIx = null )
     {
-        if (empty($this->description)) {
-            unset($this->propDelIx[self::DESCRIPTION]);
+        if( empty( $this->description )) {
+            unset( $this->propDelIx[self::DESCRIPTION] );
             return false;
         }
-        if (!Util::isCompInList($this->getCompType(), self::$MULTIDESCRCOMPS)) {
+        if( ! Util::isCompInList( $this->getCompType(), self::$MULTIDESCRCOMPS )) {
             $propDelIx = 1;
         }
-        return $this->deletePropertyM($this->description, self::DESCRIPTION, $propDelIx);
+        return $this->deletePropertyM(
+            $this->description,
+            self::DESCRIPTION,
+            $propDelIx
+        );
     }
 
     /**
      * Get calendar component property description
      *
-     * @param bool|int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param bool|int  $propIx specific property in case of multiply occurrence
+     * @param bool      $inclParam
      * @return bool|array
      * @since 2.29.5 2019-07-03
      */
-    public function getDescription($propIx = null, $inclParam = null)
+    public function getDescription( $propIx = null, $inclParam = null )
     {
-        if (empty($this->description)) {
-            unset($this->propIx[self::DESCRIPTION]);
+        if( empty( $this->description )) {
+            unset( $this->propIx[self::DESCRIPTION] );
             return false;
         }
-        if (!Util::isCompInList($this->getCompType(), self::$MULTIDESCRCOMPS)) {
-            if (!is_bool($inclParam)) {
-                $inclParam = (true == $propIx) ? true : false; // note ==
+        if( ! Util::isCompInList( $this->getCompType(), self::$MULTIDESCRCOMPS )) {
+            if( ! is_bool( $inclParam )) {
+                $inclParam = ( true == $propIx ); // note ==
             }
             $propIx = 1;
         }
-        return $this->getPropertyM($this->description, self::DESCRIPTION, $propIx, $inclParam);
+        return $this->getPropertyM(
+            $this->description,
+            self::DESCRIPTION,
+            $propIx,
+            $inclParam
+        );
     }
 
     /**
      * Set calendar component property description
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setDescription($value = null, $params = [], $index = null)
+    public function setDescription( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::DESCRIPTION);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::DESCRIPTION );
+            $value  = Util::$SP0;
             $params = [];
         }
-        if (!Util::isCompInList($this->getCompType(), self::$MULTIDESCRCOMPS)) {
+        if( ! Util::isCompInList( $this->getCompType(), self::$MULTIDESCRCOMPS )) {
             $index = 1;
         }
-        Util::assertString($value, self::DESCRIPTION);
-        $this->setMval($this->description, (string)$value, $params, null, $index);
+        Util::assertString( $value, self::DESCRIPTION );
+        $this->setMval( $this->description, (string) $value, $params,null, $index );
         return $this;
     }
 }

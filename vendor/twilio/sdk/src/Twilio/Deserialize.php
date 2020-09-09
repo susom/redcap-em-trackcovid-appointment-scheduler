@@ -2,8 +2,7 @@
 
 namespace Twilio;
 
-class Deserialize
-{
+class Deserialize {
 
     /**
      * Deserialize a string date into a DateTime object
@@ -12,8 +11,7 @@ class Deserialize
      *                  YYYY-MM-DD format.
      * @return \DateTime|string DateTime corresponding to the input string, in UTC time.
      */
-    public static function dateTime($s)
-    {
+    public static function dateTime($s) {
         try {
             if ($s) {
                 return new \DateTime($s, new \DateTimeZone('UTC'));

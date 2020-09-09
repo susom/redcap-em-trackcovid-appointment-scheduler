@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Pause extends TwiML
-{
+class Pause extends TwiML {
     /**
      * Pause constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Pause', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Pause extends TwiML
      * @param int $length Length in seconds to pause
      * @return static $this.
      */
-    public function setLength($length)
-    {
+    public function setLength($length) {
         return $this->setAttribute('length', $length);
     }
 }

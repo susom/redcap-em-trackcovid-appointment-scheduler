@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class MessageList extends ListResource
-{
+class MessageList extends ListResource {
     /**
      * Construct the MessageList
      *
@@ -25,12 +24,11 @@ class MessageList extends ListResource
      * @param string $accountSid The SID of the Account that created the resource
      * @return \Twilio\Rest\Api\V2010\Account\MessageList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Messages.json';
     }
@@ -43,8 +41,7 @@ class MessageList extends ListResource
      * @return MessageInstance Newly created MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($to, $options = array())
-    {
+    public function create($to, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -52,9 +49,7 @@ class MessageList extends ListResource
             'From' => $options['from'],
             'MessagingServiceSid' => $options['messagingServiceSid'],
             'Body' => $options['body'],
-            'MediaUrl' => Serialize::map($options['mediaUrl'], function ($e) {
-                return $e;
-            }),
+            'MediaUrl' => Serialize::map($options['mediaUrl'], function($e) { return $e; }),
             'StatusCallback' => $options['statusCallback'],
             'ApplicationSid' => $options['applicationSid'],
             'MaxPrice' => $options['maxPrice'],
@@ -64,9 +59,7 @@ class MessageList extends ListResource
             'ContentRetention' => $options['contentRetention'],
             'AddressRetention' => $options['addressRetention'],
             'SmartEncoded' => Serialize::booleanToString($options['smartEncoded']),
-            'PersistentAction' => Serialize::map($options['persistentAction'], function ($e) {
-                return $e;
-            }),
+            'PersistentAction' => Serialize::map($options['persistentAction'], function($e) { return $e; }),
         ));
 
         $payload = $this->version->create(
@@ -98,8 +91,7 @@ class MessageList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -123,8 +115,7 @@ class MessageList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return MessageInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -138,12 +129,7 @@ class MessageList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of MessageInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'To' => $options['to'],
@@ -172,8 +158,7 @@ class MessageList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of MessageInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -188,8 +173,7 @@ class MessageList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\MessageContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new MessageContext($this->version, $this->solution['accountSid'], $sid);
     }
 
@@ -198,8 +182,7 @@ class MessageList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.MessageList]';
     }
 }

@@ -11,18 +11,15 @@ namespace Twilio\Rest\Numbers\V2\RegulatoryCompliance;
 
 use Twilio\Page;
 
-class EndUserPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class EndUserPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new EndUserInstance($this->version, $payload);
     }
 
@@ -31,8 +28,7 @@ class EndUserPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Numbers.V2.EndUserPage]';
     }
 }

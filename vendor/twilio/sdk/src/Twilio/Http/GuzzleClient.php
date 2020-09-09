@@ -45,6 +45,6 @@ final class GuzzleClient implements Client
         }
         // Casting the body (stream) to a string performs a rewind, ensuring we return the entire response.
         // See https://stackoverflow.com/a/30549372/86696
-        return new Response($response->getStatusCode(), (string)$response->getBody(), $response->getHeaders());
+        return new Response($response->getStatusCode(), (string) $response->getBody(), $response->getHeaders());
     }
 }

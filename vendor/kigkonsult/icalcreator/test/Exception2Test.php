@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -51,8 +51,7 @@ class Exception2Test extends TestCase
     /**
      * RexdateFactoryPrepInputExdateTest provider
      */
-    public function Provider1()
-    {
+    public function Provider1() {
 
         $dataArr = [];
 
@@ -60,10 +59,10 @@ class Exception2Test extends TestCase
             1,
             [
                 [
-                    DateTimeFactory::factory('now')
+                    DateTimeFactory::factory( 'now' )
                 ]
             ],
-            [Vcalendar::TZID => 'invalid/timezone']
+            [ Vcalendar::TZID => 'invalid/timezone' ]
         ];
 
         $dataArr[] = [
@@ -73,7 +72,7 @@ class Exception2Test extends TestCase
                     '011201250101'
                 ]
             ],
-            [Vcalendar::TZID => 'invalid/timezone']
+            [ Vcalendar::TZID => 'invalid/timezone' ]
         ];
 
         $dataArr[] = [
@@ -102,19 +101,19 @@ class Exception2Test extends TestCase
      *
      * @test
      * @dataProvider Provider1
-     * @param int $case
-     * @param mixed $value
-     * @param array $params
+     * @param int    $case
+     * @param mixed  $value
+     * @param array  $params
      */
-    public function RexdateFactoryPrepInputExdateTest($case, $value, $params)
-    {
+    public function RexdateFactoryPrepInputExdateTest( $case, $value, $params ) {
         $ok = false;
         try {
-            $result = RexdateFactory::prepInputExdate($value, $params);
-        } catch (Exception $e) {
+            $result = RexdateFactory::prepInputExdate( $value, $params );
+        }
+        catch ( Exception $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
 
@@ -123,19 +122,19 @@ class Exception2Test extends TestCase
      *
      * @test
      * @dataProvider Provider1
-     * @param int $case
-     * @param mixed $value
-     * @param array $params
+     * @param int    $case
+     * @param mixed  $value
+     * @param array  $params
      */
-    public function RexdateFactoryprepInputRdateTest($case, $value, $params)
-    {
+    public function RexdateFactoryprepInputRdateTest( $case, $value, $params ) {
         $ok = false;
         try {
-            $result = RexdateFactory::prepInputRdate($value, $params);
-        } catch (Exception $e) {
+            $result = RexdateFactory::prepInputRdate( $value, $params );
+        }
+        catch( Exception $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
 

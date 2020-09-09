@@ -1,11 +1,11 @@
 <?php
 /**
- * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
+  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -72,8 +72,6 @@ final class Vjournal extends Vcomponent
 
     /**
      * @var string
-     * @access protected
-     * @static
      */
     protected static $compSgn = 'j';
 
@@ -137,35 +135,35 @@ final class Vjournal extends Vcomponent
      */
     public function createComponent()
     {
-        $compType = strtoupper($this->getCompType());
-        $component = sprintf(self::$FMTBEGIN, $compType);
-        $component .= $this->createUid();
-        $component .= $this->createDtstamp();
-        $component .= $this->createAttach();
-        $component .= $this->createAttendee();
-        $component .= $this->createCategories();
-        $component .= $this->createClass();
-        $component .= $this->createColor();
-        $component .= $this->createComment();
-        $component .= $this->createContact();
-        $component .= $this->createCreated();
-        $component .= $this->createDescription();
-        $component .= $this->createDtstart();
-        $component .= $this->createExdate();
-        $component .= $this->createExrule();
-        $component .= $this->createImage();
-        $component .= $this->createLastmodified();
-        $component .= $this->createOrganizer();
-        $component .= $this->createRdate();
-        $component .= $this->createRequeststatus();
-        $component .= $this->createRecurrenceid();
-        $component .= $this->createRelatedto();
-        $component .= $this->createRrule();
-        $component .= $this->createSequence();
-        $component .= $this->createStatus();
-        $component .= $this->createSummary();
-        $component .= $this->createUrl();
-        $component .= $this->createXprop();
-        return $component . sprintf(self::$FMTEND, $compType);
+        $compType    = strtoupper( $this->getCompType());
+        $component   = sprintf( self::$FMTBEGIN, $compType );
+        $component  .= $this->createUid();
+        $component  .= $this->createDtstamp();
+        $component  .= $this->createAttach();
+        $component  .= $this->createAttendee();
+        $component  .= $this->createCategories();
+        $component  .= $this->createClass();
+        $component  .= $this->createColor();
+        $component  .= $this->createComment();
+        $component  .= $this->createContact();
+        $component  .= $this->createCreated();
+        $component  .= $this->createDescription();
+        $component  .= $this->createDtstart();
+        $component  .= $this->createExdate();
+        $component  .= $this->createExrule();
+        $component  .= $this->createImage();
+        $component  .= $this->createLastmodified();
+        $component  .= $this->createOrganizer();
+        $component  .= $this->createRdate();
+        $component  .= $this->createRequeststatus();
+        $component  .= $this->createRecurrenceid();
+        $component  .= $this->createRelatedto();
+        $component  .= $this->createRrule();
+        $component  .= $this->createSequence();
+        $component  .= $this->createStatus();
+        $component  .= $this->createSummary();
+        $component  .= $this->createUrl();
+        $component  .= $this->createXprop();
+        return $component . sprintf( self::$FMTEND, $compType );
     }
 }

@@ -20,8 +20,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Conversations\V1\WebhookList $webhooks
  * @method \Twilio\Rest\Conversations\V1\ConversationContext conversations(string $sid)
  */
-class V1 extends Version
-{
+class V1 extends Version {
     protected $_conversations = null;
     protected $_webhooks = null;
 
@@ -31,8 +30,7 @@ class V1 extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Conversations\V1 V1 version of Conversations
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'v1';
     }
@@ -40,8 +38,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Conversations\V1\ConversationList
      */
-    protected function getConversations()
-    {
+    protected function getConversations() {
         if (!$this->_conversations) {
             $this->_conversations = new ConversationList($this);
         }
@@ -51,8 +48,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Conversations\V1\WebhookList
      */
-    protected function getWebhooks()
-    {
+    protected function getWebhooks() {
         if (!$this->_webhooks) {
             $this->_webhooks = new WebhookList($this);
         }
@@ -66,8 +62,7 @@ class V1 extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -84,8 +79,7 @@ class V1 extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -99,8 +93,7 @@ class V1 extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Conversations.V1]';
     }
 }

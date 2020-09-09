@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -48,7 +48,6 @@ trait STATUStrait
 {
     /**
      * @var array component property STATUS value
-     * @access protected
      */
     protected $status = null;
 
@@ -59,15 +58,17 @@ trait STATUStrait
      */
     public function createStatus()
     {
-        if (empty($this->status)) {
+        if( empty( $this->status )) {
             return null;
         }
-        if (empty($this->status[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::STATUS) : null;
+        if( empty( $this->status[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::STATUS )
+                : null;
         }
         return StringFactory::createElement(
             self::STATUS,
-            ParameterFactory::createParams($this->status[Util::$LCparams]),
+            ParameterFactory::createParams( $this->status[Util::$LCparams] ),
             $this->status[Util::$LCvalue]
         );
     }
@@ -87,28 +88,28 @@ trait STATUStrait
     /**
      * Get calendar component property status
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getStatus($inclParam = false)
+    public function getStatus( $inclParam = false )
     {
-        if (empty($this->status)) {
+        if( empty( $this->status )) {
             return false;
         }
-        return ($inclParam) ? $this->status : $this->status[Util::$LCvalue];
+        return ( $inclParam ) ? $this->status : $this->status[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property status
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setStatus($value = null, $params = [])
+    public function setStatus( $value = null, $params = [] )
     {
         static $ALLOWED_VEVENT = [
             self::CONFIRMED,
@@ -126,26 +127,26 @@ trait STATUStrait
             self::DRAFT,
             self::F_NAL,
         ];
-        $value = strtoupper(StringFactory::trimTrailNL($value));
-        switch (true) {
-            case (empty($value)) :
-                $this->assertEmptyValue($value, self::STATUS);
-                $value = Util::$SP0;
+        $value = strtoupper( StringFactory::trimTrailNL( $value ));
+        switch( true ) {
+            case ( empty( $value )) :
+                $this->assertEmptyValue( $value, self::STATUS );
+                $value  = Util::$SP0;
                 $params = [];
                 break;
-            case (Vcalendar::VEVENT == $this->getCompType()) :
-                Util::assertInEnumeration($value, $ALLOWED_VEVENT, self::STATUS);
+            case ( Vcalendar::VEVENT == $this->getCompType()) :
+                Util::assertInEnumeration( $value, $ALLOWED_VEVENT, self::STATUS );
                 break;
-            case (Vcalendar::VTODO == $this->getCompType()) :
-                Util::assertInEnumeration($value, $ALLOWED_VTODO, self::STATUS);
+            case ( Vcalendar::VTODO == $this->getCompType()) :
+                Util::assertInEnumeration( $value, $ALLOWED_VTODO, self::STATUS );
                 break;
-            case (Vcalendar::VJOURNAL == $this->getCompType()) :
-                Util::assertInEnumeration($value, $ALLOWED_VJOURNAL, self::STATUS);
+            case ( Vcalendar::VJOURNAL == $this->getCompType()) :
+                Util::assertInEnumeration( $value, $ALLOWED_VJOURNAL, self::STATUS );
                 break;
-        }
+        } // end switch
         $this->status = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => $value ,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

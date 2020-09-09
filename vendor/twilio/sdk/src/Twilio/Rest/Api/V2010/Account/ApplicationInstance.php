@@ -38,8 +38,7 @@ use Twilio\Version;
  * @property string $voiceMethod
  * @property string $voiceUrl
  */
-class ApplicationInstance extends InstanceResource
-{
+class ApplicationInstance extends InstanceResource {
     /**
      * Initialize the ApplicationInstance
      *
@@ -49,8 +48,7 @@ class ApplicationInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\ApplicationInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -77,7 +75,7 @@ class ApplicationInstance extends InstanceResource
             'voiceUrl' => Values::array_get($payload, 'voice_url'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -87,8 +85,7 @@ class ApplicationInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\ApplicationContext Context for this
      *                                                           ApplicationInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ApplicationContext(
                 $this->version,
@@ -106,8 +103,7 @@ class ApplicationInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -117,8 +113,7 @@ class ApplicationInstance extends InstanceResource
      * @return ApplicationInstance Fetched ApplicationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -129,8 +124,7 @@ class ApplicationInstance extends InstanceResource
      * @return ApplicationInstance Updated ApplicationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -141,8 +135,7 @@ class ApplicationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -160,8 +153,7 @@ class ApplicationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

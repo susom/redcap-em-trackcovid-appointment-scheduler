@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -64,33 +64,43 @@ trait X_PROPtrait
      */
     public function createXprop()
     {
-        if (empty($this->xprop) || !is_array($this->xprop)) {
+        if( empty( $this->xprop ) || ! is_array( $this->xprop ))
+        {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->xprop as $xpropName => $xpropPart) {
-            if (!isset($xpropPart[Util::$LCvalue]) ||
-                (empty($xpropPart[Util::$LCvalue]) && !is_numeric($xpropPart[Util::$LCvalue]))) {
-                if ($this->getConfig(self::ALLOWEMPTY)) {
-                    $output .= StringFactory::createElement($xpropName);
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->xprop as $xpropName => $xpropPart ) {
+            if( ! isset( $xpropPart[Util::$LCvalue] ) ||
+                ( empty( $xpropPart[Util::$LCvalue] ) &&
+                    ! is_numeric( $xpropPart[Util::$LCvalue] ))) {
+                if( $this->getConfig( self::ALLOWEMPTY )) {
+                    $output .= StringFactory::createElement( $xpropName );
                 }
                 continue;
             }
-            if (is_array($xpropPart[Util::$LCvalue])) {
-                foreach ($xpropPart[Util::$LCvalue] as $pix => $theXpart) {
-                    $xpropPart[Util::$LCvalue][$pix] = StringFactory::strrep($theXpart);
+            if( is_array( $xpropPart[Util::$LCvalue] )) {
+                foreach( $xpropPart[Util::$LCvalue] as $pix => $theXpart ) {
+                    $xpropPart[Util::$LCvalue][$pix] =
+                        StringFactory::strrep( $theXpart );
                 }
-                $xpropPart[Util::$LCvalue] = implode(Util::$COMMA, $xpropPart[Util::$LCvalue]);
-            } else {
-                $xpropPart[Util::$LCvalue] = StringFactory::strrep($xpropPart[Util::$LCvalue]);
+                $xpropPart[Util::$LCvalue] =
+                    implode( Util::$COMMA, $xpropPart[Util::$LCvalue] );
+            }
+            else {
+                $xpropPart[Util::$LCvalue] =
+                    StringFactory::strrep( $xpropPart[Util::$LCvalue] );
             }
             $output .= StringFactory::createElement(
                 $xpropName,
-                ParameterFactory::createParams($xpropPart[Util::$LCparams], [self::LANGUAGE], $lang),
+                ParameterFactory::createParams(
+                    $xpropPart[Util::$LCparams],
+                    [ self::LANGUAGE ],
+                    $lang
+                ),
                 $xpropPart[Util::$LCvalue]
             );
-        }
+        } // end foreach
         return $output;
     }
 
@@ -98,54 +108,59 @@ trait X_PROPtrait
      * Delete component property X-prop value
      *
      * @param string $propName
-     * @param int $propDelIx removal counter
+     * @param int    $propDelIx removal counter
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteXprop($propName, $propDelIx = null)
+    public function deleteXprop( $propName, $propDelIx=null )
     {
-        $propName = ($propName) ? strtoupper($propName) : self::X_PROP;
-        if (empty($this->xprop)) {
-            foreach ($this->propDelIx as $propName => $v) {
-                if (StringFactory::isXprefixed($propName)) {
-                    unset($this->propDelIx[$propName]);
+        $propName = ( $propName ) ? strtoupper( $propName ) : self::X_PROP;
+        if( empty( $this->xprop )) {
+            foreach( $this->propDelIx as $propName => $v ) {
+                if( StringFactory::isXprefixed( $propName )) {
+                    unset( $this->propDelIx[$propName] );
                 }
             }
             return false;
         }
-        if (is_null($propDelIx)) {
-            $propDelIx = (isset($this->propDelIx[$propName]) && (self::X_PROP != $propName))
-                ? $this->propDelIx[$propName] + 2 : 1;
+        if( is_null( $propDelIx )) {
+            $propDelIx = (
+                isset( $this->propDelIx[$propName] ) &&
+                ( self::X_PROP != $propName )
+            )
+                ? $this->propDelIx[$propName] + 2
+                : 1;
         }
         $this->propDelIx[$propName] = --$propDelIx;
         $reduced = [];
-        if ($propName != self::X_PROP) {
-            if (!isset($this->xprop[$propName])) {
-                unset($this->propDelIx[$propName]);
+        if( $propName != self::X_PROP ) {
+            if( ! isset( $this->xprop[$propName] )) {
+                unset( $this->propDelIx[$propName] );
                 return false;
             }
-            foreach ($this->xprop as $k => $xValue) {
-                if (($k != $propName) && !empty($xValue)) {
+            foreach( $this->xprop as $k => $xValue ) {
+                if(( $k != $propName ) && ! empty( $xValue )) {
                     $reduced[$k] = $xValue;
                 }
             }
-        } else {
-            if (count($this->xprop) <= $propDelIx) {
-                unset($this->propDelIx[$propName]);
+        }
+        else {
+            if( count( $this->xprop ) <= $propDelIx ) {
+                unset( $this->propDelIx[$propName] );
                 return false;
             }
             $xpropNo = 0;
-            foreach ($this->xprop as $xpropKey => $xpropValue) {
-                if ($propDelIx != $xpropNo) {
+            foreach( $this->xprop as $xpropKey => $xpropValue ) {
+                if( $propDelIx != $xpropNo ) {
                     $reduced[$xpropKey] = $xpropValue;
                 }
                 $xpropNo++;
             }
         }
         $this->xprop = $reduced;
-        if (empty($this->xprop)) {
+        if( empty( $this->xprop )) {
             $this->xprop = null;
-            unset($this->propDelIx[$propName]);
+            unset( $this->propDelIx[$propName] );
             return false;
         }
         return true;
@@ -155,47 +170,50 @@ trait X_PROPtrait
      * Get calendar component property x-prop
      *
      * @param string $propName
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx    specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.11 - 2019-01-02
      */
-    public function getXprop($propName = null, $propIx = null, $inclParam = false)
+    public function getXprop( $propName = null, $propIx = null, $inclParam = false )
     {
-        if (empty($this->xprop)) {
-            foreach ($this->propIx as $propName => $v) {
-                if (StringFactory::isXprefixed($propName)) {
-                    unset($this->propIx[$propName]);
+        if( empty( $this->xprop )) {
+            foreach( $this->propIx as $propName => $v ) {
+                if( StringFactory::isXprefixed( $propName )) {
+                    unset( $this->propIx[$propName] );
                 }
             }
             return false;
         }
-        $propName = ($propName) ? strtoupper($propName) : self::X_PROP;
-        if ($propName != self::X_PROP) {
-            if (!isset($this->xprop[$propName])) {
+        $propName = ( $propName ) ? strtoupper( $propName ) : self::X_PROP;
+        if( $propName != self::X_PROP ) {
+            if( ! isset( $this->xprop[$propName] )) {
                 return false;
             }
-            return ($inclParam)
-                ? [$propName, $this->xprop[$propName],]
-                : [$propName, $this->xprop[$propName][Util::$LCvalue],];
+            return ( $inclParam )
+                ? [ $propName, $this->xprop[$propName], ]
+                : [ $propName, $this->xprop[$propName][Util::$LCvalue], ];
         }
-        if (empty($propIx)) {
-            $propIx = (isset($this->propIx[$propName])) ? $this->propIx[$propName] + 2 : 1;
+        if( empty( $propIx )) {
+            $propIx = ( isset( $this->propIx[$propName] ))
+                ? $this->propIx[$propName] + 2
+                : 1;
         }
         $this->propIx[$propName] = --$propIx;
-        $class = get_class($this);
-        $class::recountMvalPropix($this->xprop, $propIx);
+        $class = get_class( $this );
+        $class::recountMvalPropix( $this->xprop, $propIx );
         $this->propIx[$propName] = $propIx;
         $xpropNo = 0;
-        foreach ($this->xprop as $xpropKey => $xpropValue) {
-            if ($propIx == $xpropNo) {
-                return ($inclParam)
-                    ? [$xpropKey, $this->xprop[$xpropKey],]
-                    : [$xpropKey, $this->xprop[$xpropKey][Util::$LCvalue],];
-            } else {
+        foreach( $this->xprop as $xpropKey => $xpropValue ) {
+            if( $propIx == $xpropNo ) {
+                return ( $inclParam )
+                    ? [ $xpropKey, $this->xprop[$xpropKey], ]
+                    : [ $xpropKey, $this->xprop[$xpropKey][Util::$LCvalue], ];
+            }
+            else {
                 $xpropNo++;
             }
-        }
+        } // end foreach
         return false; // not found ??
     }
 
@@ -204,38 +222,38 @@ trait X_PROPtrait
      *
      * @param string $xPropName
      * @param string $value
-     * @param array $params optional
+     * @param array  $params   optional
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      * @todo more value typed asserts ??
      */
-    public function setXprop($xPropName, $value = null, $params = [])
+    public function setXprop( $xPropName, $value=null, $params = [] )
     {
         static $MSG = 'Invalid X-property name : \'%s\'';
-        if (empty($xPropName) || !StringFactory::isXprefixed($xPropName)) {
-            throw new InvalidArgumentException(sprintf($MSG, $xPropName));
+        if( empty( $xPropName ) || ! StringFactory::isXprefixed( $xPropName )) {
+            throw new InvalidArgumentException( sprintf( $MSG, $xPropName ));
         }
-        $xPropName = strtoupper($xPropName);
-        $params = array_change_key_case($params, CASE_UPPER);
-        if (empty($value)) {
-            $this->assertEmptyValue($value, $xPropName);
-            $value = Util::$SP0;
+        $xPropName = strtoupper( $xPropName );
+        $params    = array_change_key_case( $params, CASE_UPPER );
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, $xPropName );
+            $value  = Util::$SP0;
             $params = [];
-        } elseif (!isset($params[self::VALUE]) ||
-            (self::TEXT == $params[self::VALUE])) {
-            Util::assertString($value, $xPropName);
-            $value = StringFactory::trimTrailNL($value);
+        }
+        elseif( ! isset( $params[self::VALUE] ) ||
+                ( self::TEXT === $params[self::VALUE] )) {
+            Util::assertString( $value, $xPropName );
+            $value = StringFactory::trimTrailNL( $value );
         }
         $xprop = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params)
+            Util::$LCvalue  => $value,
+            Util::$LCparams => ParameterFactory::setParams( $params )
         ];
-        if (!is_array($this->xprop)) {
+        if( ! is_array( $this->xprop )) {
             $this->xprop = [];
         }
         $this->xprop[$xPropName] = $xprop;
         return $this;
     }
-
 }

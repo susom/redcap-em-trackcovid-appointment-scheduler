@@ -4,54 +4,62 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit3c2c05e97eb5cc00d8530ab91e60dafc
+class ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8
 {
-    public static $files = array(
+    public static $files = array (
         '47b18101462cdeb25f661813113e3182' => __DIR__ . '/..' . '/kigkonsult/icalcreator/autoload.php',
     );
 
-    public static $prefixLengthsPsr4 = array(
-        'T' =>
-            array(
-                'Twilio\\' => 7,
-            ),
-        'P' =>
-            array(
-                'Psr\\Log\\' => 8,
-                'PHPMailer\\PHPMailer\\' => 20,
-            ),
-        'K' =>
-            array(
-                'Kigkonsult\\Icalcreator\\' => 23,
-            ),
+    public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twilio\\' => 7,
+        ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
+        ),
+        'K' => 
+        array (
+            'Kigkonsult\\Icalcreator\\' => 23,
+        ),
     );
 
-    public static $prefixDirsPsr4 = array(
-        'Twilio\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',
-            ),
-        'Psr\\Log\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-            ),
-        'PHPMailer\\PHPMailer\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-            ),
-        'Kigkonsult\\Icalcreator\\' =>
-            array(
-                0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',
-                1 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Util',
-                2 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Traits',
-            ),
+    public static $prefixDirsPsr4 = array (
+        'Twilio\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Kigkonsult\\Icalcreator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',
+            1 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Util',
+            2 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Traits',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3c2c05e97eb5cc00d8530ab91e60dafc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3c2c05e97eb5cc00d8530ab91e60dafc::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

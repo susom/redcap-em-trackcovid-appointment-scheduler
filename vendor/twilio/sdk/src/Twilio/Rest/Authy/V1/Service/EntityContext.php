@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Authy\V1\Service\Entity\FactorList $factors
  * @method \Twilio\Rest\Authy\V1\Service\Entity\FactorContext factors(string $sid)
  */
-class EntityContext extends InstanceContext
-{
+class EntityContext extends InstanceContext {
     protected $_factors = null;
 
     /**
@@ -33,12 +32,11 @@ class EntityContext extends InstanceContext
      * @param string $identity Unique identity of the Entity
      * @return \Twilio\Rest\Authy\V1\Service\EntityContext
      */
-    public function __construct(Version $version, $serviceSid, $identity)
-    {
+    public function __construct(Version $version, $serviceSid, $identity) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'identity' => $identity,);
+        $this->solution = array('serviceSid' => $serviceSid, 'identity' => $identity, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Entities/' . \rawurlencode($identity) . '';
     }
@@ -49,8 +47,7 @@ class EntityContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -60,8 +57,7 @@ class EntityContext extends InstanceContext
      * @return EntityInstance Fetched EntityInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -83,8 +79,7 @@ class EntityContext extends InstanceContext
      *
      * @return \Twilio\Rest\Authy\V1\Service\Entity\FactorList
      */
-    protected function getFactors()
-    {
+    protected function getFactors() {
         if (!$this->_factors) {
             $this->_factors = new FactorList(
                 $this->version,
@@ -103,8 +98,7 @@ class EntityContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -121,8 +115,7 @@ class EntityContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -136,8 +129,7 @@ class EntityContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

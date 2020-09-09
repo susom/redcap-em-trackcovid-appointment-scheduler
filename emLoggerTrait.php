@@ -1,6 +1,6 @@
 <?php
 
-namespace Stanford\TrackCovidAppointmentScheduler;
+namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 /** @var \Stanford\LanguageEditor\LanguageEditor $this */
 

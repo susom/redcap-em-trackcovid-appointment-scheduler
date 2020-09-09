@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkflowRealTimeStatisticsContext extends InstanceContext
-{
+class WorkflowRealTimeStatisticsContext extends InstanceContext {
     /**
      * Initialize the WorkflowRealTimeStatisticsContext
      *
@@ -28,12 +27,11 @@ class WorkflowRealTimeStatisticsContext extends InstanceContext
      *                            value
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowRealTimeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid, $workflowSid)
-    {
+    public function __construct(Version $version, $workspaceSid, $workflowSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'workflowSid' => $workflowSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'workflowSid' => $workflowSid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workflows/' . \rawurlencode($workflowSid) . '/RealTimeStatistics';
     }
@@ -46,11 +44,10 @@ class WorkflowRealTimeStatisticsContext extends InstanceContext
      *                                            WorkflowRealTimeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
-        $params = Values::of(array('TaskChannel' => $options['taskChannel'],));
+        $params = Values::of(array('TaskChannel' => $options['taskChannel'], ));
 
         $payload = $this->version->fetch(
             'GET',
@@ -71,8 +68,7 @@ class WorkflowRealTimeStatisticsContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

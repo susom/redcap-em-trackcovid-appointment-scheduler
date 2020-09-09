@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class SsmlSub extends TwiML
-{
+class SsmlSub extends TwiML {
     /**
      * SsmlSub constructor.
      *
      * @param string $words Words to be substituted
      * @param array $attributes Optional attributes
      */
-    public function __construct($words, $attributes = array())
-    {
+    public function __construct($words, $attributes = array()) {
         parent::__construct('sub', $words, $attributes);
     }
 
@@ -31,8 +29,7 @@ class SsmlSub extends TwiML
      *                      selected text such as an acronym or abbreviation
      * @return static $this.
      */
-    public function setAlias($alias)
-    {
+    public function setAlias($alias) {
         return $this->setAttribute('alias', $alias);
     }
 }

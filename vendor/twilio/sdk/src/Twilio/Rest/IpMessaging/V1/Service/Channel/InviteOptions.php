@@ -12,14 +12,12 @@ namespace Twilio\Rest\IpMessaging\V1\Service\Channel;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class InviteOptions
-{
+abstract class InviteOptions {
     /**
      * @param string $roleSid The Role assigned to the new member
      * @return CreateInviteOptions Options builder
      */
-    public static function create($roleSid = Values::NONE)
-    {
+    public static function create($roleSid = Values::NONE) {
         return new CreateInviteOptions($roleSid);
     }
 
@@ -27,19 +25,16 @@ abstract class InviteOptions
      * @param string $identity The `identity` value of the resources to read
      * @return ReadInviteOptions Options builder
      */
-    public static function read($identity = Values::NONE)
-    {
+    public static function read($identity = Values::NONE) {
         return new ReadInviteOptions($identity);
     }
 }
 
-class CreateInviteOptions extends Options
-{
+class CreateInviteOptions extends Options {
     /**
      * @param string $roleSid The Role assigned to the new member
      */
-    public function __construct($roleSid = Values::NONE)
-    {
+    public function __construct($roleSid = Values::NONE) {
         $this->options['roleSid'] = $roleSid;
     }
 
@@ -49,8 +44,7 @@ class CreateInviteOptions extends Options
      * @param string $roleSid The Role assigned to the new member
      * @return $this Fluent Builder
      */
-    public function setRoleSid($roleSid)
-    {
+    public function setRoleSid($roleSid) {
         $this->options['roleSid'] = $roleSid;
         return $this;
     }
@@ -60,8 +54,7 @@ class CreateInviteOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -72,13 +65,11 @@ class CreateInviteOptions extends Options
     }
 }
 
-class ReadInviteOptions extends Options
-{
+class ReadInviteOptions extends Options {
     /**
      * @param string $identity The `identity` value of the resources to read
      */
-    public function __construct($identity = Values::NONE)
-    {
+    public function __construct($identity = Values::NONE) {
         $this->options['identity'] = $identity;
     }
 
@@ -88,8 +79,7 @@ class ReadInviteOptions extends Options
      * @param string $identity The `identity` value of the resources to read
      * @return $this Fluent Builder
      */
-    public function setIdentity($identity)
-    {
+    public function setIdentity($identity) {
         $this->options['identity'] = $identity;
         return $this;
     }
@@ -99,8 +89,7 @@ class ReadInviteOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

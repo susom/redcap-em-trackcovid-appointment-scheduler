@@ -17,16 +17,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CurrentCallContext extends InstanceContext
-{
+class CurrentCallContext extends InstanceContext {
     /**
      * Initialize the CurrentCallContext
      *
      * @param \Twilio\Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallContext
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -41,8 +39,7 @@ class CurrentCallContext extends InstanceContext
      * @return CurrentCallInstance Fetched CurrentCallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -59,8 +56,7 @@ class CurrentCallContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

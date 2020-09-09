@@ -18,8 +18,7 @@ use Twilio\Rest\Insights\V1;
  * @property \Twilio\Rest\Insights\V1\CallList $calls
  * @method \Twilio\Rest\Insights\V1\CallContext calls(string $sid)
  */
-class Insights extends Domain
-{
+class Insights extends Domain {
     protected $_v1 = null;
 
     /**
@@ -29,8 +28,7 @@ class Insights extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Insights Domain for Insights
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://insights.twilio.com';
@@ -39,8 +37,7 @@ class Insights extends Domain
     /**
      * @return \Twilio\Rest\Insights\V1 Version v1 of insights
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -54,8 +51,7 @@ class Insights extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -72,8 +68,7 @@ class Insights extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -85,8 +80,7 @@ class Insights extends Domain
     /**
      * @return \Twilio\Rest\Insights\V1\CallList
      */
-    protected function getCalls()
-    {
+    protected function getCalls() {
         return $this->v1->calls;
     }
 
@@ -94,8 +88,7 @@ class Insights extends Domain
      * @param string $sid The sid
      * @return \Twilio\Rest\Insights\V1\CallContext
      */
-    protected function contextCalls($sid)
-    {
+    protected function contextCalls($sid) {
         return $this->v1->calls($sid);
     }
 
@@ -104,8 +97,7 @@ class Insights extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Insights]';
     }
 }

@@ -21,8 +21,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Accounts\V1\Credential\PublicKeyContext publicKey(string $sid)
  * @method \Twilio\Rest\Accounts\V1\Credential\AwsContext aws(string $sid)
  */
-class CredentialList extends ListResource
-{
+class CredentialList extends ListResource {
     protected $_publicKey = null;
     protected $_aws = null;
 
@@ -32,8 +31,7 @@ class CredentialList extends ListResource
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Accounts\V1\CredentialList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -43,8 +41,7 @@ class CredentialList extends ListResource
     /**
      * Access the publicKey
      */
-    protected function getPublicKey()
-    {
+    protected function getPublicKey() {
         if (!$this->_publicKey) {
             $this->_publicKey = new PublicKeyList($this->version);
         }
@@ -55,8 +52,7 @@ class CredentialList extends ListResource
     /**
      * Access the aws
      */
-    protected function getAws()
-    {
+    protected function getAws() {
         if (!$this->_aws) {
             $this->_aws = new AwsList($this->version);
         }
@@ -71,8 +67,7 @@ class CredentialList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -89,8 +84,7 @@ class CredentialList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -104,8 +98,7 @@ class CredentialList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Accounts.V1.CredentialList]';
     }
 }

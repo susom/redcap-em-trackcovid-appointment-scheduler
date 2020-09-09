@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -47,7 +47,6 @@ trait EXDATEtrait
 {
     /**
      * @var array component property EXDATE value
-     * @access protected
      */
     protected $exdate = null;
 
@@ -55,71 +54,82 @@ trait EXDATEtrait
      * Return formatted output for calendar component property exdate
      *
      * @return string
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function createExdate()
     {
-        if (empty($this->exdate)) {
+        if( empty( $this->exdate )) {
             return null;
         }
-        return RexdateFactory::formatExdate($this->exdate, $this->getConfig(self::ALLOWEMPTY));
+        return RexdateFactory::formatExdate(
+            $this->exdate,
+            $this->getConfig( self::ALLOWEMPTY )
+        );
     }
 
     /**
      * Delete calendar component property exdate
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteExdate($propDelIx = null)
+    public function deleteExdate( $propDelIx = null )
     {
-        if (empty($this->exdate)) {
-            unset($this->propDelIx[self::EXDATE]);
+        if( empty( $this->exdate )) {
+            unset( $this->propDelIx[self::EXDATE] );
             return false;
         }
-        return $this->deletePropertyM($this->exdate, self::EXDATE, $propDelIx);
+        return $this->deletePropertyM( $this->exdate, self::EXDATE, $propDelIx );
     }
 
     /**
      * Get calendar component property exdate
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getExdate($propIx = null, $inclParam = false)
+    public function getExdate( $propIx = null, $inclParam = false )
     {
-        if (empty($this->exdate)) {
-            unset($this->propIx[self::EXDATE]);
+        if( empty( $this->exdate )) {
+            unset( $this->propIx[self::EXDATE] );
             return false;
         }
-        return $this->getPropertyM($this->exdate, self::EXDATE, $propIx, $inclParam);
+        return $this->getPropertyM( $this->exdate, self::EXDATE, $propIx, $inclParam );
     }
 
     /**
      * Set calendar component property exdate
      *
      * @param string|string[]|DateTimeInterface|DateTimeInterface[] $value
-     * @param array $params
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.16 2020-01-24
      */
-    public function setExdate($value = null, $params = [], $index = null)
+    public function setExdate( $value = null, $params = [], $index = null )
     {
-        if (empty($value) ||
-            (is_array($value) && (1 == count($value)) && empty(reset($value)))
+        if( empty( $value ) ||
+            ( is_array( $value) && ( 1 == count( $value )) && empty( reset( $value )))
         ) {
-            $this->assertEmptyValue($value, self::EXDATE);
-            $this->setMval($this->exdate, Util::$SP0, [], null, $index);
+            $this->assertEmptyValue( $value, self::EXDATE );
+            $this->setMval( $this->exdate, Util::$SP0, [], null, $index );
             return $this;
         }
-        $value = self::checkSingleExdates($value);
-        $input = RexdateFactory::prepInputExdate($value, $params);
-        $this->setMval($this->exdate, $input[Util::$LCvalue], $input[Util::$LCparams], null, $index);
+        $value = self::checkSingleExdates( $value );
+        $input = RexdateFactory::prepInputExdate( $value, $params );
+        $this->setMval(
+            $this->exdate,
+            $input[Util::$LCvalue],
+            $input[Util::$LCparams],
+            null,
+            $index
+        );
         return $this;
     }
 
@@ -128,17 +138,15 @@ trait EXDATEtrait
      *
      * @param string|string[]|DateTimeInterface|DateTimeInterface[] $value
      * @return array
-     * @access private
-     * @static
      * @since 2.29.16 2020-01-24
      */
-    private static function checkSingleExdates($value)
+    private static function checkSingleExdates( $value )
     {
-        if ($value instanceof DateTimeInterface) {
-            return [$value];
+        if( $value instanceof DateTimeInterface ) {
+            return [ $value ];
         }
-        if (DateTimeFactory::isStringAndDate($value)) {
-            return [$value];
+        if( DateTimeFactory::isStringAndDate( $value )) {
+            return [ $value ];
         }
         return $value;
     }

@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -46,7 +46,6 @@ trait PRODIDtrait
 {
     /**
      * @var string calendar property PRODID
-     * @access protected
      */
     protected $prodid = null;
 
@@ -57,10 +56,10 @@ trait PRODIDtrait
      */
     public function createProdid()
     {
-        if (empty($this->prodid)) {
+        if( empty( $this->prodid )) {
             $this->makeProdid();
         }
-        return StringFactory::createElement(self::PRODID, null, $this->prodid);
+        return StringFactory::createElement( self::PRODID, null, $this->prodid );
     }
 
     /**
@@ -71,7 +70,7 @@ trait PRODIDtrait
      */
     public function getProdid()
     {
-        if (empty($this->prodid)) {
+        if( empty( $this->prodid )) {
             $this->makeProdid();
         }
         return $this->prodid;
@@ -93,14 +92,15 @@ trait PRODIDtrait
     public function makeProdid()
     {
         static $FMT = '-//%s//NONSGML kigkonsult.se %s//%s';
-        if (false !== ($lang = $this->getConfig(self::LANGUAGE))) {
-            $lang = strtoupper($lang);
-        } else {
+        if( false !== ( $lang = $this->getConfig( self::LANGUAGE ))) {
+            $lang = strtoupper( $lang );
+        }
+        else {
             $lang = Util::$SP0;
         }
         $this->prodid = sprintf(
             $FMT,
-            $this->getConfig(self::UNIQUE_ID),
+            $this->getConfig( self::UNIQUE_ID ),
             ICALCREATOR_VERSION,
             $lang
         );

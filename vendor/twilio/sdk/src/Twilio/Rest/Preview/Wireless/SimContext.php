@@ -22,8 +22,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Preview\Wireless\Sim\UsageList $usage
  * @method \Twilio\Rest\Preview\Wireless\Sim\UsageContext usage()
  */
-class SimContext extends InstanceContext
-{
+class SimContext extends InstanceContext {
     protected $_usage = null;
 
     /**
@@ -33,12 +32,11 @@ class SimContext extends InstanceContext
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Wireless\SimContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Sims/' . \rawurlencode($sid) . '';
     }
@@ -49,8 +47,7 @@ class SimContext extends InstanceContext
      * @return SimInstance Fetched SimInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,8 +66,7 @@ class SimContext extends InstanceContext
      * @return SimInstance Updated SimInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -107,8 +103,7 @@ class SimContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Wireless\Sim\UsageList
      */
-    protected function getUsage()
-    {
+    protected function getUsage() {
         if (!$this->_usage) {
             $this->_usage = new UsageList($this->version, $this->solution['sid']);
         }
@@ -123,8 +118,7 @@ class SimContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -141,8 +135,7 @@ class SimContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -156,8 +149,7 @@ class SimContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

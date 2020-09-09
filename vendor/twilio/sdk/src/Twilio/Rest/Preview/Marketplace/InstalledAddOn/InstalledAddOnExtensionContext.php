@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class InstalledAddOnExtensionContext extends InstanceContext
-{
+class InstalledAddOnExtensionContext extends InstanceContext {
     /**
      * Initialize the InstalledAddOnExtensionContext
      *
@@ -29,12 +28,11 @@ class InstalledAddOnExtensionContext extends InstanceContext
      * @param string $sid The SID of the InstalledAddOn Extension resource to fetch
      * @return \Twilio\Rest\Preview\Marketplace\InstalledAddOn\InstalledAddOnExtensionContext
      */
-    public function __construct(Version $version, $installedAddOnSid, $sid)
-    {
+    public function __construct(Version $version, $installedAddOnSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('installedAddOnSid' => $installedAddOnSid, 'sid' => $sid,);
+        $this->solution = array('installedAddOnSid' => $installedAddOnSid, 'sid' => $sid, );
 
         $this->uri = '/InstalledAddOns/' . \rawurlencode($installedAddOnSid) . '/Extensions/' . \rawurlencode($sid) . '';
     }
@@ -46,8 +44,7 @@ class InstalledAddOnExtensionContext extends InstanceContext
      *                                         InstalledAddOnExtensionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -72,9 +69,8 @@ class InstalledAddOnExtensionContext extends InstanceContext
      *                                         InstalledAddOnExtensionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($enabled)
-    {
-        $data = Values::of(array('Enabled' => Serialize::booleanToString($enabled),));
+    public function update($enabled) {
+        $data = Values::of(array('Enabled' => Serialize::booleanToString($enabled), ));
 
         $payload = $this->version->update(
             'POST',
@@ -96,8 +92,7 @@ class InstalledAddOnExtensionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

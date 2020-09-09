@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait PRIORITYtrait
 {
     /**
      * @var array component property PRIORITY value
-     * @access protected
      */
     protected $priority = null;
 
@@ -56,16 +55,19 @@ trait PRIORITYtrait
      */
     public function createPriority()
     {
-        if (empty($this->priority)) {
+        if( empty( $this->priority )) {
             return null;
         }
-        if (!isset($this->priority[Util::$LCvalue]) ||
-            (empty($this->priority[Util::$LCvalue]) && !is_numeric($this->priority[Util::$LCvalue]))) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::PRIORITY) : null;
+        if( ! isset( $this->priority[Util::$LCvalue] ) ||
+            ( empty( $this->priority[Util::$LCvalue] ) &&
+                ! is_numeric( $this->priority[Util::$LCvalue] ))) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::PRIORITY )
+                : null;
         }
         return StringFactory::createElement(
             self::PRIORITY,
-            ParameterFactory::createParams($this->priority[Util::$LCparams]),
+            ParameterFactory::createParams( $this->priority[Util::$LCparams] ),
             $this->priority[Util::$LCvalue]
         );
     }
@@ -85,40 +87,41 @@ trait PRIORITYtrait
     /**
      * Get calendar component property priority
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getPriority($inclParam = false)
+    public function getPriority( $inclParam = false )
     {
-        if (empty($this->priority)) {
+        if( empty( $this->priority )) {
             return false;
         }
-        return ($inclParam) ? $this->priority : $this->priority[Util::$LCvalue];
+        return ( $inclParam ) ? $this->priority : $this->priority[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property priority
      *
-     * @param int $value
+     * @param int   $value
      * @param array $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.27.2 2019-01-03
      */
-    public function setPriority($value = null, $params = [])
+    public function setPriority( $value = null, $params = [] )
     {
-        if (empty($value) && (Util::$ZERO != $value)) {
-            $this->assertEmptyValue($value, self::PRIORITY);
-            $value = Util::$SP0;
+        if( empty( $value ) && ( Util::$ZERO != $value )) {
+            $this->assertEmptyValue( $value, self::PRIORITY );
+            $value  = Util::$SP0;
             $params = [];
 
-        } else {
-            Util::assertInteger($value, self::PRIORITY, 0, 9);
+        }
+        else {
+            Util::assertInteger( $value, self::PRIORITY, 0, 9 );
         }
         $this->priority = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => $value,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

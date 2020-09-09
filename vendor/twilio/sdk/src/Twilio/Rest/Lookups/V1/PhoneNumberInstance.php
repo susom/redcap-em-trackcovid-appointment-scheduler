@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property array $addOns
  * @property string $url
  */
-class PhoneNumberInstance extends InstanceResource
-{
+class PhoneNumberInstance extends InstanceResource {
     /**
      * Initialize the PhoneNumberInstance
      *
@@ -34,8 +33,7 @@ class PhoneNumberInstance extends InstanceResource
      * @param string $phoneNumber The phone number to fetch in E.164 format
      * @return \Twilio\Rest\Lookups\V1\PhoneNumberInstance
      */
-    public function __construct(Version $version, array $payload, $phoneNumber = null)
-    {
+    public function __construct(Version $version, array $payload, $phoneNumber = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,7 +47,7 @@ class PhoneNumberInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('phoneNumber' => $phoneNumber ?: $this->properties['phoneNumber'],);
+        $this->solution = array('phoneNumber' => $phoneNumber ?: $this->properties['phoneNumber'], );
     }
 
     /**
@@ -59,8 +57,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return \Twilio\Rest\Lookups\V1\PhoneNumberContext Context for this
      *                                                    PhoneNumberInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new PhoneNumberContext($this->version, $this->solution['phoneNumber']);
         }
@@ -75,8 +72,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return PhoneNumberInstance Fetched PhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -87,8 +83,7 @@ class PhoneNumberInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -106,8 +101,7 @@ class PhoneNumberInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

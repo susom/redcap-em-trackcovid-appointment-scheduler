@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Task extends TwiML
-{
+class Task extends TwiML {
     /**
      * Task constructor.
      *
      * @param string $body TaskRouter task attributes
      * @param array $attributes Optional attributes
      */
-    public function __construct($body, $attributes = array())
-    {
+    public function __construct($body, $attributes = array()) {
         parent::__construct('Task', $body, $attributes);
     }
 
@@ -30,8 +28,7 @@ class Task extends TwiML
      * @param int $priority Task priority
      * @return static $this.
      */
-    public function setPriority($priority)
-    {
+    public function setPriority($priority) {
         return $this->setAttribute('priority', $priority);
     }
 
@@ -41,8 +38,7 @@ class Task extends TwiML
      * @param int $timeout Timeout associated with task
      * @return static $this.
      */
-    public function setTimeout($timeout)
-    {
+    public function setTimeout($timeout) {
         return $this->setAttribute('timeout', $timeout);
     }
 }

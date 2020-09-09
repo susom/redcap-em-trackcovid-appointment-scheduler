@@ -15,25 +15,21 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class SubscribeRulesOptions
-{
+abstract class SubscribeRulesOptions {
     /**
      * @param array $rules A JSON-encoded array of subscribe rules
      * @return UpdateSubscribeRulesOptions Options builder
      */
-    public static function update($rules = Values::NONE)
-    {
+    public static function update($rules = Values::NONE) {
         return new UpdateSubscribeRulesOptions($rules);
     }
 }
 
-class UpdateSubscribeRulesOptions extends Options
-{
+class UpdateSubscribeRulesOptions extends Options {
     /**
      * @param array $rules A JSON-encoded array of subscribe rules
      */
-    public function __construct($rules = Values::NONE)
-    {
+    public function __construct($rules = Values::NONE) {
         $this->options['rules'] = $rules;
     }
 
@@ -43,8 +39,7 @@ class UpdateSubscribeRulesOptions extends Options
      * @param array $rules A JSON-encoded array of subscribe rules
      * @return $this Fluent Builder
      */
-    public function setRules($rules)
-    {
+    public function setRules($rules) {
         $this->options['rules'] = $rules;
         return $this;
     }
@@ -54,8 +49,7 @@ class UpdateSubscribeRulesOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkersRealTimeStatisticsContext extends InstanceContext
-{
+class WorkersRealTimeStatisticsContext extends InstanceContext {
     /**
      * Initialize the WorkersRealTimeStatisticsContext
      *
@@ -25,12 +24,11 @@ class WorkersRealTimeStatisticsContext extends InstanceContext
      *                             fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersRealTimeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid)
-    {
+    public function __construct(Version $version, $workspaceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workers/RealTimeStatistics';
     }
@@ -43,11 +41,10 @@ class WorkersRealTimeStatisticsContext extends InstanceContext
      *                                           WorkersRealTimeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
-        $params = Values::of(array('TaskChannel' => $options['taskChannel'],));
+        $params = Values::of(array('TaskChannel' => $options['taskChannel'], ));
 
         $payload = $this->version->fetch(
             'GET',
@@ -67,8 +64,7 @@ class WorkersRealTimeStatisticsContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

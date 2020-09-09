@@ -1,11 +1,11 @@
 <?php
 /**
- * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
+  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.20
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -80,7 +80,7 @@ class DateIntervalFactory
      * @var string
      * @static
      */
-    public static $P = 'P';
+    public static $P         = 'P';
 
     /**
      * Return new DateTimeZone object instance
@@ -91,9 +91,9 @@ class DateIntervalFactory
      * @static
      * @since  2.27.8 - 2019-01-12
      */
-    public static function factory($dateIntervalString)
+    public static function factory( $dateIntervalString )
     {
-        return self::assertDateIntervalString($dateIntervalString);
+        return self::assertDateIntervalString( $dateIntervalString );
     }
 
     /**
@@ -105,13 +105,18 @@ class DateIntervalFactory
      * @static
      * @since  2.27.8 - 2019-01-12
      */
-    public static function assertDateIntervalString($dateIntervalString)
+    public static function assertDateIntervalString( $dateIntervalString )
     {
         static $ERR = 'Invalid DateInterval \'%s\'';
         try {
-            $dateInterval = new DateInterval($dateIntervalString);
-        } catch (Exception $e) {
-            throw new InvalidArgumentException(sprintf($ERR, $dateIntervalString), null, $e);
+            $dateInterval = new DateInterval( $dateIntervalString );
+        }
+        catch( Exception $e ) {
+            throw new InvalidArgumentException(
+                sprintf( $ERR, $dateIntervalString ),
+                null,
+                $e
+            );
         }
         return $dateInterval;
     }
@@ -119,20 +124,21 @@ class DateIntervalFactory
     /**
      * Return bool true is string is a duration
      *
-     * @param mixed $value
+     * @param mixed  $value
      * @return bool
      * @static
-     * @since  2.29.20 - 2020-01-31
+     * @since  2.29.22 - 2020-08-22
      */
-    public static function isStringAndDuration($value)
+    public static function isStringAndDuration( $value )
     {
-        static $PREFIXARR = ['P', '+', '-'];
-        if (!is_string($value)) {
+        static $PREFIXARR = [ 'P', '+', '-' ];
+        if( ! is_string( $value )) {
             return false;
         }
-        $value = trim($value);
-        $value = StringFactory::trimTrailNL($value);
-        return ((3 <= strlen($value)) && (in_array($value[0], $PREFIXARR)));
+        $value = trim( $value );
+        $value = StringFactory::trimTrailNL( $value );
+        return (( 3 <= strlen( $value )) &&
+            ( in_array( substr( $value, 0, 1 ), $PREFIXARR )));
     }
 
     /**
@@ -143,24 +149,24 @@ class DateIntervalFactory
      * @static
      * @since  2.29.2 - 2019-06-27
      */
-    public static function isDateIntervalArrayInvertSet($dateInterval)
+    public static function isDateIntervalArrayInvertSet( $dateInterval )
     {
-        return (is_array($dateInterval) && isset($dateInterval[self::$invert]));
+        return( is_array( $dateInterval ) && isset( $dateInterval[self::$invert] ));
     }
 
     /**
      * Return value with removed opt. prefix +/-
      *
-     * @param string $value
+     * @param string  $value
      * @return string
      * @static
      * @since  2.16.7 - 2018-11-26
      * @todo remove -> $isMinus  = ( 0 > $value );  $tz = abs((int) $value );
      */
-    public static function removePlusMinusPrefix($value)
+    public static function removePlusMinusPrefix( $value )
     {
-        if (self::hasPlusMinusPrefix($value)) {
-            $value = substr($value, 1);
+        if( self::hasPlusMinusPrefix( $value )) {
+            $value = substr( $value, 1 );
         }
         return $value;
     }
@@ -168,72 +174,74 @@ class DateIntervalFactory
     /**
      * Return bool true if string has a leading +/-
      *
-     * @param string $value
+     * @param string  $value
      * @return bool
      * @static
      * @since  2.16.14 - 2019-02-18
      */
-    public static function hasPlusMinusPrefix($value)
+    public static function hasPlusMinusPrefix( $value )
     {
-        static $PLUSMINUSARR = ['+', '-'];
-        return (in_array(substr($value, 0, 1), $PLUSMINUSARR));
+        static $PLUSMINUSARR  = [ '+', '-' ];
+        return ( in_array( substr( $value, 0, 1 ), $PLUSMINUSARR ));
     }
 
     /**
      * Return DateInterval as string
      *
      * @param DateInterval $dateInterval
-     * @param bool $showOptSign
+     * @param bool         $showOptSign
      * @return string
      * @static
      * @since  2.16.14 - 2019-02-15
      */
-    public static function dateInterval2String(DateInterval $dateInterval, $showOptSign = false)
-    {
-        $dateIntervalArr = (array)$dateInterval;
-        $result = self::$P;
-        if (empty($dateIntervalArr[self::$y]) &&
-            empty($dateIntervalArr[self::$m]) &&
-            empty($dateIntervalArr[self::$h]) &&
-            empty($dateIntervalArr[self::$i]) &&
-            empty($dateIntervalArr[self::$s]) &&
-            !empty($dateIntervalArr[self::$d]) &&
-            (0 == ($dateIntervalArr[self::$d] % 7))) {
-            $result .= (int)floor($dateIntervalArr[self::$d] / 7) .
+    public static function dateInterval2String(
+        DateInterval $dateInterval,
+        $showOptSign=false
+    ) {
+        $dateIntervalArr = (array) $dateInterval;
+        $result          = self::$P;
+        if( empty( $dateIntervalArr[self::$y] ) &&
+            empty( $dateIntervalArr[self::$m] ) &&
+            empty( $dateIntervalArr[self::$h] ) &&
+            empty( $dateIntervalArr[self::$i] ) &&
+            empty( $dateIntervalArr[self::$s] ) &&
+          ! empty( $dateIntervalArr[self::$d] ) &&
+            ( 0 == ( $dateIntervalArr[self::$d] % 7 ))) {
+            $result .= (int) floor( $dateIntervalArr[self::$d] / 7 ) .
                 self::$W;
-            return ($showOptSign && (0 < $dateIntervalArr[self::$invert]))
+            return ( $showOptSign && ( 0 < $dateIntervalArr[self::$invert] ))
                 ? Util::$MINUS . $result : $result;
         }
-        if (0 < $dateIntervalArr[self::$y]) {
+        if( 0 < $dateIntervalArr[self::$y] ) {
             $result .= $dateIntervalArr[self::$y] . self::$Y;
         }
-        if (0 < $dateIntervalArr[self::$m]) {
+        if( 0 < $dateIntervalArr[self::$m] ) {
             $result .= $dateIntervalArr[self::$m] . self::$M;
         }
-        if (0 < $dateIntervalArr[self::$d]) {
+        if( 0 < $dateIntervalArr[self::$d] ) {
             $result .= $dateIntervalArr[self::$d] . self::$D;
         }
-        $hourIsSet = !empty($dateIntervalArr[self::$h]);
-        $minIsSet = !empty($dateIntervalArr[self::$i]);
-        $secIsSet = !empty($dateIntervalArr[self::$s]);
-        if (!$hourIsSet && !$minIsSet && !$secIsSet) {
-            if (self::$P == $result) {
+        $hourIsSet = ! empty( $dateIntervalArr[self::$h] );
+        $minIsSet  = ! empty( $dateIntervalArr[self::$i] );
+        $secIsSet  = ! empty( $dateIntervalArr[self::$s] );
+        if( ! $hourIsSet && ! $minIsSet && ! $secIsSet ) {
+            if( self::$P == $result ) {
                 $result = self::$PT0H0M0S;
             }
-            return ($showOptSign && (0 < $dateIntervalArr[self::$invert]))
+            return ( $showOptSign && ( 0 < $dateIntervalArr[self::$invert] ))
                 ? Util::$MINUS . $result : $result;
         }
         $result .= self::$T;
-        if ($hourIsSet) {
+        if( $hourIsSet ) {
             $result .= $dateIntervalArr[self::$h] . self::$H;
         }
-        if ($minIsSet) {
+        if( $minIsSet ) {
             $result .= $dateIntervalArr[self::$i] . self::$M;
         }
-        if ($secIsSet) {
+        if( $secIsSet ) {
             $result .= $dateIntervalArr[self::$s] . self::$S;
         }
-        return ($showOptSign && (0 < $dateIntervalArr[self::$invert]))
+        return ( $showOptSign && ( 0 < $dateIntervalArr[self::$invert] ))
             ? Util::$MINUS . $result : $result;
     }
 
@@ -246,49 +254,51 @@ class DateIntervalFactory
      * @throws Exception  on DateInterval create error
      * @since  2.27.14 - 2019-03-09
      */
-    public static function conformDateInterval(DateInterval $dateInterval)
+    public static function conformDateInterval( DateInterval $dateInterval )
     {
-        $dateIntervalArr = (array)$dateInterval;
-        if (60 <= $dateIntervalArr[self::$s]) {
+        $dateIntervalArr = (array) $dateInterval;
+        if( 60 <= $dateIntervalArr[self::$s] ) {
             $dateIntervalArr[self::$i] +=
-                (int)floor($dateIntervalArr[self::$s] / 60);
+                (int) floor( $dateIntervalArr[self::$s] / 60 );
             $dateIntervalArr[self::$s] =
                 $dateIntervalArr[self::$s] % 60;
         }
-        if (60 <= $dateIntervalArr[self::$i]) {
+        if( 60 <= $dateIntervalArr[self::$i] ) {
             $dateIntervalArr[self::$h] +=
-                (int)floor($dateIntervalArr[self::$i] / 60);
+                (int) floor( $dateIntervalArr[self::$i] / 60 );
             $dateIntervalArr[self::$i] =
                 $dateIntervalArr[self::$i] % 60;
         }
-        if (24 <= $dateIntervalArr[self::$h]) {
+        if( 24 <= $dateIntervalArr[self::$h] ) {
             $dateIntervalArr[self::$d] +=
-                (int)floor($dateIntervalArr[self::$h] / 24);
+                (int) floor( $dateIntervalArr[self::$h] / 24 );
             $dateIntervalArr[self::$h] =
                 $dateIntervalArr[self::$h] % 24;
         }
-        return self::DateIntervalArr2DateInterval($dateIntervalArr);
+        return self::DateIntervalArr2DateInterval( $dateIntervalArr );
     }
 
     /**
      * Modify DateTime from DateInterval
      *
-     * @param DateTime $dateTime
+     * @param DateTime     $dateTime
      * @param DateInterval $dateInterval
      * @static
      * @since  2.29.2 - 2019-06-20
      * @tofo error mgnt
      */
-    public static function modifyDateTimeFromDateInterval(DateTime $dateTime, DateInterval $dateInterval)
+    public static function modifyDateTimeFromDateInterval(
+        DateTime $dateTime,
+        DateInterval $dateInterval )
     {
-        static $YEAR = 'year';
+        static $YEAR  = 'year';
         static $MONTH = 'month';
-        static $DAY = 'day';
-        static $HOUR = 'hour';
-        static $MIN = 'minute';
-        static $SEC = 'second';
+        static $DAY   = 'day';
+        static $HOUR  = 'hour';
+        static $MIN   = 'minute';
+        static $SEC   = 'second';
         static $KEYS = null;
-        if (empty($KEYS)) {
+        if( empty( $KEYS )) {
             $KEYS = [
                 self::$y => $YEAR,
                 self::$m => $MONTH,
@@ -298,26 +308,28 @@ class DateIntervalFactory
                 self::$s => $SEC
             ];
         }
-        $dateIntervalArr = (array)$dateInterval;
-        $operator = (0 < $dateIntervalArr[self::$invert]) ? Util::$MINUS : Util::$PLUS;
-        foreach ($KEYS as $diKey => $dtKey) {
-            if (0 < $dateIntervalArr[$diKey]) {
-                $dateTime->modify(self::getModifyString($operator, $dateIntervalArr[$diKey], $dtKey));
+        $dateIntervalArr = (array) $dateInterval;
+        $operator        = ( 0 < $dateIntervalArr[self::$invert] )
+            ? Util::$MINUS
+            : Util::$PLUS;
+        foreach( $KEYS as $diKey => $dtKey ) {
+            if( 0 < $dateIntervalArr[$diKey] ) {
+                $dateTime->modify(
+                    self::getModifyString ( $operator, $dateIntervalArr[$diKey], $dtKey )
+                );
             }
         }
     }
-
-    private static function getModifyString($operator, $number, $unit)
+    private static function getModifyString ( $operator, $number, $unit )
     {
         static $MONTH = 'month';
-        $suffix = ($MONTH != $unit) ? self::getOptPluralSuffix($number) : null;
+        $suffix = ( $MONTH != $unit ) ? self::getOptPluralSuffix( $number ) : null;
         return $operator . $number . Util::$SP1 . $unit . $suffix;
     }
-
-    private static function getOptPluralSuffix($number)
+    private static function getOptPluralSuffix ( $number )
     {
         static $PLS = 's';
-        return (1 < $number) ? $PLS : Util::$SP0;
+        return ( 1 < $number ) ? $PLS : Util::$SP0;
     }
 
     /**
@@ -329,22 +341,22 @@ class DateIntervalFactory
      * @throws Exception  on DateInterval create error
      * @since  2.27.2 - 2018-12-21
      */
-    public static function DateIntervalArr2DateInterval($dateIntervalArr)
+    public static function DateIntervalArr2DateInterval( $dateIntervalArr )
     {
         static $P0D = 'P0D';
-        if (!is_array($dateIntervalArr)) {
+        if( ! is_array( $dateIntervalArr )) {
             $dateIntervalArr = [];
         }
         try {
-            $dateInterval = new DateInterval($P0D);
-        } catch (Exception $e) {
+            $dateInterval = new DateInterval( $P0D );
+        }
+        catch( Exception $e ) {
             throw $e;
         }
-        foreach ($dateIntervalArr as $key => $value) {
+        foreach( $dateIntervalArr as $key => $value ) {
             $dateInterval->{$key} = $value;
         }
         return $dateInterval;
     }
-
 }
 

@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class WebhookOptions
-{
+abstract class WebhookOptions {
     /**
      * @param string $method The HTTP method to be used when sending a webhook
      *                       request.
@@ -29,19 +28,12 @@ abstract class WebhookOptions
      * @param string $target The routing target of the webhook.
      * @return UpdateWebhookOptions Options builder
      */
-    public static function update(
-        $method = Values::NONE,
-        $filters = Values::NONE,
-        $preWebhookUrl = Values::NONE,
-        $postWebhookUrl = Values::NONE,
-        $target = Values::NONE
-    ) {
+    public static function update($method = Values::NONE, $filters = Values::NONE, $preWebhookUrl = Values::NONE, $postWebhookUrl = Values::NONE, $target = Values::NONE) {
         return new UpdateWebhookOptions($method, $filters, $preWebhookUrl, $postWebhookUrl, $target);
     }
 }
 
-class UpdateWebhookOptions extends Options
-{
+class UpdateWebhookOptions extends Options {
     /**
      * @param string $method The HTTP method to be used when sending a webhook
      *                       request.
@@ -53,13 +45,7 @@ class UpdateWebhookOptions extends Options
      *                               request should be sent to.
      * @param string $target The routing target of the webhook.
      */
-    public function __construct(
-        $method = Values::NONE,
-        $filters = Values::NONE,
-        $preWebhookUrl = Values::NONE,
-        $postWebhookUrl = Values::NONE,
-        $target = Values::NONE
-    ) {
+    public function __construct($method = Values::NONE, $filters = Values::NONE, $preWebhookUrl = Values::NONE, $postWebhookUrl = Values::NONE, $target = Values::NONE) {
         $this->options['method'] = $method;
         $this->options['filters'] = $filters;
         $this->options['preWebhookUrl'] = $preWebhookUrl;
@@ -74,8 +60,7 @@ class UpdateWebhookOptions extends Options
      *                       request.
      * @return $this Fluent Builder
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         $this->options['method'] = $method;
         return $this;
     }
@@ -87,8 +72,7 @@ class UpdateWebhookOptions extends Options
      *                        for this Service.
      * @return $this Fluent Builder
      */
-    public function setFilters($filters)
-    {
+    public function setFilters($filters) {
         $this->options['filters'] = $filters;
         return $this;
     }
@@ -100,8 +84,7 @@ class UpdateWebhookOptions extends Options
      *                              should be sent to.
      * @return $this Fluent Builder
      */
-    public function setPreWebhookUrl($preWebhookUrl)
-    {
+    public function setPreWebhookUrl($preWebhookUrl) {
         $this->options['preWebhookUrl'] = $preWebhookUrl;
         return $this;
     }
@@ -113,8 +96,7 @@ class UpdateWebhookOptions extends Options
      *                               request should be sent to.
      * @return $this Fluent Builder
      */
-    public function setPostWebhookUrl($postWebhookUrl)
-    {
+    public function setPostWebhookUrl($postWebhookUrl) {
         $this->options['postWebhookUrl'] = $postWebhookUrl;
         return $this;
     }
@@ -125,8 +107,7 @@ class UpdateWebhookOptions extends Options
      * @param string $target The routing target of the webhook.
      * @return $this Fluent Builder
      */
-    public function setTarget($target)
-    {
+    public function setTarget($target) {
         $this->options['target'] = $target;
         return $this;
     }
@@ -136,8 +117,7 @@ class UpdateWebhookOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

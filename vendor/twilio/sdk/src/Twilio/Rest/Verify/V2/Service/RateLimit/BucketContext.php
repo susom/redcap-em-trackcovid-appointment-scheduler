@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class BucketContext extends InstanceContext
-{
+class BucketContext extends InstanceContext {
     /**
      * Initialize the BucketContext
      *
@@ -27,8 +26,7 @@ class BucketContext extends InstanceContext
      * @param string $sid A string that uniquely identifies this Bucket.
      * @return \Twilio\Rest\Verify\V2\Service\RateLimit\BucketContext
      */
-    public function __construct(Version $version, $serviceSid, $rateLimitSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $rateLimitSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
@@ -48,11 +46,10 @@ class BucketContext extends InstanceContext
      * @return BucketInstance Updated BucketInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Max' => $options['max'], 'Interval' => $options['interval'],));
+        $data = Values::of(array('Max' => $options['max'], 'Interval' => $options['interval'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -76,8 +73,7 @@ class BucketContext extends InstanceContext
      * @return BucketInstance Fetched BucketInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -101,8 +97,7 @@ class BucketContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -111,8 +106,7 @@ class BucketContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

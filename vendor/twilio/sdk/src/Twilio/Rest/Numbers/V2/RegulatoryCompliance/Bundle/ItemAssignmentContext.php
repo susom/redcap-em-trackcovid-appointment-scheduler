@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class ItemAssignmentContext extends InstanceContext
-{
+class ItemAssignmentContext extends InstanceContext {
     /**
      * Initialize the ItemAssignmentContext
      *
@@ -24,12 +23,11 @@ class ItemAssignmentContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentContext
      */
-    public function __construct(Version $version, $bundleSid, $sid)
-    {
+    public function __construct(Version $version, $bundleSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('bundleSid' => $bundleSid, 'sid' => $sid,);
+        $this->solution = array('bundleSid' => $bundleSid, 'sid' => $sid, );
 
         $this->uri = '/RegulatoryCompliance/Bundles/' . \rawurlencode($bundleSid) . '/ItemAssignments/' . \rawurlencode($sid) . '';
     }
@@ -40,8 +38,7 @@ class ItemAssignmentContext extends InstanceContext
      * @return ItemAssignmentInstance Fetched ItemAssignmentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -64,8 +61,7 @@ class ItemAssignmentContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -74,8 +70,7 @@ class ItemAssignmentContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

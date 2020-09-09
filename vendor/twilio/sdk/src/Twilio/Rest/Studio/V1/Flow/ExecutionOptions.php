@@ -12,8 +12,7 @@ namespace Twilio\Rest\Studio\V1\Flow;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ExecutionOptions
-{
+abstract class ExecutionOptions {
     /**
      * @param \DateTime $dateCreatedFrom Only show Executions that started on or
      *                                   after this ISO 8601 date-time
@@ -21,8 +20,7 @@ abstract class ExecutionOptions
      *                                 this ISO 8601 date-time
      * @return ReadExecutionOptions Options builder
      */
-    public static function read($dateCreatedFrom = Values::NONE, $dateCreatedTo = Values::NONE)
-    {
+    public static function read($dateCreatedFrom = Values::NONE, $dateCreatedTo = Values::NONE) {
         return new ReadExecutionOptions($dateCreatedFrom, $dateCreatedTo);
     }
 
@@ -30,22 +28,19 @@ abstract class ExecutionOptions
      * @param array $parameters JSON data that will be added to the Flow's context
      * @return CreateExecutionOptions Options builder
      */
-    public static function create($parameters = Values::NONE)
-    {
+    public static function create($parameters = Values::NONE) {
         return new CreateExecutionOptions($parameters);
     }
 }
 
-class ReadExecutionOptions extends Options
-{
+class ReadExecutionOptions extends Options {
     /**
      * @param \DateTime $dateCreatedFrom Only show Executions that started on or
      *                                   after this ISO 8601 date-time
      * @param \DateTime $dateCreatedTo Only show Executions that started before
      *                                 this ISO 8601 date-time
      */
-    public function __construct($dateCreatedFrom = Values::NONE, $dateCreatedTo = Values::NONE)
-    {
+    public function __construct($dateCreatedFrom = Values::NONE, $dateCreatedTo = Values::NONE) {
         $this->options['dateCreatedFrom'] = $dateCreatedFrom;
         $this->options['dateCreatedTo'] = $dateCreatedTo;
     }
@@ -57,8 +52,7 @@ class ReadExecutionOptions extends Options
      *                                   after this ISO 8601 date-time
      * @return $this Fluent Builder
      */
-    public function setDateCreatedFrom($dateCreatedFrom)
-    {
+    public function setDateCreatedFrom($dateCreatedFrom) {
         $this->options['dateCreatedFrom'] = $dateCreatedFrom;
         return $this;
     }
@@ -70,8 +64,7 @@ class ReadExecutionOptions extends Options
      *                                 this ISO 8601 date-time
      * @return $this Fluent Builder
      */
-    public function setDateCreatedTo($dateCreatedTo)
-    {
+    public function setDateCreatedTo($dateCreatedTo) {
         $this->options['dateCreatedTo'] = $dateCreatedTo;
         return $this;
     }
@@ -81,8 +74,7 @@ class ReadExecutionOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -93,13 +85,11 @@ class ReadExecutionOptions extends Options
     }
 }
 
-class CreateExecutionOptions extends Options
-{
+class CreateExecutionOptions extends Options {
     /**
      * @param array $parameters JSON data that will be added to the Flow's context
      */
-    public function __construct($parameters = Values::NONE)
-    {
+    public function __construct($parameters = Values::NONE) {
         $this->options['parameters'] = $parameters;
     }
 
@@ -109,8 +99,7 @@ class CreateExecutionOptions extends Options
      * @param array $parameters JSON data that will be added to the Flow's context
      * @return $this Fluent Builder
      */
-    public function setParameters($parameters)
-    {
+    public function setParameters($parameters) {
         $this->options['parameters'] = $parameters;
         return $this;
     }
@@ -120,8 +109,7 @@ class CreateExecutionOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

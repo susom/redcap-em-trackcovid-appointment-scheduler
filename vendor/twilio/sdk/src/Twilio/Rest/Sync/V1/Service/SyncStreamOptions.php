@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class SyncStreamOptions
-{
+abstract class SyncStreamOptions {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
@@ -24,8 +23,7 @@ abstract class SyncStreamOptions
      *                 deleted
      * @return CreateSyncStreamOptions Options builder
      */
-    public static function create($uniqueName = Values::NONE, $ttl = Values::NONE)
-    {
+    public static function create($uniqueName = Values::NONE, $ttl = Values::NONE) {
         return new CreateSyncStreamOptions($uniqueName, $ttl);
     }
 
@@ -34,22 +32,19 @@ abstract class SyncStreamOptions
      *                 deleted
      * @return UpdateSyncStreamOptions Options builder
      */
-    public static function update($ttl = Values::NONE)
-    {
+    public static function update($ttl = Values::NONE) {
         return new UpdateSyncStreamOptions($ttl);
     }
 }
 
-class CreateSyncStreamOptions extends Options
-{
+class CreateSyncStreamOptions extends Options {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
      * @param int $ttl How long, in seconds, before the Stream expires and is
      *                 deleted
      */
-    public function __construct($uniqueName = Values::NONE, $ttl = Values::NONE)
-    {
+    public function __construct($uniqueName = Values::NONE, $ttl = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['ttl'] = $ttl;
     }
@@ -61,8 +56,7 @@ class CreateSyncStreamOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -74,8 +68,7 @@ class CreateSyncStreamOptions extends Options
      *                 deleted
      * @return $this Fluent Builder
      */
-    public function setTtl($ttl)
-    {
+    public function setTtl($ttl) {
         $this->options['ttl'] = $ttl;
         return $this;
     }
@@ -85,8 +78,7 @@ class CreateSyncStreamOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -97,14 +89,12 @@ class CreateSyncStreamOptions extends Options
     }
 }
 
-class UpdateSyncStreamOptions extends Options
-{
+class UpdateSyncStreamOptions extends Options {
     /**
      * @param int $ttl How long, in seconds, before the Stream expires and is
      *                 deleted
      */
-    public function __construct($ttl = Values::NONE)
-    {
+    public function __construct($ttl = Values::NONE) {
         $this->options['ttl'] = $ttl;
     }
 
@@ -115,8 +105,7 @@ class UpdateSyncStreamOptions extends Options
      *                 deleted
      * @return $this Fluent Builder
      */
-    public function setTtl($ttl)
-    {
+    public function setTtl($ttl) {
         $this->options['ttl'] = $ttl;
         return $this;
     }
@@ -126,8 +115,7 @@ class UpdateSyncStreamOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

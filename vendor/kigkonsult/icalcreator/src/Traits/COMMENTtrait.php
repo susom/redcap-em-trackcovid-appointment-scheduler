@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait COMMENTtrait
 {
     /**
      * @var array component property COMMENT value
-     * @access protected
      */
     protected $comment = null;
 
@@ -56,79 +55,88 @@ trait COMMENTtrait
      */
     public function createComment()
     {
-        if (empty($this->comment)) {
+        if( empty( $this->comment )) {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->comment as $cx => $commentPart) {
-            if (empty($commentPart[Util::$LCvalue])) {
-                if ($this->getConfig(self::ALLOWEMPTY)) {
-                    $output .= StringFactory::createElement(self::COMMENT);
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->comment as $cx => $commentPart ) {
+            if( empty( $commentPart[Util::$LCvalue] )) {
+                if( $this->getConfig( self::ALLOWEMPTY )) {
+                    $output .= StringFactory::createElement( self::COMMENT );
                 }
                 continue;
             }
             $output .= StringFactory::createElement(
                 self::COMMENT,
-                ParameterFactory::createParams($commentPart[Util::$LCparams], self::$ALTRPLANGARR, $lang),
-                StringFactory::strrep($commentPart[Util::$LCvalue])
+                ParameterFactory::createParams(
+                    $commentPart[Util::$LCparams],
+                    self::$ALTRPLANGARR,
+                    $lang
+                ),
+                StringFactory::strrep( $commentPart[Util::$LCvalue] )
             );
-        }
+        } // end foreach
         return $output;
     }
 
     /**
      * Delete calendar component property comment
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteComment($propDelIx = null)
+    public function deleteComment( $propDelIx = null )
     {
-        if (empty($this->comment)) {
-            unset($this->propDelIx[self::COMMENT]);
+        if( empty( $this->comment )) {
+            unset( $this->propDelIx[self::COMMENT] );
             return false;
         }
-        return $this->deletePropertyM($this->comment, self::COMMENT, $propDelIx);
+        return $this->deletePropertyM( $this->comment, self::COMMENT, $propDelIx );
     }
 
     /**
      * Get calendar component property comment
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getComment($propIx = null, $inclParam = false)
+    public function getComment( $propIx = null, $inclParam = false )
     {
-        if (empty($this->comment)) {
-            unset($this->propIx[self::COMMENT]);
+        if( empty( $this->comment )) {
+            unset( $this->propIx[self::COMMENT] );
             return false;
         }
-        return $this->getPropertyM($this->comment, self::COMMENT, $propIx, $inclParam);
+        return $this->getPropertyM(
+            $this->comment,
+            self::COMMENT,
+            $propIx,
+            $inclParam
+        );
     }
 
     /**
      * Set calendar component property comment
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setComment($value = null, $params = [], $index = null)
+    public function setComment( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::COMMENT);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::COMMENT );
+            $value  = Util::$SP0;
             $params = [];
         }
-        Util::assertString($value, self::COMMENT);
-        $this->setMval($this->comment, (string)$value, $params, null, $index);
+        Util::assertString( $value, self::COMMENT );
+        $this->setMval( $this->comment, (string) $value, $params, null, $index );
         return $this;
     }
 }

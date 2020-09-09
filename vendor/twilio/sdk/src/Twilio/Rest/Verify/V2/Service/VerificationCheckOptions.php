@@ -12,8 +12,7 @@ namespace Twilio\Rest\Verify\V2\Service;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class VerificationCheckOptions
-{
+abstract class VerificationCheckOptions {
     /**
      * @param string $to The phone number or email to verify
      * @param string $verificationSid A SID that uniquely identifies the
@@ -23,18 +22,12 @@ abstract class VerificationCheckOptions
      * @param string $payee The payee of the associated PSD2 compliant transaction
      * @return CreateVerificationCheckOptions Options builder
      */
-    public static function create(
-        $to = Values::NONE,
-        $verificationSid = Values::NONE,
-        $amount = Values::NONE,
-        $payee = Values::NONE
-    ) {
+    public static function create($to = Values::NONE, $verificationSid = Values::NONE, $amount = Values::NONE, $payee = Values::NONE) {
         return new CreateVerificationCheckOptions($to, $verificationSid, $amount, $payee);
     }
 }
 
-class CreateVerificationCheckOptions extends Options
-{
+class CreateVerificationCheckOptions extends Options {
     /**
      * @param string $to The phone number or email to verify
      * @param string $verificationSid A SID that uniquely identifies the
@@ -43,12 +36,7 @@ class CreateVerificationCheckOptions extends Options
      *                       transaction.
      * @param string $payee The payee of the associated PSD2 compliant transaction
      */
-    public function __construct(
-        $to = Values::NONE,
-        $verificationSid = Values::NONE,
-        $amount = Values::NONE,
-        $payee = Values::NONE
-    ) {
+    public function __construct($to = Values::NONE, $verificationSid = Values::NONE, $amount = Values::NONE, $payee = Values::NONE) {
         $this->options['to'] = $to;
         $this->options['verificationSid'] = $verificationSid;
         $this->options['amount'] = $amount;
@@ -61,8 +49,7 @@ class CreateVerificationCheckOptions extends Options
      * @param string $to The phone number or email to verify
      * @return $this Fluent Builder
      */
-    public function setTo($to)
-    {
+    public function setTo($to) {
         $this->options['to'] = $to;
         return $this;
     }
@@ -74,8 +61,7 @@ class CreateVerificationCheckOptions extends Options
      *                                Verification Check
      * @return $this Fluent Builder
      */
-    public function setVerificationSid($verificationSid)
-    {
+    public function setVerificationSid($verificationSid) {
         $this->options['verificationSid'] = $verificationSid;
         return $this;
     }
@@ -87,8 +73,7 @@ class CreateVerificationCheckOptions extends Options
      *                       transaction.
      * @return $this Fluent Builder
      */
-    public function setAmount($amount)
-    {
+    public function setAmount($amount) {
         $this->options['amount'] = $amount;
         return $this;
     }
@@ -99,8 +84,7 @@ class CreateVerificationCheckOptions extends Options
      * @param string $payee The payee of the associated PSD2 compliant transaction
      * @return $this Fluent Builder
      */
-    public function setPayee($payee)
-    {
+    public function setPayee($payee) {
         $this->options['payee'] = $payee;
         return $this;
     }
@@ -110,8 +94,7 @@ class CreateVerificationCheckOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

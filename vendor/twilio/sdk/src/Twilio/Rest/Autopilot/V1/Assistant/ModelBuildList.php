@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class ModelBuildList extends ListResource
-{
+class ModelBuildList extends ListResource {
     /**
      * Construct the ModelBuildList
      *
@@ -28,12 +27,11 @@ class ModelBuildList extends ListResource
      *                             the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\ModelBuildList
      */
-    public function __construct(Version $version, $assistantSid)
-    {
+    public function __construct(Version $version, $assistantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/ModelBuilds';
     }
@@ -56,8 +54,7 @@ class ModelBuildList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -80,8 +77,7 @@ class ModelBuildList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return ModelBuildInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -94,8 +90,7 @@ class ModelBuildList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of ModelBuildInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -118,8 +113,7 @@ class ModelBuildList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of ModelBuildInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -135,8 +129,7 @@ class ModelBuildList extends ListResource
      * @return ModelBuildInstance Newly created ModelBuildInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -160,8 +153,7 @@ class ModelBuildList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\ModelBuildContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new ModelBuildContext($this->version, $this->solution['assistantSid'], $sid);
     }
 
@@ -170,8 +162,7 @@ class ModelBuildList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Autopilot.V1.ModelBuildList]';
     }
 }

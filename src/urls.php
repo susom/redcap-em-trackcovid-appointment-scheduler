@@ -1,8 +1,8 @@
 <?php
 
-namespace Stanford\TrackCovidAppointmentScheduler;
+namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
-/** @var \Stanford\TrackCovidAppointmentScheduler\TrackCovidAppointmentScheduler $module */
+/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 //if(!isset($_COOKIE['participant_login'])) {
 //    redirect($module->getUrl('src/login', false,false));
 //}

@@ -26,8 +26,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingContext ipAccessControlListMappings(string $sid)
  * @method \Twilio\Rest\Api\V2010\Account\Sip\Domain\CredentialListMappingContext credentialListMappings(string $sid)
  */
-class DomainContext extends InstanceContext
-{
+class DomainContext extends InstanceContext {
     protected $_ipAccessControlListMappings = null;
     protected $_credentialListMappings = null;
     protected $_auth = null;
@@ -41,12 +40,11 @@ class DomainContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\Sip\DomainContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/SIP/Domains/' . \rawurlencode($sid) . '.json';
     }
@@ -57,8 +55,7 @@ class DomainContext extends InstanceContext
      * @return DomainInstance Fetched DomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -82,8 +79,7 @@ class DomainContext extends InstanceContext
      * @return DomainInstance Updated DomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -119,8 +115,7 @@ class DomainContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -129,8 +124,7 @@ class DomainContext extends InstanceContext
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingList
      */
-    protected function getIpAccessControlListMappings()
-    {
+    protected function getIpAccessControlListMappings() {
         if (!$this->_ipAccessControlListMappings) {
             $this->_ipAccessControlListMappings = new IpAccessControlListMappingList(
                 $this->version,
@@ -147,8 +141,7 @@ class DomainContext extends InstanceContext
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\CredentialListMappingList
      */
-    protected function getCredentialListMappings()
-    {
+    protected function getCredentialListMappings() {
         if (!$this->_credentialListMappings) {
             $this->_credentialListMappings = new CredentialListMappingList(
                 $this->version,
@@ -165,8 +158,7 @@ class DomainContext extends InstanceContext
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypesList
      */
-    protected function getAuth()
-    {
+    protected function getAuth() {
         if (!$this->_auth) {
             $this->_auth = new AuthTypesList(
                 $this->version,
@@ -185,8 +177,7 @@ class DomainContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -203,8 +194,7 @@ class DomainContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -218,8 +208,7 @@ class DomainContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

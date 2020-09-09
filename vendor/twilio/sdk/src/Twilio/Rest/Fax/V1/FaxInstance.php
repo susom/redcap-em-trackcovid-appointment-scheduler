@@ -38,8 +38,7 @@ use Twilio\Version;
  * @property array $links
  * @property string $url
  */
-class FaxInstance extends InstanceResource
-{
+class FaxInstance extends InstanceResource {
     protected $_media = null;
 
     /**
@@ -50,8 +49,7 @@ class FaxInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Fax\V1\FaxInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -76,7 +74,7 @@ class FaxInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -85,8 +83,7 @@ class FaxInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Fax\V1\FaxContext Context for this FaxInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FaxContext($this->version, $this->solution['sid']);
         }
@@ -100,8 +97,7 @@ class FaxInstance extends InstanceResource
      * @return FaxInstance Fetched FaxInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -112,8 +108,7 @@ class FaxInstance extends InstanceResource
      * @return FaxInstance Updated FaxInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -123,8 +118,7 @@ class FaxInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -133,8 +127,7 @@ class FaxInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Fax\V1\Fax\FaxMediaList
      */
-    protected function getMedia()
-    {
+    protected function getMedia() {
         return $this->proxy()->media;
     }
 
@@ -145,8 +138,7 @@ class FaxInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -164,8 +156,7 @@ class FaxInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

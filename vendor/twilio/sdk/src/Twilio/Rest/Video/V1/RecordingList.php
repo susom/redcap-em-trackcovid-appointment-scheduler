@@ -15,16 +15,14 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class RecordingList extends ListResource
-{
+class RecordingList extends ListResource {
     /**
      * Construct the RecordingList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Video\V1\RecordingList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -52,8 +50,7 @@ class RecordingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -77,8 +74,7 @@ class RecordingList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return RecordingInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -92,19 +88,12 @@ class RecordingList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of RecordingInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Status' => $options['status'],
             'SourceSid' => $options['sourceSid'],
-            'GroupingSid' => Serialize::map($options['groupingSid'], function ($e) {
-                return $e;
-            }),
+            'GroupingSid' => Serialize::map($options['groupingSid'], function($e) { return $e; }),
             'DateCreatedAfter' => Serialize::iso8601DateTime($options['dateCreatedAfter']),
             'DateCreatedBefore' => Serialize::iso8601DateTime($options['dateCreatedBefore']),
             'MediaType' => $options['mediaType'],
@@ -129,8 +118,7 @@ class RecordingList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of RecordingInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -145,8 +133,7 @@ class RecordingList extends ListResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\RecordingContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new RecordingContext($this->version, $sid);
     }
 
@@ -155,8 +142,7 @@ class RecordingList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Video.V1.RecordingList]';
     }
 }

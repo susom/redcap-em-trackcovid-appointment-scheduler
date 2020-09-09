@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class VerificationCheckList extends ListResource
-{
+class VerificationCheckList extends ListResource {
     /**
      * Construct the VerificationCheckList
      *
@@ -25,12 +24,11 @@ class VerificationCheckList extends ListResource
      *                           associated with
      * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckList
      */
-    public function __construct(Version $version, $serviceSid)
-    {
+    public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid,);
+        $this->solution = array('serviceSid' => $serviceSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/VerificationCheck';
     }
@@ -43,8 +41,7 @@ class VerificationCheckList extends ListResource
      * @return VerificationCheckInstance Newly created VerificationCheckInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($code, $options = array())
-    {
+    public function create($code, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -70,8 +67,7 @@ class VerificationCheckList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Verify.V2.VerificationCheckList]';
     }
 }

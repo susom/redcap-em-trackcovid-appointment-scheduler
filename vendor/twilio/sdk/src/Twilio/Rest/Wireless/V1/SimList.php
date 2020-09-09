@@ -14,16 +14,14 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class SimList extends ListResource
-{
+class SimList extends ListResource {
     /**
      * Construct the SimList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Wireless\V1\SimList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -51,8 +49,7 @@ class SimList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -76,8 +73,7 @@ class SimList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return SimInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -91,12 +87,7 @@ class SimList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of SimInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Status' => $options['status'],
@@ -125,8 +116,7 @@ class SimList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of SimInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -141,8 +131,7 @@ class SimList extends ListResource
      * @param string $sid The SID of the Sim resource to fetch
      * @return \Twilio\Rest\Wireless\V1\SimContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new SimContext($this->version, $sid);
     }
 
@@ -151,8 +140,7 @@ class SimList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Wireless.V1.SimList]';
     }
 }

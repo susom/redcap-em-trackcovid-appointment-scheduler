@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class RecordingOptions
-{
+abstract class RecordingOptions {
     /**
      * @param string $dateCreatedBefore Only include recordings that were created
      *                                  on this date
@@ -25,19 +24,12 @@ abstract class RecordingOptions
      * @param string $conferenceSid Read by unique Conference SID for the recording
      * @return ReadRecordingOptions Options builder
      */
-    public static function read(
-        $dateCreatedBefore = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $callSid = Values::NONE,
-        $conferenceSid = Values::NONE
-    ) {
+    public static function read($dateCreatedBefore = Values::NONE, $dateCreated = Values::NONE, $dateCreatedAfter = Values::NONE, $callSid = Values::NONE, $conferenceSid = Values::NONE) {
         return new ReadRecordingOptions($dateCreatedBefore, $dateCreated, $dateCreatedAfter, $callSid, $conferenceSid);
     }
 }
 
-class ReadRecordingOptions extends Options
-{
+class ReadRecordingOptions extends Options {
     /**
      * @param string $dateCreatedBefore Only include recordings that were created
      *                                  on this date
@@ -48,13 +40,7 @@ class ReadRecordingOptions extends Options
      * @param string $callSid The Call SID of the resources to read
      * @param string $conferenceSid Read by unique Conference SID for the recording
      */
-    public function __construct(
-        $dateCreatedBefore = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $callSid = Values::NONE,
-        $conferenceSid = Values::NONE
-    ) {
+    public function __construct($dateCreatedBefore = Values::NONE, $dateCreated = Values::NONE, $dateCreatedAfter = Values::NONE, $callSid = Values::NONE, $conferenceSid = Values::NONE) {
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
         $this->options['dateCreated'] = $dateCreated;
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
@@ -69,8 +55,7 @@ class ReadRecordingOptions extends Options
      *                                  on this date
      * @return $this Fluent Builder
      */
-    public function setDateCreatedBefore($dateCreatedBefore)
-    {
+    public function setDateCreatedBefore($dateCreatedBefore) {
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
         return $this;
     }
@@ -82,8 +67,7 @@ class ReadRecordingOptions extends Options
      *                            date
      * @return $this Fluent Builder
      */
-    public function setDateCreated($dateCreated)
-    {
+    public function setDateCreated($dateCreated) {
         $this->options['dateCreated'] = $dateCreated;
         return $this;
     }
@@ -95,8 +79,7 @@ class ReadRecordingOptions extends Options
      *                                 this date
      * @return $this Fluent Builder
      */
-    public function setDateCreatedAfter($dateCreatedAfter)
-    {
+    public function setDateCreatedAfter($dateCreatedAfter) {
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
         return $this;
     }
@@ -107,8 +90,7 @@ class ReadRecordingOptions extends Options
      * @param string $callSid The Call SID of the resources to read
      * @return $this Fluent Builder
      */
-    public function setCallSid($callSid)
-    {
+    public function setCallSid($callSid) {
         $this->options['callSid'] = $callSid;
         return $this;
     }
@@ -119,8 +101,7 @@ class ReadRecordingOptions extends Options
      * @param string $conferenceSid Read by unique Conference SID for the recording
      * @return $this Fluent Builder
      */
-    public function setConferenceSid($conferenceSid)
-    {
+    public function setConferenceSid($conferenceSid) {
         $this->options['conferenceSid'] = $conferenceSid;
         return $this;
     }
@@ -130,8 +111,7 @@ class ReadRecordingOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class FeedbackList extends ListResource
-{
+class FeedbackList extends ListResource {
     /**
      * Construct the FeedbackList
      *
@@ -26,12 +25,11 @@ class FeedbackList extends ListResource
      *                           feedback was provided
      * @return \Twilio\Rest\Api\V2010\Account\Message\FeedbackList
      */
-    public function __construct(Version $version, $accountSid, $messageSid)
-    {
+    public function __construct(Version $version, $accountSid, $messageSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'messageSid' => $messageSid,);
+        $this->solution = array('accountSid' => $accountSid, 'messageSid' => $messageSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Messages/' . \rawurlencode($messageSid) . '/Feedback.json';
     }
@@ -43,11 +41,10 @@ class FeedbackList extends ListResource
      * @return FeedbackInstance Newly created FeedbackInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Outcome' => $options['outcome'],));
+        $data = Values::of(array('Outcome' => $options['outcome'], ));
 
         $payload = $this->version->create(
             'POST',
@@ -69,8 +66,7 @@ class FeedbackList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.FeedbackList]';
     }
 }

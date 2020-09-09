@@ -23,8 +23,7 @@ use Twilio\Version;
  * @property string $workspaceSid
  * @property string $url
  */
-class TaskQueueStatisticsInstance extends InstanceResource
-{
+class TaskQueueStatisticsInstance extends InstanceResource {
     /**
      * Initialize the TaskQueueStatisticsInstance
      *
@@ -36,8 +35,7 @@ class TaskQueueStatisticsInstance extends InstanceResource
      *                             statistics were calculated
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $taskQueueSid)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid, $taskQueueSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -50,7 +48,7 @@ class TaskQueueStatisticsInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('workspaceSid' => $workspaceSid, 'taskQueueSid' => $taskQueueSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'taskQueueSid' => $taskQueueSid, );
     }
 
     /**
@@ -60,8 +58,7 @@ class TaskQueueStatisticsInstance extends InstanceResource
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsContext Context for this
      *                                                                                   TaskQueueStatisticsInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new TaskQueueStatisticsContext(
                 $this->version,
@@ -80,8 +77,7 @@ class TaskQueueStatisticsInstance extends InstanceResource
      * @return TaskQueueStatisticsInstance Fetched TaskQueueStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -92,8 +88,7 @@ class TaskQueueStatisticsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -111,8 +106,7 @@ class TaskQueueStatisticsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

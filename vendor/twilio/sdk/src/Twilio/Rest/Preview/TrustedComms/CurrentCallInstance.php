@@ -33,8 +33,7 @@ use Twilio\Version;
  * @property string $url
  * @property string $useCase
  */
-class CurrentCallInstance extends InstanceResource
-{
+class CurrentCallInstance extends InstanceResource {
     /**
      * Initialize the CurrentCallInstance
      *
@@ -42,8 +41,7 @@ class CurrentCallInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -75,8 +73,7 @@ class CurrentCallInstance extends InstanceResource
      *                                                              this
      *                                                              CurrentCallInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CurrentCallContext($this->version);
         }
@@ -90,8 +87,7 @@ class CurrentCallInstance extends InstanceResource
      * @return CurrentCallInstance Fetched CurrentCallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -102,8 +98,7 @@ class CurrentCallInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -121,8 +116,7 @@ class CurrentCallInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -54,7 +54,6 @@ trait RDATEtrait
 {
     /**
      * @var array component property RDATE value
-     * @access protected
      */
     protected $rdate = null;
 
@@ -66,16 +65,17 @@ trait RDATEtrait
      */
     public function createRdate()
     {
-        if (empty($this->rdate)) {
+        if( empty( $this->rdate )) {
             return null;
         }
         try {
             $res = RexdateFactory::formatRdate(
                 $this->rdate,
-                $this->getConfig(self::ALLOWEMPTY),
+                $this->getConfig( self::ALLOWEMPTY ),
                 $this->getCompType()
             );
-        } catch (Exception $e) {
+        }
+        catch( Exception $e ) {
             throw $e;
         }
         return $res;
@@ -84,61 +84,64 @@ trait RDATEtrait
     /**
      * Delete calendar component property rdate
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteRdate($propDelIx = null)
+    public function deleteRdate( $propDelIx = null )
     {
-        if (empty($this->rdate)) {
-            unset($this->propDelIx[self::RDATE]);
+        if( empty( $this->rdate )) {
+            unset( $this->propDelIx[self::RDATE] );
             return false;
         }
-        return $this->deletePropertyM($this->rdate, self::RDATE, $propDelIx);
+        return $this->deletePropertyM( $this->rdate, self::RDATE, $propDelIx );
     }
 
     /**
      * Get calendar component property rdate
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @throws Exception
      * @since 2.29.2 2019-06-23
      */
-    public function getRdate($propIx = null, $inclParam = false)
+    public function getRdate( $propIx = null, $inclParam = false )
     {
-        if (empty($this->rdate)) {
-            unset($this->propIx[self::RDATE]);
+        if( empty( $this->rdate )) {
+            unset( $this->propIx[self::RDATE] );
             return false;
         }
-        $output = $this->getPropertyM($this->rdate, self::RDATE, $propIx, $inclParam);
-        if (empty($output)) {
+        $output = $this->getPropertyM( $this->rdate, self::RDATE, $propIx, $inclParam );
+        if( empty( $output )) {
             return false;
         }
-        if (empty($output[Util::$LCvalue])) {
+        if( empty( $output[Util::$LCvalue] )) {
             return $output;
         }
-        if (isset($output[Util::$LCvalue])) {
-            foreach ($output[Util::$LCvalue] as $rIx => $rdatePart) {
-                if (is_array($rdatePart) && isset($rdatePart[1]) &&
-                    DateIntervalFactory::isDateIntervalArrayInvertSet($rdatePart[1])) {
+        if( isset( $output[Util::$LCvalue] )) {
+            foreach( $output[Util::$LCvalue] as $rIx => $rdatePart ) {
+                if( is_array( $rdatePart ) && isset( $rdatePart[1] ) &&
+                    DateIntervalFactory::isDateIntervalArrayInvertSet( $rdatePart[1] )) {
                     try {// fix pre 7.0.5 bug
                         $output[Util::$LCvalue][$rIx][1] =
-                            DateIntervalFactory::DateIntervalArr2DateInterval($rdatePart[1]);
-                    } catch (Exception $e) {
+                            DateIntervalFactory::DateIntervalArr2DateInterval( $rdatePart[1] );
+                    }
+                    catch( Exception $e ) {
                         throw $e;
                     }
                 }
             } // end foreach
         } // end if
         else {
-            foreach ($output as $rIx => $rdatePart) {
-                if (is_array($rdatePart) && isset($rdatePart[1]) &&
-                    DateIntervalFactory::isDateIntervalArrayInvertSet($rdatePart[1])) {
+            foreach( $output as $rIx => $rdatePart ) {
+                if( is_array( $rdatePart ) && isset( $rdatePart[1] ) &&
+                    DateIntervalFactory::isDateIntervalArrayInvertSet( $rdatePart[1] )) {
                     try { // fix pre 7.0.5 bug
-                        $output[$rIx][1] = DateIntervalFactory::DateIntervalArr2DateInterval($rdatePart[1]);
-                    } catch (Exception $e) {
+                        $output[$rIx][1] =
+                            DateIntervalFactory::DateIntervalArr2DateInterval( $rdatePart[1] );
+                    }
+                    catch( Exception $e ) {
                         throw $e;
                     }
                 }
@@ -150,36 +153,46 @@ trait RDATEtrait
     /**
      * Set calendar component property rdate
      *
-     * @param array $value
-     * @param array $params
+     * @param array   $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.2 2019-06-23
      */
-    public function setRdate($value = null, $params = [], $index = null)
+    public function setRdate( $value = null, $params = [], $index = null )
     {
-        if (empty($value) ||
-            (is_array($value) && (1 == count($value)) && empty(reset($value)))
+        if( empty( $value ) ||
+            ( is_array( $value) && ( 1 == count( $value )) && empty( reset( $value )))
         ) {
-            $this->assertEmptyValue($value, self::RDATE);
-            $this->setMval($this->rdate, Util::$SP0, [], null, $index);
+            $this->assertEmptyValue( $value, self::RDATE );
+            $this->setMval( $this->rdate, Util::$SP0, [], null, $index );
             return $this;
         }
         $value = self::checkSingleRdates(
             $value,
-            ParameterFactory::isParamsValueSet([Util::$LCparams => $params], self::PERIOD)
+            ParameterFactory::isParamsValueSet(
+                [ Util::$LCparams => $params ],
+                self::PERIOD
+            )
         );
-        if (Util::isCompInList($this->getCompType(), Vcalendar::$TZCOMPS)) {
+        if( Util::isCompInList( $this->getCompType(), Vcalendar::$TZCOMPS )) {
             $params[Util::$ISLOCALTIME] = true;
         }
         try {
-            $input = RexdateFactory::prepInputRdate($value, $params);
-        } catch (Exception $e) {
+            $input = RexdateFactory::prepInputRdate( $value, $params );
+        }
+        catch( Exception $e ) {
             throw $e;
         }
-        $this->setMval($this->rdate, $input[Util::$LCvalue], $input[Util::$LCparams], null, $index);
+        $this->setMval(
+            $this->rdate,
+            $input[Util::$LCvalue],
+            $input[Util::$LCparams],
+            null,
+            $index
+        );
         return $this;
     }
 
@@ -189,27 +202,26 @@ trait RDATEtrait
      * @param array $rDates
      * @param bool $isPeriod
      * @return array
-     * @access private
      * @throws Exception
      * @throws InvalidArgumentException
      * @static
      * @since 2.29.16 2020-01-24
      */
-    private static function checkSingleRdates($rDates, $isPeriod)
+    private static function checkSingleRdates( $rDates, $isPeriod )
     {
-        if ($rDates instanceof DateTimeInterface) {
-            return [DateTimeFactory::cnvrtDateTimeInterface($rDates)];
+        if( $rDates instanceof DateTimeInterface ) {
+            return [ DateTimeFactory::cnvrtDateTimeInterface( $rDates ) ];
         }
-        if (DateTimeFactory::isStringAndDate($rDates)) {
-            return [$rDates];
+        if( DateTimeFactory::isStringAndDate( $rDates )) {
+            return [ $rDates ];
         }
-        if ($isPeriod && is_array($rDates) && (2 == count($rDates))) {
-            $first = reset($rDates);
-            if ($first instanceof DateTimeInterface) {
-                return [$rDates];
+        if( $isPeriod && is_array( $rDates ) && ( 2 == count( $rDates ))) {
+            $first = reset( $rDates );
+            if( $first instanceof DateTimeInterface ) {
+                return [ $rDates ];
             }
-            if (DateTimeFactory::isStringAndDate($first)) {
-                return [$rDates];
+            if( DateTimeFactory::isStringAndDate( $first )) {
+                return [ $rDates ];
             }
         }
         return $rDates;

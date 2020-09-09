@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Stanford\TrackCovidAppointmentScheduler;
+namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
-/** @var \Stanford\TrackCovidAppointmentScheduler\TrackCovidAppointmentScheduler $module */
+/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 try {
     /**

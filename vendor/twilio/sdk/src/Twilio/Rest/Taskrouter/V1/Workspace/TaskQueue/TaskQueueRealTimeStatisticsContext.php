@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class TaskQueueRealTimeStatisticsContext extends InstanceContext
-{
+class TaskQueueRealTimeStatisticsContext extends InstanceContext {
     /**
      * Initialize the TaskQueueRealTimeStatisticsContext
      *
@@ -27,12 +26,11 @@ class TaskQueueRealTimeStatisticsContext extends InstanceContext
      *                             statistics
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueRealTimeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid, $taskQueueSid)
-    {
+    public function __construct(Version $version, $workspaceSid, $taskQueueSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'taskQueueSid' => $taskQueueSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'taskQueueSid' => $taskQueueSid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/TaskQueues/' . \rawurlencode($taskQueueSid) . '/RealTimeStatistics';
     }
@@ -45,11 +43,10 @@ class TaskQueueRealTimeStatisticsContext extends InstanceContext
      *                                             TaskQueueRealTimeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         $options = new Values($options);
 
-        $params = Values::of(array('TaskChannel' => $options['taskChannel'],));
+        $params = Values::of(array('TaskChannel' => $options['taskChannel'], ));
 
         $payload = $this->version->fetch(
             'GET',
@@ -70,8 +67,7 @@ class TaskQueueRealTimeStatisticsContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

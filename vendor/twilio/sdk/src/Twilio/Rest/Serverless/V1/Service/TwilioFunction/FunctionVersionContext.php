@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class FunctionVersionContext extends InstanceContext
-{
+class FunctionVersionContext extends InstanceContext {
     /**
      * Initialize the FunctionVersionContext
      *
@@ -31,12 +30,11 @@ class FunctionVersionContext extends InstanceContext
      *                    fetch
      * @return \Twilio\Rest\Serverless\V1\Service\TwilioFunction\FunctionVersionContext
      */
-    public function __construct(Version $version, $serviceSid, $functionSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $functionSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'functionSid' => $functionSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'functionSid' => $functionSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Functions/' . \rawurlencode($functionSid) . '/Versions/' . \rawurlencode($sid) . '';
     }
@@ -47,8 +45,7 @@ class FunctionVersionContext extends InstanceContext
      * @return FunctionVersionInstance Fetched FunctionVersionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -71,8 +68,7 @@ class FunctionVersionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

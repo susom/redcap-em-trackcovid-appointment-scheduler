@@ -20,8 +20,7 @@ use Twilio\Rest\Authy\V1;
  * @method \Twilio\Rest\Authy\V1\FormContext forms(string $formType)
  * @method \Twilio\Rest\Authy\V1\ServiceContext services(string $sid)
  */
-class Authy extends Domain
-{
+class Authy extends Domain {
     protected $_v1 = null;
 
     /**
@@ -31,8 +30,7 @@ class Authy extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Authy Domain for Authy
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://authy.twilio.com';
@@ -41,8 +39,7 @@ class Authy extends Domain
     /**
      * @return \Twilio\Rest\Authy\V1 Version v1 of authy
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -56,8 +53,7 @@ class Authy extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -74,8 +70,7 @@ class Authy extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -87,8 +82,7 @@ class Authy extends Domain
     /**
      * @return \Twilio\Rest\Authy\V1\FormList
      */
-    protected function getForms()
-    {
+    protected function getForms() {
         return $this->v1->forms;
     }
 
@@ -96,16 +90,14 @@ class Authy extends Domain
      * @param string $formType The Type of this Form
      * @return \Twilio\Rest\Authy\V1\FormContext
      */
-    protected function contextForms($formType)
-    {
+    protected function contextForms($formType) {
         return $this->v1->forms($formType);
     }
 
     /**
      * @return \Twilio\Rest\Authy\V1\ServiceList
      */
-    protected function getServices()
-    {
+    protected function getServices() {
         return $this->v1->services;
     }
 
@@ -113,8 +105,7 @@ class Authy extends Domain
      * @param string $sid A string that uniquely identifies this Service.
      * @return \Twilio\Rest\Authy\V1\ServiceContext
      */
-    protected function contextServices($sid)
-    {
+    protected function contextServices($sid) {
         return $this->v1->services($sid);
     }
 
@@ -123,8 +114,7 @@ class Authy extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Authy]';
     }
 }

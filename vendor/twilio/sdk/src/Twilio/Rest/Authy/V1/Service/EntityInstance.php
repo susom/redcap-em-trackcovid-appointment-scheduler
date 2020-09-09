@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class EntityInstance extends InstanceResource
-{
+class EntityInstance extends InstanceResource {
     protected $_factors = null;
 
     /**
@@ -40,8 +39,7 @@ class EntityInstance extends InstanceResource
      * @param string $identity Unique identity of the Entity
      * @return \Twilio\Rest\Authy\V1\Service\EntityInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $identity = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $identity = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -69,8 +67,7 @@ class EntityInstance extends InstanceResource
      * @return \Twilio\Rest\Authy\V1\Service\EntityContext Context for this
      *                                                     EntityInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new EntityContext(
                 $this->version,
@@ -88,8 +85,7 @@ class EntityInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -99,8 +95,7 @@ class EntityInstance extends InstanceResource
      * @return EntityInstance Fetched EntityInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -109,8 +104,7 @@ class EntityInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Authy\V1\Service\Entity\FactorList
      */
-    protected function getFactors()
-    {
+    protected function getFactors() {
         return $this->proxy()->factors;
     }
 
@@ -121,8 +115,7 @@ class EntityInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -140,8 +133,7 @@ class EntityInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

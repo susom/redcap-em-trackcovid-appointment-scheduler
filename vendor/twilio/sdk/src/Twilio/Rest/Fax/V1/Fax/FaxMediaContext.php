@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class FaxMediaContext extends InstanceContext
-{
+class FaxMediaContext extends InstanceContext {
     /**
      * Initialize the FaxMediaContext
      *
@@ -27,12 +26,11 @@ class FaxMediaContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Fax\V1\Fax\FaxMediaContext
      */
-    public function __construct(Version $version, $faxSid, $sid)
-    {
+    public function __construct(Version $version, $faxSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('faxSid' => $faxSid, 'sid' => $sid,);
+        $this->solution = array('faxSid' => $faxSid, 'sid' => $sid, );
 
         $this->uri = '/Faxes/' . \rawurlencode($faxSid) . '/Media/' . \rawurlencode($sid) . '';
     }
@@ -43,8 +41,7 @@ class FaxMediaContext extends InstanceContext
      * @return FaxMediaInstance Fetched FaxMediaInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -67,8 +64,7 @@ class FaxMediaContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -77,8 +73,7 @@ class FaxMediaContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

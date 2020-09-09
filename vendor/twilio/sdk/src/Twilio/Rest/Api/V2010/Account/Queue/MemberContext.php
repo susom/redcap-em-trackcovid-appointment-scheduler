@@ -15,8 +15,7 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class MemberContext extends InstanceContext
-{
+class MemberContext extends InstanceContext {
     /**
      * Initialize the MemberContext
      *
@@ -27,8 +26,7 @@ class MemberContext extends InstanceContext
      * @param string $callSid The Call SID of the resource(s) to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberContext
      */
-    public function __construct(Version $version, $accountSid, $queueSid, $callSid)
-    {
+    public function __construct(Version $version, $accountSid, $queueSid, $callSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -47,8 +45,7 @@ class MemberContext extends InstanceContext
      * @return MemberInstance Fetched MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -74,11 +71,10 @@ class MemberContext extends InstanceContext
      * @return MemberInstance Updated MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($url, $options = array())
-    {
+    public function update($url, $options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Url' => $url, 'Method' => $options['method'],));
+        $data = Values::of(array('Url' => $url, 'Method' => $options['method'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -101,8 +97,7 @@ class MemberContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

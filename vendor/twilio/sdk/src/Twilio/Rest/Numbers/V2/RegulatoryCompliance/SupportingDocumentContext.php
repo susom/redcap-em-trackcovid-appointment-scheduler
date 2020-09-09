@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class SupportingDocumentContext extends InstanceContext
-{
+class SupportingDocumentContext extends InstanceContext {
     /**
      * Initialize the SupportingDocumentContext
      *
@@ -25,12 +24,11 @@ class SupportingDocumentContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/RegulatoryCompliance/SupportingDocuments/' . \rawurlencode($sid) . '';
     }
@@ -41,8 +39,7 @@ class SupportingDocumentContext extends InstanceContext
      * @return SupportingDocumentInstance Fetched SupportingDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -61,8 +58,7 @@ class SupportingDocumentContext extends InstanceContext
      * @return SupportingDocumentInstance Updated SupportingDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -85,8 +81,7 @@ class SupportingDocumentContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

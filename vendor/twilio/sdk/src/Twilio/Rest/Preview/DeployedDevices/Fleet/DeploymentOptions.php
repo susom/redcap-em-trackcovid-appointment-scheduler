@@ -15,16 +15,14 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class DeploymentOptions
-{
+abstract class DeploymentOptions {
     /**
      * @param string $friendlyName A human readable description for this Deployment.
      * @param string $syncServiceSid The unique identifier of the Sync service
      *                               instance.
      * @return CreateDeploymentOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE, $syncServiceSid = Values::NONE)
-    {
+    public static function create($friendlyName = Values::NONE, $syncServiceSid = Values::NONE) {
         return new CreateDeploymentOptions($friendlyName, $syncServiceSid);
     }
 
@@ -34,21 +32,18 @@ abstract class DeploymentOptions
      *                               instance.
      * @return UpdateDeploymentOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $syncServiceSid = Values::NONE)
-    {
+    public static function update($friendlyName = Values::NONE, $syncServiceSid = Values::NONE) {
         return new UpdateDeploymentOptions($friendlyName, $syncServiceSid);
     }
 }
 
-class CreateDeploymentOptions extends Options
-{
+class CreateDeploymentOptions extends Options {
     /**
      * @param string $friendlyName A human readable description for this Deployment.
      * @param string $syncServiceSid The unique identifier of the Sync service
      *                               instance.
      */
-    public function __construct($friendlyName = Values::NONE, $syncServiceSid = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $syncServiceSid = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['syncServiceSid'] = $syncServiceSid;
     }
@@ -59,8 +54,7 @@ class CreateDeploymentOptions extends Options
      * @param string $friendlyName A human readable description for this Deployment.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -72,8 +66,7 @@ class CreateDeploymentOptions extends Options
      *                               instance.
      * @return $this Fluent Builder
      */
-    public function setSyncServiceSid($syncServiceSid)
-    {
+    public function setSyncServiceSid($syncServiceSid) {
         $this->options['syncServiceSid'] = $syncServiceSid;
         return $this;
     }
@@ -83,8 +76,7 @@ class CreateDeploymentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -95,15 +87,13 @@ class CreateDeploymentOptions extends Options
     }
 }
 
-class UpdateDeploymentOptions extends Options
-{
+class UpdateDeploymentOptions extends Options {
     /**
      * @param string $friendlyName A human readable description for this Deployment.
      * @param string $syncServiceSid The unique identifier of the Sync service
      *                               instance.
      */
-    public function __construct($friendlyName = Values::NONE, $syncServiceSid = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $syncServiceSid = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['syncServiceSid'] = $syncServiceSid;
     }
@@ -114,8 +104,7 @@ class UpdateDeploymentOptions extends Options
      * @param string $friendlyName A human readable description for this Deployment.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -127,8 +116,7 @@ class UpdateDeploymentOptions extends Options
      *                               instance.
      * @return $this Fluent Builder
      */
-    public function setSyncServiceSid($syncServiceSid)
-    {
+    public function setSyncServiceSid($syncServiceSid) {
         $this->options['syncServiceSid'] = $syncServiceSid;
         return $this;
     }
@@ -138,8 +126,7 @@ class UpdateDeploymentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

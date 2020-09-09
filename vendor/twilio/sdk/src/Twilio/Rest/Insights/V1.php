@@ -18,8 +18,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Insights\V1\CallList $calls
  * @method \Twilio\Rest\Insights\V1\CallContext calls(string $sid)
  */
-class V1 extends Version
-{
+class V1 extends Version {
     protected $_calls = null;
 
     /**
@@ -28,8 +27,7 @@ class V1 extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Insights\V1 V1 version of Insights
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'v1';
     }
@@ -37,8 +35,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Insights\V1\CallList
      */
-    protected function getCalls()
-    {
+    protected function getCalls() {
         if (!$this->_calls) {
             $this->_calls = new CallList($this);
         }
@@ -52,8 +49,7 @@ class V1 extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -70,8 +66,7 @@ class V1 extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -85,8 +80,7 @@ class V1 extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Insights.V1]';
     }
 }

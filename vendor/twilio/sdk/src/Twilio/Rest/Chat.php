@@ -22,8 +22,7 @@ use Twilio\Rest\Chat\V2;
  * @method \Twilio\Rest\Chat\V2\CredentialContext credentials(string $sid)
  * @method \Twilio\Rest\Chat\V2\ServiceContext services(string $sid)
  */
-class Chat extends Domain
-{
+class Chat extends Domain {
     protected $_v1 = null;
     protected $_v2 = null;
 
@@ -34,8 +33,7 @@ class Chat extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Chat Domain for Chat
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://chat.twilio.com';
@@ -44,8 +42,7 @@ class Chat extends Domain
     /**
      * @return \Twilio\Rest\Chat\V1 Version v1 of chat
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -55,8 +52,7 @@ class Chat extends Domain
     /**
      * @return \Twilio\Rest\Chat\V2 Version v2 of chat
      */
-    protected function getV2()
-    {
+    protected function getV2() {
         if (!$this->_v2) {
             $this->_v2 = new V2($this);
         }
@@ -70,8 +66,7 @@ class Chat extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -88,8 +83,7 @@ class Chat extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -101,8 +95,7 @@ class Chat extends Domain
     /**
      * @return \Twilio\Rest\Chat\V2\CredentialList
      */
-    protected function getCredentials()
-    {
+    protected function getCredentials() {
         return $this->v2->credentials;
     }
 
@@ -110,16 +103,14 @@ class Chat extends Domain
      * @param string $sid The SID of the Credential resource to fetch
      * @return \Twilio\Rest\Chat\V2\CredentialContext
      */
-    protected function contextCredentials($sid)
-    {
+    protected function contextCredentials($sid) {
         return $this->v2->credentials($sid);
     }
 
     /**
      * @return \Twilio\Rest\Chat\V2\ServiceList
      */
-    protected function getServices()
-    {
+    protected function getServices() {
         return $this->v2->services;
     }
 
@@ -127,8 +118,7 @@ class Chat extends Domain
      * @param string $sid The SID of the Service resource to fetch
      * @return \Twilio\Rest\Chat\V2\ServiceContext
      */
-    protected function contextServices($sid)
-    {
+    protected function contextServices($sid) {
         return $this->v2->services($sid);
     }
 
@@ -137,8 +127,7 @@ class Chat extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Chat]';
     }
 }

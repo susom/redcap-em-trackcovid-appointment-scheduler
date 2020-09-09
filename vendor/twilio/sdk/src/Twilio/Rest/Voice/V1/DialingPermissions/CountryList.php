@@ -18,16 +18,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CountryList extends ListResource
-{
+class CountryList extends ListResource {
     /**
      * Construct the CountryList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\CountryList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -55,8 +53,7 @@ class CountryList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -80,8 +77,7 @@ class CountryList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return CountryInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -95,12 +91,7 @@ class CountryList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of CountryInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'IsoCode' => $options['isoCode'],
@@ -130,8 +121,7 @@ class CountryList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of CountryInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -146,8 +136,7 @@ class CountryList extends ListResource
      * @param string $isoCode The ISO country code
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\CountryContext
      */
-    public function getContext($isoCode)
-    {
+    public function getContext($isoCode) {
         return new CountryContext($this->version, $isoCode);
     }
 
@@ -156,8 +145,7 @@ class CountryList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Voice.V1.CountryList]';
     }
 }

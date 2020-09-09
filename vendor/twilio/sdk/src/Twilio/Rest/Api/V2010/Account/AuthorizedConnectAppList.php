@@ -13,8 +13,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class AuthorizedConnectAppList extends ListResource
-{
+class AuthorizedConnectAppList extends ListResource {
     /**
      * Construct the AuthorizedConnectAppList
      *
@@ -22,12 +21,11 @@ class AuthorizedConnectAppList extends ListResource
      * @param string $accountSid The SID of the Account that created the resource
      * @return \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/AuthorizedConnectApps.json';
     }
@@ -51,8 +49,7 @@ class AuthorizedConnectAppList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -75,8 +72,7 @@ class AuthorizedConnectAppList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return AuthorizedConnectAppInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -89,8 +85,7 @@ class AuthorizedConnectAppList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of AuthorizedConnectAppInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -114,8 +109,7 @@ class AuthorizedConnectAppList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of AuthorizedConnectAppInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -130,8 +124,7 @@ class AuthorizedConnectAppList extends ListResource
      * @param string $connectAppSid The SID of the Connect App to fetch
      * @return \Twilio\Rest\Api\V2010\Account\AuthorizedConnectAppContext
      */
-    public function getContext($connectAppSid)
-    {
+    public function getContext($connectAppSid) {
         return new AuthorizedConnectAppContext(
             $this->version,
             $this->solution['accountSid'],
@@ -144,8 +137,7 @@ class AuthorizedConnectAppList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.AuthorizedConnectAppList]';
     }
 }

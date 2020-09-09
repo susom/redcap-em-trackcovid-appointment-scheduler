@@ -15,8 +15,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class DataSessionList extends ListResource
-{
+class DataSessionList extends ListResource {
     /**
      * Construct the DataSessionList
      *
@@ -25,12 +24,11 @@ class DataSessionList extends ListResource
      *                       for
      * @return \Twilio\Rest\Wireless\V1\Sim\DataSessionList
      */
-    public function __construct(Version $version, $simSid)
-    {
+    public function __construct(Version $version, $simSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('simSid' => $simSid,);
+        $this->solution = array('simSid' => $simSid, );
 
         $this->uri = '/Sims/' . \rawurlencode($simSid) . '/DataSessions';
     }
@@ -54,8 +52,7 @@ class DataSessionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -79,8 +76,7 @@ class DataSessionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return DataSessionInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -94,12 +90,7 @@ class DataSessionList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of DataSessionInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'End' => Serialize::iso8601DateTime($options['end']),
@@ -125,8 +116,7 @@ class DataSessionList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of DataSessionInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -140,8 +130,7 @@ class DataSessionList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Wireless.V1.DataSessionList]';
     }
 }

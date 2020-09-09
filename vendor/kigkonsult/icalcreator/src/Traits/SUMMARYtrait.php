@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait SUMMARYtrait
 {
     /**
      * @var array component property SUMMARY value
-     * @access protected
      */
     protected $summary = null;
 
@@ -56,20 +55,22 @@ trait SUMMARYtrait
      */
     public function createSummary()
     {
-        if (empty($this->summary)) {
+        if( empty( $this->summary )) {
             return null;
         }
-        if (empty($this->summary[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::SUMMARY) : null;
+        if( empty( $this->summary[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::SUMMARY )
+                : null;
         }
         return StringFactory::createElement(
             self::SUMMARY,
             ParameterFactory::createParams(
                 $this->summary[Util::$LCparams],
                 self::$ALTRPLANGARR,
-                $this->getConfig(self::LANGUAGE)
+                $this->getConfig( self::LANGUAGE )
             ),
-            StringFactory::strrep($this->summary[Util::$LCvalue])
+            StringFactory::strrep( $this->summary[Util::$LCvalue] )
         );
     }
 
@@ -88,38 +89,38 @@ trait SUMMARYtrait
     /**
      * Get calendar component property summary
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getSummary($inclParam = false)
+    public function getSummary( $inclParam = false )
     {
-        if (empty($this->summary)) {
+        if( empty( $this->summary )) {
             return false;
         }
-        return ($inclParam) ? $this->summary : $this->summary[Util::$LCvalue];
+        return ( $inclParam ) ? $this->summary : $this->summary[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property summary
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setSummary($value = null, $params = [])
+    public function setSummary( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::SUMMARY);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::SUMMARY );
+            $value  = Util::$SP0;
             $params = [];
         }
-        Util::assertString($value, self::SUMMARY);
+        Util::assertString( $value, self::SUMMARY );
         $this->summary = [
-            Util::$LCvalue => (string)$value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => (string) $value,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

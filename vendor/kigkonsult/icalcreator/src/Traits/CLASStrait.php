@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -47,13 +47,11 @@ trait CLASStrait
 {
     /**
      * @var array component property CLASS value
-     * @access protected
      */
     protected $class = null;
 
     /**
      * @var string
-     * @access protected
      * @static
      */
     protected static $KLASS = 'class';
@@ -63,17 +61,19 @@ trait CLASStrait
      *
      * @return string
      */
-    public function createClass()
-    {
-        if (empty($this->{self::$KLASS})) {
+    public function createClass() {
+        if( empty( $this->{self::$KLASS} ))
+        {
             return null;
         }
-        if (empty($this->{self::$KLASS}[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::KLASS) : null;
+        if( empty( $this->{self::$KLASS}[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::KLASS )
+                : null;
         }
         return StringFactory::createElement(
             self::KLASS,
-            ParameterFactory::createParams($this->{self::$KLASS}[Util::$LCparams]),
+            ParameterFactory::createParams( $this->{self::$KLASS}[Util::$LCparams] ),
             $this->{self::$KLASS}[Util::$LCvalue]
         );
     }
@@ -84,7 +84,7 @@ trait CLASStrait
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteClass()
+    public function deleteClass( )
     {
         $this->{self::$KLASS} = null;
         return true;
@@ -93,45 +93,48 @@ trait CLASStrait
     /**
      * Get calendar component property class
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getClass($inclParam = false)
+    public function getClass( $inclParam = false )
     {
-        if (empty($this->{self::$KLASS})) {
+        if( empty( $this->{self::$KLASS} )) {
             return false;
         }
-        return ($inclParam) ? $this->{self::$KLASS} : $this->{self::$KLASS}[Util::$LCvalue];
+        return ( $inclParam )
+            ? $this->{self::$KLASS}
+        : $this->{self::$KLASS}[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property class
      *
      * @param string $value "PUBLIC" / "PRIVATE" / "CONFIDENTIAL" / iana-token / x-name
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setClass($value = null, $params = [])
+    public function setClass( $value = null, $params = [] )
     {
         $STDVALUES = [
             self::P_BLIC,
             self::P_IVATE,
             self::CONFIDENTIAL
         ];
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::KLASS);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::KLASS );
+            $value  = Util::$SP0;
             $params = [];
-        } elseif (Util::isPropInList($value, $STDVALUES)) {
-            $value = strtoupper($value);
         }
-        Util::assertString($value, self::KLASS);
+        elseif( Util::isPropInList( $value, $STDVALUES )) {
+            $value = strtoupper( $value );
+        }
+        Util::assertString( $value, self::KLASS );
         $this->{self::$KLASS} = [
-            Util::$LCvalue => strtoupper(StringFactory::trimTrailNL((string)$value)),
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => strtoupper( StringFactory::trimTrailNL((string) $value )),
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

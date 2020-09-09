@@ -19,16 +19,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class PhoneCallList extends ListResource
-{
+class PhoneCallList extends ListResource {
     /**
      * Construct the PhoneCallList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\TrustedComms\PhoneCallList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -46,8 +44,7 @@ class PhoneCallList extends ListResource
      * @return PhoneCallInstance Newly created PhoneCallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($from, $to, $options = array())
-    {
+    public function create($from, $to, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -67,17 +64,13 @@ class PhoneCallList extends ListResource
             'Record' => Serialize::booleanToString($options['record']),
             'RecordingChannels' => $options['recordingChannels'],
             'RecordingStatusCallback' => $options['recordingStatusCallback'],
-            'RecordingStatusCallbackEvent' => Serialize::map($options['recordingStatusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'RecordingStatusCallbackEvent' => Serialize::map($options['recordingStatusCallbackEvent'], function($e) { return $e; }),
             'RecordingStatusCallbackMethod' => $options['recordingStatusCallbackMethod'],
             'SendDigits' => $options['sendDigits'],
             'SipAuthPassword' => $options['sipAuthPassword'],
             'SipAuthUsername' => $options['sipAuthUsername'],
             'StatusCallback' => $options['statusCallback'],
-            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function($e) { return $e; }),
             'StatusCallbackMethod' => $options['statusCallbackMethod'],
             'Timeout' => $options['timeout'],
             'Trim' => $options['trim'],
@@ -99,8 +92,7 @@ class PhoneCallList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.PhoneCallList]';
     }
 }

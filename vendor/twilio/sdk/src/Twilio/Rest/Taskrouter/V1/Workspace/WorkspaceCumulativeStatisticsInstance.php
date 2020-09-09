@@ -39,8 +39,7 @@ use Twilio\Version;
  * @property string $workspaceSid
  * @property string $url
  */
-class WorkspaceCumulativeStatisticsInstance extends InstanceResource
-{
+class WorkspaceCumulativeStatisticsInstance extends InstanceResource {
     /**
      * Initialize the WorkspaceCumulativeStatisticsInstance
      *
@@ -49,8 +48,7 @@ class WorkspaceCumulativeStatisticsInstance extends InstanceResource
      * @param string $workspaceSid The SID of the Workspace
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceCumulativeStatisticsInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -78,7 +76,7 @@ class WorkspaceCumulativeStatisticsInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('workspaceSid' => $workspaceSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, );
     }
 
     /**
@@ -88,8 +86,7 @@ class WorkspaceCumulativeStatisticsInstance extends InstanceResource
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceCumulativeStatisticsContext Context for this
      *                                                                                   WorkspaceCumulativeStatisticsInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new WorkspaceCumulativeStatisticsContext(
                 $this->version,
@@ -108,8 +105,7 @@ class WorkspaceCumulativeStatisticsInstance extends InstanceResource
      *                                               WorkspaceCumulativeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -120,8 +116,7 @@ class WorkspaceCumulativeStatisticsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -139,8 +134,7 @@ class WorkspaceCumulativeStatisticsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -17,16 +17,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DeviceList extends ListResource
-{
+class DeviceList extends ListResource {
     /**
      * Construct the DeviceList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Preview\TrustedComms\DeviceList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -43,9 +41,8 @@ class DeviceList extends ListResource
      * @return DeviceInstance Newly created DeviceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($phoneNumber, $pushToken)
-    {
-        $data = Values::of(array('PhoneNumber' => $phoneNumber, 'PushToken' => $pushToken,));
+    public function create($phoneNumber, $pushToken) {
+        $data = Values::of(array('PhoneNumber' => $phoneNumber, 'PushToken' => $pushToken, ));
 
         $payload = $this->version->create(
             'POST',
@@ -62,8 +59,7 @@ class DeviceList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.TrustedComms.DeviceList]';
     }
 }

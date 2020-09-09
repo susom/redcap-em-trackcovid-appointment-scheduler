@@ -12,8 +12,7 @@ namespace Twilio\Rest\Video\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class RoomOptions
-{
+abstract class RoomOptions {
     /**
      * @param bool $enableTurn Enable Twilio's Network Traversal TURN service
      * @param string $type The type of room
@@ -32,19 +31,8 @@ abstract class RoomOptions
      * @param string $mediaRegion The region for the media server in Group Rooms
      * @return CreateRoomOptions Options builder
      */
-    public static function create(
-        $enableTurn = Values::NONE,
-        $type = Values::NONE,
-        $uniqueName = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $maxParticipants = Values::NONE,
-        $recordParticipantsOnConnect = Values::NONE,
-        $videoCodecs = Values::NONE,
-        $mediaRegion = Values::NONE
-    ) {
-        return new CreateRoomOptions($enableTurn, $type, $uniqueName, $statusCallback, $statusCallbackMethod,
-            $maxParticipants, $recordParticipantsOnConnect, $videoCodecs, $mediaRegion);
+    public static function create($enableTurn = Values::NONE, $type = Values::NONE, $uniqueName = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $maxParticipants = Values::NONE, $recordParticipantsOnConnect = Values::NONE, $videoCodecs = Values::NONE, $mediaRegion = Values::NONE) {
+        return new CreateRoomOptions($enableTurn, $type, $uniqueName, $statusCallback, $statusCallbackMethod, $maxParticipants, $recordParticipantsOnConnect, $videoCodecs, $mediaRegion);
     }
 
     /**
@@ -56,18 +44,12 @@ abstract class RoomOptions
      *                                     date, given as YYYY-MM-DD
      * @return ReadRoomOptions Options builder
      */
-    public static function read(
-        $status = Values::NONE,
-        $uniqueName = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE
-    ) {
+    public static function read($status = Values::NONE, $uniqueName = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE) {
         return new ReadRoomOptions($status, $uniqueName, $dateCreatedAfter, $dateCreatedBefore);
     }
 }
 
-class CreateRoomOptions extends Options
-{
+class CreateRoomOptions extends Options {
     /**
      * @param bool $enableTurn Enable Twilio's Network Traversal TURN service
      * @param string $type The type of room
@@ -85,17 +67,7 @@ class CreateRoomOptions extends Options
      *                            when publishing a track in the room
      * @param string $mediaRegion The region for the media server in Group Rooms
      */
-    public function __construct(
-        $enableTurn = Values::NONE,
-        $type = Values::NONE,
-        $uniqueName = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $maxParticipants = Values::NONE,
-        $recordParticipantsOnConnect = Values::NONE,
-        $videoCodecs = Values::NONE,
-        $mediaRegion = Values::NONE
-    ) {
+    public function __construct($enableTurn = Values::NONE, $type = Values::NONE, $uniqueName = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $maxParticipants = Values::NONE, $recordParticipantsOnConnect = Values::NONE, $videoCodecs = Values::NONE, $mediaRegion = Values::NONE) {
         $this->options['enableTurn'] = $enableTurn;
         $this->options['type'] = $type;
         $this->options['uniqueName'] = $uniqueName;
@@ -113,8 +85,7 @@ class CreateRoomOptions extends Options
      * @param bool $enableTurn Enable Twilio's Network Traversal TURN service
      * @return $this Fluent Builder
      */
-    public function setEnableTurn($enableTurn)
-    {
+    public function setEnableTurn($enableTurn) {
         $this->options['enableTurn'] = $enableTurn;
         return $this;
     }
@@ -125,8 +96,7 @@ class CreateRoomOptions extends Options
      * @param string $type The type of room
      * @return $this Fluent Builder
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->options['type'] = $type;
         return $this;
     }
@@ -138,8 +108,7 @@ class CreateRoomOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -151,8 +120,7 @@ class CreateRoomOptions extends Options
      *                               application
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -164,8 +132,7 @@ class CreateRoomOptions extends Options
      *                                     status_callback
      * @return $this Fluent Builder
      */
-    public function setStatusCallbackMethod($statusCallbackMethod)
-    {
+    public function setStatusCallbackMethod($statusCallbackMethod) {
         $this->options['statusCallbackMethod'] = $statusCallbackMethod;
         return $this;
     }
@@ -177,8 +144,7 @@ class CreateRoomOptions extends Options
      *                             allowed in the room
      * @return $this Fluent Builder
      */
-    public function setMaxParticipants($maxParticipants)
-    {
+    public function setMaxParticipants($maxParticipants) {
         $this->options['maxParticipants'] = $maxParticipants;
         return $this;
     }
@@ -190,8 +156,7 @@ class CreateRoomOptions extends Options
      *                                          Participants connect
      * @return $this Fluent Builder
      */
-    public function setRecordParticipantsOnConnect($recordParticipantsOnConnect)
-    {
+    public function setRecordParticipantsOnConnect($recordParticipantsOnConnect) {
         $this->options['recordParticipantsOnConnect'] = $recordParticipantsOnConnect;
         return $this;
     }
@@ -203,8 +168,7 @@ class CreateRoomOptions extends Options
      *                            when publishing a track in the room
      * @return $this Fluent Builder
      */
-    public function setVideoCodecs($videoCodecs)
-    {
+    public function setVideoCodecs($videoCodecs) {
         $this->options['videoCodecs'] = $videoCodecs;
         return $this;
     }
@@ -215,8 +179,7 @@ class CreateRoomOptions extends Options
      * @param string $mediaRegion The region for the media server in Group Rooms
      * @return $this Fluent Builder
      */
-    public function setMediaRegion($mediaRegion)
-    {
+    public function setMediaRegion($mediaRegion) {
         $this->options['mediaRegion'] = $mediaRegion;
         return $this;
     }
@@ -226,8 +189,7 @@ class CreateRoomOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -238,8 +200,7 @@ class CreateRoomOptions extends Options
     }
 }
 
-class ReadRoomOptions extends Options
-{
+class ReadRoomOptions extends Options {
     /**
      * @param string $status Read only the rooms with this status
      * @param string $uniqueName Read only rooms with this unique_name
@@ -248,12 +209,7 @@ class ReadRoomOptions extends Options
      * @param \DateTime $dateCreatedBefore Read only rooms that started before this
      *                                     date, given as YYYY-MM-DD
      */
-    public function __construct(
-        $status = Values::NONE,
-        $uniqueName = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE
-    ) {
+    public function __construct($status = Values::NONE, $uniqueName = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE) {
         $this->options['status'] = $status;
         $this->options['uniqueName'] = $uniqueName;
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
@@ -266,8 +222,7 @@ class ReadRoomOptions extends Options
      * @param string $status Read only the rooms with this status
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -278,8 +233,7 @@ class ReadRoomOptions extends Options
      * @param string $uniqueName Read only rooms with this unique_name
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -291,8 +245,7 @@ class ReadRoomOptions extends Options
      *                                    this date, given as YYYY-MM-DD
      * @return $this Fluent Builder
      */
-    public function setDateCreatedAfter($dateCreatedAfter)
-    {
+    public function setDateCreatedAfter($dateCreatedAfter) {
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
         return $this;
     }
@@ -304,8 +257,7 @@ class ReadRoomOptions extends Options
      *                                     date, given as YYYY-MM-DD
      * @return $this Fluent Builder
      */
-    public function setDateCreatedBefore($dateCreatedBefore)
-    {
+    public function setDateCreatedBefore($dateCreatedBefore) {
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
         return $this;
     }
@@ -315,8 +267,7 @@ class ReadRoomOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

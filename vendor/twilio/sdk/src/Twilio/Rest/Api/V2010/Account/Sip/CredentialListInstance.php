@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property array $subresourceUris
  * @property string $uri
  */
-class CredentialListInstance extends InstanceResource
-{
+class CredentialListInstance extends InstanceResource {
     protected $_credentials = null;
 
     /**
@@ -38,8 +37,7 @@ class CredentialListInstance extends InstanceResource
      * @param string $sid Fetch by unique credential list Sid
      * @return \Twilio\Rest\Api\V2010\Account\Sip\CredentialListInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -53,7 +51,7 @@ class CredentialListInstance extends InstanceResource
             'uri' => Values::array_get($payload, 'uri'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -64,8 +62,7 @@ class CredentialListInstance extends InstanceResource
      *                                                                  this
      *                                                                  CredentialListInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CredentialListContext(
                 $this->version,
@@ -83,8 +80,7 @@ class CredentialListInstance extends InstanceResource
      * @return CredentialListInstance Fetched CredentialListInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -95,8 +91,7 @@ class CredentialListInstance extends InstanceResource
      * @return CredentialListInstance Updated CredentialListInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($friendlyName)
-    {
+    public function update($friendlyName) {
         return $this->proxy()->update($friendlyName);
     }
 
@@ -106,8 +101,7 @@ class CredentialListInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -116,8 +110,7 @@ class CredentialListInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\CredentialList\CredentialList
      */
-    protected function getCredentials()
-    {
+    protected function getCredentials() {
         return $this->proxy()->credentials;
     }
 
@@ -128,8 +121,7 @@ class CredentialListInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -147,8 +139,7 @@ class CredentialListInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -26,8 +26,7 @@ use Twilio\Version;
  * @property bool $manage
  * @property string $url
  */
-class SyncListPermissionInstance extends InstanceResource
-{
+class SyncListPermissionInstance extends InstanceResource {
     /**
      * Initialize the SyncListPermissionInstance
      *
@@ -42,8 +41,7 @@ class SyncListPermissionInstance extends InstanceResource
      *                         to fetch
      * @return \Twilio\Rest\Sync\V1\Service\SyncList\SyncListPermissionInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $listSid, $identity = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $listSid, $identity = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -71,8 +69,7 @@ class SyncListPermissionInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Sync\V1\Service\SyncList\SyncListPermissionContext Context for this SyncListPermissionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SyncListPermissionContext(
                 $this->version,
@@ -91,8 +88,7 @@ class SyncListPermissionInstance extends InstanceResource
      * @return SyncListPermissionInstance Fetched SyncListPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -102,8 +98,7 @@ class SyncListPermissionInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -116,8 +111,7 @@ class SyncListPermissionInstance extends InstanceResource
      * @return SyncListPermissionInstance Updated SyncListPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($read, $write, $manage)
-    {
+    public function update($read, $write, $manage) {
         return $this->proxy()->update($read, $write, $manage);
     }
 
@@ -128,8 +122,7 @@ class SyncListPermissionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -147,8 +140,7 @@ class SyncListPermissionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

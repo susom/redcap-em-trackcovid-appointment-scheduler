@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -34,7 +34,7 @@ use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 
 /**
- * class Exception5Test
+ * class Exception6Test
  *
  * Testing exceptions TZOFFSETFROM and TZOFFSETTO
  *
@@ -46,8 +46,7 @@ class Exception6Test extends TestCase
     /**
      * DateIntervalFactoryTest provider
      */
-    public function DateIntervalFactoryTestProvider()
-    {
+    public function DateIntervalFactoryTestProvider() {
 
         $dataArr = [];
 
@@ -55,7 +54,7 @@ class Exception6Test extends TestCase
             11,
             Vcalendar::TZOFFSETFROM,
             null,
-            [Vcalendar::ALLOWEMPTY => false]
+            [ Vcalendar::ALLOWEMPTY => false ]
         ];
 
         $dataArr[] = [
@@ -69,7 +68,7 @@ class Exception6Test extends TestCase
             21,
             Vcalendar::TZOFFSETTO,
             null,
-            [Vcalendar::ALLOWEMPTY => false]
+            [ Vcalendar::ALLOWEMPTY => false ]
         ];
 
         $dataArr[] = [
@@ -87,22 +86,22 @@ class Exception6Test extends TestCase
      *
      * @test
      * @dataProvider DateIntervalFactoryTestProvider
-     * @param int $case
+     * @param int    $case
      * @param string $property
      * @param string|null $value
      * @param array $config
      */
-    public function DateIntervalFactoryTest($case, $property, $value = null, $config = [])
-    {
-        $standard = new Standard($config);
-        $method = $standard::getSetMethodName($property);
+    public function DateIntervalFactoryTest(  $case, $property, $value  = null, $config = [] ) {
+        $standard = new Standard( $config );
+        $method   = $standard::getSetMethodName( $property );
         $ok = false;
         try {
-            $standard->{$method}($value);
-        } catch (InvalidArgumentException $e) {
+            $standard->{$method}( $value );
+        }
+        catch ( InvalidArgumentException $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
 }

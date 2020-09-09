@@ -49,8 +49,7 @@ use Twilio\Version;
  * @property string $emergencyAddressSid
  * @property string $bundleSid
  */
-class IncomingPhoneNumberInstance extends InstanceResource
-{
+class IncomingPhoneNumberInstance extends InstanceResource {
     protected $_assignedAddOns = null;
 
     /**
@@ -62,8 +61,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -101,7 +99,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
             'bundleSid' => Values::array_get($payload, 'bundle_sid'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -112,8 +110,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      *                                                                   for this
      *                                                                   IncomingPhoneNumberInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new IncomingPhoneNumberContext(
                 $this->version,
@@ -132,8 +129,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      * @return IncomingPhoneNumberInstance Updated IncomingPhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -143,8 +139,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      * @return IncomingPhoneNumberInstance Fetched IncomingPhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -154,8 +149,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -164,8 +158,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOnList
      */
-    protected function getAssignedAddOns()
-    {
+    protected function getAssignedAddOns() {
         return $this->proxy()->assignedAddOns;
     }
 
@@ -176,8 +169,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -195,8 +187,7 @@ class IncomingPhoneNumberInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

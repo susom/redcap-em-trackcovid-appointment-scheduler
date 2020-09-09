@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property \DateTime $dateUpdated
  * @property string $url
  */
-class MessagingConfigurationInstance extends InstanceResource
-{
+class MessagingConfigurationInstance extends InstanceResource {
     /**
      * Initialize the MessagingConfigurationInstance
      *
@@ -36,8 +35,7 @@ class MessagingConfigurationInstance extends InstanceResource
      * @param string $country The ISO-3166-1 country code of the country or `all`.
      * @return \Twilio\Rest\Verify\V2\Service\MessagingConfigurationInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $country = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $country = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -66,8 +64,7 @@ class MessagingConfigurationInstance extends InstanceResource
      *                                                                      this
      *                                                                      MessagingConfigurationInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new MessagingConfigurationContext(
                 $this->version,
@@ -87,8 +84,7 @@ class MessagingConfigurationInstance extends InstanceResource
      * @return MessagingConfigurationInstance Updated MessagingConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($messagingServiceSid)
-    {
+    public function update($messagingServiceSid) {
         return $this->proxy()->update($messagingServiceSid);
     }
 
@@ -98,8 +94,7 @@ class MessagingConfigurationInstance extends InstanceResource
      * @return MessagingConfigurationInstance Fetched MessagingConfigurationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -109,8 +104,7 @@ class MessagingConfigurationInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -121,8 +115,7 @@ class MessagingConfigurationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -140,8 +133,7 @@ class MessagingConfigurationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

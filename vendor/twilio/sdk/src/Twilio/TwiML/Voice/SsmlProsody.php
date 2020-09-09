@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class SsmlProsody extends TwiML
-{
+class SsmlProsody extends TwiML {
     /**
      * SsmlProsody constructor.
      *
      * @param string $words Words to speak
      * @param array $attributes Optional attributes
      */
-    public function __construct($words, $attributes = array())
-    {
+    public function __construct($words, $attributes = array()) {
         parent::__construct('prosody', $words, $attributes);
     }
 
@@ -31,8 +29,7 @@ class SsmlProsody extends TwiML
      *                       x-soft, soft, medium, loud, x-loud, +ndB, -ndB
      * @return static $this.
      */
-    public function setVolume($volume)
-    {
+    public function setVolume($volume) {
         return $this->setAttribute('volume', $volume);
     }
 
@@ -43,8 +40,7 @@ class SsmlProsody extends TwiML
      *                     medium, fast, x-fast, n%
      * @return static $this.
      */
-    public function setRate($rate)
-    {
+    public function setRate($rate) {
         return $this->setAttribute('rate', $rate);
     }
 
@@ -55,8 +51,7 @@ class SsmlProsody extends TwiML
      *                      low, medium, high, x-high, +n%, -n%
      * @return static $this.
      */
-    public function setPitch($pitch)
-    {
+    public function setPitch($pitch) {
         return $this->setAttribute('pitch', $pitch);
     }
 }

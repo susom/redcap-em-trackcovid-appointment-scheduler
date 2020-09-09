@@ -15,8 +15,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DialogueList extends ListResource
-{
+class DialogueList extends ListResource {
     /**
      * Construct the DialogueList
      *
@@ -24,12 +23,11 @@ class DialogueList extends ListResource
      * @param string $assistantSid The unique ID of the parent Assistant.
      * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueList
      */
-    public function __construct(Version $version, $assistantSid)
-    {
+    public function __construct(Version $version, $assistantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
     }
 
     /**
@@ -38,8 +36,7 @@ class DialogueList extends ListResource
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new DialogueContext($this->version, $this->solution['assistantSid'], $sid);
     }
 
@@ -48,8 +45,7 @@ class DialogueList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.Understand.DialogueList]';
     }
 }

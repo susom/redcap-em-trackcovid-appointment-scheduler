@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $smsUrl
  * @property string $uri
  */
-class ShortCodeInstance extends InstanceResource
-{
+class ShortCodeInstance extends InstanceResource {
     /**
      * Initialize the ShortCodeInstance
      *
@@ -41,8 +40,7 @@ class ShortCodeInstance extends InstanceResource
      * @param string $sid The unique string that identifies this resource
      * @return \Twilio\Rest\Api\V2010\Account\ShortCodeInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -61,7 +59,7 @@ class ShortCodeInstance extends InstanceResource
             'uri' => Values::array_get($payload, 'uri'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -71,8 +69,7 @@ class ShortCodeInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\ShortCodeContext Context for this
      *                                                         ShortCodeInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ShortCodeContext(
                 $this->version,
@@ -90,8 +87,7 @@ class ShortCodeInstance extends InstanceResource
      * @return ShortCodeInstance Fetched ShortCodeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -102,8 +98,7 @@ class ShortCodeInstance extends InstanceResource
      * @return ShortCodeInstance Updated ShortCodeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -114,8 +109,7 @@ class ShortCodeInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -133,8 +127,7 @@ class ShortCodeInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

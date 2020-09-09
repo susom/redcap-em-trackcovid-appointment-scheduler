@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class PhoneNumberContext extends InstanceContext
-{
+class PhoneNumberContext extends InstanceContext {
     /**
      * Initialize the PhoneNumberContext
      *
@@ -30,12 +29,11 @@ class PhoneNumberContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Proxy\V1\Service\PhoneNumberContext
      */
-    public function __construct(Version $version, $serviceSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/PhoneNumbers/' . \rawurlencode($sid) . '';
     }
@@ -46,8 +44,7 @@ class PhoneNumberContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -57,8 +54,7 @@ class PhoneNumberContext extends InstanceContext
      * @return PhoneNumberInstance Fetched PhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -82,11 +78,10 @@ class PhoneNumberContext extends InstanceContext
      * @return PhoneNumberInstance Updated PhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('IsReserved' => Serialize::booleanToString($options['isReserved']),));
+        $data = Values::of(array('IsReserved' => Serialize::booleanToString($options['isReserved']), ));
 
         $payload = $this->version->update(
             'POST',
@@ -108,8 +103,7 @@ class PhoneNumberContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DocumentPermissionContext extends InstanceContext
-{
+class DocumentPermissionContext extends InstanceContext {
     /**
      * Initialize the DocumentPermissionContext
      *
@@ -30,8 +29,7 @@ class DocumentPermissionContext extends InstanceContext
      *                         Permission applies.
      * @return \Twilio\Rest\Preview\Sync\Service\Document\DocumentPermissionContext
      */
-    public function __construct(Version $version, $serviceSid, $documentSid, $identity)
-    {
+    public function __construct(Version $version, $serviceSid, $documentSid, $identity) {
         parent::__construct($version);
 
         // Path Solution
@@ -50,8 +48,7 @@ class DocumentPermissionContext extends InstanceContext
      * @return DocumentPermissionInstance Fetched DocumentPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -75,8 +72,7 @@ class DocumentPermissionContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -89,8 +85,7 @@ class DocumentPermissionContext extends InstanceContext
      * @return DocumentPermissionInstance Updated DocumentPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($read, $write, $manage)
-    {
+    public function update($read, $write, $manage) {
         $data = Values::of(array(
             'Read' => Serialize::booleanToString($read),
             'Write' => Serialize::booleanToString($write),
@@ -118,8 +113,7 @@ class DocumentPermissionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

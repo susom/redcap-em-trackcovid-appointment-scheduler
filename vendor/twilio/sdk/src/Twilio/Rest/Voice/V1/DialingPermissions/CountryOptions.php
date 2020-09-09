@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class CountryOptions
-{
+abstract class CountryOptions {
     /**
      * @param string $isoCode Filter to retrieve the country permissions by
      *                        specifying the ISO country code
@@ -36,21 +35,12 @@ abstract class CountryOptions
      *                                              enabled
      * @return ReadCountryOptions Options builder
      */
-    public static function read(
-        $isoCode = Values::NONE,
-        $continent = Values::NONE,
-        $countryCode = Values::NONE,
-        $lowRiskNumbersEnabled = Values::NONE,
-        $highRiskSpecialNumbersEnabled = Values::NONE,
-        $highRiskTollfraudNumbersEnabled = Values::NONE
-    ) {
-        return new ReadCountryOptions($isoCode, $continent, $countryCode, $lowRiskNumbersEnabled,
-            $highRiskSpecialNumbersEnabled, $highRiskTollfraudNumbersEnabled);
+    public static function read($isoCode = Values::NONE, $continent = Values::NONE, $countryCode = Values::NONE, $lowRiskNumbersEnabled = Values::NONE, $highRiskSpecialNumbersEnabled = Values::NONE, $highRiskTollfraudNumbersEnabled = Values::NONE) {
+        return new ReadCountryOptions($isoCode, $continent, $countryCode, $lowRiskNumbersEnabled, $highRiskSpecialNumbersEnabled, $highRiskTollfraudNumbersEnabled);
     }
 }
 
-class ReadCountryOptions extends Options
-{
+class ReadCountryOptions extends Options {
     /**
      * @param string $isoCode Filter to retrieve the country permissions by
      *                        specifying the ISO country code
@@ -69,14 +59,7 @@ class ReadCountryOptions extends Options
      *                                              high-risk toll fraud numbers
      *                                              enabled
      */
-    public function __construct(
-        $isoCode = Values::NONE,
-        $continent = Values::NONE,
-        $countryCode = Values::NONE,
-        $lowRiskNumbersEnabled = Values::NONE,
-        $highRiskSpecialNumbersEnabled = Values::NONE,
-        $highRiskTollfraudNumbersEnabled = Values::NONE
-    ) {
+    public function __construct($isoCode = Values::NONE, $continent = Values::NONE, $countryCode = Values::NONE, $lowRiskNumbersEnabled = Values::NONE, $highRiskSpecialNumbersEnabled = Values::NONE, $highRiskTollfraudNumbersEnabled = Values::NONE) {
         $this->options['isoCode'] = $isoCode;
         $this->options['continent'] = $continent;
         $this->options['countryCode'] = $countryCode;
@@ -92,8 +75,7 @@ class ReadCountryOptions extends Options
      *                        specifying the ISO country code
      * @return $this Fluent Builder
      */
-    public function setIsoCode($isoCode)
-    {
+    public function setIsoCode($isoCode) {
         $this->options['isoCode'] = $isoCode;
         return $this;
     }
@@ -105,8 +87,7 @@ class ReadCountryOptions extends Options
      *                          specifying the continent
      * @return $this Fluent Builder
      */
-    public function setContinent($continent)
-    {
+    public function setContinent($continent) {
         $this->options['continent'] = $continent;
         return $this;
     }
@@ -117,8 +98,7 @@ class ReadCountryOptions extends Options
      * @param string $countryCode Country code filter
      * @return $this Fluent Builder
      */
-    public function setCountryCode($countryCode)
-    {
+    public function setCountryCode($countryCode) {
         $this->options['countryCode'] = $countryCode;
         return $this;
     }
@@ -131,8 +111,7 @@ class ReadCountryOptions extends Options
      *                                    numbers enabled
      * @return $this Fluent Builder
      */
-    public function setLowRiskNumbersEnabled($lowRiskNumbersEnabled)
-    {
+    public function setLowRiskNumbersEnabled($lowRiskNumbersEnabled) {
         $this->options['lowRiskNumbersEnabled'] = $lowRiskNumbersEnabled;
         return $this;
     }
@@ -146,8 +125,7 @@ class ReadCountryOptions extends Options
      *                                            enabled
      * @return $this Fluent Builder
      */
-    public function setHighRiskSpecialNumbersEnabled($highRiskSpecialNumbersEnabled)
-    {
+    public function setHighRiskSpecialNumbersEnabled($highRiskSpecialNumbersEnabled) {
         $this->options['highRiskSpecialNumbersEnabled'] = $highRiskSpecialNumbersEnabled;
         return $this;
     }
@@ -161,8 +139,7 @@ class ReadCountryOptions extends Options
      *                                              enabled
      * @return $this Fluent Builder
      */
-    public function setHighRiskTollfraudNumbersEnabled($highRiskTollfraudNumbersEnabled)
-    {
+    public function setHighRiskTollfraudNumbersEnabled($highRiskTollfraudNumbersEnabled) {
         $this->options['highRiskTollfraudNumbersEnabled'] = $highRiskTollfraudNumbersEnabled;
         return $this;
     }
@@ -172,8 +149,7 @@ class ReadCountryOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

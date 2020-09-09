@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -79,8 +79,6 @@ final class Vevent extends VetComponent
 
     /**
      * @var string
-     * @access protected
-     * @static
      */
     protected static $compSgn = 'e';
 
@@ -91,8 +89,8 @@ final class Vevent extends VetComponent
      */
     public function __destruct()
     {
-        if (!empty($this->components)) {
-            foreach ($this->components as $cix => $component) {
+        if( ! empty( $this->components )) {
+            foreach( $this->components as $cix => $component ) {
                 $this->components[$cix]->__destruct();
             }
         }
@@ -157,45 +155,44 @@ final class Vevent extends VetComponent
      */
     public function createComponent()
     {
-        $compType = strtoupper($this->getCompType());
-        $component = sprintf(self::$FMTBEGIN, $compType);
-        $component .= $this->createUid();
-        $component .= $this->createDtstamp();
-        $component .= $this->createAttach();
-        $component .= $this->createAttendee();
-        $component .= $this->createCategories();
-        $component .= $this->createClass();
-        $component .= $this->createColor();
-        $component .= $this->createComment();
-        $component .= $this->createConference();
-        $component .= $this->createContact();
-        $component .= $this->createCreated();
-        $component .= $this->createDescription();
-        $component .= $this->createDtstart();
-        $component .= $this->createDtend();
-        $component .= $this->createDuration();
-        $component .= $this->createExdate();
-        $component .= $this->createExrule();
-        $component .= $this->createImage();
-        $component .= $this->createGeo();
-        $component .= $this->createLastmodified();
-        $component .= $this->createLocation();
-        $component .= $this->createOrganizer();
-        $component .= $this->createPriority();
-        $component .= $this->createRdate();
-        $component .= $this->createRrule();
-        $component .= $this->createRelatedto();
-        $component .= $this->createRequeststatus();
-        $component .= $this->createRecurrenceid();
-        $component .= $this->createResources();
-        $component .= $this->createSequence();
-        $component .= $this->createStatus();
-        $component .= $this->createSummary();
-        $component .= $this->createTransp();
-        $component .= $this->createUrl();
-        $component .= $this->createXprop();
-        $component .= $this->createSubComponent();
-        return $component . sprintf(self::$FMTEND, $compType);
+        $compType    = strtoupper( $this->getCompType());
+        $component   = sprintf( self::$FMTBEGIN, $compType );
+        $component  .= $this->createUid();
+        $component  .= $this->createDtstamp();
+        $component  .= $this->createAttach();
+        $component  .= $this->createAttendee();
+        $component  .= $this->createCategories();
+        $component  .= $this->createClass();
+        $component  .= $this->createColor();
+        $component  .= $this->createComment();
+        $component  .= $this->createConference();
+        $component  .= $this->createContact();
+        $component  .= $this->createCreated();
+        $component  .= $this->createDescription();
+        $component  .= $this->createDtstart();
+        $component  .= $this->createDtend();
+        $component  .= $this->createDuration();
+        $component  .= $this->createExdate();
+        $component  .= $this->createExrule();
+        $component  .= $this->createImage();
+        $component  .= $this->createGeo();
+        $component  .= $this->createLastmodified();
+        $component  .= $this->createLocation();
+        $component  .= $this->createOrganizer();
+        $component  .= $this->createPriority();
+        $component  .= $this->createRdate();
+        $component  .= $this->createRrule();
+        $component  .= $this->createRelatedto();
+        $component  .= $this->createRequeststatus();
+        $component  .= $this->createRecurrenceid();
+        $component  .= $this->createResources();
+        $component  .= $this->createSequence();
+        $component  .= $this->createStatus();
+        $component  .= $this->createSummary();
+        $component  .= $this->createTransp();
+        $component  .= $this->createUrl();
+        $component  .= $this->createXprop();
+        $component  .= $this->createSubComponent();
+        return $component . sprintf( self::$FMTEND, $compType );
     }
-
 }

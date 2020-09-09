@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class QueryList extends ListResource
-{
+class QueryList extends ListResource {
     /**
      * Construct the QueryList
      *
@@ -28,12 +27,11 @@ class QueryList extends ListResource
      *                             the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\QueryList
      */
-    public function __construct(Version $version, $assistantSid)
-    {
+    public function __construct(Version $version, $assistantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/Queries';
     }
@@ -57,8 +55,7 @@ class QueryList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -82,8 +79,7 @@ class QueryList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return QueryInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -97,12 +93,7 @@ class QueryList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of QueryInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Language' => $options['language'],
@@ -129,8 +120,7 @@ class QueryList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of QueryInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -149,8 +139,7 @@ class QueryList extends ListResource
      * @return QueryInstance Newly created QueryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($language, $query, $options = array())
-    {
+    public function create($language, $query, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -176,8 +165,7 @@ class QueryList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\QueryContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new QueryContext($this->version, $this->solution['assistantSid'], $sid);
     }
 
@@ -186,8 +174,7 @@ class QueryList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Autopilot.V1.QueryList]';
     }
 }

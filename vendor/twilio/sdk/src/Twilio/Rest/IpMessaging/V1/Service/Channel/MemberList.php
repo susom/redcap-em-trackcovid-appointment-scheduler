@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class MemberList extends ListResource
-{
+class MemberList extends ListResource {
     /**
      * Construct the MemberList
      *
@@ -27,12 +26,11 @@ class MemberList extends ListResource
      * @param string $channelSid The unique ID of the Channel for the member
      * @return \Twilio\Rest\IpMessaging\V1\Service\Channel\MemberList
      */
-    public function __construct(Version $version, $serviceSid, $channelSid)
-    {
+    public function __construct(Version $version, $serviceSid, $channelSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Channels/' . \rawurlencode($channelSid) . '/Members';
     }
@@ -46,11 +44,10 @@ class MemberList extends ListResource
      * @return MemberInstance Newly created MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($identity, $options = array())
-    {
+    public function create($identity, $options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Identity' => $identity, 'RoleSid' => $options['roleSid'],));
+        $data = Values::of(array('Identity' => $identity, 'RoleSid' => $options['roleSid'], ));
 
         $payload = $this->version->create(
             'POST',
@@ -86,8 +83,7 @@ class MemberList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -111,8 +107,7 @@ class MemberList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return MemberInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -126,17 +121,10 @@ class MemberList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of MemberInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
-            'Identity' => Serialize::map($options['identity'], function ($e) {
-                return $e;
-            }),
+            'Identity' => Serialize::map($options['identity'], function($e) { return $e; }),
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
             'PageSize' => $pageSize,
@@ -158,8 +146,7 @@ class MemberList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of MemberInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -174,8 +161,7 @@ class MemberList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\IpMessaging\V1\Service\Channel\MemberContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new MemberContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -189,8 +175,7 @@ class MemberList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.IpMessaging.V1.MemberList]';
     }
 }

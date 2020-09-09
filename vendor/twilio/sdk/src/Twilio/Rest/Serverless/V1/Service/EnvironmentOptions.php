@@ -15,27 +15,23 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class EnvironmentOptions
-{
+abstract class EnvironmentOptions {
     /**
      * @param string $domainSuffix A URL-friendly name that represents the
      *                             environment
      * @return CreateEnvironmentOptions Options builder
      */
-    public static function create($domainSuffix = Values::NONE)
-    {
+    public static function create($domainSuffix = Values::NONE) {
         return new CreateEnvironmentOptions($domainSuffix);
     }
 }
 
-class CreateEnvironmentOptions extends Options
-{
+class CreateEnvironmentOptions extends Options {
     /**
      * @param string $domainSuffix A URL-friendly name that represents the
      *                             environment
      */
-    public function __construct($domainSuffix = Values::NONE)
-    {
+    public function __construct($domainSuffix = Values::NONE) {
         $this->options['domainSuffix'] = $domainSuffix;
     }
 
@@ -46,8 +42,7 @@ class CreateEnvironmentOptions extends Options
      *                             environment
      * @return $this Fluent Builder
      */
-    public function setDomainSuffix($domainSuffix)
-    {
+    public function setDomainSuffix($domainSuffix) {
         $this->options['domainSuffix'] = $domainSuffix;
         return $this;
     }
@@ -57,8 +52,7 @@ class CreateEnvironmentOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

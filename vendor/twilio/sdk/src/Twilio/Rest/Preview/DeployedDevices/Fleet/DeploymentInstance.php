@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property \DateTime $dateUpdated
  */
-class DeploymentInstance extends InstanceResource
-{
+class DeploymentInstance extends InstanceResource {
     /**
      * Initialize the DeploymentInstance
      *
@@ -39,8 +38,7 @@ class DeploymentInstance extends InstanceResource
      * @param string $sid A string that uniquely identifies the Deployment.
      * @return \Twilio\Rest\Preview\DeployedDevices\Fleet\DeploymentInstance
      */
-    public function __construct(Version $version, array $payload, $fleetSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $fleetSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -55,7 +53,7 @@ class DeploymentInstance extends InstanceResource
             'dateUpdated' => Deserialize::dateTime(Values::array_get($payload, 'date_updated')),
         );
 
-        $this->solution = array('fleetSid' => $fleetSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('fleetSid' => $fleetSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -67,8 +65,7 @@ class DeploymentInstance extends InstanceResource
      *                                                                      this
      *                                                                      DeploymentInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new DeploymentContext(
                 $this->version,
@@ -86,8 +83,7 @@ class DeploymentInstance extends InstanceResource
      * @return DeploymentInstance Fetched DeploymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -97,8 +93,7 @@ class DeploymentInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -109,8 +104,7 @@ class DeploymentInstance extends InstanceResource
      * @return DeploymentInstance Updated DeploymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -121,8 +115,7 @@ class DeploymentInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -140,8 +133,7 @@ class DeploymentInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

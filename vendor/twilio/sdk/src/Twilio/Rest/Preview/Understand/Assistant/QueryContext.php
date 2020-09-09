@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class QueryContext extends InstanceContext
-{
+class QueryContext extends InstanceContext {
     /**
      * Initialize the QueryContext
      *
@@ -29,12 +28,11 @@ class QueryContext extends InstanceContext
      *                    resource.
      * @return \Twilio\Rest\Preview\Understand\Assistant\QueryContext
      */
-    public function __construct(Version $version, $assistantSid, $sid)
-    {
+    public function __construct(Version $version, $assistantSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid,);
+        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/Queries/' . \rawurlencode($sid) . '';
     }
@@ -45,8 +43,7 @@ class QueryContext extends InstanceContext
      * @return QueryInstance Fetched QueryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -70,11 +67,10 @@ class QueryContext extends InstanceContext
      * @return QueryInstance Updated QueryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('SampleSid' => $options['sampleSid'], 'Status' => $options['status'],));
+        $data = Values::of(array('SampleSid' => $options['sampleSid'], 'Status' => $options['status'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -97,8 +93,7 @@ class QueryContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -107,8 +102,7 @@ class QueryContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

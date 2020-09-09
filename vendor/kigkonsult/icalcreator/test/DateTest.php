@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -47,16 +47,12 @@ class DateTest extends DtBase
      * set and restore local timezone from const
      */
     public static $oldTimeZone = null;
-
-    public static function setUpBeforeClass()
-    {
+    public static function setUpBeforeClass() {
         self::$oldTimeZone = date_default_timezone_get();
-        date_default_timezone_set(LTZ);
+        date_default_timezone_set( LTZ );
     }
-
-    public static function tearDownAfterClass()
-    {
-        date_default_timezone_set(self::$oldTimeZone);
+    public static function tearDownAfterClass() {
+        date_default_timezone_set( self::$oldTimeZone );
     }
 
     /**
@@ -66,7 +62,7 @@ class DateTest extends DtBase
      */
     public function DATEProvider()
     {
-        date_default_timezone_set(LTZ);
+        date_default_timezone_set( LTZ );
 
         $dataArr = [];
 
@@ -82,118 +78,118 @@ class DateTest extends DtBase
         ];
 
 
-        $dateTime = DateTimeFactory::factory(DATEYmd);
+        $dateTime  = DateTimeFactory::factory( DATEYmd );
         $dataArr[] = [ // test set #101 DateTime
             101,
             $dateTime,
-            [Vcalendar::VALUE => Vcalendar::DATE],
+            [ Vcalendar::VALUE => Vcalendar::DATE ],
             [
-                Util::$LCvalue => $dateTime,
-                Util::$LCparams => [Vcalendar::VALUE => Vcalendar::DATE]
+                Util::$LCvalue  => $dateTime,
+                Util::$LCparams => [ Vcalendar::VALUE => Vcalendar::DATE ]
             ],
-            $this->getDateTimeAsCreateShortString($dateTime)
+            $this->getDateTimeAsCreateShortString( $dateTime )
         ];
 
-        $dateTime = DateTimeFactory::factory(DATEYmdTHis);
+        $dateTime  = DateTimeFactory::factory( DATEYmdTHis );
         $dataArr[] = [ // test set #102 DateTime
             102,
             $dateTime,
-            [Vcalendar::VALUE => Vcalendar::DATE],
+            [ Vcalendar::VALUE => Vcalendar::DATE ],
             [
-                Util::$LCvalue => $dateTime,
-                Util::$LCparams => [Vcalendar::VALUE => Vcalendar::DATE]
+                Util::$LCvalue  => $dateTime,
+                Util::$LCparams => [ Vcalendar::VALUE => Vcalendar::DATE ]
             ],
-            $this->getDateTimeAsCreateShortString($dateTime)
+            $this->getDateTimeAsCreateShortString( $dateTime )
         ];
 
-        $dateTime = DateTimeFactory::factory(DATEYmdTHis . ' ' . LTZ);
+        $dateTime = DateTimeFactory::factory( DATEYmdTHis . ' ' . LTZ );
         $dataArr[] = [ // test set #103 DateTime
             103,
             $dateTime,
             [],
             [
-                Util::$LCvalue => $dateTime,
-                Util::$LCparams => [Vcalendar::TZID => LTZ]
+                Util::$LCvalue  => $dateTime,
+                Util::$LCparams => [ Vcalendar::TZID => LTZ ]
             ],
-            $this->getDateTimeAsCreateLongString($dateTime, LTZ)
+            $this->getDateTimeAsCreateLongString( $dateTime, LTZ)
         ];
 
-        $dateTime = DateTimeFactory::factory(DATEYmd);
+        $dateTime = DateTimeFactory::factory( DATEYmd );
         $dataArr[] = [ // test set #114 string
             114,
             DATEYmd,
-            [Vcalendar::VALUE => Vcalendar::DATE],
+            [ Vcalendar::VALUE => Vcalendar::DATE ],
             [
-                Util::$LCvalue => $dateTime,
-                Util::$LCparams => [Vcalendar::VALUE => Vcalendar::DATE]
+                Util::$LCvalue  => $dateTime,
+                Util::$LCparams => [ Vcalendar::VALUE => Vcalendar::DATE ]
             ],
-            $this->getDateTimeAsCreateShortString($dateTime)
+            $this->getDateTimeAsCreateShortString( $dateTime )
         ];
 
 
-        $dateTime = DateTimeFactory::factory(DATEYmdTHis);
+        $dateTime = DateTimeFactory::factory( DATEYmdTHis );
         $dataArr[] = [ // test set #115 string
             115,
             DATEYmdTHis,
-            [Vcalendar::VALUE => Vcalendar::DATE],
+            [ Vcalendar::VALUE => Vcalendar::DATE ],
             [
-                Util::$LCvalue => $dateTime,
-                Util::$LCparams => [Vcalendar::VALUE => Vcalendar::DATE]
+                Util::$LCvalue  => $dateTime,
+                Util::$LCparams => [ Vcalendar::VALUE => Vcalendar::DATE ]
             ],
-            $this->getDateTimeAsCreateShortString($dateTime)
+            $this->getDateTimeAsCreateShortString( $dateTime )
         ];
 
-        $dateTime = DateTimeFactory::factory(DATEYmdTHis, Vcalendar::UTC);
+        $dateTime = DateTimeFactory::factory( DATEYmdTHis, Vcalendar::UTC );
         $dataArr[] = [ // test set #116 string
             116,
             DATEYmdTHis,
             [],
             [
-                Util::$LCvalue => $dateTime,
+                Util::$LCvalue  => $dateTime,
                 Util::$LCparams => []
             ],
-            $this->getDateTimeAsCreateLongString($dateTime)
+            $this->getDateTimeAsCreateLongString( $dateTime )
         ];
 
 
-        $dateTime = DateTimeFactory::factory(DATEYmdTHis, Vcalendar::UTC);
+        $dateTime = DateTimeFactory::factory( DATEYmdTHis, Vcalendar::UTC );
         $dataArr[] = [ // test set #117 string
             117,
             DATEYmdTHis . 'Z',
-            [Vcalendar::VALUE => Vcalendar::DATE],
+            [ Vcalendar::VALUE => Vcalendar::DATE ],
             [
-                Util::$LCvalue => $dateTime,
+                Util::$LCvalue  => $dateTime,
                 Util::$LCparams =>
-                    [Vcalendar::VALUE => Vcalendar::DATE]
+                    [ Vcalendar::VALUE => Vcalendar::DATE ]
             ],
-            $this->getDateTimeAsCreateShortString($dateTime)
+            $this->getDateTimeAsCreateShortString( $dateTime )
         ];
 
-        $dateTime = DateTimeFactory::factory(DATEYmdTHis, Vcalendar::UTC);
+        $dateTime = DateTimeFactory::factory( DATEYmdTHis, Vcalendar::UTC );
         $dataArr[] = [ // test set #118 string
             118,
             DATEYmdTHis . 'Z',
             [],
             [
-                Util::$LCvalue => $dateTime,
+                Util::$LCvalue  => $dateTime,
                 Util::$LCparams => []
             ],
-            $this->getDateTimeAsCreateLongString($dateTime, Vcalendar::UTC)
+            $this->getDateTimeAsCreateLongString( $dateTime, Vcalendar::UTC )
         ];
 
-        $dateTime = DateTimeFactory::factory('20160305');
-        for ($x = 1; $x < 10; $x++) {
+        $dateTime  = DateTimeFactory::factory( '20160305' );
+        for( $x = 1; $x < 10; $x++ ) {
             $dataArr[] = [ // test set #101 DateTime
                 200 + $x,
-                $dateTime->format('Ymd'),
-                [Vcalendar::VALUE => Vcalendar::DATE],
+                $dateTime->format( 'Ymd' ),
+                [ Vcalendar::VALUE => Vcalendar::DATE ],
                 [
-                    Util::$LCvalue => clone $dateTime,
-                    Util::$LCparams => [Vcalendar::VALUE => Vcalendar::DATE]
+                    Util::$LCvalue  => clone $dateTime,
+                    Util::$LCparams => [ Vcalendar::VALUE => Vcalendar::DATE ]
                 ],
-                $this->getDateTimeAsCreateShortString($dateTime)
+                $this->getDateTimeAsCreateShortString( $dateTime )
             ];
-            $dateTime->modify('-1 day ');
+            $dateTime->modify( '-1 day ' );
         }
 
         return $dataArr;
@@ -204,10 +200,10 @@ class DateTest extends DtBase
      *
      * @test
      * @dataProvider DATEProvider
-     * @param int $case
-     * @param mixed $value
-     * @param mixed $params
-     * @param array $expectedGet
+     * @param int    $case
+     * @param mixed  $value
+     * @param mixed  $params
+     * @param array  $expectedGet
      * @param string $expectedString
      * @throws Exception
      * @throws InvalidArgumentException
@@ -227,8 +223,8 @@ class DateTest extends DtBase
                 Vcalendar::EXDATE,
                 Vcalendar::RDATE
             ],
-            Vcalendar::VTODO => [Vcalendar::DTSTART, Vcalendar::DUE, Vcalendar::RECURRENCE_ID],
-            Vcalendar::VJOURNAL => [Vcalendar::DTSTART, Vcalendar::RECURRENCE_ID],
+            Vcalendar::VTODO    => [ Vcalendar::DTSTART, Vcalendar::DUE, Vcalendar::RECURRENCE_ID ],
+            Vcalendar::VJOURNAL => [ Vcalendar::DTSTART, Vcalendar::RECURRENCE_ID ],
         ];
         static $compsProps2 = [
             Vcalendar::VEVENT => [
@@ -236,8 +232,8 @@ class DateTest extends DtBase
                 Vcalendar::RDATE
             ]
         ];
-        $this->theTestMethod($case, $compsProps, $value, $params, $expectedGet, $expectedString);
-        $this->theTestMethod1b($case, $compsProps2, $value, $params, $expectedGet, $expectedString);
+        $this->theTestMethod( $case, $compsProps, $value, $params, $expectedGet, $expectedString );
+        $this->theTestMethod1b( $case, $compsProps2, $value, $params, $expectedGet, $expectedString );
     }
 
 

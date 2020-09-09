@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ApplicationOptions
-{
+abstract class ApplicationOptions {
     /**
      * @param string $apiVersion The API version to use to start a new TwiML session
      * @param string $voiceUrl The URL to call when the phone number receives a call
@@ -39,26 +38,8 @@ abstract class ApplicationOptions
      * @param string $friendlyName A string to describe the new resource
      * @return CreateApplicationOptions Options builder
      */
-    public static function create(
-        $apiVersion = Values::NONE,
-        $voiceUrl = Values::NONE,
-        $voiceMethod = Values::NONE,
-        $voiceFallbackUrl = Values::NONE,
-        $voiceFallbackMethod = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $voiceCallerIdLookup = Values::NONE,
-        $smsUrl = Values::NONE,
-        $smsMethod = Values::NONE,
-        $smsFallbackUrl = Values::NONE,
-        $smsFallbackMethod = Values::NONE,
-        $smsStatusCallback = Values::NONE,
-        $messageStatusCallback = Values::NONE,
-        $friendlyName = Values::NONE
-    ) {
-        return new CreateApplicationOptions($apiVersion, $voiceUrl, $voiceMethod, $voiceFallbackUrl,
-            $voiceFallbackMethod, $statusCallback, $statusCallbackMethod, $voiceCallerIdLookup, $smsUrl, $smsMethod,
-            $smsFallbackUrl, $smsFallbackMethod, $smsStatusCallback, $messageStatusCallback, $friendlyName);
+    public static function create($apiVersion = Values::NONE, $voiceUrl = Values::NONE, $voiceMethod = Values::NONE, $voiceFallbackUrl = Values::NONE, $voiceFallbackMethod = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $voiceCallerIdLookup = Values::NONE, $smsUrl = Values::NONE, $smsMethod = Values::NONE, $smsFallbackUrl = Values::NONE, $smsFallbackMethod = Values::NONE, $smsStatusCallback = Values::NONE, $messageStatusCallback = Values::NONE, $friendlyName = Values::NONE) {
+        return new CreateApplicationOptions($apiVersion, $voiceUrl, $voiceMethod, $voiceFallbackUrl, $voiceFallbackMethod, $statusCallback, $statusCallbackMethod, $voiceCallerIdLookup, $smsUrl, $smsMethod, $smsFallbackUrl, $smsFallbackMethod, $smsStatusCallback, $messageStatusCallback, $friendlyName);
     }
 
     /**
@@ -66,8 +47,7 @@ abstract class ApplicationOptions
      *                             resources to read
      * @return ReadApplicationOptions Options builder
      */
-    public static function read($friendlyName = Values::NONE)
-    {
+    public static function read($friendlyName = Values::NONE) {
         return new ReadApplicationOptions($friendlyName);
     }
 
@@ -96,31 +76,12 @@ abstract class ApplicationOptions
      *                                      information to your application
      * @return UpdateApplicationOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $apiVersion = Values::NONE,
-        $voiceUrl = Values::NONE,
-        $voiceMethod = Values::NONE,
-        $voiceFallbackUrl = Values::NONE,
-        $voiceFallbackMethod = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $voiceCallerIdLookup = Values::NONE,
-        $smsUrl = Values::NONE,
-        $smsMethod = Values::NONE,
-        $smsFallbackUrl = Values::NONE,
-        $smsFallbackMethod = Values::NONE,
-        $smsStatusCallback = Values::NONE,
-        $messageStatusCallback = Values::NONE
-    ) {
-        return new UpdateApplicationOptions($friendlyName, $apiVersion, $voiceUrl, $voiceMethod, $voiceFallbackUrl,
-            $voiceFallbackMethod, $statusCallback, $statusCallbackMethod, $voiceCallerIdLookup, $smsUrl, $smsMethod,
-            $smsFallbackUrl, $smsFallbackMethod, $smsStatusCallback, $messageStatusCallback);
+    public static function update($friendlyName = Values::NONE, $apiVersion = Values::NONE, $voiceUrl = Values::NONE, $voiceMethod = Values::NONE, $voiceFallbackUrl = Values::NONE, $voiceFallbackMethod = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $voiceCallerIdLookup = Values::NONE, $smsUrl = Values::NONE, $smsMethod = Values::NONE, $smsFallbackUrl = Values::NONE, $smsFallbackMethod = Values::NONE, $smsStatusCallback = Values::NONE, $messageStatusCallback = Values::NONE) {
+        return new UpdateApplicationOptions($friendlyName, $apiVersion, $voiceUrl, $voiceMethod, $voiceFallbackUrl, $voiceFallbackMethod, $statusCallback, $statusCallbackMethod, $voiceCallerIdLookup, $smsUrl, $smsMethod, $smsFallbackUrl, $smsFallbackMethod, $smsStatusCallback, $messageStatusCallback);
     }
 }
 
-class CreateApplicationOptions extends Options
-{
+class CreateApplicationOptions extends Options {
     /**
      * @param string $apiVersion The API version to use to start a new TwiML session
      * @param string $voiceUrl The URL to call when the phone number receives a call
@@ -145,23 +106,7 @@ class CreateApplicationOptions extends Options
      *                                      information to your application
      * @param string $friendlyName A string to describe the new resource
      */
-    public function __construct(
-        $apiVersion = Values::NONE,
-        $voiceUrl = Values::NONE,
-        $voiceMethod = Values::NONE,
-        $voiceFallbackUrl = Values::NONE,
-        $voiceFallbackMethod = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $voiceCallerIdLookup = Values::NONE,
-        $smsUrl = Values::NONE,
-        $smsMethod = Values::NONE,
-        $smsFallbackUrl = Values::NONE,
-        $smsFallbackMethod = Values::NONE,
-        $smsStatusCallback = Values::NONE,
-        $messageStatusCallback = Values::NONE,
-        $friendlyName = Values::NONE
-    ) {
+    public function __construct($apiVersion = Values::NONE, $voiceUrl = Values::NONE, $voiceMethod = Values::NONE, $voiceFallbackUrl = Values::NONE, $voiceFallbackMethod = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $voiceCallerIdLookup = Values::NONE, $smsUrl = Values::NONE, $smsMethod = Values::NONE, $smsFallbackUrl = Values::NONE, $smsFallbackMethod = Values::NONE, $smsStatusCallback = Values::NONE, $messageStatusCallback = Values::NONE, $friendlyName = Values::NONE) {
         $this->options['apiVersion'] = $apiVersion;
         $this->options['voiceUrl'] = $voiceUrl;
         $this->options['voiceMethod'] = $voiceMethod;
@@ -185,8 +130,7 @@ class CreateApplicationOptions extends Options
      * @param string $apiVersion The API version to use to start a new TwiML session
      * @return $this Fluent Builder
      */
-    public function setApiVersion($apiVersion)
-    {
+    public function setApiVersion($apiVersion) {
         $this->options['apiVersion'] = $apiVersion;
         return $this;
     }
@@ -197,8 +141,7 @@ class CreateApplicationOptions extends Options
      * @param string $voiceUrl The URL to call when the phone number receives a call
      * @return $this Fluent Builder
      */
-    public function setVoiceUrl($voiceUrl)
-    {
+    public function setVoiceUrl($voiceUrl) {
         $this->options['voiceUrl'] = $voiceUrl;
         return $this;
     }
@@ -209,8 +152,7 @@ class CreateApplicationOptions extends Options
      * @param string $voiceMethod The HTTP method to use with the voice_url
      * @return $this Fluent Builder
      */
-    public function setVoiceMethod($voiceMethod)
-    {
+    public function setVoiceMethod($voiceMethod) {
         $this->options['voiceMethod'] = $voiceMethod;
         return $this;
     }
@@ -221,8 +163,7 @@ class CreateApplicationOptions extends Options
      * @param string $voiceFallbackUrl The URL to call when a TwiML error occurs
      * @return $this Fluent Builder
      */
-    public function setVoiceFallbackUrl($voiceFallbackUrl)
-    {
+    public function setVoiceFallbackUrl($voiceFallbackUrl) {
         $this->options['voiceFallbackUrl'] = $voiceFallbackUrl;
         return $this;
     }
@@ -234,8 +175,7 @@ class CreateApplicationOptions extends Options
      *                                    voice_fallback_url
      * @return $this Fluent Builder
      */
-    public function setVoiceFallbackMethod($voiceFallbackMethod)
-    {
+    public function setVoiceFallbackMethod($voiceFallbackMethod) {
         $this->options['voiceFallbackMethod'] = $voiceFallbackMethod;
         return $this;
     }
@@ -247,8 +187,7 @@ class CreateApplicationOptions extends Options
      *                               application
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -260,8 +199,7 @@ class CreateApplicationOptions extends Options
      *                                     status_callback
      * @return $this Fluent Builder
      */
-    public function setStatusCallbackMethod($statusCallbackMethod)
-    {
+    public function setStatusCallbackMethod($statusCallbackMethod) {
         $this->options['statusCallbackMethod'] = $statusCallbackMethod;
         return $this;
     }
@@ -272,8 +210,7 @@ class CreateApplicationOptions extends Options
      * @param bool $voiceCallerIdLookup Whether to lookup the caller's name
      * @return $this Fluent Builder
      */
-    public function setVoiceCallerIdLookup($voiceCallerIdLookup)
-    {
+    public function setVoiceCallerIdLookup($voiceCallerIdLookup) {
         $this->options['voiceCallerIdLookup'] = $voiceCallerIdLookup;
         return $this;
     }
@@ -285,8 +222,7 @@ class CreateApplicationOptions extends Options
      *                       incoming SMS message
      * @return $this Fluent Builder
      */
-    public function setSmsUrl($smsUrl)
-    {
+    public function setSmsUrl($smsUrl) {
         $this->options['smsUrl'] = $smsUrl;
         return $this;
     }
@@ -297,8 +233,7 @@ class CreateApplicationOptions extends Options
      * @param string $smsMethod The HTTP method to use with sms_url
      * @return $this Fluent Builder
      */
-    public function setSmsMethod($smsMethod)
-    {
+    public function setSmsMethod($smsMethod) {
         $this->options['smsMethod'] = $smsMethod;
         return $this;
     }
@@ -310,8 +245,7 @@ class CreateApplicationOptions extends Options
      *                               retrieving or executing the TwiML
      * @return $this Fluent Builder
      */
-    public function setSmsFallbackUrl($smsFallbackUrl)
-    {
+    public function setSmsFallbackUrl($smsFallbackUrl) {
         $this->options['smsFallbackUrl'] = $smsFallbackUrl;
         return $this;
     }
@@ -322,8 +256,7 @@ class CreateApplicationOptions extends Options
      * @param string $smsFallbackMethod The HTTP method to use with sms_fallback_url
      * @return $this Fluent Builder
      */
-    public function setSmsFallbackMethod($smsFallbackMethod)
-    {
+    public function setSmsFallbackMethod($smsFallbackMethod) {
         $this->options['smsFallbackMethod'] = $smsFallbackMethod;
         return $this;
     }
@@ -335,8 +268,7 @@ class CreateApplicationOptions extends Options
      *                                  application
      * @return $this Fluent Builder
      */
-    public function setSmsStatusCallback($smsStatusCallback)
-    {
+    public function setSmsStatusCallback($smsStatusCallback) {
         $this->options['smsStatusCallback'] = $smsStatusCallback;
         return $this;
     }
@@ -348,8 +280,7 @@ class CreateApplicationOptions extends Options
      *                                      information to your application
      * @return $this Fluent Builder
      */
-    public function setMessageStatusCallback($messageStatusCallback)
-    {
+    public function setMessageStatusCallback($messageStatusCallback) {
         $this->options['messageStatusCallback'] = $messageStatusCallback;
         return $this;
     }
@@ -360,8 +291,7 @@ class CreateApplicationOptions extends Options
      * @param string $friendlyName A string to describe the new resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -371,8 +301,7 @@ class CreateApplicationOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -383,14 +312,12 @@ class CreateApplicationOptions extends Options
     }
 }
 
-class ReadApplicationOptions extends Options
-{
+class ReadApplicationOptions extends Options {
     /**
      * @param string $friendlyName The string that identifies the Application
      *                             resources to read
      */
-    public function __construct($friendlyName = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
     }
 
@@ -401,8 +328,7 @@ class ReadApplicationOptions extends Options
      *                             resources to read
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -412,8 +338,7 @@ class ReadApplicationOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -424,8 +349,7 @@ class ReadApplicationOptions extends Options
     }
 }
 
-class UpdateApplicationOptions extends Options
-{
+class UpdateApplicationOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $apiVersion The API version to use to start a new TwiML session
@@ -450,23 +374,7 @@ class UpdateApplicationOptions extends Options
      * @param string $messageStatusCallback The URL to send message status
      *                                      information to your application
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $apiVersion = Values::NONE,
-        $voiceUrl = Values::NONE,
-        $voiceMethod = Values::NONE,
-        $voiceFallbackUrl = Values::NONE,
-        $voiceFallbackMethod = Values::NONE,
-        $statusCallback = Values::NONE,
-        $statusCallbackMethod = Values::NONE,
-        $voiceCallerIdLookup = Values::NONE,
-        $smsUrl = Values::NONE,
-        $smsMethod = Values::NONE,
-        $smsFallbackUrl = Values::NONE,
-        $smsFallbackMethod = Values::NONE,
-        $smsStatusCallback = Values::NONE,
-        $messageStatusCallback = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $apiVersion = Values::NONE, $voiceUrl = Values::NONE, $voiceMethod = Values::NONE, $voiceFallbackUrl = Values::NONE, $voiceFallbackMethod = Values::NONE, $statusCallback = Values::NONE, $statusCallbackMethod = Values::NONE, $voiceCallerIdLookup = Values::NONE, $smsUrl = Values::NONE, $smsMethod = Values::NONE, $smsFallbackUrl = Values::NONE, $smsFallbackMethod = Values::NONE, $smsStatusCallback = Values::NONE, $messageStatusCallback = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['apiVersion'] = $apiVersion;
         $this->options['voiceUrl'] = $voiceUrl;
@@ -490,8 +398,7 @@ class UpdateApplicationOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -502,8 +409,7 @@ class UpdateApplicationOptions extends Options
      * @param string $apiVersion The API version to use to start a new TwiML session
      * @return $this Fluent Builder
      */
-    public function setApiVersion($apiVersion)
-    {
+    public function setApiVersion($apiVersion) {
         $this->options['apiVersion'] = $apiVersion;
         return $this;
     }
@@ -514,8 +420,7 @@ class UpdateApplicationOptions extends Options
      * @param string $voiceUrl The URL to call when the phone number receives a call
      * @return $this Fluent Builder
      */
-    public function setVoiceUrl($voiceUrl)
-    {
+    public function setVoiceUrl($voiceUrl) {
         $this->options['voiceUrl'] = $voiceUrl;
         return $this;
     }
@@ -526,8 +431,7 @@ class UpdateApplicationOptions extends Options
      * @param string $voiceMethod The HTTP method to use with the voice_url
      * @return $this Fluent Builder
      */
-    public function setVoiceMethod($voiceMethod)
-    {
+    public function setVoiceMethod($voiceMethod) {
         $this->options['voiceMethod'] = $voiceMethod;
         return $this;
     }
@@ -538,8 +442,7 @@ class UpdateApplicationOptions extends Options
      * @param string $voiceFallbackUrl The URL to call when a TwiML error occurs
      * @return $this Fluent Builder
      */
-    public function setVoiceFallbackUrl($voiceFallbackUrl)
-    {
+    public function setVoiceFallbackUrl($voiceFallbackUrl) {
         $this->options['voiceFallbackUrl'] = $voiceFallbackUrl;
         return $this;
     }
@@ -551,8 +454,7 @@ class UpdateApplicationOptions extends Options
      *                                    voice_fallback_url
      * @return $this Fluent Builder
      */
-    public function setVoiceFallbackMethod($voiceFallbackMethod)
-    {
+    public function setVoiceFallbackMethod($voiceFallbackMethod) {
         $this->options['voiceFallbackMethod'] = $voiceFallbackMethod;
         return $this;
     }
@@ -564,8 +466,7 @@ class UpdateApplicationOptions extends Options
      *                               application
      * @return $this Fluent Builder
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         $this->options['statusCallback'] = $statusCallback;
         return $this;
     }
@@ -577,8 +478,7 @@ class UpdateApplicationOptions extends Options
      *                                     status_callback
      * @return $this Fluent Builder
      */
-    public function setStatusCallbackMethod($statusCallbackMethod)
-    {
+    public function setStatusCallbackMethod($statusCallbackMethod) {
         $this->options['statusCallbackMethod'] = $statusCallbackMethod;
         return $this;
     }
@@ -589,8 +489,7 @@ class UpdateApplicationOptions extends Options
      * @param bool $voiceCallerIdLookup Whether to lookup the caller's name
      * @return $this Fluent Builder
      */
-    public function setVoiceCallerIdLookup($voiceCallerIdLookup)
-    {
+    public function setVoiceCallerIdLookup($voiceCallerIdLookup) {
         $this->options['voiceCallerIdLookup'] = $voiceCallerIdLookup;
         return $this;
     }
@@ -602,8 +501,7 @@ class UpdateApplicationOptions extends Options
      *                       incoming SMS message
      * @return $this Fluent Builder
      */
-    public function setSmsUrl($smsUrl)
-    {
+    public function setSmsUrl($smsUrl) {
         $this->options['smsUrl'] = $smsUrl;
         return $this;
     }
@@ -614,8 +512,7 @@ class UpdateApplicationOptions extends Options
      * @param string $smsMethod The HTTP method to use with sms_url
      * @return $this Fluent Builder
      */
-    public function setSmsMethod($smsMethod)
-    {
+    public function setSmsMethod($smsMethod) {
         $this->options['smsMethod'] = $smsMethod;
         return $this;
     }
@@ -627,8 +524,7 @@ class UpdateApplicationOptions extends Options
      *                               retrieving or executing the TwiML
      * @return $this Fluent Builder
      */
-    public function setSmsFallbackUrl($smsFallbackUrl)
-    {
+    public function setSmsFallbackUrl($smsFallbackUrl) {
         $this->options['smsFallbackUrl'] = $smsFallbackUrl;
         return $this;
     }
@@ -639,8 +535,7 @@ class UpdateApplicationOptions extends Options
      * @param string $smsFallbackMethod The HTTP method to use with sms_fallback_url
      * @return $this Fluent Builder
      */
-    public function setSmsFallbackMethod($smsFallbackMethod)
-    {
+    public function setSmsFallbackMethod($smsFallbackMethod) {
         $this->options['smsFallbackMethod'] = $smsFallbackMethod;
         return $this;
     }
@@ -652,8 +547,7 @@ class UpdateApplicationOptions extends Options
      *                                  application
      * @return $this Fluent Builder
      */
-    public function setSmsStatusCallback($smsStatusCallback)
-    {
+    public function setSmsStatusCallback($smsStatusCallback) {
         $this->options['smsStatusCallback'] = $smsStatusCallback;
         return $this;
     }
@@ -665,8 +559,7 @@ class UpdateApplicationOptions extends Options
      *                                      information to your application
      * @return $this Fluent Builder
      */
-    public function setMessageStatusCallback($messageStatusCallback)
-    {
+    public function setMessageStatusCallback($messageStatusCallback) {
         $this->options['messageStatusCallback'] = $messageStatusCallback;
         return $this;
     }
@@ -676,8 +569,7 @@ class UpdateApplicationOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -22,8 +22,7 @@ use Twilio\Version;
  * @property int $size
  * @property string $resourceType
  */
-class DayInstance extends InstanceResource
-{
+class DayInstance extends InstanceResource {
     /**
      * Initialize the DayInstance
      *
@@ -32,8 +31,7 @@ class DayInstance extends InstanceResource
      * @param string $resourceType The type of communication – Messages, Calls
      * @return \Twilio\Rest\Preview\BulkExports\Export\DayInstance
      */
-    public function __construct(Version $version, array $payload, $resourceType)
-    {
+    public function __construct(Version $version, array $payload, $resourceType) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -44,7 +42,7 @@ class DayInstance extends InstanceResource
             'resourceType' => Values::array_get($payload, 'resource_type'),
         );
 
-        $this->solution = array('resourceType' => $resourceType,);
+        $this->solution = array('resourceType' => $resourceType, );
     }
 
     /**
@@ -54,8 +52,7 @@ class DayInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -73,8 +70,7 @@ class DayInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.BulkExports.DayInstance]';
     }
 }

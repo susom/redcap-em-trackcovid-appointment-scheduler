@@ -13,8 +13,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkerChannelList extends ListResource
-{
+class WorkerChannelList extends ListResource {
     /**
      * Construct the WorkerChannelList
      *
@@ -25,12 +24,11 @@ class WorkerChannelList extends ListResource
      *                          WorkerChannel
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelList
      */
-    public function __construct(Version $version, $workspaceSid, $workerSid)
-    {
+    public function __construct(Version $version, $workspaceSid, $workerSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'workerSid' => $workerSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'workerSid' => $workerSid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workers/' . \rawurlencode($workerSid) . '/Channels';
     }
@@ -53,8 +51,7 @@ class WorkerChannelList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -77,8 +74,7 @@ class WorkerChannelList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return WorkerChannelInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -91,8 +87,7 @@ class WorkerChannelList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of WorkerChannelInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -115,8 +110,7 @@ class WorkerChannelList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of WorkerChannelInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -131,8 +125,7 @@ class WorkerChannelList extends ListResource
      * @param string $sid The SID of the to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new WorkerChannelContext(
             $this->version,
             $this->solution['workspaceSid'],
@@ -146,8 +139,7 @@ class WorkerChannelList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Taskrouter.V1.WorkerChannelList]';
     }
 }

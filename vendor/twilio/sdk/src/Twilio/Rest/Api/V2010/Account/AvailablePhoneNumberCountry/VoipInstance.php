@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property bool $beta
  * @property string $capabilities
  */
-class VoipInstance extends InstanceResource
-{
+class VoipInstance extends InstanceResource {
     /**
      * Initialize the VoipInstance
      *
@@ -40,8 +39,7 @@ class VoipInstance extends InstanceResource
      * @param string $countryCode The ISO-3166-1 country code of the country.
      * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountry\VoipInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $countryCode)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $countryCode) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -61,7 +59,7 @@ class VoipInstance extends InstanceResource
             'capabilities' => Values::array_get($payload, 'capabilities'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'countryCode' => $countryCode,);
+        $this->solution = array('accountSid' => $accountSid, 'countryCode' => $countryCode, );
     }
 
     /**
@@ -71,8 +69,7 @@ class VoipInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -90,8 +87,7 @@ class VoipInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.VoipInstance]';
     }
 }

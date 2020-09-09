@@ -12,8 +12,7 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace\Workflow;
 use Twilio\ListResource;
 use Twilio\Version;
 
-class WorkflowCumulativeStatisticsList extends ListResource
-{
+class WorkflowCumulativeStatisticsList extends ListResource {
     /**
      * Construct the WorkflowCumulativeStatisticsList
      *
@@ -25,12 +24,11 @@ class WorkflowCumulativeStatisticsList extends ListResource
      *                            value
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowCumulativeStatisticsList
      */
-    public function __construct(Version $version, $workspaceSid, $workflowSid)
-    {
+    public function __construct(Version $version, $workspaceSid, $workflowSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'workflowSid' => $workflowSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'workflowSid' => $workflowSid, );
     }
 
     /**
@@ -38,8 +36,7 @@ class WorkflowCumulativeStatisticsList extends ListResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Workflow\WorkflowCumulativeStatisticsContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new WorkflowCumulativeStatisticsContext(
             $this->version,
             $this->solution['workspaceSid'],
@@ -52,8 +49,7 @@ class WorkflowCumulativeStatisticsList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Taskrouter.V1.WorkflowCumulativeStatisticsList]';
     }
 }

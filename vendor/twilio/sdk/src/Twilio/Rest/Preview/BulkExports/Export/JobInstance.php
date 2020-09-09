@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property string $email
  * @property string $url
  */
-class JobInstance extends InstanceResource
-{
+class JobInstance extends InstanceResource {
     /**
      * Initialize the JobInstance
      *
@@ -38,8 +37,7 @@ class JobInstance extends InstanceResource
      * @param string $jobSid The job_sid
      * @return \Twilio\Rest\Preview\BulkExports\Export\JobInstance
      */
-    public function __construct(Version $version, array $payload, $jobSid = null)
-    {
+    public function __construct(Version $version, array $payload, $jobSid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -56,7 +54,7 @@ class JobInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('jobSid' => $jobSid ?: $this->properties['jobSid'],);
+        $this->solution = array('jobSid' => $jobSid ?: $this->properties['jobSid'], );
     }
 
     /**
@@ -66,8 +64,7 @@ class JobInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\BulkExports\Export\JobContext Context for this
      *                                                            JobInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new JobContext($this->version, $this->solution['jobSid']);
         }
@@ -81,8 +78,7 @@ class JobInstance extends InstanceResource
      * @return JobInstance Fetched JobInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -92,8 +88,7 @@ class JobInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -104,8 +99,7 @@ class JobInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -123,8 +117,7 @@ class JobInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

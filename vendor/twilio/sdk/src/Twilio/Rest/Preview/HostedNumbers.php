@@ -21,8 +21,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentContext authorizationDocuments(string $sid)
  * @method \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderContext hostedNumberOrders(string $sid)
  */
-class HostedNumbers extends Version
-{
+class HostedNumbers extends Version {
     protected $_authorizationDocuments = null;
     protected $_hostedNumberOrders = null;
 
@@ -32,8 +31,7 @@ class HostedNumbers extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Preview\HostedNumbers HostedNumbers version of Preview
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'HostedNumbers';
     }
@@ -41,8 +39,7 @@ class HostedNumbers extends Version
     /**
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentList
      */
-    protected function getAuthorizationDocuments()
-    {
+    protected function getAuthorizationDocuments() {
         if (!$this->_authorizationDocuments) {
             $this->_authorizationDocuments = new AuthorizationDocumentList($this);
         }
@@ -52,8 +49,7 @@ class HostedNumbers extends Version
     /**
      * @return \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderList
      */
-    protected function getHostedNumberOrders()
-    {
+    protected function getHostedNumberOrders() {
         if (!$this->_hostedNumberOrders) {
             $this->_hostedNumberOrders = new HostedNumberOrderList($this);
         }
@@ -67,8 +63,7 @@ class HostedNumbers extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -85,8 +80,7 @@ class HostedNumbers extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -100,8 +94,7 @@ class HostedNumbers extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.HostedNumbers]';
     }
 }

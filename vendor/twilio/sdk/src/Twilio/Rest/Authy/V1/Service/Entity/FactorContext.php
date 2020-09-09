@@ -22,8 +22,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Authy\V1\Service\Entity\Factor\ChallengeList $challenges
  * @method \Twilio\Rest\Authy\V1\Service\Entity\Factor\ChallengeContext challenges(string $sid)
  */
-class FactorContext extends InstanceContext
-{
+class FactorContext extends InstanceContext {
     protected $_challenges = null;
 
     /**
@@ -35,12 +34,11 @@ class FactorContext extends InstanceContext
      * @param string $sid A string that uniquely identifies this Factor.
      * @return \Twilio\Rest\Authy\V1\Service\Entity\FactorContext
      */
-    public function __construct(Version $version, $serviceSid, $identity, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $identity, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'identity' => $identity, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'identity' => $identity, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Entities/' . \rawurlencode($identity) . '/Factors/' . \rawurlencode($sid) . '';
     }
@@ -51,8 +49,7 @@ class FactorContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -62,8 +59,7 @@ class FactorContext extends InstanceContext
      * @return FactorInstance Fetched FactorInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -88,11 +84,10 @@ class FactorContext extends InstanceContext
      * @return FactorInstance Updated FactorInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('AuthPayload' => $options['authPayload'],));
+        $data = Values::of(array('AuthPayload' => $options['authPayload'], ));
 
         $payload = $this->version->update(
             'POST',
@@ -115,8 +110,7 @@ class FactorContext extends InstanceContext
      *
      * @return \Twilio\Rest\Authy\V1\Service\Entity\Factor\ChallengeList
      */
-    protected function getChallenges()
-    {
+    protected function getChallenges() {
         if (!$this->_challenges) {
             $this->_challenges = new ChallengeList(
                 $this->version,
@@ -136,8 +130,7 @@ class FactorContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -154,8 +147,7 @@ class FactorContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -169,8 +161,7 @@ class FactorContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

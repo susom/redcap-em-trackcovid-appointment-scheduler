@@ -33,8 +33,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Taskrouter\V1\Workspace\Worker\ReservationContext reservations(string $sid)
  * @method \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelContext workerChannels(string $sid)
  */
-class WorkerContext extends InstanceContext
-{
+class WorkerContext extends InstanceContext {
     protected $_realTimeStatistics = null;
     protected $_cumulativeStatistics = null;
     protected $_statistics = null;
@@ -49,12 +48,11 @@ class WorkerContext extends InstanceContext
      * @param string $sid The SID of the resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkerContext
      */
-    public function __construct(Version $version, $workspaceSid, $sid)
-    {
+    public function __construct(Version $version, $workspaceSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid, );
 
         $this->uri = '/Workspaces/' . \rawurlencode($workspaceSid) . '/Workers/' . \rawurlencode($sid) . '';
     }
@@ -65,8 +63,7 @@ class WorkerContext extends InstanceContext
      * @return WorkerInstance Fetched WorkerInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -90,8 +87,7 @@ class WorkerContext extends InstanceContext
      * @return WorkerInstance Updated WorkerInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -122,8 +118,7 @@ class WorkerContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -132,8 +127,7 @@ class WorkerContext extends InstanceContext
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersRealTimeStatisticsList
      */
-    protected function getRealTimeStatistics()
-    {
+    protected function getRealTimeStatistics() {
         if (!$this->_realTimeStatistics) {
             $this->_realTimeStatistics = new WorkersRealTimeStatisticsList(
                 $this->version,
@@ -149,8 +143,7 @@ class WorkerContext extends InstanceContext
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsList
      */
-    protected function getCumulativeStatistics()
-    {
+    protected function getCumulativeStatistics() {
         if (!$this->_cumulativeStatistics) {
             $this->_cumulativeStatistics = new WorkersCumulativeStatisticsList(
                 $this->version,
@@ -166,8 +159,7 @@ class WorkerContext extends InstanceContext
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerStatisticsList
      */
-    protected function getStatistics()
-    {
+    protected function getStatistics() {
         if (!$this->_statistics) {
             $this->_statistics = new WorkerStatisticsList(
                 $this->version,
@@ -184,8 +176,7 @@ class WorkerContext extends InstanceContext
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\ReservationList
      */
-    protected function getReservations()
-    {
+    protected function getReservations() {
         if (!$this->_reservations) {
             $this->_reservations = new ReservationList(
                 $this->version,
@@ -202,8 +193,7 @@ class WorkerContext extends InstanceContext
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelList
      */
-    protected function getWorkerChannels()
-    {
+    protected function getWorkerChannels() {
         if (!$this->_workerChannels) {
             $this->_workerChannels = new WorkerChannelList(
                 $this->version,
@@ -222,8 +212,7 @@ class WorkerContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -240,8 +229,7 @@ class WorkerContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -255,8 +243,7 @@ class WorkerContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

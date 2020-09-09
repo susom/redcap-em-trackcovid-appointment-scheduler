@@ -39,8 +39,7 @@ use Twilio\Version;
  * @property array $attributes
  * @property array $properties
  */
-class CallSummaryInstance extends InstanceResource
-{
+class CallSummaryInstance extends InstanceResource {
     /**
      * Initialize the CallSummaryInstance
      *
@@ -49,8 +48,7 @@ class CallSummaryInstance extends InstanceResource
      * @param string $callSid The call_sid
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryInstance
      */
-    public function __construct(Version $version, array $payload, $callSid)
-    {
+    public function __construct(Version $version, array $payload, $callSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -76,7 +74,7 @@ class CallSummaryInstance extends InstanceResource
             'properties' => Values::array_get($payload, 'properties'),
         );
 
-        $this->solution = array('callSid' => $callSid,);
+        $this->solution = array('callSid' => $callSid, );
     }
 
     /**
@@ -86,8 +84,7 @@ class CallSummaryInstance extends InstanceResource
      * @return \Twilio\Rest\Insights\V1\Call\CallSummaryContext Context for this
      *                                                          CallSummaryInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CallSummaryContext($this->version, $this->solution['callSid']);
         }
@@ -102,8 +99,7 @@ class CallSummaryInstance extends InstanceResource
      * @return CallSummaryInstance Fetched CallSummaryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -114,8 +110,7 @@ class CallSummaryInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -133,8 +128,7 @@ class CallSummaryInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

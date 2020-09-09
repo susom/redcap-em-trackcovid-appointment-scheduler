@@ -20,8 +20,7 @@ use Twilio\Version;
  *
  * @property \Twilio\Rest\Preview\TrustedComms\Business\InsightsList $insights
  */
-class BusinessContext extends InstanceContext
-{
+class BusinessContext extends InstanceContext {
     protected $_insights = null;
 
     /**
@@ -31,12 +30,11 @@ class BusinessContext extends InstanceContext
      * @param string $sid A string that uniquely identifies this Business.
      * @return \Twilio\Rest\Preview\TrustedComms\BusinessContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Businesses/' . \rawurlencode($sid) . '';
     }
@@ -47,8 +45,7 @@ class BusinessContext extends InstanceContext
      * @return BusinessInstance Fetched BusinessInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -65,8 +62,7 @@ class BusinessContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\TrustedComms\Business\InsightsList
      */
-    protected function getInsights()
-    {
+    protected function getInsights() {
         if (!$this->_insights) {
             $this->_insights = new InsightsList($this->version, $this->solution['sid']);
         }
@@ -81,8 +77,7 @@ class BusinessContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -99,8 +94,7 @@ class BusinessContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -114,8 +108,7 @@ class BusinessContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

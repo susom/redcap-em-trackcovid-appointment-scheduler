@@ -15,15 +15,13 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class SampleOptions
-{
+abstract class SampleOptions {
     /**
      * @param string $language The ISO language-country string that specifies the
      *                         language used for the sample
      * @return ReadSampleOptions Options builder
      */
-    public static function read($language = Values::NONE)
-    {
+    public static function read($language = Values::NONE) {
         return new ReadSampleOptions($language);
     }
 
@@ -32,8 +30,7 @@ abstract class SampleOptions
      *                              sample was captured
      * @return CreateSampleOptions Options builder
      */
-    public static function create($sourceChannel = Values::NONE)
-    {
+    public static function create($sourceChannel = Values::NONE) {
         return new CreateSampleOptions($sourceChannel);
     }
 
@@ -46,20 +43,17 @@ abstract class SampleOptions
      *                              was captured
      * @return UpdateSampleOptions Options builder
      */
-    public static function update($language = Values::NONE, $taggedText = Values::NONE, $sourceChannel = Values::NONE)
-    {
+    public static function update($language = Values::NONE, $taggedText = Values::NONE, $sourceChannel = Values::NONE) {
         return new UpdateSampleOptions($language, $taggedText, $sourceChannel);
     }
 }
 
-class ReadSampleOptions extends Options
-{
+class ReadSampleOptions extends Options {
     /**
      * @param string $language The ISO language-country string that specifies the
      *                         language used for the sample
      */
-    public function __construct($language = Values::NONE)
-    {
+    public function __construct($language = Values::NONE) {
         $this->options['language'] = $language;
     }
 
@@ -70,8 +64,7 @@ class ReadSampleOptions extends Options
      *                         language used for the sample
      * @return $this Fluent Builder
      */
-    public function setLanguage($language)
-    {
+    public function setLanguage($language) {
         $this->options['language'] = $language;
         return $this;
     }
@@ -81,8 +74,7 @@ class ReadSampleOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -93,14 +85,12 @@ class ReadSampleOptions extends Options
     }
 }
 
-class CreateSampleOptions extends Options
-{
+class CreateSampleOptions extends Options {
     /**
      * @param string $sourceChannel The communication channel from which the new
      *                              sample was captured
      */
-    public function __construct($sourceChannel = Values::NONE)
-    {
+    public function __construct($sourceChannel = Values::NONE) {
         $this->options['sourceChannel'] = $sourceChannel;
     }
 
@@ -111,8 +101,7 @@ class CreateSampleOptions extends Options
      *                              sample was captured
      * @return $this Fluent Builder
      */
-    public function setSourceChannel($sourceChannel)
-    {
+    public function setSourceChannel($sourceChannel) {
         $this->options['sourceChannel'] = $sourceChannel;
         return $this;
     }
@@ -122,8 +111,7 @@ class CreateSampleOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -134,8 +122,7 @@ class CreateSampleOptions extends Options
     }
 }
 
-class UpdateSampleOptions extends Options
-{
+class UpdateSampleOptions extends Options {
     /**
      * @param string $language The ISO language-country string that specifies the
      *                         language used for the sample
@@ -144,8 +131,7 @@ class UpdateSampleOptions extends Options
      * @param string $sourceChannel The communication channel from which the sample
      *                              was captured
      */
-    public function __construct($language = Values::NONE, $taggedText = Values::NONE, $sourceChannel = Values::NONE)
-    {
+    public function __construct($language = Values::NONE, $taggedText = Values::NONE, $sourceChannel = Values::NONE) {
         $this->options['language'] = $language;
         $this->options['taggedText'] = $taggedText;
         $this->options['sourceChannel'] = $sourceChannel;
@@ -158,8 +144,7 @@ class UpdateSampleOptions extends Options
      *                         language used for the sample
      * @return $this Fluent Builder
      */
-    public function setLanguage($language)
-    {
+    public function setLanguage($language) {
         $this->options['language'] = $language;
         return $this;
     }
@@ -171,8 +156,7 @@ class UpdateSampleOptions extends Options
      *                           the task
      * @return $this Fluent Builder
      */
-    public function setTaggedText($taggedText)
-    {
+    public function setTaggedText($taggedText) {
         $this->options['taggedText'] = $taggedText;
         return $this;
     }
@@ -184,8 +168,7 @@ class UpdateSampleOptions extends Options
      *                              was captured
      * @return $this Fluent Builder
      */
-    public function setSourceChannel($sourceChannel)
-    {
+    public function setSourceChannel($sourceChannel) {
         $this->options['sourceChannel'] = $sourceChannel;
         return $this;
     }
@@ -195,8 +178,7 @@ class UpdateSampleOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

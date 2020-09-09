@@ -31,8 +31,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class WorkerInstance extends InstanceResource
-{
+class WorkerInstance extends InstanceResource {
     protected $_realTimeStatistics = null;
     protected $_cumulativeStatistics = null;
     protected $_statistics = null;
@@ -48,8 +47,7 @@ class WorkerInstance extends InstanceResource
      * @param string $sid The SID of the resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkerInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -69,7 +67,7 @@ class WorkerInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('workspaceSid' => $workspaceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -79,8 +77,7 @@ class WorkerInstance extends InstanceResource
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkerContext Context for this
      *                                                            WorkerInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new WorkerContext(
                 $this->version,
@@ -98,8 +95,7 @@ class WorkerInstance extends InstanceResource
      * @return WorkerInstance Fetched WorkerInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -110,8 +106,7 @@ class WorkerInstance extends InstanceResource
      * @return WorkerInstance Updated WorkerInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -121,8 +116,7 @@ class WorkerInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -131,8 +125,7 @@ class WorkerInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersRealTimeStatisticsList
      */
-    protected function getRealTimeStatistics()
-    {
+    protected function getRealTimeStatistics() {
         return $this->proxy()->realTimeStatistics;
     }
 
@@ -141,8 +134,7 @@ class WorkerInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsList
      */
-    protected function getCumulativeStatistics()
-    {
+    protected function getCumulativeStatistics() {
         return $this->proxy()->cumulativeStatistics;
     }
 
@@ -151,8 +143,7 @@ class WorkerInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerStatisticsList
      */
-    protected function getStatistics()
-    {
+    protected function getStatistics() {
         return $this->proxy()->statistics;
     }
 
@@ -161,8 +152,7 @@ class WorkerInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\ReservationList
      */
-    protected function getReservations()
-    {
+    protected function getReservations() {
         return $this->proxy()->reservations;
     }
 
@@ -171,8 +161,7 @@ class WorkerInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkerChannelList
      */
-    protected function getWorkerChannels()
-    {
+    protected function getWorkerChannels() {
         return $this->proxy()->workerChannels;
     }
 
@@ -183,8 +172,7 @@ class WorkerInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -202,8 +190,7 @@ class WorkerInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

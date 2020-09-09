@@ -25,8 +25,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property \DateTime $dateUpdated
  */
-class ChannelInstance extends InstanceResource
-{
+class ChannelInstance extends InstanceResource {
     /**
      * Initialize the ChannelInstance
      *
@@ -36,8 +35,7 @@ class ChannelInstance extends InstanceResource
      *                    fetch
      * @return \Twilio\Rest\FlexApi\V1\ChannelInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -52,7 +50,7 @@ class ChannelInstance extends InstanceResource
             'dateUpdated' => Deserialize::dateTime(Values::array_get($payload, 'date_updated')),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -62,8 +60,7 @@ class ChannelInstance extends InstanceResource
      * @return \Twilio\Rest\FlexApi\V1\ChannelContext Context for this
      *                                                ChannelInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ChannelContext($this->version, $this->solution['sid']);
         }
@@ -77,8 +74,7 @@ class ChannelInstance extends InstanceResource
      * @return ChannelInstance Fetched ChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -88,8 +84,7 @@ class ChannelInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -100,8 +95,7 @@ class ChannelInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -119,8 +113,7 @@ class ChannelInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

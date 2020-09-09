@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class VerificationContext extends InstanceContext
-{
+class VerificationContext extends InstanceContext {
     /**
      * Initialize the VerificationContext
      *
@@ -25,12 +24,11 @@ class VerificationContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Verify\V2\Service\VerificationContext
      */
-    public function __construct(Version $version, $serviceSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Verifications/' . \rawurlencode($sid) . '';
     }
@@ -42,9 +40,8 @@ class VerificationContext extends InstanceContext
      * @return VerificationInstance Updated VerificationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($status)
-    {
-        $data = Values::of(array('Status' => $status,));
+    public function update($status) {
+        $data = Values::of(array('Status' => $status, ));
 
         $payload = $this->version->update(
             'POST',
@@ -67,8 +64,7 @@ class VerificationContext extends InstanceContext
      * @return VerificationInstance Fetched VerificationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -90,8 +86,7 @@ class VerificationContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

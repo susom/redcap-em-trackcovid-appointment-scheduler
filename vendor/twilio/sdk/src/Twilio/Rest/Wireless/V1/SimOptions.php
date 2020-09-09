@@ -12,8 +12,7 @@ namespace Twilio\Rest\Wireless\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class SimOptions
-{
+abstract class SimOptions {
     /**
      * @param string $status Only return Sim resources with this status
      * @param string $iccid Only return Sim resources with this ICCID
@@ -24,13 +23,7 @@ abstract class SimOptions
      *                                    registration code
      * @return ReadSimOptions Options builder
      */
-    public static function read(
-        $status = Values::NONE,
-        $iccid = Values::NONE,
-        $ratePlan = Values::NONE,
-        $eId = Values::NONE,
-        $simRegistrationCode = Values::NONE
-    ) {
+    public static function read($status = Values::NONE, $iccid = Values::NONE, $ratePlan = Values::NONE, $eId = Values::NONE, $simRegistrationCode = Values::NONE) {
         return new ReadSimOptions($status, $iccid, $ratePlan, $eId, $simRegistrationCode);
     }
 
@@ -71,34 +64,12 @@ abstract class SimOptions
      *                           should belong
      * @return UpdateSimOptions Options builder
      */
-    public static function update(
-        $uniqueName = Values::NONE,
-        $callbackMethod = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $friendlyName = Values::NONE,
-        $ratePlan = Values::NONE,
-        $status = Values::NONE,
-        $commandsCallbackMethod = Values::NONE,
-        $commandsCallbackUrl = Values::NONE,
-        $smsFallbackMethod = Values::NONE,
-        $smsFallbackUrl = Values::NONE,
-        $smsMethod = Values::NONE,
-        $smsUrl = Values::NONE,
-        $voiceFallbackMethod = Values::NONE,
-        $voiceFallbackUrl = Values::NONE,
-        $voiceMethod = Values::NONE,
-        $voiceUrl = Values::NONE,
-        $resetStatus = Values::NONE,
-        $accountSid = Values::NONE
-    ) {
-        return new UpdateSimOptions($uniqueName, $callbackMethod, $callbackUrl, $friendlyName, $ratePlan, $status,
-            $commandsCallbackMethod, $commandsCallbackUrl, $smsFallbackMethod, $smsFallbackUrl, $smsMethod, $smsUrl,
-            $voiceFallbackMethod, $voiceFallbackUrl, $voiceMethod, $voiceUrl, $resetStatus, $accountSid);
+    public static function update($uniqueName = Values::NONE, $callbackMethod = Values::NONE, $callbackUrl = Values::NONE, $friendlyName = Values::NONE, $ratePlan = Values::NONE, $status = Values::NONE, $commandsCallbackMethod = Values::NONE, $commandsCallbackUrl = Values::NONE, $smsFallbackMethod = Values::NONE, $smsFallbackUrl = Values::NONE, $smsMethod = Values::NONE, $smsUrl = Values::NONE, $voiceFallbackMethod = Values::NONE, $voiceFallbackUrl = Values::NONE, $voiceMethod = Values::NONE, $voiceUrl = Values::NONE, $resetStatus = Values::NONE, $accountSid = Values::NONE) {
+        return new UpdateSimOptions($uniqueName, $callbackMethod, $callbackUrl, $friendlyName, $ratePlan, $status, $commandsCallbackMethod, $commandsCallbackUrl, $smsFallbackMethod, $smsFallbackUrl, $smsMethod, $smsUrl, $voiceFallbackMethod, $voiceFallbackUrl, $voiceMethod, $voiceUrl, $resetStatus, $accountSid);
     }
 }
 
-class ReadSimOptions extends Options
-{
+class ReadSimOptions extends Options {
     /**
      * @param string $status Only return Sim resources with this status
      * @param string $iccid Only return Sim resources with this ICCID
@@ -108,13 +79,7 @@ class ReadSimOptions extends Options
      * @param string $simRegistrationCode Only return Sim resources with this
      *                                    registration code
      */
-    public function __construct(
-        $status = Values::NONE,
-        $iccid = Values::NONE,
-        $ratePlan = Values::NONE,
-        $eId = Values::NONE,
-        $simRegistrationCode = Values::NONE
-    ) {
+    public function __construct($status = Values::NONE, $iccid = Values::NONE, $ratePlan = Values::NONE, $eId = Values::NONE, $simRegistrationCode = Values::NONE) {
         $this->options['status'] = $status;
         $this->options['iccid'] = $iccid;
         $this->options['ratePlan'] = $ratePlan;
@@ -128,8 +93,7 @@ class ReadSimOptions extends Options
      * @param string $status Only return Sim resources with this status
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -140,8 +104,7 @@ class ReadSimOptions extends Options
      * @param string $iccid Only return Sim resources with this ICCID
      * @return $this Fluent Builder
      */
-    public function setIccid($iccid)
-    {
+    public function setIccid($iccid) {
         $this->options['iccid'] = $iccid;
         return $this;
     }
@@ -153,8 +116,7 @@ class ReadSimOptions extends Options
      *                         resource
      * @return $this Fluent Builder
      */
-    public function setRatePlan($ratePlan)
-    {
+    public function setRatePlan($ratePlan) {
         $this->options['ratePlan'] = $ratePlan;
         return $this;
     }
@@ -165,8 +127,7 @@ class ReadSimOptions extends Options
      * @param string $eId Deprecated
      * @return $this Fluent Builder
      */
-    public function setEId($eId)
-    {
+    public function setEId($eId) {
         $this->options['eId'] = $eId;
         return $this;
     }
@@ -178,8 +139,7 @@ class ReadSimOptions extends Options
      *                                    registration code
      * @return $this Fluent Builder
      */
-    public function setSimRegistrationCode($simRegistrationCode)
-    {
+    public function setSimRegistrationCode($simRegistrationCode) {
         $this->options['simRegistrationCode'] = $simRegistrationCode;
         return $this;
     }
@@ -189,8 +149,7 @@ class ReadSimOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -201,8 +160,7 @@ class ReadSimOptions extends Options
     }
 }
 
-class UpdateSimOptions extends Options
-{
+class UpdateSimOptions extends Options {
     /**
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
@@ -239,26 +197,7 @@ class UpdateSimOptions extends Options
      * @param string $accountSid The SID of the Account to which the Sim resource
      *                           should belong
      */
-    public function __construct(
-        $uniqueName = Values::NONE,
-        $callbackMethod = Values::NONE,
-        $callbackUrl = Values::NONE,
-        $friendlyName = Values::NONE,
-        $ratePlan = Values::NONE,
-        $status = Values::NONE,
-        $commandsCallbackMethod = Values::NONE,
-        $commandsCallbackUrl = Values::NONE,
-        $smsFallbackMethod = Values::NONE,
-        $smsFallbackUrl = Values::NONE,
-        $smsMethod = Values::NONE,
-        $smsUrl = Values::NONE,
-        $voiceFallbackMethod = Values::NONE,
-        $voiceFallbackUrl = Values::NONE,
-        $voiceMethod = Values::NONE,
-        $voiceUrl = Values::NONE,
-        $resetStatus = Values::NONE,
-        $accountSid = Values::NONE
-    ) {
+    public function __construct($uniqueName = Values::NONE, $callbackMethod = Values::NONE, $callbackUrl = Values::NONE, $friendlyName = Values::NONE, $ratePlan = Values::NONE, $status = Values::NONE, $commandsCallbackMethod = Values::NONE, $commandsCallbackUrl = Values::NONE, $smsFallbackMethod = Values::NONE, $smsFallbackUrl = Values::NONE, $smsMethod = Values::NONE, $smsUrl = Values::NONE, $voiceFallbackMethod = Values::NONE, $voiceFallbackUrl = Values::NONE, $voiceMethod = Values::NONE, $voiceUrl = Values::NONE, $resetStatus = Values::NONE, $accountSid = Values::NONE) {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['callbackMethod'] = $callbackMethod;
         $this->options['callbackUrl'] = $callbackUrl;
@@ -286,8 +225,7 @@ class UpdateSimOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -299,8 +237,7 @@ class UpdateSimOptions extends Options
      *                               callback_url
      * @return $this Fluent Builder
      */
-    public function setCallbackMethod($callbackMethod)
-    {
+    public function setCallbackMethod($callbackMethod) {
         $this->options['callbackMethod'] = $callbackMethod;
         return $this;
     }
@@ -312,8 +249,7 @@ class UpdateSimOptions extends Options
      *                            finished updating
      * @return $this Fluent Builder
      */
-    public function setCallbackUrl($callbackUrl)
-    {
+    public function setCallbackUrl($callbackUrl) {
         $this->options['callbackUrl'] = $callbackUrl;
         return $this;
     }
@@ -324,8 +260,7 @@ class UpdateSimOptions extends Options
      * @param string $friendlyName A string to describe the Sim resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -337,8 +272,7 @@ class UpdateSimOptions extends Options
      *                         which the Sim resource should be assigned
      * @return $this Fluent Builder
      */
-    public function setRatePlan($ratePlan)
-    {
+    public function setRatePlan($ratePlan) {
         $this->options['ratePlan'] = $ratePlan;
         return $this;
     }
@@ -349,8 +283,7 @@ class UpdateSimOptions extends Options
      * @param string $status The new status of the Sim resource
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -362,8 +295,7 @@ class UpdateSimOptions extends Options
      *                                       commands_callback_url
      * @return $this Fluent Builder
      */
-    public function setCommandsCallbackMethod($commandsCallbackMethod)
-    {
+    public function setCommandsCallbackMethod($commandsCallbackMethod) {
         $this->options['commandsCallbackMethod'] = $commandsCallbackMethod;
         return $this;
     }
@@ -375,8 +307,7 @@ class UpdateSimOptions extends Options
      *                                    a Command
      * @return $this Fluent Builder
      */
-    public function setCommandsCallbackUrl($commandsCallbackUrl)
-    {
+    public function setCommandsCallbackUrl($commandsCallbackUrl) {
         $this->options['commandsCallbackUrl'] = $commandsCallbackUrl;
         return $this;
     }
@@ -388,8 +319,7 @@ class UpdateSimOptions extends Options
      *                                  sms_fallback_url
      * @return $this Fluent Builder
      */
-    public function setSmsFallbackMethod($smsFallbackMethod)
-    {
+    public function setSmsFallbackMethod($smsFallbackMethod) {
         $this->options['smsFallbackMethod'] = $smsFallbackMethod;
         return $this;
     }
@@ -402,8 +332,7 @@ class UpdateSimOptions extends Options
      *                               requested from sms_url
      * @return $this Fluent Builder
      */
-    public function setSmsFallbackUrl($smsFallbackUrl)
-    {
+    public function setSmsFallbackUrl($smsFallbackUrl) {
         $this->options['smsFallbackUrl'] = $smsFallbackUrl;
         return $this;
     }
@@ -414,8 +343,7 @@ class UpdateSimOptions extends Options
      * @param string $smsMethod The HTTP method we should use to call sms_url
      * @return $this Fluent Builder
      */
-    public function setSmsMethod($smsMethod)
-    {
+    public function setSmsMethod($smsMethod) {
         $this->options['smsMethod'] = $smsMethod;
         return $this;
     }
@@ -427,8 +355,7 @@ class UpdateSimOptions extends Options
      *                       sends an SMS message that is not a Command
      * @return $this Fluent Builder
      */
-    public function setSmsUrl($smsUrl)
-    {
+    public function setSmsUrl($smsUrl) {
         $this->options['smsUrl'] = $smsUrl;
         return $this;
     }
@@ -440,8 +367,7 @@ class UpdateSimOptions extends Options
      *                                    voice_fallback_url
      * @return $this Fluent Builder
      */
-    public function setVoiceFallbackMethod($voiceFallbackMethod)
-    {
+    public function setVoiceFallbackMethod($voiceFallbackMethod) {
         $this->options['voiceFallbackMethod'] = $voiceFallbackMethod;
         return $this;
     }
@@ -454,8 +380,7 @@ class UpdateSimOptions extends Options
      *                                 requested from voice_url
      * @return $this Fluent Builder
      */
-    public function setVoiceFallbackUrl($voiceFallbackUrl)
-    {
+    public function setVoiceFallbackUrl($voiceFallbackUrl) {
         $this->options['voiceFallbackUrl'] = $voiceFallbackUrl;
         return $this;
     }
@@ -467,8 +392,7 @@ class UpdateSimOptions extends Options
      *                            voice_url
      * @return $this Fluent Builder
      */
-    public function setVoiceMethod($voiceMethod)
-    {
+    public function setVoiceMethod($voiceMethod) {
         $this->options['voiceMethod'] = $voiceMethod;
         return $this;
     }
@@ -480,8 +404,7 @@ class UpdateSimOptions extends Options
      *                         makes a voice call
      * @return $this Fluent Builder
      */
-    public function setVoiceUrl($voiceUrl)
-    {
+    public function setVoiceUrl($voiceUrl) {
         $this->options['voiceUrl'] = $voiceUrl;
         return $this;
     }
@@ -492,8 +415,7 @@ class UpdateSimOptions extends Options
      * @param string $resetStatus Initiate a connectivity reset on a SIM
      * @return $this Fluent Builder
      */
-    public function setResetStatus($resetStatus)
-    {
+    public function setResetStatus($resetStatus) {
         $this->options['resetStatus'] = $resetStatus;
         return $this;
     }
@@ -505,8 +427,7 @@ class UpdateSimOptions extends Options
      *                           should belong
      * @return $this Fluent Builder
      */
-    public function setAccountSid($accountSid)
-    {
+    public function setAccountSid($accountSid) {
         $this->options['accountSid'] = $accountSid;
         return $this;
     }
@@ -516,8 +437,7 @@ class UpdateSimOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

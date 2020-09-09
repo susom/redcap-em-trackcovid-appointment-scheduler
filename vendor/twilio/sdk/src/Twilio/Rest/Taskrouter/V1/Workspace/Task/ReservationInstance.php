@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class ReservationInstance extends InstanceResource
-{
+class ReservationInstance extends InstanceResource {
     /**
      * Initialize the ReservationInstance
      *
@@ -42,8 +41,7 @@ class ReservationInstance extends InstanceResource
      * @param string $sid The SID of the TaskReservation resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Task\ReservationInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $taskSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $workspaceSid, $taskSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -77,8 +75,7 @@ class ReservationInstance extends InstanceResource
      *                                                                      this
      *                                                                      ReservationInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ReservationContext(
                 $this->version,
@@ -97,8 +94,7 @@ class ReservationInstance extends InstanceResource
      * @return ReservationInstance Fetched ReservationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -109,8 +105,7 @@ class ReservationInstance extends InstanceResource
      * @return ReservationInstance Updated ReservationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -121,8 +116,7 @@ class ReservationInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -140,8 +134,7 @@ class ReservationInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

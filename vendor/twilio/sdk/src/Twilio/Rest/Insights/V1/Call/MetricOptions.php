@@ -15,27 +15,23 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class MetricOptions
-{
+abstract class MetricOptions {
     /**
      * @param string $edge The edge
      * @param string $direction The direction
      * @return ReadMetricOptions Options builder
      */
-    public static function read($edge = Values::NONE, $direction = Values::NONE)
-    {
+    public static function read($edge = Values::NONE, $direction = Values::NONE) {
         return new ReadMetricOptions($edge, $direction);
     }
 }
 
-class ReadMetricOptions extends Options
-{
+class ReadMetricOptions extends Options {
     /**
      * @param string $edge The edge
      * @param string $direction The direction
      */
-    public function __construct($edge = Values::NONE, $direction = Values::NONE)
-    {
+    public function __construct($edge = Values::NONE, $direction = Values::NONE) {
         $this->options['edge'] = $edge;
         $this->options['direction'] = $direction;
     }
@@ -46,8 +42,7 @@ class ReadMetricOptions extends Options
      * @param string $edge The edge
      * @return $this Fluent Builder
      */
-    public function setEdge($edge)
-    {
+    public function setEdge($edge) {
         $this->options['edge'] = $edge;
         return $this;
     }
@@ -58,8 +53,7 @@ class ReadMetricOptions extends Options
      * @param string $direction The direction
      * @return $this Fluent Builder
      */
-    public function setDirection($direction)
-    {
+    public function setDirection($direction) {
         $this->options['direction'] = $direction;
         return $this;
     }
@@ -69,8 +63,7 @@ class ReadMetricOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

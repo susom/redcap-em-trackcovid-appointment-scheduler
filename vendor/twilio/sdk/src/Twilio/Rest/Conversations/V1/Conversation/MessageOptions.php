@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class MessageOptions
-{
+abstract class MessageOptions {
     /**
      * @param string $author The channel specific identifier of the message's
      *                       author.
@@ -28,14 +27,7 @@ abstract class MessageOptions
      * @param string $mediaSid The Media Sid to be attached to the new Message.
      * @return CreateMessageOptions Options builder
      */
-    public static function create(
-        $author = Values::NONE,
-        $body = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $attributes = Values::NONE,
-        $mediaSid = Values::NONE
-    ) {
+    public static function create($author = Values::NONE, $body = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $attributes = Values::NONE, $mediaSid = Values::NONE) {
         return new CreateMessageOptions($author, $body, $dateCreated, $dateUpdated, $attributes, $mediaSid);
     }
 
@@ -49,19 +41,12 @@ abstract class MessageOptions
      *                           data you wish.
      * @return UpdateMessageOptions Options builder
      */
-    public static function update(
-        $author = Values::NONE,
-        $body = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $attributes = Values::NONE
-    ) {
+    public static function update($author = Values::NONE, $body = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $attributes = Values::NONE) {
         return new UpdateMessageOptions($author, $body, $dateCreated, $dateUpdated, $attributes);
     }
 }
 
-class CreateMessageOptions extends Options
-{
+class CreateMessageOptions extends Options {
     /**
      * @param string $author The channel specific identifier of the message's
      *                       author.
@@ -72,14 +57,7 @@ class CreateMessageOptions extends Options
      *                           data you wish.
      * @param string $mediaSid The Media Sid to be attached to the new Message.
      */
-    public function __construct(
-        $author = Values::NONE,
-        $body = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $attributes = Values::NONE,
-        $mediaSid = Values::NONE
-    ) {
+    public function __construct($author = Values::NONE, $body = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $attributes = Values::NONE, $mediaSid = Values::NONE) {
         $this->options['author'] = $author;
         $this->options['body'] = $body;
         $this->options['dateCreated'] = $dateCreated;
@@ -95,8 +73,7 @@ class CreateMessageOptions extends Options
      *                       author.
      * @return $this Fluent Builder
      */
-    public function setAuthor($author)
-    {
+    public function setAuthor($author) {
         $this->options['author'] = $author;
         return $this;
     }
@@ -107,8 +84,7 @@ class CreateMessageOptions extends Options
      * @param string $body The content of the message.
      * @return $this Fluent Builder
      */
-    public function setBody($body)
-    {
+    public function setBody($body) {
         $this->options['body'] = $body;
         return $this;
     }
@@ -119,8 +95,7 @@ class CreateMessageOptions extends Options
      * @param \DateTime $dateCreated The date that this resource was created.
      * @return $this Fluent Builder
      */
-    public function setDateCreated($dateCreated)
-    {
+    public function setDateCreated($dateCreated) {
         $this->options['dateCreated'] = $dateCreated;
         return $this;
     }
@@ -131,8 +106,7 @@ class CreateMessageOptions extends Options
      * @param \DateTime $dateUpdated The date that this resource was last updated.
      * @return $this Fluent Builder
      */
-    public function setDateUpdated($dateUpdated)
-    {
+    public function setDateUpdated($dateUpdated) {
         $this->options['dateUpdated'] = $dateUpdated;
         return $this;
     }
@@ -144,8 +118,7 @@ class CreateMessageOptions extends Options
      *                           data you wish.
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -156,8 +129,7 @@ class CreateMessageOptions extends Options
      * @param string $mediaSid The Media Sid to be attached to the new Message.
      * @return $this Fluent Builder
      */
-    public function setMediaSid($mediaSid)
-    {
+    public function setMediaSid($mediaSid) {
         $this->options['mediaSid'] = $mediaSid;
         return $this;
     }
@@ -167,8 +139,7 @@ class CreateMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -179,8 +150,7 @@ class CreateMessageOptions extends Options
     }
 }
 
-class UpdateMessageOptions extends Options
-{
+class UpdateMessageOptions extends Options {
     /**
      * @param string $author The channel specific identifier of the message's
      *                       author.
@@ -190,13 +160,7 @@ class UpdateMessageOptions extends Options
      * @param string $attributes A string metadata field you can use to store any
      *                           data you wish.
      */
-    public function __construct(
-        $author = Values::NONE,
-        $body = Values::NONE,
-        $dateCreated = Values::NONE,
-        $dateUpdated = Values::NONE,
-        $attributes = Values::NONE
-    ) {
+    public function __construct($author = Values::NONE, $body = Values::NONE, $dateCreated = Values::NONE, $dateUpdated = Values::NONE, $attributes = Values::NONE) {
         $this->options['author'] = $author;
         $this->options['body'] = $body;
         $this->options['dateCreated'] = $dateCreated;
@@ -211,8 +175,7 @@ class UpdateMessageOptions extends Options
      *                       author.
      * @return $this Fluent Builder
      */
-    public function setAuthor($author)
-    {
+    public function setAuthor($author) {
         $this->options['author'] = $author;
         return $this;
     }
@@ -223,8 +186,7 @@ class UpdateMessageOptions extends Options
      * @param string $body The content of the message.
      * @return $this Fluent Builder
      */
-    public function setBody($body)
-    {
+    public function setBody($body) {
         $this->options['body'] = $body;
         return $this;
     }
@@ -235,8 +197,7 @@ class UpdateMessageOptions extends Options
      * @param \DateTime $dateCreated The date that this resource was created.
      * @return $this Fluent Builder
      */
-    public function setDateCreated($dateCreated)
-    {
+    public function setDateCreated($dateCreated) {
         $this->options['dateCreated'] = $dateCreated;
         return $this;
     }
@@ -247,8 +208,7 @@ class UpdateMessageOptions extends Options
      * @param \DateTime $dateUpdated The date that this resource was last updated.
      * @return $this Fluent Builder
      */
-    public function setDateUpdated($dateUpdated)
-    {
+    public function setDateUpdated($dateUpdated) {
         $this->options['dateUpdated'] = $dateUpdated;
         return $this;
     }
@@ -260,8 +220,7 @@ class UpdateMessageOptions extends Options
      *                           data you wish.
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -271,8 +230,7 @@ class UpdateMessageOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

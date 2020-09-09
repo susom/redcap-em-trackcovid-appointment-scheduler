@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Pay extends TwiML
-{
+class Pay extends TwiML {
     /**
      * Pay constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Pay', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Pay extends TwiML
      * @param array $attributes Optional attributes
      * @return Prompt Child element.
      */
-    public function prompt($attributes = array())
-    {
+    public function prompt($attributes = array()) {
         return $this->nest(new Prompt($attributes));
     }
 
@@ -40,8 +37,7 @@ class Pay extends TwiML
      * @param array $attributes Optional attributes
      * @return Parameter Child element.
      */
-    public function parameter($attributes = array())
-    {
+    public function parameter($attributes = array()) {
         return $this->nest(new Parameter($attributes));
     }
 
@@ -51,8 +47,7 @@ class Pay extends TwiML
      * @param string $input Input type Twilio should accept
      * @return static $this.
      */
-    public function setInput($input)
-    {
+    public function setInput($input) {
         return $this->setAttribute('input', $input);
     }
 
@@ -62,8 +57,7 @@ class Pay extends TwiML
      * @param string $action Action URL
      * @return static $this.
      */
-    public function setAction($action)
-    {
+    public function setAction($action) {
         return $this->setAttribute('action', $action);
     }
 
@@ -76,8 +70,7 @@ class Pay extends TwiML
      *                                ach-debit. defaults to consumer-checking
      * @return static $this.
      */
-    public function setBankAccountType($bankAccountType)
-    {
+    public function setBankAccountType($bankAccountType) {
         return $this->setAttribute('bankAccountType', $bankAccountType);
     }
 
@@ -87,8 +80,7 @@ class Pay extends TwiML
      * @param string $statusCallback Status callback URL
      * @return static $this.
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         return $this->setAttribute('statusCallback', $statusCallback);
     }
 
@@ -98,8 +90,7 @@ class Pay extends TwiML
      * @param string $statusCallbackMethod Status callback method
      * @return static $this.
      */
-    public function setStatusCallbackMethod($statusCallbackMethod)
-    {
+    public function setStatusCallbackMethod($statusCallbackMethod) {
         return $this->setAttribute('statusCallbackMethod', $statusCallbackMethod);
     }
 
@@ -109,8 +100,7 @@ class Pay extends TwiML
      * @param int $timeout Time to wait to gather input
      * @return static $this.
      */
-    public function setTimeout($timeout)
-    {
+    public function setTimeout($timeout) {
         return $this->setAttribute('timeout', $timeout);
     }
 
@@ -121,8 +111,7 @@ class Pay extends TwiML
      *                         input
      * @return static $this.
      */
-    public function setMaxAttempts($maxAttempts)
-    {
+    public function setMaxAttempts($maxAttempts) {
         return $this->setAttribute('maxAttempts', $maxAttempts);
     }
 
@@ -132,8 +121,7 @@ class Pay extends TwiML
      * @param bool $securityCode Prompt for security code
      * @return static $this.
      */
-    public function setSecurityCode($securityCode)
-    {
+    public function setSecurityCode($securityCode) {
         return $this->setAttribute('securityCode', $securityCode);
     }
 
@@ -144,8 +132,7 @@ class Pay extends TwiML
      *                           or default postal code
      * @return static $this.
      */
-    public function setPostalCode($postalCode)
-    {
+    public function setPostalCode($postalCode) {
         return $this->setAttribute('postalCode', $postalCode);
     }
 
@@ -155,8 +142,7 @@ class Pay extends TwiML
      * @param int $minPostalCodeLength Prompt for minimum postal code length
      * @return static $this.
      */
-    public function setMinPostalCodeLength($minPostalCodeLength)
-    {
+    public function setMinPostalCodeLength($minPostalCodeLength) {
         return $this->setAttribute('minPostalCodeLength', $minPostalCodeLength);
     }
 
@@ -166,8 +152,7 @@ class Pay extends TwiML
      * @param string $paymentConnector Unique name for payment connector
      * @return static $this.
      */
-    public function setPaymentConnector($paymentConnector)
-    {
+    public function setPaymentConnector($paymentConnector) {
         return $this->setAttribute('paymentConnector', $paymentConnector);
     }
 
@@ -178,8 +163,7 @@ class Pay extends TwiML
      *                              credit-card
      * @return static $this.
      */
-    public function setPaymentMethod($paymentMethod)
-    {
+    public function setPaymentMethod($paymentMethod) {
         return $this->setAttribute('paymentMethod', $paymentMethod);
     }
 
@@ -189,8 +173,7 @@ class Pay extends TwiML
      * @param string $tokenType Type of token
      * @return static $this.
      */
-    public function setTokenType($tokenType)
-    {
+    public function setTokenType($tokenType) {
         return $this->setAttribute('tokenType', $tokenType);
     }
 
@@ -201,8 +184,7 @@ class Pay extends TwiML
      *                             then make the payment else create a payment token
      * @return static $this.
      */
-    public function setChargeAmount($chargeAmount)
-    {
+    public function setChargeAmount($chargeAmount) {
         return $this->setAttribute('chargeAmount', $chargeAmount);
     }
 
@@ -212,8 +194,7 @@ class Pay extends TwiML
      * @param string $currency Currency of the amount attribute
      * @return static $this.
      */
-    public function setCurrency($currency)
-    {
+    public function setCurrency($currency) {
         return $this->setAttribute('currency', $currency);
     }
 
@@ -223,8 +204,7 @@ class Pay extends TwiML
      * @param string $description Details regarding the payment
      * @return static $this.
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         return $this->setAttribute('description', $description);
     }
 
@@ -234,8 +214,7 @@ class Pay extends TwiML
      * @param string $validCardTypes Comma separated accepted card types
      * @return static $this.
      */
-    public function setValidCardTypes($validCardTypes)
-    {
+    public function setValidCardTypes($validCardTypes) {
         return $this->setAttribute('validCardTypes', $validCardTypes);
     }
 
@@ -245,8 +224,7 @@ class Pay extends TwiML
      * @param string $language Language to use
      * @return static $this.
      */
-    public function setLanguage($language)
-    {
+    public function setLanguage($language) {
         return $this->setAttribute('language', $language);
     }
 }

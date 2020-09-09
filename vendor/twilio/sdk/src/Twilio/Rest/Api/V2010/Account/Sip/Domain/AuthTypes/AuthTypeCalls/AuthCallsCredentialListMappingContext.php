@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class AuthCallsCredentialListMappingContext extends InstanceContext
-{
+class AuthCallsCredentialListMappingContext extends InstanceContext {
     /**
      * Initialize the AuthCallsCredentialListMappingContext
      *
@@ -27,12 +26,11 @@ class AuthCallsCredentialListMappingContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeCalls\AuthCallsCredentialListMappingContext
      */
-    public function __construct(Version $version, $accountSid, $domainSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $domainSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'domainSid' => $domainSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'domainSid' => $domainSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/SIP/Domains/' . \rawurlencode($domainSid) . '/Auth/Calls/CredentialListMappings/' . \rawurlencode($sid) . '.json';
     }
@@ -44,8 +42,7 @@ class AuthCallsCredentialListMappingContext extends InstanceContext
      *                                                AuthCallsCredentialListMappingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,8 +66,7 @@ class AuthCallsCredentialListMappingContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -79,8 +75,7 @@ class AuthCallsCredentialListMappingContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

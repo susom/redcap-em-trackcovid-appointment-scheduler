@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property bool $encryptionEnabled
  * @property string $url
  */
-class CompositionSettingsInstance extends InstanceResource
-{
+class CompositionSettingsInstance extends InstanceResource {
     /**
      * Initialize the CompositionSettingsInstance
      *
@@ -36,8 +35,7 @@ class CompositionSettingsInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Video\V1\CompositionSettingsInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -62,8 +60,7 @@ class CompositionSettingsInstance extends InstanceResource
      * @return \Twilio\Rest\Video\V1\CompositionSettingsContext Context for this
      *                                                          CompositionSettingsInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CompositionSettingsContext($this->version);
         }
@@ -77,8 +74,7 @@ class CompositionSettingsInstance extends InstanceResource
      * @return CompositionSettingsInstance Fetched CompositionSettingsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -91,8 +87,7 @@ class CompositionSettingsInstance extends InstanceResource
      * @return CompositionSettingsInstance Newly created CompositionSettingsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($friendlyName, $options = array())
-    {
+    public function create($friendlyName, $options = array()) {
         return $this->proxy()->create($friendlyName, $options);
     }
 
@@ -103,8 +98,7 @@ class CompositionSettingsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -122,8 +116,7 @@ class CompositionSettingsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

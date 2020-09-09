@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Sms extends TwiML
-{
+class Sms extends TwiML {
     /**
      * Sms constructor.
      *
      * @param string $message Message body
      * @param array $attributes Optional attributes
      */
-    public function __construct($message, $attributes = array())
-    {
+    public function __construct($message, $attributes = array()) {
         parent::__construct('Sms', $message, $attributes);
     }
 
@@ -30,8 +28,7 @@ class Sms extends TwiML
      * @param string $to Number to send message to
      * @return static $this.
      */
-    public function setTo($to)
-    {
+    public function setTo($to) {
         return $this->setAttribute('to', $to);
     }
 
@@ -41,8 +38,7 @@ class Sms extends TwiML
      * @param string $from Number to send message from
      * @return static $this.
      */
-    public function setFrom($from)
-    {
+    public function setFrom($from) {
         return $this->setAttribute('from', $from);
     }
 
@@ -52,8 +48,7 @@ class Sms extends TwiML
      * @param string $action Action URL
      * @return static $this.
      */
-    public function setAction($action)
-    {
+    public function setAction($action) {
         return $this->setAttribute('action', $action);
     }
 
@@ -63,8 +58,7 @@ class Sms extends TwiML
      * @param string $method Action URL method
      * @return static $this.
      */
-    public function setMethod($method)
-    {
+    public function setMethod($method) {
         return $this->setAttribute('method', $method);
     }
 
@@ -74,8 +68,7 @@ class Sms extends TwiML
      * @param string $statusCallback Status callback URL
      * @return static $this.
      */
-    public function setStatusCallback($statusCallback)
-    {
+    public function setStatusCallback($statusCallback) {
         return $this->setAttribute('statusCallback', $statusCallback);
     }
 }

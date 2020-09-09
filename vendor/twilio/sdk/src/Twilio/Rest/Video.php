@@ -28,8 +28,7 @@ use Twilio\Rest\Video\V1;
  * @method \Twilio\Rest\Video\V1\RecordingSettingsContext recordingSettings()
  * @method \Twilio\Rest\Video\V1\RoomContext rooms(string $sid)
  */
-class Video extends Domain
-{
+class Video extends Domain {
     protected $_v1 = null;
 
     /**
@@ -39,8 +38,7 @@ class Video extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Video Domain for Video
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://video.twilio.com';
@@ -49,8 +47,7 @@ class Video extends Domain
     /**
      * @return \Twilio\Rest\Video\V1 Version v1 of video
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -64,8 +61,7 @@ class Video extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -82,8 +78,7 @@ class Video extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -95,8 +90,7 @@ class Video extends Domain
     /**
      * @return \Twilio\Rest\Video\V1\CompositionList
      */
-    protected function getCompositions()
-    {
+    protected function getCompositions() {
         return $this->v1->compositions;
     }
 
@@ -104,16 +98,14 @@ class Video extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\CompositionContext
      */
-    protected function contextCompositions($sid)
-    {
+    protected function contextCompositions($sid) {
         return $this->v1->compositions($sid);
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\CompositionHookList
      */
-    protected function getCompositionHooks()
-    {
+    protected function getCompositionHooks() {
         return $this->v1->compositionHooks;
     }
 
@@ -121,32 +113,28 @@ class Video extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\CompositionHookContext
      */
-    protected function contextCompositionHooks($sid)
-    {
+    protected function contextCompositionHooks($sid) {
         return $this->v1->compositionHooks($sid);
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\CompositionSettingsList
      */
-    protected function getCompositionSettings()
-    {
+    protected function getCompositionSettings() {
         return $this->v1->compositionSettings;
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\CompositionSettingsContext
      */
-    protected function contextCompositionSettings()
-    {
+    protected function contextCompositionSettings() {
         return $this->v1->compositionSettings();
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\RecordingList
      */
-    protected function getRecordings()
-    {
+    protected function getRecordings() {
         return $this->v1->recordings;
     }
 
@@ -154,32 +142,28 @@ class Video extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\RecordingContext
      */
-    protected function contextRecordings($sid)
-    {
+    protected function contextRecordings($sid) {
         return $this->v1->recordings($sid);
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\RecordingSettingsList
      */
-    protected function getRecordingSettings()
-    {
+    protected function getRecordingSettings() {
         return $this->v1->recordingSettings;
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\RecordingSettingsContext
      */
-    protected function contextRecordingSettings()
-    {
+    protected function contextRecordingSettings() {
         return $this->v1->recordingSettings();
     }
 
     /**
      * @return \Twilio\Rest\Video\V1\RoomList
      */
-    protected function getRooms()
-    {
+    protected function getRooms() {
         return $this->v1->rooms;
     }
 
@@ -187,8 +171,7 @@ class Video extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Video\V1\RoomContext
      */
-    protected function contextRooms($sid)
-    {
+    protected function contextRooms($sid) {
         return $this->v1->rooms($sid);
     }
 
@@ -197,8 +180,7 @@ class Video extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Video]';
     }
 }

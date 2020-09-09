@@ -12,8 +12,7 @@ namespace Twilio\Rest\Trunking\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class TrunkOptions
-{
+abstract class TrunkOptions {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $domainName The unique address you reserve on Twilio to which
@@ -29,17 +28,8 @@ abstract class TrunkOptions
      *                                be enabled for the trunk
      * @return CreateTrunkOptions Options builder
      */
-    public static function create(
-        $friendlyName = Values::NONE,
-        $domainName = Values::NONE,
-        $disasterRecoveryUrl = Values::NONE,
-        $disasterRecoveryMethod = Values::NONE,
-        $recording = Values::NONE,
-        $secure = Values::NONE,
-        $cnamLookupEnabled = Values::NONE
-    ) {
-        return new CreateTrunkOptions($friendlyName, $domainName, $disasterRecoveryUrl, $disasterRecoveryMethod,
-            $recording, $secure, $cnamLookupEnabled);
+    public static function create($friendlyName = Values::NONE, $domainName = Values::NONE, $disasterRecoveryUrl = Values::NONE, $disasterRecoveryMethod = Values::NONE, $recording = Values::NONE, $secure = Values::NONE, $cnamLookupEnabled = Values::NONE) {
+        return new CreateTrunkOptions($friendlyName, $domainName, $disasterRecoveryUrl, $disasterRecoveryMethod, $recording, $secure, $cnamLookupEnabled);
     }
 
     /**
@@ -57,22 +47,12 @@ abstract class TrunkOptions
      *                                be enabled for the trunk
      * @return UpdateTrunkOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $domainName = Values::NONE,
-        $disasterRecoveryUrl = Values::NONE,
-        $disasterRecoveryMethod = Values::NONE,
-        $recording = Values::NONE,
-        $secure = Values::NONE,
-        $cnamLookupEnabled = Values::NONE
-    ) {
-        return new UpdateTrunkOptions($friendlyName, $domainName, $disasterRecoveryUrl, $disasterRecoveryMethod,
-            $recording, $secure, $cnamLookupEnabled);
+    public static function update($friendlyName = Values::NONE, $domainName = Values::NONE, $disasterRecoveryUrl = Values::NONE, $disasterRecoveryMethod = Values::NONE, $recording = Values::NONE, $secure = Values::NONE, $cnamLookupEnabled = Values::NONE) {
+        return new UpdateTrunkOptions($friendlyName, $domainName, $disasterRecoveryUrl, $disasterRecoveryMethod, $recording, $secure, $cnamLookupEnabled);
     }
 }
 
-class CreateTrunkOptions extends Options
-{
+class CreateTrunkOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $domainName The unique address you reserve on Twilio to which
@@ -87,15 +67,7 @@ class CreateTrunkOptions extends Options
      * @param bool $cnamLookupEnabled Whether Caller ID Name (CNAM) lookup should
      *                                be enabled for the trunk
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $domainName = Values::NONE,
-        $disasterRecoveryUrl = Values::NONE,
-        $disasterRecoveryMethod = Values::NONE,
-        $recording = Values::NONE,
-        $secure = Values::NONE,
-        $cnamLookupEnabled = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $domainName = Values::NONE, $disasterRecoveryUrl = Values::NONE, $disasterRecoveryMethod = Values::NONE, $recording = Values::NONE, $secure = Values::NONE, $cnamLookupEnabled = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['domainName'] = $domainName;
         $this->options['disasterRecoveryUrl'] = $disasterRecoveryUrl;
@@ -111,8 +83,7 @@ class CreateTrunkOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -124,8 +95,7 @@ class CreateTrunkOptions extends Options
      *                           you route your SIP traffic
      * @return $this Fluent Builder
      */
-    public function setDomainName($domainName)
-    {
+    public function setDomainName($domainName) {
         $this->options['domainName'] = $domainName;
         return $this;
     }
@@ -138,8 +108,7 @@ class CreateTrunkOptions extends Options
      *                                    towards your configured Origination URL
      * @return $this Fluent Builder
      */
-    public function setDisasterRecoveryUrl($disasterRecoveryUrl)
-    {
+    public function setDisasterRecoveryUrl($disasterRecoveryUrl) {
         $this->options['disasterRecoveryUrl'] = $disasterRecoveryUrl;
         return $this;
     }
@@ -151,8 +120,7 @@ class CreateTrunkOptions extends Options
      *                                       the disaster_recovery_url
      * @return $this Fluent Builder
      */
-    public function setDisasterRecoveryMethod($disasterRecoveryMethod)
-    {
+    public function setDisasterRecoveryMethod($disasterRecoveryMethod) {
         $this->options['disasterRecoveryMethod'] = $disasterRecoveryMethod;
         return $this;
     }
@@ -163,8 +131,7 @@ class CreateTrunkOptions extends Options
      * @param string $recording The recording settings for the trunk
      * @return $this Fluent Builder
      */
-    public function setRecording($recording)
-    {
+    public function setRecording($recording) {
         $this->options['recording'] = $recording;
         return $this;
     }
@@ -175,8 +142,7 @@ class CreateTrunkOptions extends Options
      * @param bool $secure Whether Secure Trunking is enabled for the trunk
      * @return $this Fluent Builder
      */
-    public function setSecure($secure)
-    {
+    public function setSecure($secure) {
         $this->options['secure'] = $secure;
         return $this;
     }
@@ -188,8 +154,7 @@ class CreateTrunkOptions extends Options
      *                                be enabled for the trunk
      * @return $this Fluent Builder
      */
-    public function setCnamLookupEnabled($cnamLookupEnabled)
-    {
+    public function setCnamLookupEnabled($cnamLookupEnabled) {
         $this->options['cnamLookupEnabled'] = $cnamLookupEnabled;
         return $this;
     }
@@ -199,8 +164,7 @@ class CreateTrunkOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -211,8 +175,7 @@ class CreateTrunkOptions extends Options
     }
 }
 
-class UpdateTrunkOptions extends Options
-{
+class UpdateTrunkOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $domainName The unique address you reserve on Twilio to which
@@ -227,15 +190,7 @@ class UpdateTrunkOptions extends Options
      * @param bool $cnamLookupEnabled Whether Caller ID Name (CNAM) lookup should
      *                                be enabled for the trunk
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $domainName = Values::NONE,
-        $disasterRecoveryUrl = Values::NONE,
-        $disasterRecoveryMethod = Values::NONE,
-        $recording = Values::NONE,
-        $secure = Values::NONE,
-        $cnamLookupEnabled = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $domainName = Values::NONE, $disasterRecoveryUrl = Values::NONE, $disasterRecoveryMethod = Values::NONE, $recording = Values::NONE, $secure = Values::NONE, $cnamLookupEnabled = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['domainName'] = $domainName;
         $this->options['disasterRecoveryUrl'] = $disasterRecoveryUrl;
@@ -251,8 +206,7 @@ class UpdateTrunkOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -264,8 +218,7 @@ class UpdateTrunkOptions extends Options
      *                           you route your SIP traffic
      * @return $this Fluent Builder
      */
-    public function setDomainName($domainName)
-    {
+    public function setDomainName($domainName) {
         $this->options['domainName'] = $domainName;
         return $this;
     }
@@ -278,8 +231,7 @@ class UpdateTrunkOptions extends Options
      *                                    towards your configured Origination URL
      * @return $this Fluent Builder
      */
-    public function setDisasterRecoveryUrl($disasterRecoveryUrl)
-    {
+    public function setDisasterRecoveryUrl($disasterRecoveryUrl) {
         $this->options['disasterRecoveryUrl'] = $disasterRecoveryUrl;
         return $this;
     }
@@ -291,8 +243,7 @@ class UpdateTrunkOptions extends Options
      *                                       the disaster_recovery_url
      * @return $this Fluent Builder
      */
-    public function setDisasterRecoveryMethod($disasterRecoveryMethod)
-    {
+    public function setDisasterRecoveryMethod($disasterRecoveryMethod) {
         $this->options['disasterRecoveryMethod'] = $disasterRecoveryMethod;
         return $this;
     }
@@ -303,8 +254,7 @@ class UpdateTrunkOptions extends Options
      * @param string $recording The recording settings for the trunk
      * @return $this Fluent Builder
      */
-    public function setRecording($recording)
-    {
+    public function setRecording($recording) {
         $this->options['recording'] = $recording;
         return $this;
     }
@@ -315,8 +265,7 @@ class UpdateTrunkOptions extends Options
      * @param bool $secure Whether Secure Trunking is enabled for the trunk
      * @return $this Fluent Builder
      */
-    public function setSecure($secure)
-    {
+    public function setSecure($secure) {
         $this->options['secure'] = $secure;
         return $this;
     }
@@ -328,8 +277,7 @@ class UpdateTrunkOptions extends Options
      *                                be enabled for the trunk
      * @return $this Fluent Builder
      */
-    public function setCnamLookupEnabled($cnamLookupEnabled)
-    {
+    public function setCnamLookupEnabled($cnamLookupEnabled) {
         $this->options['cnamLookupEnabled'] = $cnamLookupEnabled;
         return $this;
     }
@@ -339,8 +287,7 @@ class UpdateTrunkOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -12,15 +12,13 @@ namespace Twilio\Rest\FlexApi\V1;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class FlexFlowOptions
-{
+abstract class FlexFlowOptions {
     /**
      * @param string $friendlyName The `friendly_name` of the FlexFlow resources to
      *                             read
      * @return ReadFlexFlowOptions Options builder
      */
-    public static function read($friendlyName = Values::NONE)
-    {
+    public static function read($friendlyName = Values::NONE) {
         return new ReadFlexFlowOptions($friendlyName);
     }
 
@@ -44,26 +42,8 @@ abstract class FlexFlowOptions
      *                                   if the first attempt fails
      * @return CreateFlexFlowOptions Options builder
      */
-    public static function create(
-        $contactIdentity = Values::NONE,
-        $enabled = Values::NONE,
-        $integrationType = Values::NONE,
-        $integrationFlowSid = Values::NONE,
-        $integrationUrl = Values::NONE,
-        $integrationWorkspaceSid = Values::NONE,
-        $integrationWorkflowSid = Values::NONE,
-        $integrationChannel = Values::NONE,
-        $integrationTimeout = Values::NONE,
-        $integrationPriority = Values::NONE,
-        $integrationCreationOnMessage = Values::NONE,
-        $longLived = Values::NONE,
-        $janitorEnabled = Values::NONE,
-        $integrationRetryCount = Values::NONE
-    ) {
-        return new CreateFlexFlowOptions($contactIdentity, $enabled, $integrationType, $integrationFlowSid,
-            $integrationUrl, $integrationWorkspaceSid, $integrationWorkflowSid, $integrationChannel,
-            $integrationTimeout, $integrationPriority, $integrationCreationOnMessage, $longLived, $janitorEnabled,
-            $integrationRetryCount);
+    public static function create($contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE, $janitorEnabled = Values::NONE, $integrationRetryCount = Values::NONE) {
+        return new CreateFlexFlowOptions($contactIdentity, $enabled, $integrationType, $integrationFlowSid, $integrationUrl, $integrationWorkspaceSid, $integrationWorkflowSid, $integrationChannel, $integrationTimeout, $integrationPriority, $integrationCreationOnMessage, $longLived, $janitorEnabled, $integrationRetryCount);
     }
 
     /**
@@ -89,40 +69,17 @@ abstract class FlexFlowOptions
      *                                   if the first attempt fails
      * @return UpdateFlexFlowOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $chatServiceSid = Values::NONE,
-        $channelType = Values::NONE,
-        $contactIdentity = Values::NONE,
-        $enabled = Values::NONE,
-        $integrationType = Values::NONE,
-        $integrationFlowSid = Values::NONE,
-        $integrationUrl = Values::NONE,
-        $integrationWorkspaceSid = Values::NONE,
-        $integrationWorkflowSid = Values::NONE,
-        $integrationChannel = Values::NONE,
-        $integrationTimeout = Values::NONE,
-        $integrationPriority = Values::NONE,
-        $integrationCreationOnMessage = Values::NONE,
-        $longLived = Values::NONE,
-        $janitorEnabled = Values::NONE,
-        $integrationRetryCount = Values::NONE
-    ) {
-        return new UpdateFlexFlowOptions($friendlyName, $chatServiceSid, $channelType, $contactIdentity, $enabled,
-            $integrationType, $integrationFlowSid, $integrationUrl, $integrationWorkspaceSid, $integrationWorkflowSid,
-            $integrationChannel, $integrationTimeout, $integrationPriority, $integrationCreationOnMessage, $longLived,
-            $janitorEnabled, $integrationRetryCount);
+    public static function update($friendlyName = Values::NONE, $chatServiceSid = Values::NONE, $channelType = Values::NONE, $contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE, $janitorEnabled = Values::NONE, $integrationRetryCount = Values::NONE) {
+        return new UpdateFlexFlowOptions($friendlyName, $chatServiceSid, $channelType, $contactIdentity, $enabled, $integrationType, $integrationFlowSid, $integrationUrl, $integrationWorkspaceSid, $integrationWorkflowSid, $integrationChannel, $integrationTimeout, $integrationPriority, $integrationCreationOnMessage, $longLived, $janitorEnabled, $integrationRetryCount);
     }
 }
 
-class ReadFlexFlowOptions extends Options
-{
+class ReadFlexFlowOptions extends Options {
     /**
      * @param string $friendlyName The `friendly_name` of the FlexFlow resources to
      *                             read
      */
-    public function __construct($friendlyName = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
     }
 
@@ -133,8 +90,7 @@ class ReadFlexFlowOptions extends Options
      *                             read
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -144,8 +100,7 @@ class ReadFlexFlowOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -156,8 +111,7 @@ class ReadFlexFlowOptions extends Options
     }
 }
 
-class CreateFlexFlowOptions extends Options
-{
+class CreateFlexFlowOptions extends Options {
     /**
      * @param string $contactIdentity The channel contact's Identity
      * @param bool $enabled Whether the new FlexFlow is enabled
@@ -177,22 +131,7 @@ class CreateFlexFlowOptions extends Options
      * @param int $integrationRetryCount The number of times to retry the webhook
      *                                   if the first attempt fails
      */
-    public function __construct(
-        $contactIdentity = Values::NONE,
-        $enabled = Values::NONE,
-        $integrationType = Values::NONE,
-        $integrationFlowSid = Values::NONE,
-        $integrationUrl = Values::NONE,
-        $integrationWorkspaceSid = Values::NONE,
-        $integrationWorkflowSid = Values::NONE,
-        $integrationChannel = Values::NONE,
-        $integrationTimeout = Values::NONE,
-        $integrationPriority = Values::NONE,
-        $integrationCreationOnMessage = Values::NONE,
-        $longLived = Values::NONE,
-        $janitorEnabled = Values::NONE,
-        $integrationRetryCount = Values::NONE
-    ) {
+    public function __construct($contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE, $janitorEnabled = Values::NONE, $integrationRetryCount = Values::NONE) {
         $this->options['contactIdentity'] = $contactIdentity;
         $this->options['enabled'] = $enabled;
         $this->options['integrationType'] = $integrationType;
@@ -215,8 +154,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $contactIdentity The channel contact's Identity
      * @return $this Fluent Builder
      */
-    public function setContactIdentity($contactIdentity)
-    {
+    public function setContactIdentity($contactIdentity) {
         $this->options['contactIdentity'] = $contactIdentity;
         return $this;
     }
@@ -227,8 +165,7 @@ class CreateFlexFlowOptions extends Options
      * @param bool $enabled Whether the new FlexFlow is enabled
      * @return $this Fluent Builder
      */
-    public function setEnabled($enabled)
-    {
+    public function setEnabled($enabled) {
         $this->options['enabled'] = $enabled;
         return $this;
     }
@@ -239,8 +176,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $integrationType The integration type
      * @return $this Fluent Builder
      */
-    public function setIntegrationType($integrationType)
-    {
+    public function setIntegrationType($integrationType) {
         $this->options['integrationType'] = $integrationType;
         return $this;
     }
@@ -251,8 +187,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $integrationFlowSid The SID of the Flow
      * @return $this Fluent Builder
      */
-    public function setIntegrationFlowSid($integrationFlowSid)
-    {
+    public function setIntegrationFlowSid($integrationFlowSid) {
         $this->options['integrationFlowSid'] = $integrationFlowSid;
         return $this;
     }
@@ -263,8 +198,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $integrationUrl The External Webhook URL
      * @return $this Fluent Builder
      */
-    public function setIntegrationUrl($integrationUrl)
-    {
+    public function setIntegrationUrl($integrationUrl) {
         $this->options['integrationUrl'] = $integrationUrl;
         return $this;
     }
@@ -275,8 +209,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $integrationWorkspaceSid The Workspace SID for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationWorkspaceSid($integrationWorkspaceSid)
-    {
+    public function setIntegrationWorkspaceSid($integrationWorkspaceSid) {
         $this->options['integrationWorkspaceSid'] = $integrationWorkspaceSid;
         return $this;
     }
@@ -287,8 +220,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $integrationWorkflowSid The Workflow SID for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationWorkflowSid($integrationWorkflowSid)
-    {
+    public function setIntegrationWorkflowSid($integrationWorkflowSid) {
         $this->options['integrationWorkflowSid'] = $integrationWorkflowSid;
         return $this;
     }
@@ -299,8 +231,7 @@ class CreateFlexFlowOptions extends Options
      * @param string $integrationChannel The task channel for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationChannel($integrationChannel)
-    {
+    public function setIntegrationChannel($integrationChannel) {
         $this->options['integrationChannel'] = $integrationChannel;
         return $this;
     }
@@ -311,8 +242,7 @@ class CreateFlexFlowOptions extends Options
      * @param int $integrationTimeout The task timeout in seconds for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationTimeout($integrationTimeout)
-    {
+    public function setIntegrationTimeout($integrationTimeout) {
         $this->options['integrationTimeout'] = $integrationTimeout;
         return $this;
     }
@@ -323,8 +253,7 @@ class CreateFlexFlowOptions extends Options
      * @param int $integrationPriority The task priority of a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationPriority($integrationPriority)
-    {
+    public function setIntegrationPriority($integrationPriority) {
         $this->options['integrationPriority'] = $integrationPriority;
         return $this;
     }
@@ -336,8 +265,7 @@ class CreateFlexFlowOptions extends Options
      *                                           first message arrives
      * @return $this Fluent Builder
      */
-    public function setIntegrationCreationOnMessage($integrationCreationOnMessage)
-    {
+    public function setIntegrationCreationOnMessage($integrationCreationOnMessage) {
         $this->options['integrationCreationOnMessage'] = $integrationCreationOnMessage;
         return $this;
     }
@@ -348,8 +276,7 @@ class CreateFlexFlowOptions extends Options
      * @param bool $longLived Whether new channels are long-lived
      * @return $this Fluent Builder
      */
-    public function setLongLived($longLived)
-    {
+    public function setLongLived($longLived) {
         $this->options['longLived'] = $longLived;
         return $this;
     }
@@ -361,8 +288,7 @@ class CreateFlexFlowOptions extends Options
      *                             Janitor
      * @return $this Fluent Builder
      */
-    public function setJanitorEnabled($janitorEnabled)
-    {
+    public function setJanitorEnabled($janitorEnabled) {
         $this->options['janitorEnabled'] = $janitorEnabled;
         return $this;
     }
@@ -374,8 +300,7 @@ class CreateFlexFlowOptions extends Options
      *                                   if the first attempt fails
      * @return $this Fluent Builder
      */
-    public function setIntegrationRetryCount($integrationRetryCount)
-    {
+    public function setIntegrationRetryCount($integrationRetryCount) {
         $this->options['integrationRetryCount'] = $integrationRetryCount;
         return $this;
     }
@@ -385,8 +310,7 @@ class CreateFlexFlowOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -397,8 +321,7 @@ class CreateFlexFlowOptions extends Options
     }
 }
 
-class UpdateFlexFlowOptions extends Options
-{
+class UpdateFlexFlowOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $chatServiceSid The SID of the chat service
@@ -421,25 +344,7 @@ class UpdateFlexFlowOptions extends Options
      * @param int $integrationRetryCount The number of times to retry the webhook
      *                                   if the first attempt fails
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $chatServiceSid = Values::NONE,
-        $channelType = Values::NONE,
-        $contactIdentity = Values::NONE,
-        $enabled = Values::NONE,
-        $integrationType = Values::NONE,
-        $integrationFlowSid = Values::NONE,
-        $integrationUrl = Values::NONE,
-        $integrationWorkspaceSid = Values::NONE,
-        $integrationWorkflowSid = Values::NONE,
-        $integrationChannel = Values::NONE,
-        $integrationTimeout = Values::NONE,
-        $integrationPriority = Values::NONE,
-        $integrationCreationOnMessage = Values::NONE,
-        $longLived = Values::NONE,
-        $janitorEnabled = Values::NONE,
-        $integrationRetryCount = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $chatServiceSid = Values::NONE, $channelType = Values::NONE, $contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE, $janitorEnabled = Values::NONE, $integrationRetryCount = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['chatServiceSid'] = $chatServiceSid;
         $this->options['channelType'] = $channelType;
@@ -465,8 +370,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -477,8 +381,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $chatServiceSid The SID of the chat service
      * @return $this Fluent Builder
      */
-    public function setChatServiceSid($chatServiceSid)
-    {
+    public function setChatServiceSid($chatServiceSid) {
         $this->options['chatServiceSid'] = $chatServiceSid;
         return $this;
     }
@@ -489,8 +392,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $channelType The channel type
      * @return $this Fluent Builder
      */
-    public function setChannelType($channelType)
-    {
+    public function setChannelType($channelType) {
         $this->options['channelType'] = $channelType;
         return $this;
     }
@@ -501,8 +403,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $contactIdentity The channel contact's Identity
      * @return $this Fluent Builder
      */
-    public function setContactIdentity($contactIdentity)
-    {
+    public function setContactIdentity($contactIdentity) {
         $this->options['contactIdentity'] = $contactIdentity;
         return $this;
     }
@@ -513,8 +414,7 @@ class UpdateFlexFlowOptions extends Options
      * @param bool $enabled Whether the FlexFlow is enabled
      * @return $this Fluent Builder
      */
-    public function setEnabled($enabled)
-    {
+    public function setEnabled($enabled) {
         $this->options['enabled'] = $enabled;
         return $this;
     }
@@ -525,8 +425,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $integrationType The integration type
      * @return $this Fluent Builder
      */
-    public function setIntegrationType($integrationType)
-    {
+    public function setIntegrationType($integrationType) {
         $this->options['integrationType'] = $integrationType;
         return $this;
     }
@@ -537,8 +436,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $integrationFlowSid The SID of the Flow
      * @return $this Fluent Builder
      */
-    public function setIntegrationFlowSid($integrationFlowSid)
-    {
+    public function setIntegrationFlowSid($integrationFlowSid) {
         $this->options['integrationFlowSid'] = $integrationFlowSid;
         return $this;
     }
@@ -549,8 +447,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $integrationUrl The External Webhook URL
      * @return $this Fluent Builder
      */
-    public function setIntegrationUrl($integrationUrl)
-    {
+    public function setIntegrationUrl($integrationUrl) {
         $this->options['integrationUrl'] = $integrationUrl;
         return $this;
     }
@@ -561,8 +458,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $integrationWorkspaceSid The Workspace SID for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationWorkspaceSid($integrationWorkspaceSid)
-    {
+    public function setIntegrationWorkspaceSid($integrationWorkspaceSid) {
         $this->options['integrationWorkspaceSid'] = $integrationWorkspaceSid;
         return $this;
     }
@@ -573,8 +469,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $integrationWorkflowSid The Workflow SID for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationWorkflowSid($integrationWorkflowSid)
-    {
+    public function setIntegrationWorkflowSid($integrationWorkflowSid) {
         $this->options['integrationWorkflowSid'] = $integrationWorkflowSid;
         return $this;
     }
@@ -585,8 +480,7 @@ class UpdateFlexFlowOptions extends Options
      * @param string $integrationChannel task channel for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationChannel($integrationChannel)
-    {
+    public function setIntegrationChannel($integrationChannel) {
         $this->options['integrationChannel'] = $integrationChannel;
         return $this;
     }
@@ -597,8 +491,7 @@ class UpdateFlexFlowOptions extends Options
      * @param int $integrationTimeout The task timeout in seconds for a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationTimeout($integrationTimeout)
-    {
+    public function setIntegrationTimeout($integrationTimeout) {
         $this->options['integrationTimeout'] = $integrationTimeout;
         return $this;
     }
@@ -609,8 +502,7 @@ class UpdateFlexFlowOptions extends Options
      * @param int $integrationPriority The task priority of a new task
      * @return $this Fluent Builder
      */
-    public function setIntegrationPriority($integrationPriority)
-    {
+    public function setIntegrationPriority($integrationPriority) {
         $this->options['integrationPriority'] = $integrationPriority;
         return $this;
     }
@@ -622,8 +514,7 @@ class UpdateFlexFlowOptions extends Options
      *                                           first message arrives
      * @return $this Fluent Builder
      */
-    public function setIntegrationCreationOnMessage($integrationCreationOnMessage)
-    {
+    public function setIntegrationCreationOnMessage($integrationCreationOnMessage) {
         $this->options['integrationCreationOnMessage'] = $integrationCreationOnMessage;
         return $this;
     }
@@ -634,8 +525,7 @@ class UpdateFlexFlowOptions extends Options
      * @param bool $longLived Whether new channels created are long-lived
      * @return $this Fluent Builder
      */
-    public function setLongLived($longLived)
-    {
+    public function setLongLived($longLived) {
         $this->options['longLived'] = $longLived;
         return $this;
     }
@@ -647,8 +537,7 @@ class UpdateFlexFlowOptions extends Options
      *                             Janitor
      * @return $this Fluent Builder
      */
-    public function setJanitorEnabled($janitorEnabled)
-    {
+    public function setJanitorEnabled($janitorEnabled) {
         $this->options['janitorEnabled'] = $janitorEnabled;
         return $this;
     }
@@ -660,8 +549,7 @@ class UpdateFlexFlowOptions extends Options
      *                                   if the first attempt fails
      * @return $this Fluent Builder
      */
-    public function setIntegrationRetryCount($integrationRetryCount)
-    {
+    public function setIntegrationRetryCount($integrationRetryCount) {
         $this->options['integrationRetryCount'] = $integrationRetryCount;
         return $this;
     }
@@ -671,8 +559,7 @@ class UpdateFlexFlowOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

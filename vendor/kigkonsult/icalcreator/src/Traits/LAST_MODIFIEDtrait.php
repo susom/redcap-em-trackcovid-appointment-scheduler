@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -52,7 +52,6 @@ trait LAST_MODIFIEDtrait
 {
     /**
      * @var array component property LAST-MODIFIED value
-     * @access protected
      */
     protected $lastmodified = null;
 
@@ -60,17 +59,19 @@ trait LAST_MODIFIEDtrait
      * Return formatted output for calendar component property last-modified
      *
      * @return string
+     * @throws Exception
+     * @throws InvalidArgumentException
      * @since 2.29.9 2019-08-05
      */
     public function createLastmodified()
     {
-        if (empty($this->lastmodified)) {
+        if( empty( $this->lastmodified )) {
             return null;
         }
         return StringFactory::createElement(
             self::LAST_MODIFIED,
-            ParameterFactory::createParams($this->lastmodified[Util::$LCparams]),
-            DateTimeFactory::dateTime2Str($this->lastmodified[Util::$LCvalue])
+            ParameterFactory::createParams( $this->lastmodified[Util::$LCparams] ),
+            DateTimeFactory::dateTime2Str( $this->lastmodified[Util::$LCvalue] )
         );
     }
 
@@ -89,40 +90,42 @@ trait LAST_MODIFIEDtrait
     /**
      * Return calendar component property last-modified
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|DateTime|array
      * @since 2.29.9 2019-08-05
      */
-    public function getLastmodified($inclParam = false)
+    public function getLastmodified( $inclParam = false )
     {
-        if (empty($this->lastmodified)) {
+        if( empty( $this->lastmodified )) {
             return false;
         }
-        return ($inclParam) ? $this->lastmodified : $this->lastmodified[Util::$LCvalue];
+        return ( $inclParam )
+            ? $this->lastmodified
+            : $this->lastmodified[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property last-modified
      *
-     * @param string|DateTimeInterface $value
-     * @param array $params
+     * @param string|DateTimeInterface  $value
+     * @param array  $params
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.16 2020-01-24
      */
-    public function setLastmodified($value = null, $params = [])
+    public function setLastmodified( $value = null, $params = [] )
     {
-        if (empty($value)) {
+        if( empty( $value )) {
             $this->lastmodified = [
-                Util::$LCvalue => DateTimeFactory::factory(null, self::UTC),
+                Util::$LCvalue  => DateTimeFactory::factory( null, self::UTC ),
                 Util::$LCparams => [],
             ];
             return $this;
         }
-        $params = array_change_key_case($params, CASE_UPPER);
+        $params = array_change_key_case( $params, CASE_UPPER );
         $params[Vcalendar::VALUE] = Vcalendar::DATE_TIME;
-        $this->lastmodified = DateTimeFactory::setDate($value, $params, true); // $forceUTC
+        $this->lastmodified = DateTimeFactory::setDate( $value, $params, true ); // $forceUTC
         return $this;
     }
 }

@@ -14,8 +14,7 @@ use Twilio\InstanceResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class UsageInstance extends InstanceResource
-{
+class UsageInstance extends InstanceResource {
     /**
      * Initialize the UsageInstance
      *
@@ -25,11 +24,10 @@ class UsageInstance extends InstanceResource
      *                           this resource.
      * @return \Twilio\Rest\Api\V2010\Account\UsageInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid)
-    {
+    public function __construct(Version $version, array $payload, $accountSid) {
         parent::__construct($version);
 
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
     }
 
     /**
@@ -39,8 +37,7 @@ class UsageInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -58,8 +55,7 @@ class UsageInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.UsageInstance]';
     }
 }

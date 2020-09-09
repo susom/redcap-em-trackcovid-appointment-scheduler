@@ -18,8 +18,7 @@ use Twilio\Rest\Verify\V2;
  * @property \Twilio\Rest\Verify\V2\ServiceList $services
  * @method \Twilio\Rest\Verify\V2\ServiceContext services(string $sid)
  */
-class Verify extends Domain
-{
+class Verify extends Domain {
     protected $_v2 = null;
 
     /**
@@ -29,8 +28,7 @@ class Verify extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Verify Domain for Verify
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://verify.twilio.com';
@@ -39,8 +37,7 @@ class Verify extends Domain
     /**
      * @return \Twilio\Rest\Verify\V2 Version v2 of verify
      */
-    protected function getV2()
-    {
+    protected function getV2() {
         if (!$this->_v2) {
             $this->_v2 = new V2($this);
         }
@@ -54,8 +51,7 @@ class Verify extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -72,8 +68,7 @@ class Verify extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -85,8 +80,7 @@ class Verify extends Domain
     /**
      * @return \Twilio\Rest\Verify\V2\ServiceList
      */
-    protected function getServices()
-    {
+    protected function getServices() {
         return $this->v2->services;
     }
 
@@ -94,8 +88,7 @@ class Verify extends Domain
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Verify\V2\ServiceContext
      */
-    protected function contextServices($sid)
-    {
+    protected function contextServices($sid) {
         return $this->v2->services($sid);
     }
 
@@ -104,8 +97,7 @@ class Verify extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Verify]';
     }
 }

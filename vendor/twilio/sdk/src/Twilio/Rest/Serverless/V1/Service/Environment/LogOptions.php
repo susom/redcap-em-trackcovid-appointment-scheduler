@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class LogOptions
-{
+abstract class LogOptions {
     /**
      * @param string $functionSid The SID of the function whose invocation produced
      *                            the Log resources to read
@@ -26,14 +25,12 @@ abstract class LogOptions
      *                           must have been created.
      * @return ReadLogOptions Options builder
      */
-    public static function read($functionSid = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE)
-    {
+    public static function read($functionSid = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
         return new ReadLogOptions($functionSid, $startDate, $endDate);
     }
 }
 
-class ReadLogOptions extends Options
-{
+class ReadLogOptions extends Options {
     /**
      * @param string $functionSid The SID of the function whose invocation produced
      *                            the Log resources to read
@@ -42,8 +39,7 @@ class ReadLogOptions extends Options
      * @param \DateTime $endDate The date and time before which the Log resource
      *                           must have been created.
      */
-    public function __construct($functionSid = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE)
-    {
+    public function __construct($functionSid = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE) {
         $this->options['functionSid'] = $functionSid;
         $this->options['startDate'] = $startDate;
         $this->options['endDate'] = $endDate;
@@ -56,8 +52,7 @@ class ReadLogOptions extends Options
      *                            the Log resources to read
      * @return $this Fluent Builder
      */
-    public function setFunctionSid($functionSid)
-    {
+    public function setFunctionSid($functionSid) {
         $this->options['functionSid'] = $functionSid;
         return $this;
     }
@@ -69,8 +64,7 @@ class ReadLogOptions extends Options
      *                             must have been created.
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -82,8 +76,7 @@ class ReadLogOptions extends Options
      *                           must have been created.
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -93,8 +86,7 @@ class ReadLogOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class TaskOptions
-{
+abstract class TaskOptions {
     /**
      * @param string $friendlyName descriptive string that you create to describe
      *                             the new resource
@@ -25,8 +24,7 @@ abstract class TaskOptions
      * @param string $actionsUrl The URL from which the Assistant can fetch actions
      * @return CreateTaskOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE)
-    {
+    public static function create($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         return new CreateTaskOptions($friendlyName, $actions, $actionsUrl);
     }
 
@@ -39,18 +37,12 @@ abstract class TaskOptions
      * @param string $actionsUrl The URL from which the Assistant can fetch actions
      * @return UpdateTaskOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE,
-        $actions = Values::NONE,
-        $actionsUrl = Values::NONE
-    ) {
+    public static function update($friendlyName = Values::NONE, $uniqueName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         return new UpdateTaskOptions($friendlyName, $uniqueName, $actions, $actionsUrl);
     }
 }
 
-class CreateTaskOptions extends Options
-{
+class CreateTaskOptions extends Options {
     /**
      * @param string $friendlyName descriptive string that you create to describe
      *                             the new resource
@@ -58,8 +50,7 @@ class CreateTaskOptions extends Options
      *                       instruct the Assistant on how to perform the task
      * @param string $actionsUrl The URL from which the Assistant can fetch actions
      */
-    public function __construct($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['actions'] = $actions;
         $this->options['actionsUrl'] = $actionsUrl;
@@ -72,8 +63,7 @@ class CreateTaskOptions extends Options
      *                             the new resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -85,8 +75,7 @@ class CreateTaskOptions extends Options
      *                       instruct the Assistant on how to perform the task
      * @return $this Fluent Builder
      */
-    public function setActions($actions)
-    {
+    public function setActions($actions) {
         $this->options['actions'] = $actions;
         return $this;
     }
@@ -97,8 +86,7 @@ class CreateTaskOptions extends Options
      * @param string $actionsUrl The URL from which the Assistant can fetch actions
      * @return $this Fluent Builder
      */
-    public function setActionsUrl($actionsUrl)
-    {
+    public function setActionsUrl($actionsUrl) {
         $this->options['actionsUrl'] = $actionsUrl;
         return $this;
     }
@@ -108,8 +96,7 @@ class CreateTaskOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -120,8 +107,7 @@ class CreateTaskOptions extends Options
     }
 }
 
-class UpdateTaskOptions extends Options
-{
+class UpdateTaskOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $uniqueName An application-defined string that uniquely
@@ -130,12 +116,7 @@ class UpdateTaskOptions extends Options
      *                       instruct the Assistant on how to perform the task
      * @param string $actionsUrl The URL from which the Assistant can fetch actions
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE,
-        $actions = Values::NONE,
-        $actionsUrl = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['uniqueName'] = $uniqueName;
         $this->options['actions'] = $actions;
@@ -148,8 +129,7 @@ class UpdateTaskOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -161,8 +141,7 @@ class UpdateTaskOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -174,8 +153,7 @@ class UpdateTaskOptions extends Options
      *                       instruct the Assistant on how to perform the task
      * @return $this Fluent Builder
      */
-    public function setActions($actions)
-    {
+    public function setActions($actions) {
         $this->options['actions'] = $actions;
         return $this;
     }
@@ -186,8 +164,7 @@ class UpdateTaskOptions extends Options
      * @param string $actionsUrl The URL from which the Assistant can fetch actions
      * @return $this Fluent Builder
      */
-    public function setActionsUrl($actionsUrl)
-    {
+    public function setActionsUrl($actionsUrl) {
         $this->options['actionsUrl'] = $actionsUrl;
         return $this;
     }
@@ -197,8 +174,7 @@ class UpdateTaskOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

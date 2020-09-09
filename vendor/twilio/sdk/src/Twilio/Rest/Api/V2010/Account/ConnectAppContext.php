@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class ConnectAppContext extends InstanceContext
-{
+class ConnectAppContext extends InstanceContext {
     /**
      * Initialize the ConnectAppContext
      *
@@ -27,12 +26,11 @@ class ConnectAppContext extends InstanceContext
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\ConnectAppContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/ConnectApps/' . \rawurlencode($sid) . '.json';
     }
@@ -43,8 +41,7 @@ class ConnectAppContext extends InstanceContext
      * @return ConnectAppInstance Fetched ConnectAppInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -68,8 +65,7 @@ class ConnectAppContext extends InstanceContext
      * @return ConnectAppInstance Updated ConnectAppInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -80,9 +76,7 @@ class ConnectAppContext extends InstanceContext
             'Description' => $options['description'],
             'FriendlyName' => $options['friendlyName'],
             'HomepageUrl' => $options['homepageUrl'],
-            'Permissions' => Serialize::map($options['permissions'], function ($e) {
-                return $e;
-            }),
+            'Permissions' => Serialize::map($options['permissions'], function($e) { return $e; }),
         ));
 
         $payload = $this->version->update(
@@ -106,8 +100,7 @@ class ConnectAppContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -116,8 +109,7 @@ class ConnectAppContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

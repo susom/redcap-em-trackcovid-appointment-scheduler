@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class WebhookOptions
-{
+abstract class WebhookOptions {
     /**
      * @param string $configurationUrl The absolute URL the webhook request should
      *                                 be sent to
@@ -37,20 +36,8 @@ abstract class WebhookOptions
      * @param int $configurationBufferWindow The period to buffer messages
      * @return CreateWebhookOptions Options builder
      */
-    public static function create(
-        $configurationUrl = Values::NONE,
-        $configurationMethod = Values::NONE,
-        $configurationFilters = Values::NONE,
-        $configurationTriggers = Values::NONE,
-        $configurationFlowSid = Values::NONE,
-        $configurationRetryCount = Values::NONE,
-        $configurationReplayAfter = Values::NONE,
-        $configurationBufferMessages = Values::NONE,
-        $configurationBufferWindow = Values::NONE
-    ) {
-        return new CreateWebhookOptions($configurationUrl, $configurationMethod, $configurationFilters,
-            $configurationTriggers, $configurationFlowSid, $configurationRetryCount, $configurationReplayAfter,
-            $configurationBufferMessages, $configurationBufferWindow);
+    public static function create($configurationUrl = Values::NONE, $configurationMethod = Values::NONE, $configurationFilters = Values::NONE, $configurationTriggers = Values::NONE, $configurationFlowSid = Values::NONE, $configurationRetryCount = Values::NONE, $configurationReplayAfter = Values::NONE, $configurationBufferMessages = Values::NONE, $configurationBufferWindow = Values::NONE) {
+        return new CreateWebhookOptions($configurationUrl, $configurationMethod, $configurationFilters, $configurationTriggers, $configurationFlowSid, $configurationRetryCount, $configurationReplayAfter, $configurationBufferMessages, $configurationBufferWindow);
     }
 
     /**
@@ -71,24 +58,12 @@ abstract class WebhookOptions
      * @param int $configurationBufferWindow The period to buffer messages
      * @return UpdateWebhookOptions Options builder
      */
-    public static function update(
-        $configurationUrl = Values::NONE,
-        $configurationMethod = Values::NONE,
-        $configurationFilters = Values::NONE,
-        $configurationTriggers = Values::NONE,
-        $configurationFlowSid = Values::NONE,
-        $configurationRetryCount = Values::NONE,
-        $configurationBufferMessages = Values::NONE,
-        $configurationBufferWindow = Values::NONE
-    ) {
-        return new UpdateWebhookOptions($configurationUrl, $configurationMethod, $configurationFilters,
-            $configurationTriggers, $configurationFlowSid, $configurationRetryCount, $configurationBufferMessages,
-            $configurationBufferWindow);
+    public static function update($configurationUrl = Values::NONE, $configurationMethod = Values::NONE, $configurationFilters = Values::NONE, $configurationTriggers = Values::NONE, $configurationFlowSid = Values::NONE, $configurationRetryCount = Values::NONE, $configurationBufferMessages = Values::NONE, $configurationBufferWindow = Values::NONE) {
+        return new UpdateWebhookOptions($configurationUrl, $configurationMethod, $configurationFilters, $configurationTriggers, $configurationFlowSid, $configurationRetryCount, $configurationBufferMessages, $configurationBufferWindow);
     }
 }
 
-class CreateWebhookOptions extends Options
-{
+class CreateWebhookOptions extends Options {
     /**
      * @param string $configurationUrl The absolute URL the webhook request should
      *                                 be sent to
@@ -108,17 +83,7 @@ class CreateWebhookOptions extends Options
      *                                          to messages
      * @param int $configurationBufferWindow The period to buffer messages
      */
-    public function __construct(
-        $configurationUrl = Values::NONE,
-        $configurationMethod = Values::NONE,
-        $configurationFilters = Values::NONE,
-        $configurationTriggers = Values::NONE,
-        $configurationFlowSid = Values::NONE,
-        $configurationRetryCount = Values::NONE,
-        $configurationReplayAfter = Values::NONE,
-        $configurationBufferMessages = Values::NONE,
-        $configurationBufferWindow = Values::NONE
-    ) {
+    public function __construct($configurationUrl = Values::NONE, $configurationMethod = Values::NONE, $configurationFilters = Values::NONE, $configurationTriggers = Values::NONE, $configurationFlowSid = Values::NONE, $configurationRetryCount = Values::NONE, $configurationReplayAfter = Values::NONE, $configurationBufferMessages = Values::NONE, $configurationBufferWindow = Values::NONE) {
         $this->options['configurationUrl'] = $configurationUrl;
         $this->options['configurationMethod'] = $configurationMethod;
         $this->options['configurationFilters'] = $configurationFilters;
@@ -137,8 +102,7 @@ class CreateWebhookOptions extends Options
      *                                 be sent to
      * @return $this Fluent Builder
      */
-    public function setConfigurationUrl($configurationUrl)
-    {
+    public function setConfigurationUrl($configurationUrl) {
         $this->options['configurationUrl'] = $configurationUrl;
         return $this;
     }
@@ -150,8 +114,7 @@ class CreateWebhookOptions extends Options
      *                                    sending a webhook request to url
      * @return $this Fluent Builder
      */
-    public function setConfigurationMethod($configurationMethod)
-    {
+    public function setConfigurationMethod($configurationMethod) {
         $this->options['configurationMethod'] = $configurationMethod;
         return $this;
     }
@@ -163,8 +126,7 @@ class CreateWebhookOptions extends Options
      *                                     webhook event for the Session
      * @return $this Fluent Builder
      */
-    public function setConfigurationFilters($configurationFilters)
-    {
+    public function setConfigurationFilters($configurationFilters) {
         $this->options['configurationFilters'] = $configurationFilters;
         return $this;
     }
@@ -176,8 +138,7 @@ class CreateWebhookOptions extends Options
      *                                      event for the Session
      * @return $this Fluent Builder
      */
-    public function setConfigurationTriggers($configurationTriggers)
-    {
+    public function setConfigurationTriggers($configurationTriggers) {
         $this->options['configurationTriggers'] = $configurationTriggers;
         return $this;
     }
@@ -189,8 +150,7 @@ class CreateWebhookOptions extends Options
      *                                     webhook should be sent to
      * @return $this Fluent Builder
      */
-    public function setConfigurationFlowSid($configurationFlowSid)
-    {
+    public function setConfigurationFlowSid($configurationFlowSid) {
         $this->options['configurationFlowSid'] = $configurationFlowSid;
         return $this;
     }
@@ -202,8 +162,7 @@ class CreateWebhookOptions extends Options
      *                                     request if the first attempt fails
      * @return $this Fluent Builder
      */
-    public function setConfigurationRetryCount($configurationRetryCount)
-    {
+    public function setConfigurationRetryCount($configurationRetryCount) {
         $this->options['configurationRetryCount'] = $configurationRetryCount;
         return $this;
     }
@@ -215,8 +174,7 @@ class CreateWebhookOptions extends Options
      *                                      successors the webhook will be replayed
      * @return $this Fluent Builder
      */
-    public function setConfigurationReplayAfter($configurationReplayAfter)
-    {
+    public function setConfigurationReplayAfter($configurationReplayAfter) {
         $this->options['configurationReplayAfter'] = $configurationReplayAfter;
         return $this;
     }
@@ -228,8 +186,7 @@ class CreateWebhookOptions extends Options
      *                                          to messages
      * @return $this Fluent Builder
      */
-    public function setConfigurationBufferMessages($configurationBufferMessages)
-    {
+    public function setConfigurationBufferMessages($configurationBufferMessages) {
         $this->options['configurationBufferMessages'] = $configurationBufferMessages;
         return $this;
     }
@@ -240,8 +197,7 @@ class CreateWebhookOptions extends Options
      * @param int $configurationBufferWindow The period to buffer messages
      * @return $this Fluent Builder
      */
-    public function setConfigurationBufferWindow($configurationBufferWindow)
-    {
+    public function setConfigurationBufferWindow($configurationBufferWindow) {
         $this->options['configurationBufferWindow'] = $configurationBufferWindow;
         return $this;
     }
@@ -251,8 +207,7 @@ class CreateWebhookOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -263,8 +218,7 @@ class CreateWebhookOptions extends Options
     }
 }
 
-class UpdateWebhookOptions extends Options
-{
+class UpdateWebhookOptions extends Options {
     /**
      * @param string $configurationUrl The absolute URL the webhook request should
      *                                 be sent to
@@ -282,16 +236,7 @@ class UpdateWebhookOptions extends Options
      *                                          to messages
      * @param int $configurationBufferWindow The period to buffer messages
      */
-    public function __construct(
-        $configurationUrl = Values::NONE,
-        $configurationMethod = Values::NONE,
-        $configurationFilters = Values::NONE,
-        $configurationTriggers = Values::NONE,
-        $configurationFlowSid = Values::NONE,
-        $configurationRetryCount = Values::NONE,
-        $configurationBufferMessages = Values::NONE,
-        $configurationBufferWindow = Values::NONE
-    ) {
+    public function __construct($configurationUrl = Values::NONE, $configurationMethod = Values::NONE, $configurationFilters = Values::NONE, $configurationTriggers = Values::NONE, $configurationFlowSid = Values::NONE, $configurationRetryCount = Values::NONE, $configurationBufferMessages = Values::NONE, $configurationBufferWindow = Values::NONE) {
         $this->options['configurationUrl'] = $configurationUrl;
         $this->options['configurationMethod'] = $configurationMethod;
         $this->options['configurationFilters'] = $configurationFilters;
@@ -309,8 +254,7 @@ class UpdateWebhookOptions extends Options
      *                                 be sent to
      * @return $this Fluent Builder
      */
-    public function setConfigurationUrl($configurationUrl)
-    {
+    public function setConfigurationUrl($configurationUrl) {
         $this->options['configurationUrl'] = $configurationUrl;
         return $this;
     }
@@ -322,8 +266,7 @@ class UpdateWebhookOptions extends Options
      *                                    sending a webhook request to url
      * @return $this Fluent Builder
      */
-    public function setConfigurationMethod($configurationMethod)
-    {
+    public function setConfigurationMethod($configurationMethod) {
         $this->options['configurationMethod'] = $configurationMethod;
         return $this;
     }
@@ -335,8 +278,7 @@ class UpdateWebhookOptions extends Options
      *                                     webhook event for the Session
      * @return $this Fluent Builder
      */
-    public function setConfigurationFilters($configurationFilters)
-    {
+    public function setConfigurationFilters($configurationFilters) {
         $this->options['configurationFilters'] = $configurationFilters;
         return $this;
     }
@@ -348,8 +290,7 @@ class UpdateWebhookOptions extends Options
      *                                      webhook event for the Session
      * @return $this Fluent Builder
      */
-    public function setConfigurationTriggers($configurationTriggers)
-    {
+    public function setConfigurationTriggers($configurationTriggers) {
         $this->options['configurationTriggers'] = $configurationTriggers;
         return $this;
     }
@@ -361,8 +302,7 @@ class UpdateWebhookOptions extends Options
      *                                     webhook should be sent to
      * @return $this Fluent Builder
      */
-    public function setConfigurationFlowSid($configurationFlowSid)
-    {
+    public function setConfigurationFlowSid($configurationFlowSid) {
         $this->options['configurationFlowSid'] = $configurationFlowSid;
         return $this;
     }
@@ -374,8 +314,7 @@ class UpdateWebhookOptions extends Options
      *                                     request if the first attempt fails
      * @return $this Fluent Builder
      */
-    public function setConfigurationRetryCount($configurationRetryCount)
-    {
+    public function setConfigurationRetryCount($configurationRetryCount) {
         $this->options['configurationRetryCount'] = $configurationRetryCount;
         return $this;
     }
@@ -387,8 +326,7 @@ class UpdateWebhookOptions extends Options
      *                                          to messages
      * @return $this Fluent Builder
      */
-    public function setConfigurationBufferMessages($configurationBufferMessages)
-    {
+    public function setConfigurationBufferMessages($configurationBufferMessages) {
         $this->options['configurationBufferMessages'] = $configurationBufferMessages;
         return $this;
     }
@@ -399,8 +337,7 @@ class UpdateWebhookOptions extends Options
      * @param int $configurationBufferWindow The period to buffer messages
      * @return $this Fluent Builder
      */
-    public function setConfigurationBufferWindow($configurationBufferWindow)
-    {
+    public function setConfigurationBufferWindow($configurationBufferWindow) {
         $this->options['configurationBufferWindow'] = $configurationBufferWindow;
         return $this;
     }
@@ -410,8 +347,7 @@ class UpdateWebhookOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -20,8 +20,7 @@ use Twilio\Rest\Monitor\V1;
  * @method \Twilio\Rest\Monitor\V1\AlertContext alerts(string $sid)
  * @method \Twilio\Rest\Monitor\V1\EventContext events(string $sid)
  */
-class Monitor extends Domain
-{
+class Monitor extends Domain {
     protected $_v1 = null;
 
     /**
@@ -31,8 +30,7 @@ class Monitor extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Monitor Domain for Monitor
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://monitor.twilio.com';
@@ -41,8 +39,7 @@ class Monitor extends Domain
     /**
      * @return \Twilio\Rest\Monitor\V1 Version v1 of monitor
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -56,8 +53,7 @@ class Monitor extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -74,8 +70,7 @@ class Monitor extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -87,8 +82,7 @@ class Monitor extends Domain
     /**
      * @return \Twilio\Rest\Monitor\V1\AlertList
      */
-    protected function getAlerts()
-    {
+    protected function getAlerts() {
         return $this->v1->alerts;
     }
 
@@ -96,16 +90,14 @@ class Monitor extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Monitor\V1\AlertContext
      */
-    protected function contextAlerts($sid)
-    {
+    protected function contextAlerts($sid) {
         return $this->v1->alerts($sid);
     }
 
     /**
      * @return \Twilio\Rest\Monitor\V1\EventList
      */
-    protected function getEvents()
-    {
+    protected function getEvents() {
         return $this->v1->events;
     }
 
@@ -113,8 +105,7 @@ class Monitor extends Domain
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Monitor\V1\EventContext
      */
-    protected function contextEvents($sid)
-    {
+    protected function contextEvents($sid) {
         return $this->v1->events($sid);
     }
 
@@ -123,8 +114,7 @@ class Monitor extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Monitor]';
     }
 }

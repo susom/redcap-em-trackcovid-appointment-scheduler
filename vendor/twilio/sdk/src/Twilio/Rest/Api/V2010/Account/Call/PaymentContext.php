@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class PaymentContext extends InstanceContext
-{
+class PaymentContext extends InstanceContext {
     /**
      * Initialize the PaymentContext
      *
@@ -30,12 +29,11 @@ class PaymentContext extends InstanceContext
      * @param string $sid The SID of Payments session
      * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentContext
      */
-    public function __construct(Version $version, $accountSid, $callSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $callSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/' . \rawurlencode($callSid) . '/Payments/' . \rawurlencode($sid) . '.json';
     }
@@ -52,8 +50,7 @@ class PaymentContext extends InstanceContext
      * @return PaymentInstance Updated PaymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($idempotencyKey, $statusCallback, $options = array())
-    {
+    public function update($idempotencyKey, $statusCallback, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -84,8 +81,7 @@ class PaymentContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

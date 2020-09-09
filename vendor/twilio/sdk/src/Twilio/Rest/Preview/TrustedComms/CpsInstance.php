@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property string $phoneNumber
  * @property string $url
  */
-class CpsInstance extends InstanceResource
-{
+class CpsInstance extends InstanceResource {
     /**
      * Initialize the CpsInstance
      *
@@ -30,8 +29,7 @@ class CpsInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Preview\TrustedComms\CpsInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -51,8 +49,7 @@ class CpsInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\TrustedComms\CpsContext Context for this
      *                                                      CpsInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new CpsContext($this->version);
         }
@@ -66,8 +63,7 @@ class CpsInstance extends InstanceResource
      * @return CpsInstance Fetched CpsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -78,8 +74,7 @@ class CpsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -97,8 +92,7 @@ class CpsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

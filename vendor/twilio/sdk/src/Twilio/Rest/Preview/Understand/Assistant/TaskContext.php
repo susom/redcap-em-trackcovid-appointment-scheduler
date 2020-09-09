@@ -32,8 +32,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Preview\Understand\Assistant\Task\TaskActionsContext taskActions()
  * @method \Twilio\Rest\Preview\Understand\Assistant\Task\TaskStatisticsContext statistics()
  */
-class TaskContext extends InstanceContext
-{
+class TaskContext extends InstanceContext {
     protected $_fields = null;
     protected $_samples = null;
     protected $_taskActions = null;
@@ -48,12 +47,11 @@ class TaskContext extends InstanceContext
      *                    resource.
      * @return \Twilio\Rest\Preview\Understand\Assistant\TaskContext
      */
-    public function __construct(Version $version, $assistantSid, $sid)
-    {
+    public function __construct(Version $version, $assistantSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid,);
+        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid, );
 
         $this->uri = '/Assistants/' . \rawurlencode($assistantSid) . '/Tasks/' . \rawurlencode($sid) . '';
     }
@@ -64,8 +62,7 @@ class TaskContext extends InstanceContext
      * @return TaskInstance Fetched TaskInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -89,8 +86,7 @@ class TaskContext extends InstanceContext
      * @return TaskInstance Updated TaskInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -121,8 +117,7 @@ class TaskContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -131,8 +126,7 @@ class TaskContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\FieldList
      */
-    protected function getFields()
-    {
+    protected function getFields() {
         if (!$this->_fields) {
             $this->_fields = new FieldList(
                 $this->version,
@@ -149,8 +143,7 @@ class TaskContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\SampleList
      */
-    protected function getSamples()
-    {
+    protected function getSamples() {
         if (!$this->_samples) {
             $this->_samples = new SampleList(
                 $this->version,
@@ -167,8 +160,7 @@ class TaskContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\TaskActionsList
      */
-    protected function getTaskActions()
-    {
+    protected function getTaskActions() {
         if (!$this->_taskActions) {
             $this->_taskActions = new TaskActionsList(
                 $this->version,
@@ -185,8 +177,7 @@ class TaskContext extends InstanceContext
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\Task\TaskStatisticsList
      */
-    protected function getStatistics()
-    {
+    protected function getStatistics() {
         if (!$this->_statistics) {
             $this->_statistics = new TaskStatisticsList(
                 $this->version,
@@ -205,8 +196,7 @@ class TaskContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -223,8 +213,7 @@ class TaskContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -238,8 +227,7 @@ class TaskContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

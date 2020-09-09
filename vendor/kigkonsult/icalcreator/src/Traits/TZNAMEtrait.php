@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait TZNAMEtrait
 {
     /**
      * @var array component property TZNAME value
-     * @access protected
      */
     protected $tzname = null;
 
@@ -56,77 +55,88 @@ trait TZNAMEtrait
      */
     public function createTzname()
     {
-        if (empty($this->tzname)) {
+        if( empty( $this->tzname )) {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->tzname as $tzx => $theName) {
-            if (!empty($theName[Util::$LCvalue])) {
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->tzname as $tzx => $theName ) {
+            if( ! empty( $theName[Util::$LCvalue] )) {
                 $output .= StringFactory::createElement(
                     self::TZNAME,
-                    ParameterFactory::createParams($theName[Util::$LCparams], [self::LANGUAGE], $lang),
-                    StringFactory::strrep($theName[Util::$LCvalue])
+                    ParameterFactory::createParams(
+                        $theName[Util::$LCparams],
+                        [ self::LANGUAGE ],
+                        $lang
+                    ),
+                    StringFactory::strrep( $theName[Util::$LCvalue] )
                 );
-            } elseif ($this->getConfig(self::ALLOWEMPTY)) {
-                $output .= StringFactory::createElement(self::TZNAME);
             }
-        }
+            elseif( $this->getConfig( self::ALLOWEMPTY )) {
+                $output .= StringFactory::createElement( self::TZNAME );
+            }
+        } // end foreach
         return $output;
     }
 
     /**
      * Delete calendar component property tzname
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteTzname($propDelIx = null)
+    public function deleteTzname( $propDelIx = null )
     {
-        if (empty($this->tzname)) {
-            unset($this->propDelIx[self::TZNAME]);
+        if( empty( $this->tzname )) {
+            unset( $this->propDelIx[self::TZNAME] );
             return false;
         }
-        return $this->deletePropertyM($this->tzname, self::TZNAME, $propDelIx);
+        return $this->deletePropertyM( $this->tzname, self::TZNAME, $propDelIx );
     }
 
     /**
      * Get calendar component property tzname
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getTzname($propIx = null, $inclParam = false)
+    public function getTzname( $propIx = null, $inclParam = false )
     {
-        if (empty($this->tzname)) {
-            unset($this->propIx[self::TZNAME]);
+        if( empty( $this->tzname )) {
+            unset( $this->propIx[self::TZNAME] );
             return false;
         }
-        return $this->getPropertyM($this->tzname, self::TZNAME, $propIx, $inclParam);
+        return $this->getPropertyM( $this->tzname, self::TZNAME, $propIx, $inclParam );
     }
 
     /**
      * Set calendar component property tzname
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setTzname($value = null, $params = [], $index = null)
+    public function setTzname( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::TZNAME);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::TZNAME );
+            $value  = Util::$SP0;
             $params = [];
         }
-        Util::assertString($value, self::TZNAME);
-        $this->setMval($this->tzname, StringFactory::trimTrailNL($value), $params, null, $index);
+        Util::assertString( $value, self::TZNAME );
+        $this->setMval(
+            $this->tzname,
+            StringFactory::trimTrailNL( $value ),
+            $params,
+            null,
+            $index
+        );
         return $this;
     }
 }

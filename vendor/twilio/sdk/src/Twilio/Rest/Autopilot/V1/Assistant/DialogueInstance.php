@@ -23,8 +23,7 @@ use Twilio\Version;
  * @property array $data
  * @property string $url
  */
-class DialogueInstance extends InstanceResource
-{
+class DialogueInstance extends InstanceResource {
     /**
      * Initialize the DialogueInstance
      *
@@ -35,8 +34,7 @@ class DialogueInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\DialogueInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -48,7 +46,7 @@ class DialogueInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -58,8 +56,7 @@ class DialogueInstance extends InstanceResource
      * @return \Twilio\Rest\Autopilot\V1\Assistant\DialogueContext Context for this
      *                                                             DialogueInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new DialogueContext(
                 $this->version,
@@ -77,8 +74,7 @@ class DialogueInstance extends InstanceResource
      * @return DialogueInstance Fetched DialogueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -89,8 +85,7 @@ class DialogueInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -108,8 +103,7 @@ class DialogueInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

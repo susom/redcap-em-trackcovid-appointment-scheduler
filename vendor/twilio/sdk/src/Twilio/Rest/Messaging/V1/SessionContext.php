@@ -29,8 +29,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Messaging\V1\Session\MessageContext messages(string $sid)
  * @method \Twilio\Rest\Messaging\V1\Session\WebhookContext webhooks(string $sid)
  */
-class SessionContext extends InstanceContext
-{
+class SessionContext extends InstanceContext {
     protected $_participants = null;
     protected $_messages = null;
     protected $_webhooks = null;
@@ -42,12 +41,11 @@ class SessionContext extends InstanceContext
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Messaging\V1\SessionContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Sessions/' . \rawurlencode($sid) . '';
     }
@@ -58,8 +56,7 @@ class SessionContext extends InstanceContext
      * @return SessionInstance Fetched SessionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -77,8 +74,7 @@ class SessionContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -89,8 +85,7 @@ class SessionContext extends InstanceContext
      * @return SessionInstance Updated SessionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -116,8 +111,7 @@ class SessionContext extends InstanceContext
      *
      * @return \Twilio\Rest\Messaging\V1\Session\ParticipantList
      */
-    protected function getParticipants()
-    {
+    protected function getParticipants() {
         if (!$this->_participants) {
             $this->_participants = new ParticipantList($this->version, $this->solution['sid']);
         }
@@ -130,8 +124,7 @@ class SessionContext extends InstanceContext
      *
      * @return \Twilio\Rest\Messaging\V1\Session\MessageList
      */
-    protected function getMessages()
-    {
+    protected function getMessages() {
         if (!$this->_messages) {
             $this->_messages = new MessageList($this->version, $this->solution['sid']);
         }
@@ -144,8 +137,7 @@ class SessionContext extends InstanceContext
      *
      * @return \Twilio\Rest\Messaging\V1\Session\WebhookList
      */
-    protected function getWebhooks()
-    {
+    protected function getWebhooks() {
         if (!$this->_webhooks) {
             $this->_webhooks = new WebhookList($this->version, $this->solution['sid']);
         }
@@ -160,8 +152,7 @@ class SessionContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -178,8 +169,7 @@ class SessionContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -193,8 +183,7 @@ class SessionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

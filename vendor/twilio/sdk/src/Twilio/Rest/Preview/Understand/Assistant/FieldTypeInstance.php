@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property string $uniqueName
  * @property string $url
  */
-class FieldTypeInstance extends InstanceResource
-{
+class FieldTypeInstance extends InstanceResource {
     protected $_fieldValues = null;
 
     /**
@@ -42,8 +41,7 @@ class FieldTypeInstance extends InstanceResource
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Understand\Assistant\FieldTypeInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -59,7 +57,7 @@ class FieldTypeInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('assistantSid' => $assistantSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -70,8 +68,7 @@ class FieldTypeInstance extends InstanceResource
      *                                                                    for this
      *                                                                    FieldTypeInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FieldTypeContext(
                 $this->version,
@@ -89,8 +86,7 @@ class FieldTypeInstance extends InstanceResource
      * @return FieldTypeInstance Fetched FieldTypeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -101,8 +97,7 @@ class FieldTypeInstance extends InstanceResource
      * @return FieldTypeInstance Updated FieldTypeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -112,8 +107,7 @@ class FieldTypeInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -122,8 +116,7 @@ class FieldTypeInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\Understand\Assistant\FieldType\FieldValueList
      */
-    protected function getFieldValues()
-    {
+    protected function getFieldValues() {
         return $this->proxy()->fieldValues;
     }
 
@@ -134,8 +127,7 @@ class FieldTypeInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -153,8 +145,7 @@ class FieldTypeInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

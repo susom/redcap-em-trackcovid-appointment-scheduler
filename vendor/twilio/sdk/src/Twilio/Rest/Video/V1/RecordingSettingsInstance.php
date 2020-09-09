@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property bool $encryptionEnabled
  * @property string $url
  */
-class RecordingSettingsInstance extends InstanceResource
-{
+class RecordingSettingsInstance extends InstanceResource {
     /**
      * Initialize the RecordingSettingsInstance
      *
@@ -36,8 +35,7 @@ class RecordingSettingsInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Video\V1\RecordingSettingsInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -62,8 +60,7 @@ class RecordingSettingsInstance extends InstanceResource
      * @return \Twilio\Rest\Video\V1\RecordingSettingsContext Context for this
      *                                                        RecordingSettingsInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new RecordingSettingsContext($this->version);
         }
@@ -77,8 +74,7 @@ class RecordingSettingsInstance extends InstanceResource
      * @return RecordingSettingsInstance Fetched RecordingSettingsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -90,8 +86,7 @@ class RecordingSettingsInstance extends InstanceResource
      * @return RecordingSettingsInstance Newly created RecordingSettingsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($friendlyName, $options = array())
-    {
+    public function create($friendlyName, $options = array()) {
         return $this->proxy()->create($friendlyName, $options);
     }
 
@@ -102,8 +97,7 @@ class RecordingSettingsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -121,8 +115,7 @@ class RecordingSettingsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -57,15 +57,17 @@ trait URLtrait
      */
     public function createUrl()
     {
-        if (empty($this->url)) {
+        if( empty( $this->url )) {
             return null;
         }
-        if (empty($this->url[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::URL) : null;
+        if( empty( $this->url[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::URL )
+                : null;
         }
         return StringFactory::createElement(
             self::URL,
-            ParameterFactory::createParams($this->url[Util::$LCparams]),
+            ParameterFactory::createParams( $this->url[Util::$LCparams] ),
             $this->url[Util::$LCvalue]
         );
     }
@@ -85,39 +87,40 @@ trait URLtrait
     /**
      * Get calendar component property url
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getUrl($inclParam = false)
+    public function getUrl( $inclParam = false )
     {
-        if (empty($this->url)) {
+        if( empty( $this->url )) {
             return false;
         }
-        return ($inclParam) ? $this->url : $this->url[Util::$LCvalue];
+        return ( $inclParam ) ? $this->url : $this->url[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property url
      *
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
      * @since 2.27.3 2018-12-22
      */
-    public function setUrl($value = null, $params = [])
+    public function setUrl( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::URL);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::URL );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            HttpFactory::assertUrl($value);
+        }
+        else {
+            HttpFactory::assertUrl( $value );
         }
         $this->url = [
-            Util::$LCvalue => $value,
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => $value,
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

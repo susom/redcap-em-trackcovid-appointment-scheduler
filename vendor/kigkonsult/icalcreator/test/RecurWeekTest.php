@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,14 +26,13 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
-use PHPUnit\Framework\TestCase;
 use Kigkonsult\Icalcreator\Util\DateTimeFactory;
 use Kigkonsult\Icalcreator\Util\RecurFactory;
-use Kigkonsult\Icalcreator\Util\Util;
+use Kigkonsult\Icalcreator\Util\RecurFactory2;
 use DateTime;
 use Exception;
 
@@ -49,31 +48,30 @@ class RecurWeekTest extends RecurBaseTest
     /**
      * recur2dateTest3Weekly provider
      */
-    public function recur2dateTest3WeeklyProvider()
-    {
+    public function recur2dateTest3WeeklyProvider() {
 
         $dataArr = [];
 
         $interval = 1;
-        for ($ix = 311; $ix <= 319; $ix++) {
-            $time = microtime(true);
-            $start = DateTimeFactory::factory('20190101T0900', 'Europe/Stockholm');
-            $wDate = clone $start;
+        for( $ix = 311; $ix <= 319; $ix++ ) {
+            $time    = microtime( true );
+            $start   = DateTimeFactory::factory( '20190101T0900', 'Europe/Stockholm' );
+            $wDate   = clone $start;
             $expects = [];
-            $count = 5;
-            $x = 1;
-            while ($x < $count) {
-                $expects[] = $wDate->modify(($interval * 7) . ' days')->format('Ymd');
-                $x += 1;
+            $count   = 5;
+            $x       = 1;
+            while( $x < $count ) {
+                $expects[] = $wDate->modify( ( $interval * 7 ) . ' days' )->format( 'Ymd' );
+                $x         += 1;
             } // end while
-            $execTime = microtime(true) - $time;
+            $execTime  = microtime( true ) - $time;
             $dataArr[] = [
                 $ix . '-' . $interval,
                 $start,
-                (clone $start)->modify(RecurFactory::EXTENDYEAR . ' year'),
+                (clone $start)->modify( RecurFactory::EXTENDYEAR . ' year' ),
                 [
-                    Vcalendar::FREQ => Vcalendar::WEEKLY,
-                    Vcalendar::COUNT => $count,
+                    Vcalendar::FREQ     => Vcalendar::WEEKLY,
+                    Vcalendar::COUNT    => $count,
                     Vcalendar::INTERVAL => $interval
                 ],
                 $expects,
@@ -83,41 +81,42 @@ class RecurWeekTest extends RecurBaseTest
         }
 
         $interval = 1;
-        for ($ix = 321; $ix <= 329; $ix++) {
-            $time = microtime(true);
-            $start = DateTimeFactory::factory('20190101T0900', 'Europe/Stockholm');
-            $end = (clone $start)->modify(RecurFactory::EXTENDYEAR . ' year');
-            $endYmd = $end->format('Ymd');
+        for( $ix = 321; $ix <= 329; $ix++ ) {
+            $time    = microtime( true );
+            $start   = DateTimeFactory::factory( '20190101T0900', 'Europe/Stockholm' );
+            $end     = (clone $start)->modify( RecurFactory::EXTENDYEAR . ' year' );
+            $endYmd  = $end->format( 'Ymd' );
             $expects = [];
-            $wDate = clone $start;
-            $saveWeekNo = $wDate->format('W');
-            while (true) {
-                if ($saveWeekNo == $wDate->format('W')) {
-                    $wDate = $wDate->modify('1 day');
-                } else {
-                    $wDate = $wDate->modify((($interval * 7) - 6) . ' days');
-                    $saveWeekNo = $wDate->format('W');
+            $wDate   = clone $start;
+            $saveWeekNo = $wDate->format( 'W' );
+            while( true ) {
+                if( $saveWeekNo == $wDate->format( 'W' )) {
+                    $wDate = $wDate->modify( '1 day' );
                 }
-                $ymd = $wDate->format('Ymd');
-                if ($endYmd < $ymd) {
+                else {
+                    $wDate = $wDate->modify( (( $interval * 7 ) - 6 ) . ' days' );
+                    $saveWeekNo = $wDate->format( 'W' );
+                }
+                $ymd = $wDate->format( 'Ymd' );
+                if( $endYmd < $ymd ) {
                     break;
                 }
-                if (in_array($wDate->format('w'), [4, 5])) {
+                if( in_array( $wDate->format( 'w' ), [ 4, 5 ] )) {
                     $expects[] = $ymd;
                 }
             } // end while
-            $execTime = microtime(true) - $time;
+            $execTime  = microtime( true ) - $time;
             $dataArr[] = [
                 $ix . '-' . $interval,
                 $start,
                 $end,
                 [
-                    Vcalendar::FREQ => Vcalendar::WEEKLY,
-                    Vcalendar::UNTIL => clone $end,
+                    Vcalendar::FREQ     => Vcalendar::WEEKLY,
+                    Vcalendar::UNTIL    => clone $end,
                     Vcalendar::INTERVAL => $interval,
-                    Vcalendar::BYDAY => [
-                        [Vcalendar::DAY => Vcalendar::TH],
-                        [Vcalendar::DAY => Vcalendar::FR]
+                    Vcalendar::BYDAY    => [
+                        [ Vcalendar::DAY => Vcalendar::TH ],
+                        [ Vcalendar::DAY => Vcalendar::FR ]
                     ]
                 ],
                 $expects,
@@ -127,99 +126,99 @@ class RecurWeekTest extends RecurBaseTest
         }
 
         $interval = 1;
-        $byMonth = [12];
-        for ($ix = 331; $ix <= 339; $ix++) {
-            $time = microtime(true);
-            $start = DateTimeFactory::factory('20190101T0900', 'Europe/Stockholm');
-            $end = (clone $start)->modify(RecurFactory::EXTENDYEAR . ' years');
-            $endYmd = $end->format('Ymd');
+        $byMonth  = [ 12 ];
+        for( $ix = 331; $ix <= 339; $ix++ ) {
+            $time    = microtime( true );
+            $start   = DateTimeFactory::factory( '20190101T0900', 'Europe/Stockholm' );
+            $end     = (clone $start)->modify( RecurFactory::EXTENDYEAR . ' years' );
+            $endYmd  = $end->format( 'Ymd' );
             $expects = [];
-            $wDate = clone $start;
-            while (true) {
-                $wDate = $wDate->modify(($interval * 7) . ' days');
-                if (!in_array($wDate->format('m'), $byMonth)) {
+            $wDate   = clone $start;
+            while( true ) {
+                $wDate = $wDate->modify( ( $interval * 7 ) . ' days' );
+                if( ! in_array( $wDate->format( 'm' ), $byMonth )) {
                     continue;
                 }
-                $ymd = $wDate->format('Ymd');
-                if ($endYmd <= $ymd) {
+                $ymd = $wDate->format( 'Ymd' );
+                if( $endYmd <= $ymd ) {
                     break;
                 }
                 $expects[] = $ymd;
             } // end while
-            $execTime = microtime(true) - $time;
+            $execTime  = microtime( true ) - $time;
             $dataArr[] = [
                 $ix . '-' . $interval,
                 $start,
                 $end,
                 [
-                    Vcalendar::FREQ => Vcalendar::WEEKLY,
-                    Vcalendar::UNTIL => clone $end,
+                    Vcalendar::FREQ     => Vcalendar::WEEKLY,
+                    Vcalendar::UNTIL    => clone $end,
                     Vcalendar::INTERVAL => $interval,
-                    Vcalendar::BYMONTH => $byMonth
+                    Vcalendar::BYMONTH  => $byMonth
                 ],
                 $expects,
                 $execTime
             ];
             $interval += 2;
             $byMonth[] = $interval;
-            sort($byMonth);
+            sort( $byMonth );
         }
 
         $interval = 1;
-        $byMonth = [1, 12];
-        for ($ix = 341; $ix <= 349; $ix++) {
-            $time = microtime(true);
-            $start = DateTimeFactory::factory('20190101T0900', 'Europe/Stockholm');
-            $startYmd = $start->format('Ymd');
-            $end = (clone $start)->modify(RecurFactory::EXTENDYEAR . ' years');
-            $endYmd = $end->format('Ymd');
-            $expects = [];
-            $wDate = clone $start;
-            $targetWeekNo = (int)$wDate->format('W');
+        $byMonth  = [ 1, 12 ];
+        for( $ix = 341; $ix <= 349; $ix++ ) {
+            $time     = microtime( true );
+            $start    = DateTimeFactory::factory( '20190101T0900', 'Europe/Stockholm' );
+            $startYmd = $start->format( 'Ymd' );
+            $end      = (clone $start)->modify( RecurFactory::EXTENDYEAR . ' years' );
+            $endYmd   = $end->format( 'Ymd' );
+            $expects  = [];
+            $wDate    = clone $start;
+            $targetWeekNo = (int) $wDate->format( 'W' );
             // go back to first day of week or first day in month
-            while ((1 != $wDate->format('w')) &&
-                (1 != $wDate->format('d'))) {
-                $wDate = $wDate->modify('-1 day');
+            while(( 1 != $wDate->format( 'w' )) &&
+                  ( 1 != $wDate->format( 'd' ))) {
+                $wDate = $wDate->modify( '-1 day' );
             }
-            while (true) {
-                $currWeekNo = (int)$wDate->format('W');
-                $Ymd = $wDate->format('Ymd');
-                switch (true) {
-                    case($Ymd <= $startYmd) :
-                        $wDate = $wDate->modify('1 day');
+            while( true ) {
+                $currWeekNo = (int) $wDate->format( 'W' );
+                $Ymd        = $wDate->format( 'Ymd' );
+                switch( true ) {
+                    case( $Ymd <= $startYmd ) :
+                        $wDate = $wDate->modify( '1 day' );
                         continue;
                         break;
-                    case($endYmd < $Ymd) :
+                    case( $endYmd < $Ymd ) :
                         break 2;
-                    case($currWeekNo == $targetWeekNo) :
-                        if (in_array($wDate->format('w'), [4, 5])) { // TH+FR
-                            if (in_array($wDate->format('m'), $byMonth)) {
+                    case( $currWeekNo == $targetWeekNo ) :
+                        if( in_array( $wDate->format( 'w' ), [ 4, 5 ] )) { // TH+FR
+                            if( in_array( $wDate->format( 'm' ), $byMonth )) {
                                 $expects[] = $Ymd;
                             }
                         }
-                        $wDate = $wDate->modify('1 day');
+                        $wDate = $wDate->modify( '1 day' );
                         continue;
                     default :
                         // now is the first day of next week
-                        if (1 < $interval) {
-                            $wDate = $wDate->modify((7 * ($interval - 1)) . ' days');
+                        if( 1 < $interval ) {
+                            $wDate = $wDate->modify( ( 7 * ( $interval - 1 )) . ' days' );
                         }
-                        $targetWeekNo = (int)$wDate->format('W');
+                        $targetWeekNo = (int) $wDate->format( 'W' );
                 } // end switch
             } // end while
-            $execTime = microtime(true) - $time;
+            $execTime  = microtime( true ) - $time;
             $dataArr[] = [
                 $ix . '-' . $interval,
                 $start,
                 $end,
                 [
-                    Vcalendar::FREQ => Vcalendar::WEEKLY,
-                    Vcalendar::UNTIL => clone $end,
+                    Vcalendar::FREQ     => Vcalendar::WEEKLY,
+                    Vcalendar::UNTIL    => clone $end,
                     Vcalendar::INTERVAL => $interval,
-                    Vcalendar::BYMONTH => $byMonth,
-                    Vcalendar::BYDAY => [
-                        [Vcalendar::DAY => Vcalendar::TH],
-                        [Vcalendar::DAY => Vcalendar::FR]
+                    Vcalendar::BYMONTH  => $byMonth,
+                    Vcalendar::BYDAY    => [
+                        [ Vcalendar::DAY => Vcalendar::TH ],
+                        [ Vcalendar::DAY => Vcalendar::FR ]
                     ]
                 ],
                 $expects,
@@ -227,7 +226,7 @@ class RecurWeekTest extends RecurBaseTest
             ];
             $interval += 3;
             $byMonth[] = $interval;
-            sort($byMonth);
+            sort( $byMonth );
         }
 
         return $dataArr;
@@ -239,12 +238,12 @@ class RecurWeekTest extends RecurBaseTest
      *
      * @test
      * @dataProvider recur2dateTest3WeeklyProvider
-     * @param int $case
+     * @param int      $case
      * @param DateTime $start
      * @param array|DateTime $end
-     * @param array $recur
-     * @param array $expects
-     * @param float $prepTime
+     * @param array    $recur
+     * @param array    $expects
+     * @param float    $prepTime
      * @throws Exception
      */
     public function recur2dateTest3Weekly(
@@ -253,8 +252,7 @@ class RecurWeekTest extends RecurBaseTest
         $end,
         array $recur,
         array $expects,
-        $prepTime
-    ) {
+        $prepTime ) {
         $saveStartDate = clone $start;
 
         $result = $this->recur2dateTest(
@@ -266,41 +264,46 @@ class RecurWeekTest extends RecurBaseTest
             $prepTime
         );
 
-        if (!isset($recur[Vcalendar::INTERVAL])) {
+        if( ! isset( $recur[Vcalendar::INTERVAL] )) {
             $recur[Vcalendar::INTERVAL] = 1;
         }
-        if (RecurFactory::isSimpleWeeklyRecur1($recur)) {
-            $time = microtime(true);
-            $resultX = RecurFactory::recurWeeklySimple1($recur, $start, clone $start, $end);
-            $execTime = microtime(true) - $time;
-            $strCase = str_pad($case, 12);
-            echo $strCase . 'week smpl1 time:' . number_format($execTime, 6) . ' : ' .
-                implode(' - ', array_keys($resultX)) . PHP_EOL; // test ###
+        $strCase  = str_pad( $case, 12 );
+        if( RecurFactory2::isRecurWeekly1( $recur )) {
+            $time     = microtime( true );
+            $resultX  = RecurFactory2::recurWeekly1( $recur, $start, clone $start, $end );
+            $execTime = microtime( true ) - $time;
+            echo $strCase . 'week smpl1 time:' . number_format( $execTime, 6 ) . ' : ' .
+                implode( ' - ', array_keys( $resultX )) . PHP_EOL; // test ###
             $this->assertEquals(
-                array_keys($result),
-                array_keys($resultX),
-                sprintf(self::$ERRFMT, __FUNCTION__, $case . '-31',
-                    $saveStartDate->format('Ymd'),
-                    $end->format('Ymd'),
-                    var_export($recur, true)
+                array_keys( $result ),
+                array_keys( $resultX ),
+                sprintf( self::$ERRFMT, __FUNCTION__, $case . '-31',
+                         $saveStartDate->format( 'Ymd' ),
+                         $end->format( 'Ymd' ),
+                         var_export( $recur, true )
                 )
             );
-        } elseif (RecurFactory::isSimpleWeeklyRecur2($recur)) {
-            $time = microtime(true);
-            $resultX = RecurFactory::recurWeeklySimple2($recur, $start, clone $start, $end);
-            $execTime = microtime(true) - $time;
-            $strCase = str_pad($case, 12);
-            echo $strCase . 'week smpl2 time:' . number_format($execTime, 6) . ' : ' .
-                implode(' - ', array_keys($resultX)) . PHP_EOL; // test ###
+        }
+        elseif( RecurFactory2::isRecurWeekly2( $recur )) {
+            $time     = microtime( true );
+            $resultX  = RecurFactory2::recurWeekly2( $recur, $start, clone $start, $end );
+            $execTime = microtime( true ) - $time;
+            echo $strCase . 'week smpl2 time:' . number_format( $execTime, 6 ) . ' : ' .
+                implode( ' - ', array_keys( $resultX )) . PHP_EOL; // test ###
             $this->assertEquals(
-                array_keys($result),
-                array_keys($resultX),
-                sprintf(self::$ERRFMT, __FUNCTION__, $case . '-32',
-                    $saveStartDate->format('Ymd'),
-                    $end->format('Ymd'),
-                    var_export($recur, true)
+                array_keys( $result ),
+                array_keys( $resultX ),
+                sprintf( self::$ERRFMT, __FUNCTION__, $case . '-32',
+                         $saveStartDate->format( 'Ymd' ),
+                         $end->format( 'Ymd' ),
+                         var_export( $recur, true )
                 )
             );
+        }
+        else {
+            $recurDisp = str_replace( [PHP_EOL, ' ' ], '', var_export( $recur, true ));
+            echo $strCase . ' NOT isRecurWeekly1/2 ' . $recurDisp . PHP_EOL;
+            $this->assertTrue( false );
         }
     }
 

@@ -22,8 +22,7 @@ use Twilio\Version;
  * @property string $stepSid
  * @property string $url
  */
-class ExecutionStepContextInstance extends InstanceResource
-{
+class ExecutionStepContextInstance extends InstanceResource {
     /**
      * Initialize the ExecutionStepContextInstance
      *
@@ -34,8 +33,7 @@ class ExecutionStepContextInstance extends InstanceResource
      * @param string $stepSid Step SID
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStep\ExecutionStepContextInstance
      */
-    public function __construct(Version $version, array $payload, $flowSid, $executionSid, $stepSid)
-    {
+    public function __construct(Version $version, array $payload, $flowSid, $executionSid, $stepSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -62,8 +60,7 @@ class ExecutionStepContextInstance extends InstanceResource
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStep\ExecutionStepContextContext Context for this
      *                                                                                         ExecutionStepContextInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ExecutionStepContextContext(
                 $this->version,
@@ -82,8 +79,7 @@ class ExecutionStepContextInstance extends InstanceResource
      * @return ExecutionStepContextInstance Fetched ExecutionStepContextInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -94,8 +90,7 @@ class ExecutionStepContextInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -113,8 +108,7 @@ class ExecutionStepContextInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

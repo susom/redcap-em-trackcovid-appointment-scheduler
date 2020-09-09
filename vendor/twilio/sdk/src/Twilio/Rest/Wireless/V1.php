@@ -26,8 +26,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Wireless\V1\RatePlanContext ratePlans(string $sid)
  * @method \Twilio\Rest\Wireless\V1\SimContext sims(string $sid)
  */
-class V1 extends Version
-{
+class V1 extends Version {
     protected $_usageRecords = null;
     protected $_commands = null;
     protected $_ratePlans = null;
@@ -39,8 +38,7 @@ class V1 extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Wireless\V1 V1 version of Wireless
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'v1';
     }
@@ -48,8 +46,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Wireless\V1\UsageRecordList
      */
-    protected function getUsageRecords()
-    {
+    protected function getUsageRecords() {
         if (!$this->_usageRecords) {
             $this->_usageRecords = new UsageRecordList($this);
         }
@@ -59,8 +56,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Wireless\V1\CommandList
      */
-    protected function getCommands()
-    {
+    protected function getCommands() {
         if (!$this->_commands) {
             $this->_commands = new CommandList($this);
         }
@@ -70,8 +66,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Wireless\V1\RatePlanList
      */
-    protected function getRatePlans()
-    {
+    protected function getRatePlans() {
         if (!$this->_ratePlans) {
             $this->_ratePlans = new RatePlanList($this);
         }
@@ -81,8 +76,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Wireless\V1\SimList
      */
-    protected function getSims()
-    {
+    protected function getSims() {
         if (!$this->_sims) {
             $this->_sims = new SimList($this);
         }
@@ -96,8 +90,7 @@ class V1 extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -114,8 +107,7 @@ class V1 extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -129,8 +121,7 @@ class V1 extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Wireless.V1]';
     }
 }

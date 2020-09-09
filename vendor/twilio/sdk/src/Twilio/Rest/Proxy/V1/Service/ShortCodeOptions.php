@@ -15,27 +15,23 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class ShortCodeOptions
-{
+abstract class ShortCodeOptions {
     /**
      * @param bool $isReserved Whether the short code should be reserved for manual
      *                         assignment to participants only
      * @return UpdateShortCodeOptions Options builder
      */
-    public static function update($isReserved = Values::NONE)
-    {
+    public static function update($isReserved = Values::NONE) {
         return new UpdateShortCodeOptions($isReserved);
     }
 }
 
-class UpdateShortCodeOptions extends Options
-{
+class UpdateShortCodeOptions extends Options {
     /**
      * @param bool $isReserved Whether the short code should be reserved for manual
      *                         assignment to participants only
      */
-    public function __construct($isReserved = Values::NONE)
-    {
+    public function __construct($isReserved = Values::NONE) {
         $this->options['isReserved'] = $isReserved;
     }
 
@@ -46,8 +42,7 @@ class UpdateShortCodeOptions extends Options
      *                         assignment to participants only
      * @return $this Fluent Builder
      */
-    public function setIsReserved($isReserved)
-    {
+    public function setIsReserved($isReserved) {
         $this->options['isReserved'] = $isReserved;
         return $this;
     }
@@ -57,8 +52,7 @@ class UpdateShortCodeOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -12,8 +12,7 @@ namespace Twilio\Rest\IpMessaging\V1\Service;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ChannelOptions
-{
+abstract class ChannelOptions {
     /**
      * @param string $friendlyName A string to describe the new resource
      * @param string $uniqueName An application-defined string that uniquely
@@ -23,12 +22,7 @@ abstract class ChannelOptions
      * @param string $type The visibility of the channel
      * @return CreateChannelOptions Options builder
      */
-    public static function create(
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE,
-        $attributes = Values::NONE,
-        $type = Values::NONE
-    ) {
+    public static function create($friendlyName = Values::NONE, $uniqueName = Values::NONE, $attributes = Values::NONE, $type = Values::NONE) {
         return new CreateChannelOptions($friendlyName, $uniqueName, $attributes, $type);
     }
 
@@ -36,8 +30,7 @@ abstract class ChannelOptions
      * @param string $type The visibility of the channel to read
      * @return ReadChannelOptions Options builder
      */
-    public static function read($type = Values::NONE)
-    {
+    public static function read($type = Values::NONE) {
         return new ReadChannelOptions($type);
     }
 
@@ -49,14 +42,12 @@ abstract class ChannelOptions
      *                           application-specific data
      * @return UpdateChannelOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $uniqueName = Values::NONE, $attributes = Values::NONE)
-    {
+    public static function update($friendlyName = Values::NONE, $uniqueName = Values::NONE, $attributes = Values::NONE) {
         return new UpdateChannelOptions($friendlyName, $uniqueName, $attributes);
     }
 }
 
-class CreateChannelOptions extends Options
-{
+class CreateChannelOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the new resource
      * @param string $uniqueName An application-defined string that uniquely
@@ -65,12 +56,7 @@ class CreateChannelOptions extends Options
      *                           application-specific data
      * @param string $type The visibility of the channel
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE,
-        $attributes = Values::NONE,
-        $type = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE, $attributes = Values::NONE, $type = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['uniqueName'] = $uniqueName;
         $this->options['attributes'] = $attributes;
@@ -83,8 +69,7 @@ class CreateChannelOptions extends Options
      * @param string $friendlyName A string to describe the new resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -96,8 +81,7 @@ class CreateChannelOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -109,8 +93,7 @@ class CreateChannelOptions extends Options
      *                           application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -121,8 +104,7 @@ class CreateChannelOptions extends Options
      * @param string $type The visibility of the channel
      * @return $this Fluent Builder
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->options['type'] = $type;
         return $this;
     }
@@ -132,8 +114,7 @@ class CreateChannelOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -144,13 +125,11 @@ class CreateChannelOptions extends Options
     }
 }
 
-class ReadChannelOptions extends Options
-{
+class ReadChannelOptions extends Options {
     /**
      * @param string $type The visibility of the channel to read
      */
-    public function __construct($type = Values::NONE)
-    {
+    public function __construct($type = Values::NONE) {
         $this->options['type'] = $type;
     }
 
@@ -160,8 +139,7 @@ class ReadChannelOptions extends Options
      * @param string $type The visibility of the channel to read
      * @return $this Fluent Builder
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->options['type'] = $type;
         return $this;
     }
@@ -171,8 +149,7 @@ class ReadChannelOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -183,8 +160,7 @@ class ReadChannelOptions extends Options
     }
 }
 
-class UpdateChannelOptions extends Options
-{
+class UpdateChannelOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $uniqueName An application-defined string that uniquely
@@ -192,8 +168,7 @@ class UpdateChannelOptions extends Options
      * @param string $attributes A valid JSON string that contains
      *                           application-specific data
      */
-    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE, $attributes = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE, $attributes = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['uniqueName'] = $uniqueName;
         $this->options['attributes'] = $attributes;
@@ -205,8 +180,7 @@ class UpdateChannelOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -218,8 +192,7 @@ class UpdateChannelOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -231,8 +204,7 @@ class UpdateChannelOptions extends Options
      *                           application-specific data
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes)
-    {
+    public function setAttributes($attributes) {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -242,8 +214,7 @@ class UpdateChannelOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

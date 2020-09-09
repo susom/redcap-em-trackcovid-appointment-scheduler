@@ -14,8 +14,7 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class FeedbackSummaryContext extends InstanceContext
-{
+class FeedbackSummaryContext extends InstanceContext {
     /**
      * Initialize the FeedbackSummaryContext
      *
@@ -25,12 +24,11 @@ class FeedbackSummaryContext extends InstanceContext
      *                    resource
      * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryContext
      */
-    public function __construct(Version $version, $accountSid, $sid)
-    {
+    public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid,);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/FeedbackSummary/' . \rawurlencode($sid) . '.json';
     }
@@ -41,8 +39,7 @@ class FeedbackSummaryContext extends InstanceContext
      * @return FeedbackSummaryInstance Fetched FeedbackSummaryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -65,8 +62,7 @@ class FeedbackSummaryContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -75,8 +71,7 @@ class FeedbackSummaryContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

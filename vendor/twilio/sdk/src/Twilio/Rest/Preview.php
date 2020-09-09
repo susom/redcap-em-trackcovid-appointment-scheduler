@@ -63,8 +63,7 @@ use Twilio\Rest\Preview\Wireless as PreviewWireless;
  * @method \Twilio\Rest\Preview\TrustedComms\CpsContext cps()
  * @method \Twilio\Rest\Preview\TrustedComms\CurrentCallContext currentCalls()
  */
-class Preview extends Domain
-{
+class Preview extends Domain {
     protected $_bulkExports = null;
     protected $_deployedDevices = null;
     protected $_hostedNumbers = null;
@@ -81,8 +80,7 @@ class Preview extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Preview Domain for Preview
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://preview.twilio.com';
@@ -91,8 +89,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\BulkExports Version bulkExports of preview
      */
-    protected function getBulkExports()
-    {
+    protected function getBulkExports() {
         if (!$this->_bulkExports) {
             $this->_bulkExports = new PreviewBulkExports($this);
         }
@@ -103,8 +100,7 @@ class Preview extends Domain
      * @return \Twilio\Rest\Preview\DeployedDevices Version deployedDevices of
      *                                              preview
      */
-    protected function getDeployedDevices()
-    {
+    protected function getDeployedDevices() {
         if (!$this->_deployedDevices) {
             $this->_deployedDevices = new PreviewDeployedDevices($this);
         }
@@ -114,8 +110,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\HostedNumbers Version hostedNumbers of preview
      */
-    protected function getHostedNumbers()
-    {
+    protected function getHostedNumbers() {
         if (!$this->_hostedNumbers) {
             $this->_hostedNumbers = new PreviewHostedNumbers($this);
         }
@@ -125,8 +120,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\Marketplace Version marketplace of preview
      */
-    protected function getMarketplace()
-    {
+    protected function getMarketplace() {
         if (!$this->_marketplace) {
             $this->_marketplace = new PreviewMarketplace($this);
         }
@@ -136,8 +130,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\Sync Version sync of preview
      */
-    protected function getSync()
-    {
+    protected function getSync() {
         if (!$this->_sync) {
             $this->_sync = new PreviewSync($this);
         }
@@ -147,8 +140,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\Understand Version understand of preview
      */
-    protected function getUnderstand()
-    {
+    protected function getUnderstand() {
         if (!$this->_understand) {
             $this->_understand = new PreviewUnderstand($this);
         }
@@ -158,8 +150,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\Wireless Version wireless of preview
      */
-    protected function getWireless()
-    {
+    protected function getWireless() {
         if (!$this->_wireless) {
             $this->_wireless = new PreviewWireless($this);
         }
@@ -169,8 +160,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\TrustedComms Version trustedComms of preview
      */
-    protected function getTrustedComms()
-    {
+    protected function getTrustedComms() {
         if (!$this->_trustedComms) {
             $this->_trustedComms = new PreviewTrustedComms($this);
         }
@@ -184,8 +174,7 @@ class Preview extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -202,8 +191,7 @@ class Preview extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -215,8 +203,7 @@ class Preview extends Domain
     /**
      * @return \Twilio\Rest\Preview\BulkExports\ExportList
      */
-    protected function getExports()
-    {
+    protected function getExports() {
         return $this->bulkExports->exports;
     }
 
@@ -224,16 +211,14 @@ class Preview extends Domain
      * @param string $resourceType The type of communication – Messages, Calls
      * @return \Twilio\Rest\Preview\BulkExports\ExportContext
      */
-    protected function contextExports($resourceType)
-    {
+    protected function contextExports($resourceType) {
         return $this->bulkExports->exports($resourceType);
     }
 
     /**
      * @return \Twilio\Rest\Preview\BulkExports\ExportConfigurationList
      */
-    protected function getExportConfiguration()
-    {
+    protected function getExportConfiguration() {
         return $this->bulkExports->exportConfiguration;
     }
 
@@ -241,16 +226,14 @@ class Preview extends Domain
      * @param string $resourceType The type of communication – Messages, Calls
      * @return \Twilio\Rest\Preview\BulkExports\ExportConfigurationContext
      */
-    protected function contextExportConfiguration($resourceType)
-    {
+    protected function contextExportConfiguration($resourceType) {
         return $this->bulkExports->exportConfiguration($resourceType);
     }
 
     /**
      * @return \Twilio\Rest\Preview\DeployedDevices\FleetList
      */
-    protected function getFleets()
-    {
+    protected function getFleets() {
         return $this->deployedDevices->fleets;
     }
 
@@ -258,16 +241,14 @@ class Preview extends Domain
      * @param string $sid A string that uniquely identifies the Fleet.
      * @return \Twilio\Rest\Preview\DeployedDevices\FleetContext
      */
-    protected function contextFleets($sid)
-    {
+    protected function contextFleets($sid) {
         return $this->deployedDevices->fleets($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentList
      */
-    protected function getAuthorizationDocuments()
-    {
+    protected function getAuthorizationDocuments() {
         return $this->hostedNumbers->authorizationDocuments;
     }
 
@@ -275,16 +256,14 @@ class Preview extends Domain
      * @param string $sid AuthorizationDocument sid.
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentContext
      */
-    protected function contextAuthorizationDocuments($sid)
-    {
+    protected function contextAuthorizationDocuments($sid) {
         return $this->hostedNumbers->authorizationDocuments($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderList
      */
-    protected function getHostedNumberOrders()
-    {
+    protected function getHostedNumberOrders() {
         return $this->hostedNumbers->hostedNumberOrders;
     }
 
@@ -292,16 +271,14 @@ class Preview extends Domain
      * @param string $sid HostedNumberOrder sid.
      * @return \Twilio\Rest\Preview\HostedNumbers\HostedNumberOrderContext
      */
-    protected function contextHostedNumberOrders($sid)
-    {
+    protected function contextHostedNumberOrders($sid) {
         return $this->hostedNumbers->hostedNumberOrders($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnList
      */
-    protected function getAvailableAddOns()
-    {
+    protected function getAvailableAddOns() {
         return $this->marketplace->availableAddOns;
     }
 
@@ -309,16 +286,14 @@ class Preview extends Domain
      * @param string $sid The SID of the AvailableAddOn resource to fetch
      * @return \Twilio\Rest\Preview\Marketplace\AvailableAddOnContext
      */
-    protected function contextAvailableAddOns($sid)
-    {
+    protected function contextAvailableAddOns($sid) {
         return $this->marketplace->availableAddOns($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Marketplace\InstalledAddOnList
      */
-    protected function getInstalledAddOns()
-    {
+    protected function getInstalledAddOns() {
         return $this->marketplace->installedAddOns;
     }
 
@@ -326,16 +301,14 @@ class Preview extends Domain
      * @param string $sid The SID of the InstalledAddOn resource to fetch
      * @return \Twilio\Rest\Preview\Marketplace\InstalledAddOnContext
      */
-    protected function contextInstalledAddOns($sid)
-    {
+    protected function contextInstalledAddOns($sid) {
         return $this->marketplace->installedAddOns($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Sync\ServiceList
      */
-    protected function getServices()
-    {
+    protected function getServices() {
         return $this->sync->services;
     }
 
@@ -343,16 +316,14 @@ class Preview extends Domain
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Sync\ServiceContext
      */
-    protected function contextServices($sid)
-    {
+    protected function contextServices($sid) {
         return $this->sync->services($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Understand\AssistantList
      */
-    protected function getAssistants()
-    {
+    protected function getAssistants() {
         return $this->understand->assistants;
     }
 
@@ -361,16 +332,14 @@ class Preview extends Domain
      *                    resource.
      * @return \Twilio\Rest\Preview\Understand\AssistantContext
      */
-    protected function contextAssistants($sid)
-    {
+    protected function contextAssistants($sid) {
         return $this->understand->assistants($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Wireless\CommandList
      */
-    protected function getCommands()
-    {
+    protected function getCommands() {
         return $this->wireless->commands;
     }
 
@@ -378,16 +347,14 @@ class Preview extends Domain
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Wireless\CommandContext
      */
-    protected function contextCommands($sid)
-    {
+    protected function contextCommands($sid) {
         return $this->wireless->commands($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Wireless\RatePlanList
      */
-    protected function getRatePlans()
-    {
+    protected function getRatePlans() {
         return $this->wireless->ratePlans;
     }
 
@@ -395,16 +362,14 @@ class Preview extends Domain
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Wireless\RatePlanContext
      */
-    protected function contextRatePlans($sid)
-    {
+    protected function contextRatePlans($sid) {
         return $this->wireless->ratePlans($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\Wireless\SimList
      */
-    protected function getSims()
-    {
+    protected function getSims() {
         return $this->wireless->sims;
     }
 
@@ -412,24 +377,21 @@ class Preview extends Domain
      * @param string $sid The sid
      * @return \Twilio\Rest\Preview\Wireless\SimContext
      */
-    protected function contextSims($sid)
-    {
+    protected function contextSims($sid) {
         return $this->wireless->sims($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\BrandedCallList
      */
-    protected function getBrandedCalls()
-    {
+    protected function getBrandedCalls() {
         return $this->trustedComms->brandedCalls;
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\BusinessList
      */
-    protected function getBusinesses()
-    {
+    protected function getBusinesses() {
         return $this->trustedComms->businesses;
     }
 
@@ -437,56 +399,49 @@ class Preview extends Domain
      * @param string $sid A string that uniquely identifies this Business.
      * @return \Twilio\Rest\Preview\TrustedComms\BusinessContext
      */
-    protected function contextBusinesses($sid)
-    {
+    protected function contextBusinesses($sid) {
         return $this->trustedComms->businesses($sid);
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\CpsList
      */
-    protected function getCps()
-    {
+    protected function getCps() {
         return $this->trustedComms->cps;
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\CpsContext
      */
-    protected function contextCps()
-    {
+    protected function contextCps() {
         return $this->trustedComms->cps();
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallList
      */
-    protected function getCurrentCalls()
-    {
+    protected function getCurrentCalls() {
         return $this->trustedComms->currentCalls;
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\CurrentCallContext
      */
-    protected function contextCurrentCalls()
-    {
+    protected function contextCurrentCalls() {
         return $this->trustedComms->currentCalls();
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\DeviceList
      */
-    protected function getDevices()
-    {
+    protected function getDevices() {
         return $this->trustedComms->devices;
     }
 
     /**
      * @return \Twilio\Rest\Preview\TrustedComms\PhoneCallList
      */
-    protected function getPhoneCalls()
-    {
+    protected function getPhoneCalls() {
         return $this->trustedComms->phoneCalls;
     }
 
@@ -495,8 +450,7 @@ class Preview extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview]';
     }
 }

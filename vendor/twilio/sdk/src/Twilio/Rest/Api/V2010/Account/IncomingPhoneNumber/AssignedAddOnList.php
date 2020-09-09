@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class AssignedAddOnList extends ListResource
-{
+class AssignedAddOnList extends ListResource {
     /**
      * Construct the AssignedAddOnList
      *
@@ -28,12 +27,11 @@ class AssignedAddOnList extends ListResource
      *                            Add-on
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOnList
      */
-    public function __construct(Version $version, $accountSid, $resourceSid)
-    {
+    public function __construct(Version $version, $accountSid, $resourceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'resourceSid' => $resourceSid,);
+        $this->solution = array('accountSid' => $accountSid, 'resourceSid' => $resourceSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/IncomingPhoneNumbers/' . \rawurlencode($resourceSid) . '/AssignedAddOns.json';
     }
@@ -56,8 +54,7 @@ class AssignedAddOnList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -80,8 +77,7 @@ class AssignedAddOnList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return AssignedAddOnInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -94,8 +90,7 @@ class AssignedAddOnList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of AssignedAddOnInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -118,8 +113,7 @@ class AssignedAddOnList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of AssignedAddOnInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -136,9 +130,8 @@ class AssignedAddOnList extends ListResource
      * @return AssignedAddOnInstance Newly created AssignedAddOnInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($installedAddOnSid)
-    {
-        $data = Values::of(array('InstalledAddOnSid' => $installedAddOnSid,));
+    public function create($installedAddOnSid) {
+        $data = Values::of(array('InstalledAddOnSid' => $installedAddOnSid, ));
 
         $payload = $this->version->create(
             'POST',
@@ -161,8 +154,7 @@ class AssignedAddOnList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOnContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new AssignedAddOnContext(
             $this->version,
             $this->solution['accountSid'],
@@ -176,8 +168,7 @@ class AssignedAddOnList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.AssignedAddOnList]';
     }
 }

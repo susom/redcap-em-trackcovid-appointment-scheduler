@@ -12,8 +12,7 @@ namespace Twilio\Rest\IpMessaging\V2;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ServiceOptions
-{
+abstract class ServiceOptions {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $defaultServiceRoleSid The service role assigned to users when
@@ -98,55 +97,12 @@ abstract class ServiceOptions
      * @param bool $notificationsLogEnabled Whether to log notifications
      * @return UpdateServiceOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $defaultServiceRoleSid = Values::NONE,
-        $defaultChannelRoleSid = Values::NONE,
-        $defaultChannelCreatorRoleSid = Values::NONE,
-        $readStatusEnabled = Values::NONE,
-        $reachabilityEnabled = Values::NONE,
-        $typingIndicatorTimeout = Values::NONE,
-        $consumptionReportInterval = Values::NONE,
-        $notificationsNewMessageEnabled = Values::NONE,
-        $notificationsNewMessageTemplate = Values::NONE,
-        $notificationsNewMessageSound = Values::NONE,
-        $notificationsNewMessageBadgeCountEnabled = Values::NONE,
-        $notificationsAddedToChannelEnabled = Values::NONE,
-        $notificationsAddedToChannelTemplate = Values::NONE,
-        $notificationsAddedToChannelSound = Values::NONE,
-        $notificationsRemovedFromChannelEnabled = Values::NONE,
-        $notificationsRemovedFromChannelTemplate = Values::NONE,
-        $notificationsRemovedFromChannelSound = Values::NONE,
-        $notificationsInvitedToChannelEnabled = Values::NONE,
-        $notificationsInvitedToChannelTemplate = Values::NONE,
-        $notificationsInvitedToChannelSound = Values::NONE,
-        $preWebhookUrl = Values::NONE,
-        $postWebhookUrl = Values::NONE,
-        $webhookMethod = Values::NONE,
-        $webhookFilters = Values::NONE,
-        $limitsChannelMembers = Values::NONE,
-        $limitsUserChannels = Values::NONE,
-        $mediaCompatibilityMessage = Values::NONE,
-        $preWebhookRetryCount = Values::NONE,
-        $postWebhookRetryCount = Values::NONE,
-        $notificationsLogEnabled = Values::NONE
-    ) {
-        return new UpdateServiceOptions($friendlyName, $defaultServiceRoleSid, $defaultChannelRoleSid,
-            $defaultChannelCreatorRoleSid, $readStatusEnabled, $reachabilityEnabled, $typingIndicatorTimeout,
-            $consumptionReportInterval, $notificationsNewMessageEnabled, $notificationsNewMessageTemplate,
-            $notificationsNewMessageSound, $notificationsNewMessageBadgeCountEnabled,
-            $notificationsAddedToChannelEnabled, $notificationsAddedToChannelTemplate,
-            $notificationsAddedToChannelSound, $notificationsRemovedFromChannelEnabled,
-            $notificationsRemovedFromChannelTemplate, $notificationsRemovedFromChannelSound,
-            $notificationsInvitedToChannelEnabled, $notificationsInvitedToChannelTemplate,
-            $notificationsInvitedToChannelSound, $preWebhookUrl, $postWebhookUrl, $webhookMethod, $webhookFilters,
-            $limitsChannelMembers, $limitsUserChannels, $mediaCompatibilityMessage, $preWebhookRetryCount,
-            $postWebhookRetryCount, $notificationsLogEnabled);
+    public static function update($friendlyName = Values::NONE, $defaultServiceRoleSid = Values::NONE, $defaultChannelRoleSid = Values::NONE, $defaultChannelCreatorRoleSid = Values::NONE, $readStatusEnabled = Values::NONE, $reachabilityEnabled = Values::NONE, $typingIndicatorTimeout = Values::NONE, $consumptionReportInterval = Values::NONE, $notificationsNewMessageEnabled = Values::NONE, $notificationsNewMessageTemplate = Values::NONE, $notificationsNewMessageSound = Values::NONE, $notificationsNewMessageBadgeCountEnabled = Values::NONE, $notificationsAddedToChannelEnabled = Values::NONE, $notificationsAddedToChannelTemplate = Values::NONE, $notificationsAddedToChannelSound = Values::NONE, $notificationsRemovedFromChannelEnabled = Values::NONE, $notificationsRemovedFromChannelTemplate = Values::NONE, $notificationsRemovedFromChannelSound = Values::NONE, $notificationsInvitedToChannelEnabled = Values::NONE, $notificationsInvitedToChannelTemplate = Values::NONE, $notificationsInvitedToChannelSound = Values::NONE, $preWebhookUrl = Values::NONE, $postWebhookUrl = Values::NONE, $webhookMethod = Values::NONE, $webhookFilters = Values::NONE, $limitsChannelMembers = Values::NONE, $limitsUserChannels = Values::NONE, $mediaCompatibilityMessage = Values::NONE, $preWebhookRetryCount = Values::NONE, $postWebhookRetryCount = Values::NONE, $notificationsLogEnabled = Values::NONE) {
+        return new UpdateServiceOptions($friendlyName, $defaultServiceRoleSid, $defaultChannelRoleSid, $defaultChannelCreatorRoleSid, $readStatusEnabled, $reachabilityEnabled, $typingIndicatorTimeout, $consumptionReportInterval, $notificationsNewMessageEnabled, $notificationsNewMessageTemplate, $notificationsNewMessageSound, $notificationsNewMessageBadgeCountEnabled, $notificationsAddedToChannelEnabled, $notificationsAddedToChannelTemplate, $notificationsAddedToChannelSound, $notificationsRemovedFromChannelEnabled, $notificationsRemovedFromChannelTemplate, $notificationsRemovedFromChannelSound, $notificationsInvitedToChannelEnabled, $notificationsInvitedToChannelTemplate, $notificationsInvitedToChannelSound, $preWebhookUrl, $postWebhookUrl, $webhookMethod, $webhookFilters, $limitsChannelMembers, $limitsUserChannels, $mediaCompatibilityMessage, $preWebhookRetryCount, $postWebhookRetryCount, $notificationsLogEnabled);
     }
 }
 
-class UpdateServiceOptions extends Options
-{
+class UpdateServiceOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $defaultServiceRoleSid The service role assigned to users when
@@ -230,39 +186,7 @@ class UpdateServiceOptions extends Options
      *                                   `post_webhook_url` will be retried
      * @param bool $notificationsLogEnabled Whether to log notifications
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $defaultServiceRoleSid = Values::NONE,
-        $defaultChannelRoleSid = Values::NONE,
-        $defaultChannelCreatorRoleSid = Values::NONE,
-        $readStatusEnabled = Values::NONE,
-        $reachabilityEnabled = Values::NONE,
-        $typingIndicatorTimeout = Values::NONE,
-        $consumptionReportInterval = Values::NONE,
-        $notificationsNewMessageEnabled = Values::NONE,
-        $notificationsNewMessageTemplate = Values::NONE,
-        $notificationsNewMessageSound = Values::NONE,
-        $notificationsNewMessageBadgeCountEnabled = Values::NONE,
-        $notificationsAddedToChannelEnabled = Values::NONE,
-        $notificationsAddedToChannelTemplate = Values::NONE,
-        $notificationsAddedToChannelSound = Values::NONE,
-        $notificationsRemovedFromChannelEnabled = Values::NONE,
-        $notificationsRemovedFromChannelTemplate = Values::NONE,
-        $notificationsRemovedFromChannelSound = Values::NONE,
-        $notificationsInvitedToChannelEnabled = Values::NONE,
-        $notificationsInvitedToChannelTemplate = Values::NONE,
-        $notificationsInvitedToChannelSound = Values::NONE,
-        $preWebhookUrl = Values::NONE,
-        $postWebhookUrl = Values::NONE,
-        $webhookMethod = Values::NONE,
-        $webhookFilters = Values::NONE,
-        $limitsChannelMembers = Values::NONE,
-        $limitsUserChannels = Values::NONE,
-        $mediaCompatibilityMessage = Values::NONE,
-        $preWebhookRetryCount = Values::NONE,
-        $postWebhookRetryCount = Values::NONE,
-        $notificationsLogEnabled = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $defaultServiceRoleSid = Values::NONE, $defaultChannelRoleSid = Values::NONE, $defaultChannelCreatorRoleSid = Values::NONE, $readStatusEnabled = Values::NONE, $reachabilityEnabled = Values::NONE, $typingIndicatorTimeout = Values::NONE, $consumptionReportInterval = Values::NONE, $notificationsNewMessageEnabled = Values::NONE, $notificationsNewMessageTemplate = Values::NONE, $notificationsNewMessageSound = Values::NONE, $notificationsNewMessageBadgeCountEnabled = Values::NONE, $notificationsAddedToChannelEnabled = Values::NONE, $notificationsAddedToChannelTemplate = Values::NONE, $notificationsAddedToChannelSound = Values::NONE, $notificationsRemovedFromChannelEnabled = Values::NONE, $notificationsRemovedFromChannelTemplate = Values::NONE, $notificationsRemovedFromChannelSound = Values::NONE, $notificationsInvitedToChannelEnabled = Values::NONE, $notificationsInvitedToChannelTemplate = Values::NONE, $notificationsInvitedToChannelSound = Values::NONE, $preWebhookUrl = Values::NONE, $postWebhookUrl = Values::NONE, $webhookMethod = Values::NONE, $webhookFilters = Values::NONE, $limitsChannelMembers = Values::NONE, $limitsUserChannels = Values::NONE, $mediaCompatibilityMessage = Values::NONE, $preWebhookRetryCount = Values::NONE, $postWebhookRetryCount = Values::NONE, $notificationsLogEnabled = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['defaultServiceRoleSid'] = $defaultServiceRoleSid;
         $this->options['defaultChannelRoleSid'] = $defaultChannelRoleSid;
@@ -302,8 +226,7 @@ class UpdateServiceOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -315,8 +238,7 @@ class UpdateServiceOptions extends Options
      *                                      they are added to the service
      * @return $this Fluent Builder
      */
-    public function setDefaultServiceRoleSid($defaultServiceRoleSid)
-    {
+    public function setDefaultServiceRoleSid($defaultServiceRoleSid) {
         $this->options['defaultServiceRoleSid'] = $defaultServiceRoleSid;
         return $this;
     }
@@ -328,8 +250,7 @@ class UpdateServiceOptions extends Options
      *                                      they are added to a channel
      * @return $this Fluent Builder
      */
-    public function setDefaultChannelRoleSid($defaultChannelRoleSid)
-    {
+    public function setDefaultChannelRoleSid($defaultChannelRoleSid) {
         $this->options['defaultChannelRoleSid'] = $defaultChannelRoleSid;
         return $this;
     }
@@ -342,8 +263,7 @@ class UpdateServiceOptions extends Options
      *                                             new channel
      * @return $this Fluent Builder
      */
-    public function setDefaultChannelCreatorRoleSid($defaultChannelCreatorRoleSid)
-    {
+    public function setDefaultChannelCreatorRoleSid($defaultChannelCreatorRoleSid) {
         $this->options['defaultChannelCreatorRoleSid'] = $defaultChannelCreatorRoleSid;
         return $this;
     }
@@ -355,8 +275,7 @@ class UpdateServiceOptions extends Options
      *                                Horizon feature
      * @return $this Fluent Builder
      */
-    public function setReadStatusEnabled($readStatusEnabled)
-    {
+    public function setReadStatusEnabled($readStatusEnabled) {
         $this->options['readStatusEnabled'] = $readStatusEnabled;
         return $this;
     }
@@ -368,8 +287,7 @@ class UpdateServiceOptions extends Options
      *                                  Indicator feature for this Service instance
      * @return $this Fluent Builder
      */
-    public function setReachabilityEnabled($reachabilityEnabled)
-    {
+    public function setReachabilityEnabled($reachabilityEnabled) {
         $this->options['reachabilityEnabled'] = $reachabilityEnabled;
         return $this;
     }
@@ -381,8 +299,7 @@ class UpdateServiceOptions extends Options
      *                                    assuming the user is no longer typing
      * @return $this Fluent Builder
      */
-    public function setTypingIndicatorTimeout($typingIndicatorTimeout)
-    {
+    public function setTypingIndicatorTimeout($typingIndicatorTimeout) {
         $this->options['typingIndicatorTimeout'] = $typingIndicatorTimeout;
         return $this;
     }
@@ -393,8 +310,7 @@ class UpdateServiceOptions extends Options
      * @param int $consumptionReportInterval DEPRECATED
      * @return $this Fluent Builder
      */
-    public function setConsumptionReportInterval($consumptionReportInterval)
-    {
+    public function setConsumptionReportInterval($consumptionReportInterval) {
         $this->options['consumptionReportInterval'] = $consumptionReportInterval;
         return $this;
     }
@@ -407,8 +323,7 @@ class UpdateServiceOptions extends Options
      *                                             channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsNewMessageEnabled($notificationsNewMessageEnabled)
-    {
+    public function setNotificationsNewMessageEnabled($notificationsNewMessageEnabled) {
         $this->options['notificationsNewMessageEnabled'] = $notificationsNewMessageEnabled;
         return $this;
     }
@@ -422,8 +337,7 @@ class UpdateServiceOptions extends Options
      *                                                is added to a channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsNewMessageTemplate($notificationsNewMessageTemplate)
-    {
+    public function setNotificationsNewMessageTemplate($notificationsNewMessageTemplate) {
         $this->options['notificationsNewMessageTemplate'] = $notificationsNewMessageTemplate;
         return $this;
     }
@@ -436,8 +350,7 @@ class UpdateServiceOptions extends Options
      *                                             channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsNewMessageSound($notificationsNewMessageSound)
-    {
+    public function setNotificationsNewMessageSound($notificationsNewMessageSound) {
         $this->options['notificationsNewMessageSound'] = $notificationsNewMessageSound;
         return $this;
     }
@@ -450,8 +363,7 @@ class UpdateServiceOptions extends Options
      *                                                       enabled
      * @return $this Fluent Builder
      */
-    public function setNotificationsNewMessageBadgeCountEnabled($notificationsNewMessageBadgeCountEnabled)
-    {
+    public function setNotificationsNewMessageBadgeCountEnabled($notificationsNewMessageBadgeCountEnabled) {
         $this->options['notificationsNewMessageBadgeCountEnabled'] = $notificationsNewMessageBadgeCountEnabled;
         return $this;
     }
@@ -464,8 +376,7 @@ class UpdateServiceOptions extends Options
      *                                                 is added to a channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsAddedToChannelEnabled($notificationsAddedToChannelEnabled)
-    {
+    public function setNotificationsAddedToChannelEnabled($notificationsAddedToChannelEnabled) {
         $this->options['notificationsAddedToChannelEnabled'] = $notificationsAddedToChannelEnabled;
         return $this;
     }
@@ -480,8 +391,7 @@ class UpdateServiceOptions extends Options
      *                                                    channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsAddedToChannelTemplate($notificationsAddedToChannelTemplate)
-    {
+    public function setNotificationsAddedToChannelTemplate($notificationsAddedToChannelTemplate) {
         $this->options['notificationsAddedToChannelTemplate'] = $notificationsAddedToChannelTemplate;
         return $this;
     }
@@ -494,8 +404,7 @@ class UpdateServiceOptions extends Options
      *                                                 to a channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsAddedToChannelSound($notificationsAddedToChannelSound)
-    {
+    public function setNotificationsAddedToChannelSound($notificationsAddedToChannelSound) {
         $this->options['notificationsAddedToChannelSound'] = $notificationsAddedToChannelSound;
         return $this;
     }
@@ -509,8 +418,7 @@ class UpdateServiceOptions extends Options
      *                                                     from a channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsRemovedFromChannelEnabled($notificationsRemovedFromChannelEnabled)
-    {
+    public function setNotificationsRemovedFromChannelEnabled($notificationsRemovedFromChannelEnabled) {
         $this->options['notificationsRemovedFromChannelEnabled'] = $notificationsRemovedFromChannelEnabled;
         return $this;
     }
@@ -525,8 +433,7 @@ class UpdateServiceOptions extends Options
      *                                                        when they are removed
      * @return $this Fluent Builder
      */
-    public function setNotificationsRemovedFromChannelTemplate($notificationsRemovedFromChannelTemplate)
-    {
+    public function setNotificationsRemovedFromChannelTemplate($notificationsRemovedFromChannelTemplate) {
         $this->options['notificationsRemovedFromChannelTemplate'] = $notificationsRemovedFromChannelTemplate;
         return $this;
     }
@@ -540,8 +447,7 @@ class UpdateServiceOptions extends Options
      *                                                     channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsRemovedFromChannelSound($notificationsRemovedFromChannelSound)
-    {
+    public function setNotificationsRemovedFromChannelSound($notificationsRemovedFromChannelSound) {
         $this->options['notificationsRemovedFromChannelSound'] = $notificationsRemovedFromChannelSound;
         return $this;
     }
@@ -554,8 +460,7 @@ class UpdateServiceOptions extends Options
      *                                                   is invited to a channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsInvitedToChannelEnabled($notificationsInvitedToChannelEnabled)
-    {
+    public function setNotificationsInvitedToChannelEnabled($notificationsInvitedToChannelEnabled) {
         $this->options['notificationsInvitedToChannelEnabled'] = $notificationsInvitedToChannelEnabled;
         return $this;
     }
@@ -570,8 +475,7 @@ class UpdateServiceOptions extends Options
      *                                                      channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsInvitedToChannelTemplate($notificationsInvitedToChannelTemplate)
-    {
+    public function setNotificationsInvitedToChannelTemplate($notificationsInvitedToChannelTemplate) {
         $this->options['notificationsInvitedToChannelTemplate'] = $notificationsInvitedToChannelTemplate;
         return $this;
     }
@@ -584,8 +488,7 @@ class UpdateServiceOptions extends Options
      *                                                   invited to a channel
      * @return $this Fluent Builder
      */
-    public function setNotificationsInvitedToChannelSound($notificationsInvitedToChannelSound)
-    {
+    public function setNotificationsInvitedToChannelSound($notificationsInvitedToChannelSound) {
         $this->options['notificationsInvitedToChannelSound'] = $notificationsInvitedToChannelSound;
         return $this;
     }
@@ -596,8 +499,7 @@ class UpdateServiceOptions extends Options
      * @param string $preWebhookUrl The webhook URL for pre-event webhooks
      * @return $this Fluent Builder
      */
-    public function setPreWebhookUrl($preWebhookUrl)
-    {
+    public function setPreWebhookUrl($preWebhookUrl) {
         $this->options['preWebhookUrl'] = $preWebhookUrl;
         return $this;
     }
@@ -608,8 +510,7 @@ class UpdateServiceOptions extends Options
      * @param string $postWebhookUrl The URL for post-event webhooks
      * @return $this Fluent Builder
      */
-    public function setPostWebhookUrl($postWebhookUrl)
-    {
+    public function setPostWebhookUrl($postWebhookUrl) {
         $this->options['postWebhookUrl'] = $postWebhookUrl;
         return $this;
     }
@@ -621,8 +522,7 @@ class UpdateServiceOptions extends Options
      *                              webhooks
      * @return $this Fluent Builder
      */
-    public function setWebhookMethod($webhookMethod)
-    {
+    public function setWebhookMethod($webhookMethod) {
         $this->options['webhookMethod'] = $webhookMethod;
         return $this;
     }
@@ -634,8 +534,7 @@ class UpdateServiceOptions extends Options
      *                               for this Service instance
      * @return $this Fluent Builder
      */
-    public function setWebhookFilters($webhookFilters)
-    {
+    public function setWebhookFilters($webhookFilters) {
         $this->options['webhookFilters'] = $webhookFilters;
         return $this;
     }
@@ -647,8 +546,7 @@ class UpdateServiceOptions extends Options
      *                                  added to Channels within this Service
      * @return $this Fluent Builder
      */
-    public function setLimitsChannelMembers($limitsChannelMembers)
-    {
+    public function setLimitsChannelMembers($limitsChannelMembers) {
         $this->options['limitsChannelMembers'] = $limitsChannelMembers;
         return $this;
     }
@@ -660,8 +558,7 @@ class UpdateServiceOptions extends Options
      *                                Member of within this Service
      * @return $this Fluent Builder
      */
-    public function setLimitsUserChannels($limitsUserChannels)
-    {
+    public function setLimitsUserChannels($limitsUserChannels) {
         $this->options['limitsUserChannels'] = $limitsUserChannels;
         return $this;
     }
@@ -673,8 +570,7 @@ class UpdateServiceOptions extends Options
      *                                          message has no text
      * @return $this Fluent Builder
      */
-    public function setMediaCompatibilityMessage($mediaCompatibilityMessage)
-    {
+    public function setMediaCompatibilityMessage($mediaCompatibilityMessage) {
         $this->options['mediaCompatibilityMessage'] = $mediaCompatibilityMessage;
         return $this;
     }
@@ -687,8 +583,7 @@ class UpdateServiceOptions extends Options
      *                                  responses
      * @return $this Fluent Builder
      */
-    public function setPreWebhookRetryCount($preWebhookRetryCount)
-    {
+    public function setPreWebhookRetryCount($preWebhookRetryCount) {
         $this->options['preWebhookRetryCount'] = $preWebhookRetryCount;
         return $this;
     }
@@ -700,8 +595,7 @@ class UpdateServiceOptions extends Options
      *                                   `post_webhook_url` will be retried
      * @return $this Fluent Builder
      */
-    public function setPostWebhookRetryCount($postWebhookRetryCount)
-    {
+    public function setPostWebhookRetryCount($postWebhookRetryCount) {
         $this->options['postWebhookRetryCount'] = $postWebhookRetryCount;
         return $this;
     }
@@ -712,8 +606,7 @@ class UpdateServiceOptions extends Options
      * @param bool $notificationsLogEnabled Whether to log notifications
      * @return $this Fluent Builder
      */
-    public function setNotificationsLogEnabled($notificationsLogEnabled)
-    {
+    public function setNotificationsLogEnabled($notificationsLogEnabled) {
         $this->options['notificationsLogEnabled'] = $notificationsLogEnabled;
         return $this;
     }
@@ -723,8 +616,7 @@ class UpdateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

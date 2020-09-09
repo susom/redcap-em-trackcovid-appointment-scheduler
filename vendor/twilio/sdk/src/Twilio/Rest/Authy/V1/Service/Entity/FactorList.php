@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class FactorList extends ListResource
-{
+class FactorList extends ListResource {
     /**
      * Construct the FactorList
      *
@@ -27,12 +26,11 @@ class FactorList extends ListResource
      * @param string $identity Unique identity of the Entity
      * @return \Twilio\Rest\Authy\V1\Service\Entity\FactorList
      */
-    public function __construct(Version $version, $serviceSid, $identity)
-    {
+    public function __construct(Version $version, $serviceSid, $identity) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'identity' => $identity,);
+        $this->solution = array('serviceSid' => $serviceSid, 'identity' => $identity, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Entities/' . \rawurlencode($identity) . '/Factors';
     }
@@ -46,8 +44,7 @@ class FactorList extends ListResource
      * @return FactorInstance Newly created FactorInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($binding, $friendlyName, $factorType)
-    {
+    public function create($binding, $friendlyName, $factorType) {
         $data = Values::of(array(
             'Binding' => $binding,
             'FriendlyName' => $friendlyName,
@@ -87,8 +84,7 @@ class FactorList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -111,8 +107,7 @@ class FactorList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return FactorInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -125,8 +120,7 @@ class FactorList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of FactorInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -149,8 +143,7 @@ class FactorList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of FactorInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -165,8 +158,7 @@ class FactorList extends ListResource
      * @param string $sid A string that uniquely identifies this Factor.
      * @return \Twilio\Rest\Authy\V1\Service\Entity\FactorContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new FactorContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -180,8 +172,7 @@ class FactorList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Authy.V1.FactorList]';
     }
 }

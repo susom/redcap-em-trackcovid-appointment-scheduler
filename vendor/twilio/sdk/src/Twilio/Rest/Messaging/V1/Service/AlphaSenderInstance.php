@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property array $capabilities
  * @property string $url
  */
-class AlphaSenderInstance extends InstanceResource
-{
+class AlphaSenderInstance extends InstanceResource {
     /**
      * Initialize the AlphaSenderInstance
      *
@@ -39,8 +38,7 @@ class AlphaSenderInstance extends InstanceResource
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Messaging\V1\Service\AlphaSenderInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -55,7 +53,7 @@ class AlphaSenderInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -66,8 +64,7 @@ class AlphaSenderInstance extends InstanceResource
      *                                                              this
      *                                                              AlphaSenderInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new AlphaSenderContext(
                 $this->version,
@@ -85,8 +82,7 @@ class AlphaSenderInstance extends InstanceResource
      * @return AlphaSenderInstance Fetched AlphaSenderInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -96,8 +92,7 @@ class AlphaSenderInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -108,8 +103,7 @@ class AlphaSenderInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -127,8 +121,7 @@ class AlphaSenderInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

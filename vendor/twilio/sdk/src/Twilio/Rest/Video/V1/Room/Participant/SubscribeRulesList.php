@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SubscribeRulesList extends ListResource
-{
+class SubscribeRulesList extends ListResource {
     /**
      * Construct the SubscribeRulesList
      *
@@ -30,12 +29,11 @@ class SubscribeRulesList extends ListResource
      *                               Subscribe Rules
      * @return \Twilio\Rest\Video\V1\Room\Participant\SubscribeRulesList
      */
-    public function __construct(Version $version, $roomSid, $participantSid)
-    {
+    public function __construct(Version $version, $roomSid, $participantSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('roomSid' => $roomSid, 'participantSid' => $participantSid,);
+        $this->solution = array('roomSid' => $roomSid, 'participantSid' => $participantSid, );
 
         $this->uri = '/Rooms/' . \rawurlencode($roomSid) . '/Participants/' . \rawurlencode($participantSid) . '/SubscribeRules';
     }
@@ -46,8 +44,7 @@ class SubscribeRulesList extends ListResource
      * @return SubscribeRulesInstance Fetched SubscribeRulesInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -71,11 +68,10 @@ class SubscribeRulesList extends ListResource
      * @return SubscribeRulesInstance Updated SubscribeRulesInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Rules' => Serialize::jsonObject($options['rules']),));
+        $data = Values::of(array('Rules' => Serialize::jsonObject($options['rules']), ));
 
         $payload = $this->version->update(
             'POST',
@@ -97,8 +93,7 @@ class SubscribeRulesList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Video.V1.SubscribeRulesList]';
     }
 }

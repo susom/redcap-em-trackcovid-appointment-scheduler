@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class EnvironmentInstance extends InstanceResource
-{
+class EnvironmentInstance extends InstanceResource {
     protected $_variables = null;
     protected $_deployments = null;
     protected $_logs = null;
@@ -46,8 +45,7 @@ class EnvironmentInstance extends InstanceResource
      * @param string $sid The SID of the Environment resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\EnvironmentInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -65,7 +63,7 @@ class EnvironmentInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -76,8 +74,7 @@ class EnvironmentInstance extends InstanceResource
      *                                                               this
      *                                                               EnvironmentInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new EnvironmentContext(
                 $this->version,
@@ -95,8 +92,7 @@ class EnvironmentInstance extends InstanceResource
      * @return EnvironmentInstance Fetched EnvironmentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -106,8 +102,7 @@ class EnvironmentInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -116,8 +111,7 @@ class EnvironmentInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableList
      */
-    protected function getVariables()
-    {
+    protected function getVariables() {
         return $this->proxy()->variables;
     }
 
@@ -126,8 +120,7 @@ class EnvironmentInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList
      */
-    protected function getDeployments()
-    {
+    protected function getDeployments() {
         return $this->proxy()->deployments;
     }
 
@@ -136,8 +129,7 @@ class EnvironmentInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\LogList
      */
-    protected function getLogs()
-    {
+    protected function getLogs() {
         return $this->proxy()->logs;
     }
 
@@ -148,8 +140,7 @@ class EnvironmentInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -167,8 +158,7 @@ class EnvironmentInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

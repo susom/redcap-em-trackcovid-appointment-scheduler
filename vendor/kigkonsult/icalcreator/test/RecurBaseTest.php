@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -51,19 +51,19 @@ abstract class RecurBaseTest extends TestCase
     public static function tearDownAfterClass()
     {
         echo PHP_EOL;
-        echo 'Tot result time:' . number_format(self::$totResultTime, 6) . PHP_EOL; // test ###
-        echo 'Tot expect time:' . number_format(self::$totExpectTime, 6) . PHP_EOL; // test ###
+        echo 'Tot result time:' . number_format( self::$totResultTime, 6 ) . PHP_EOL; // test ###
+        echo 'Tot expect time:' . number_format( self::$totExpectTime, 6 ) . PHP_EOL; // test ###
     }
 
     /**
      * Testing recur2date
      *
-     * @param int $case
+     * @param int      $case
      * @param DateTime $start
      * @param array|DateTime $end
-     * @param array $recur
-     * @param array $expects
-     * @param float $prepTime
+     * @param array    $recur
+     * @param array    $expects
+     * @param float    $prepTime
      * @return array
      * @throws Exception
      */
@@ -73,8 +73,7 @@ abstract class RecurBaseTest extends TestCase
         $end,
         array $recur,
         array $expects,
-        $prepTime
-    ) {
+        $prepTime ) {
         $saveStartDate = clone $start;
         /*
 //        $e = Vcalendar::factory()->newVevent(); ??
@@ -85,46 +84,56 @@ abstract class RecurBaseTest extends TestCase
         echo PHP_EOL . $case . ' recur ' . var_export( $e->getRrule(), true ) . PHP_EOL; // test ###
         */
 
-        $time1 = microtime(true);
-        $result1 = [];
-        RecurFactory::fullRecur2date($result1, $recur, $start, (clone $start), $end);
-        $execTime1 = microtime(true) - $time1;
-        $time2 = microtime(true);
-        $result2 = [];
-        RecurFactory::Recur2date($result2, $recur, $start, (clone $start), $end);
-        $execTime2 = microtime(true) - $time2;
+        $time1     = microtime( true );
+        $result1   = [];
+        RecurFactory::fullRecur2date( $result1, $recur, $start, ( clone $start ), $end );
+        $execTime1 = microtime( true ) - $time1;
+        $time2     = microtime( true );
+        $result2   = [];
+        RecurFactory::Recur2date( $result2, $recur, $start, ( clone $start ), $end );
+        $execTime2 = microtime( true ) - $time2;
 
         self::$totResultTime += $execTime1;
         self::$totResultTime += $execTime2;
         self::$totExpectTime += $prepTime;
 
-        $strCase = str_pad($case, 12);
+        $strCase = str_pad( $case, 12 );
         echo PHP_EOL .  // test ###
-            $strCase . 'resultOld  time:' . number_format($execTime1, 6) . ' : ' . implode(' - ', array_keys($result1)
-            ) . PHP_EOL; // test ###
+            $strCase . 'resultOld  time:' . number_format( $execTime1, 6 ) . ' : ' . implode( ' - ', array_keys( $result1 )) . PHP_EOL; // test ###
         echo   // test ###
-            $strCase . 'resultNew  time:' . number_format($execTime2, 6) . ' : ' . implode(' - ', array_keys($result2)
-            ) . PHP_EOL; // test ###
+            $strCase . 'resultNew  time:' . number_format( $execTime2, 6 ) . ' : ' . implode( ' - ', array_keys( $result2 )) . PHP_EOL; // test ###
         echo
-            $strCase . 'expects    time:' . number_format($prepTime, 6) . ' : ' . implode(' - ', $expects
-            ) . PHP_EOL; // test ###
+            $strCase . 'expects    time:' . number_format( $prepTime, 6 ) . ' : ' . implode( ' - ', $expects  ) . PHP_EOL; // test ###
 
+        $recurDisp = str_replace( [PHP_EOL, ' ' ], '', var_export( $recur, true ));
+        $result = array_keys( $result1 );
         $this->assertEquals(
             $expects,
-            array_keys($result1),
-            sprintf(self::$ERRFMT, __FUNCTION__, $case,
-                $saveStartDate->format('Ymd'),
-                $end->format('Ymd'),
-                var_export($recur, true)
+            $result,
+            sprintf(
+                self::$ERRFMT,
+                __FUNCTION__,
+                $case . ' test #1',
+                $saveStartDate->format( 'Ymd' ),
+                $end->format( 'Ymd' ),
+                PHP_EOL . $recurDisp .
+                PHP_EOL . 'got : ' . implode( ',', $result ) .
+                PHP_EOL . 'exp : ' . implode( ',', $expects )
             )
         );
+        $result = array_keys( $result2 );
         $this->assertEquals(
             $expects,
-            array_keys($result2),
-            sprintf(self::$ERRFMT, __FUNCTION__, $case,
-                $saveStartDate->format('Ymd'),
-                $end->format('Ymd'),
-                var_export($recur, true)
+            $result,
+            sprintf(
+                self::$ERRFMT,
+                __FUNCTION__,
+                $case . ' test #2',
+                $saveStartDate->format( 'Ymd' ),
+                $end->format( 'Ymd' ),
+                $recurDisp .
+                PHP_EOL . 'exp : ' . implode( ',', $expects ) .
+                PHP_EOL . 'got : ' . implode( ',', $result )
             )
         );
         return $result1;

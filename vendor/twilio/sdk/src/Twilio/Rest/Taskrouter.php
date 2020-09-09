@@ -18,8 +18,7 @@ use Twilio\Rest\Taskrouter\V1;
  * @property \Twilio\Rest\Taskrouter\V1\WorkspaceList $workspaces
  * @method \Twilio\Rest\Taskrouter\V1\WorkspaceContext workspaces(string $sid)
  */
-class Taskrouter extends Domain
-{
+class Taskrouter extends Domain {
     protected $_v1 = null;
 
     /**
@@ -29,8 +28,7 @@ class Taskrouter extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Taskrouter Domain for Taskrouter
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://taskrouter.twilio.com';
@@ -39,8 +37,7 @@ class Taskrouter extends Domain
     /**
      * @return \Twilio\Rest\Taskrouter\V1 Version v1 of taskrouter
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -54,8 +51,7 @@ class Taskrouter extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -72,8 +68,7 @@ class Taskrouter extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -85,8 +80,7 @@ class Taskrouter extends Domain
     /**
      * @return \Twilio\Rest\Taskrouter\V1\WorkspaceList
      */
-    protected function getWorkspaces()
-    {
+    protected function getWorkspaces() {
         return $this->v1->workspaces;
     }
 
@@ -94,8 +88,7 @@ class Taskrouter extends Domain
      * @param string $sid The SID of the resource to fetch
      * @return \Twilio\Rest\Taskrouter\V1\WorkspaceContext
      */
-    protected function contextWorkspaces($sid)
-    {
+    protected function contextWorkspaces($sid) {
         return $this->v1->workspaces($sid);
     }
 
@@ -104,8 +97,7 @@ class Taskrouter extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Taskrouter]';
     }
 }

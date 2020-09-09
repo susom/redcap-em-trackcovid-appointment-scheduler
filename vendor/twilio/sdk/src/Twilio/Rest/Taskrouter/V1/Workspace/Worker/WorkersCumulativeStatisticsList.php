@@ -12,8 +12,7 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace\Worker;
 use Twilio\ListResource;
 use Twilio\Version;
 
-class WorkersCumulativeStatisticsList extends ListResource
-{
+class WorkersCumulativeStatisticsList extends ListResource {
     /**
      * Construct the WorkersCumulativeStatisticsList
      *
@@ -22,12 +21,11 @@ class WorkersCumulativeStatisticsList extends ListResource
      *                             Workers
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsList
      */
-    public function __construct(Version $version, $workspaceSid)
-    {
+    public function __construct(Version $version, $workspaceSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('workspaceSid' => $workspaceSid,);
+        $this->solution = array('workspaceSid' => $workspaceSid, );
     }
 
     /**
@@ -35,8 +33,7 @@ class WorkersCumulativeStatisticsList extends ListResource
      *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return new WorkersCumulativeStatisticsContext($this->version, $this->solution['workspaceSid']);
     }
 
@@ -45,8 +42,7 @@ class WorkersCumulativeStatisticsList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Taskrouter.V1.WorkersCumulativeStatisticsList]';
     }
 }

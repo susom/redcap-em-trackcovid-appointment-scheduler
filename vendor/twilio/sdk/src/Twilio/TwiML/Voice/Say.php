@@ -11,16 +11,14 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Say extends TwiML
-{
+class Say extends TwiML {
     /**
      * Say constructor.
      *
      * @param string $message Message to say
      * @param array $attributes Optional attributes
      */
-    public function __construct($message, $attributes = array())
-    {
+    public function __construct($message, $attributes = array()) {
         parent::__construct('Say', $message, $attributes);
     }
 
@@ -30,8 +28,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlBreak Child element.
      */
-    public function break_($attributes = array())
-    {
+    public function break_($attributes = array()) {
         return $this->nest(new SsmlBreak($attributes));
     }
 
@@ -42,8 +39,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlEmphasis Child element.
      */
-    public function emphasis($words, $attributes = array())
-    {
+    public function emphasis($words, $attributes = array()) {
         return $this->nest(new SsmlEmphasis($words, $attributes));
     }
 
@@ -54,8 +50,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlLang Child element.
      */
-    public function lang($words, $attributes = array())
-    {
+    public function lang($words, $attributes = array()) {
         return $this->nest(new SsmlLang($words, $attributes));
     }
 
@@ -65,8 +60,7 @@ class Say extends TwiML
      * @param string $words Words to speak
      * @return SsmlP Child element.
      */
-    public function p($words)
-    {
+    public function p($words) {
         return $this->nest(new SsmlP($words));
     }
 
@@ -77,8 +71,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlPhoneme Child element.
      */
-    public function phoneme($words, $attributes = array())
-    {
+    public function phoneme($words, $attributes = array()) {
         return $this->nest(new SsmlPhoneme($words, $attributes));
     }
 
@@ -89,8 +82,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlProsody Child element.
      */
-    public function prosody($words, $attributes = array())
-    {
+    public function prosody($words, $attributes = array()) {
         return $this->nest(new SsmlProsody($words, $attributes));
     }
 
@@ -100,8 +92,7 @@ class Say extends TwiML
      * @param string $words Words to speak
      * @return SsmlS Child element.
      */
-    public function s($words)
-    {
+    public function s($words) {
         return $this->nest(new SsmlS($words));
     }
 
@@ -112,8 +103,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlSayAs Child element.
      */
-    public function say_As($words, $attributes = array())
-    {
+    public function say_As($words, $attributes = array()) {
         return $this->nest(new SsmlSayAs($words, $attributes));
     }
 
@@ -124,8 +114,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlSub Child element.
      */
-    public function sub($words, $attributes = array())
-    {
+    public function sub($words, $attributes = array()) {
         return $this->nest(new SsmlSub($words, $attributes));
     }
 
@@ -136,8 +125,7 @@ class Say extends TwiML
      * @param array $attributes Optional attributes
      * @return SsmlW Child element.
      */
-    public function w($words, $attributes = array())
-    {
+    public function w($words, $attributes = array()) {
         return $this->nest(new SsmlW($words, $attributes));
     }
 
@@ -147,8 +135,7 @@ class Say extends TwiML
      * @param string $voice Voice to use
      * @return static $this.
      */
-    public function setVoice($voice)
-    {
+    public function setVoice($voice) {
         return $this->setAttribute('voice', $voice);
     }
 
@@ -158,8 +145,7 @@ class Say extends TwiML
      * @param int $loop Times to loop message
      * @return static $this.
      */
-    public function setLoop($loop)
-    {
+    public function setLoop($loop) {
         return $this->setAttribute('loop', $loop);
     }
 
@@ -169,8 +155,7 @@ class Say extends TwiML
      * @param string $language Message langauge
      * @return static $this.
      */
-    public function setLanguage($language)
-    {
+    public function setLanguage($language) {
         return $this->setAttribute('language', $language);
     }
 }

@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class ChallengeList extends ListResource
-{
+class ChallengeList extends ListResource {
     /**
      * Construct the ChallengeList
      *
@@ -30,8 +29,7 @@ class ChallengeList extends ListResource
      * @param string $factorSid Factor Sid.
      * @return \Twilio\Rest\Authy\V1\Service\Entity\Factor\ChallengeList
      */
-    public function __construct(Version $version, $serviceSid, $identity, $factorSid)
-    {
+    public function __construct(Version $version, $serviceSid, $identity, $factorSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -51,8 +49,7 @@ class ChallengeList extends ListResource
      * @return ChallengeInstance Newly created ChallengeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -84,8 +81,7 @@ class ChallengeList extends ListResource
      *                    `latest`.
      * @return \Twilio\Rest\Authy\V1\Service\Entity\Factor\ChallengeContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new ChallengeContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -100,8 +96,7 @@ class ChallengeList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Authy.V1.ChallengeList]';
     }
 }

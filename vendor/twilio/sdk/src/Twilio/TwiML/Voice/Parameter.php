@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class Parameter extends TwiML
-{
+class Parameter extends TwiML {
     /**
      * Parameter constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('Parameter', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class Parameter extends TwiML
      * @param string $name The name of the custom parameter
      * @return static $this.
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         return $this->setAttribute('name', $name);
     }
 
@@ -40,8 +37,7 @@ class Parameter extends TwiML
      * @param string $value The value of the custom parameter
      * @return static $this.
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         return $this->setAttribute('value', $value);
     }
 }

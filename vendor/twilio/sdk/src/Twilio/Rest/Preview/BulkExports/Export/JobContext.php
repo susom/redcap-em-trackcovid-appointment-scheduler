@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class JobContext extends InstanceContext
-{
+class JobContext extends InstanceContext {
     /**
      * Initialize the JobContext
      *
@@ -26,12 +25,11 @@ class JobContext extends InstanceContext
      * @param string $jobSid The job_sid
      * @return \Twilio\Rest\Preview\BulkExports\Export\JobContext
      */
-    public function __construct(Version $version, $jobSid)
-    {
+    public function __construct(Version $version, $jobSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('jobSid' => $jobSid,);
+        $this->solution = array('jobSid' => $jobSid, );
 
         $this->uri = '/Exports/Jobs/' . \rawurlencode($jobSid) . '';
     }
@@ -42,8 +40,7 @@ class JobContext extends InstanceContext
      * @return JobInstance Fetched JobInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -61,8 +58,7 @@ class JobContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -71,8 +67,7 @@ class JobContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

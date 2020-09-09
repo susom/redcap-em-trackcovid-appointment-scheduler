@@ -15,27 +15,23 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class FactorOptions
-{
+abstract class FactorOptions {
     /**
      * @param string $authPayload Optional payload to verify the Factor for the
      *                            first time
      * @return UpdateFactorOptions Options builder
      */
-    public static function update($authPayload = Values::NONE)
-    {
+    public static function update($authPayload = Values::NONE) {
         return new UpdateFactorOptions($authPayload);
     }
 }
 
-class UpdateFactorOptions extends Options
-{
+class UpdateFactorOptions extends Options {
     /**
      * @param string $authPayload Optional payload to verify the Factor for the
      *                            first time
      */
-    public function __construct($authPayload = Values::NONE)
-    {
+    public function __construct($authPayload = Values::NONE) {
         $this->options['authPayload'] = $authPayload;
     }
 
@@ -46,8 +42,7 @@ class UpdateFactorOptions extends Options
      *                            first time
      * @return $this Fluent Builder
      */
-    public function setAuthPayload($authPayload)
-    {
+    public function setAuthPayload($authPayload) {
         $this->options['authPayload'] = $authPayload;
         return $this;
     }
@@ -57,8 +52,7 @@ class UpdateFactorOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

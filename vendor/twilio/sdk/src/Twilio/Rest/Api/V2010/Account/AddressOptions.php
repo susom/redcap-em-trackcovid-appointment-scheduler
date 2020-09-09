@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class AddressOptions
-{
+abstract class AddressOptions {
     /**
      * @param string $friendlyName A string to describe the new resource
      * @param bool $emergencyEnabled Whether to enable emergency calling on the new
@@ -22,11 +21,7 @@ abstract class AddressOptions
      *                                 address
      * @return CreateAddressOptions Options builder
      */
-    public static function create(
-        $friendlyName = Values::NONE,
-        $emergencyEnabled = Values::NONE,
-        $autoCorrectAddress = Values::NONE
-    ) {
+    public static function create($friendlyName = Values::NONE, $emergencyEnabled = Values::NONE, $autoCorrectAddress = Values::NONE) {
         return new CreateAddressOptions($friendlyName, $emergencyEnabled, $autoCorrectAddress);
     }
 
@@ -43,18 +38,8 @@ abstract class AddressOptions
      *                                 address
      * @return UpdateAddressOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $customerName = Values::NONE,
-        $street = Values::NONE,
-        $city = Values::NONE,
-        $region = Values::NONE,
-        $postalCode = Values::NONE,
-        $emergencyEnabled = Values::NONE,
-        $autoCorrectAddress = Values::NONE
-    ) {
-        return new UpdateAddressOptions($friendlyName, $customerName, $street, $city, $region, $postalCode,
-            $emergencyEnabled, $autoCorrectAddress);
+    public static function update($friendlyName = Values::NONE, $customerName = Values::NONE, $street = Values::NONE, $city = Values::NONE, $region = Values::NONE, $postalCode = Values::NONE, $emergencyEnabled = Values::NONE, $autoCorrectAddress = Values::NONE) {
+        return new UpdateAddressOptions($friendlyName, $customerName, $street, $city, $region, $postalCode, $emergencyEnabled, $autoCorrectAddress);
     }
 
     /**
@@ -66,14 +51,12 @@ abstract class AddressOptions
      *                           read
      * @return ReadAddressOptions Options builder
      */
-    public static function read($customerName = Values::NONE, $friendlyName = Values::NONE, $isoCountry = Values::NONE)
-    {
+    public static function read($customerName = Values::NONE, $friendlyName = Values::NONE, $isoCountry = Values::NONE) {
         return new ReadAddressOptions($customerName, $friendlyName, $isoCountry);
     }
 }
 
-class CreateAddressOptions extends Options
-{
+class CreateAddressOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the new resource
      * @param bool $emergencyEnabled Whether to enable emergency calling on the new
@@ -81,11 +64,7 @@ class CreateAddressOptions extends Options
      * @param bool $autoCorrectAddress Whether we should automatically correct the
      *                                 address
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $emergencyEnabled = Values::NONE,
-        $autoCorrectAddress = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $emergencyEnabled = Values::NONE, $autoCorrectAddress = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['emergencyEnabled'] = $emergencyEnabled;
         $this->options['autoCorrectAddress'] = $autoCorrectAddress;
@@ -97,8 +76,7 @@ class CreateAddressOptions extends Options
      * @param string $friendlyName A string to describe the new resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -110,8 +88,7 @@ class CreateAddressOptions extends Options
      *                               address
      * @return $this Fluent Builder
      */
-    public function setEmergencyEnabled($emergencyEnabled)
-    {
+    public function setEmergencyEnabled($emergencyEnabled) {
         $this->options['emergencyEnabled'] = $emergencyEnabled;
         return $this;
     }
@@ -123,8 +100,7 @@ class CreateAddressOptions extends Options
      *                                 address
      * @return $this Fluent Builder
      */
-    public function setAutoCorrectAddress($autoCorrectAddress)
-    {
+    public function setAutoCorrectAddress($autoCorrectAddress) {
         $this->options['autoCorrectAddress'] = $autoCorrectAddress;
         return $this;
     }
@@ -134,8 +110,7 @@ class CreateAddressOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -146,8 +121,7 @@ class CreateAddressOptions extends Options
     }
 }
 
-class UpdateAddressOptions extends Options
-{
+class UpdateAddressOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the resource
      * @param string $customerName The name to associate with the address
@@ -160,16 +134,7 @@ class UpdateAddressOptions extends Options
      * @param bool $autoCorrectAddress Whether we should automatically correct the
      *                                 address
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $customerName = Values::NONE,
-        $street = Values::NONE,
-        $city = Values::NONE,
-        $region = Values::NONE,
-        $postalCode = Values::NONE,
-        $emergencyEnabled = Values::NONE,
-        $autoCorrectAddress = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $customerName = Values::NONE, $street = Values::NONE, $city = Values::NONE, $region = Values::NONE, $postalCode = Values::NONE, $emergencyEnabled = Values::NONE, $autoCorrectAddress = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['customerName'] = $customerName;
         $this->options['street'] = $street;
@@ -186,8 +151,7 @@ class UpdateAddressOptions extends Options
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -198,8 +162,7 @@ class UpdateAddressOptions extends Options
      * @param string $customerName The name to associate with the address
      * @return $this Fluent Builder
      */
-    public function setCustomerName($customerName)
-    {
+    public function setCustomerName($customerName) {
         $this->options['customerName'] = $customerName;
         return $this;
     }
@@ -210,8 +173,7 @@ class UpdateAddressOptions extends Options
      * @param string $street The number and street address of the address
      * @return $this Fluent Builder
      */
-    public function setStreet($street)
-    {
+    public function setStreet($street) {
         $this->options['street'] = $street;
         return $this;
     }
@@ -222,8 +184,7 @@ class UpdateAddressOptions extends Options
      * @param string $city The city of the address
      * @return $this Fluent Builder
      */
-    public function setCity($city)
-    {
+    public function setCity($city) {
         $this->options['city'] = $city;
         return $this;
     }
@@ -234,8 +195,7 @@ class UpdateAddressOptions extends Options
      * @param string $region The state or region of the address
      * @return $this Fluent Builder
      */
-    public function setRegion($region)
-    {
+    public function setRegion($region) {
         $this->options['region'] = $region;
         return $this;
     }
@@ -246,8 +206,7 @@ class UpdateAddressOptions extends Options
      * @param string $postalCode The postal code of the address
      * @return $this Fluent Builder
      */
-    public function setPostalCode($postalCode)
-    {
+    public function setPostalCode($postalCode) {
         $this->options['postalCode'] = $postalCode;
         return $this;
     }
@@ -259,8 +218,7 @@ class UpdateAddressOptions extends Options
      *                               address
      * @return $this Fluent Builder
      */
-    public function setEmergencyEnabled($emergencyEnabled)
-    {
+    public function setEmergencyEnabled($emergencyEnabled) {
         $this->options['emergencyEnabled'] = $emergencyEnabled;
         return $this;
     }
@@ -272,8 +230,7 @@ class UpdateAddressOptions extends Options
      *                                 address
      * @return $this Fluent Builder
      */
-    public function setAutoCorrectAddress($autoCorrectAddress)
-    {
+    public function setAutoCorrectAddress($autoCorrectAddress) {
         $this->options['autoCorrectAddress'] = $autoCorrectAddress;
         return $this;
     }
@@ -283,8 +240,7 @@ class UpdateAddressOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -295,8 +251,7 @@ class UpdateAddressOptions extends Options
     }
 }
 
-class ReadAddressOptions extends Options
-{
+class ReadAddressOptions extends Options {
     /**
      * @param string $customerName The `customer_name` of the Address resources to
      *                             read
@@ -305,8 +260,7 @@ class ReadAddressOptions extends Options
      * @param string $isoCountry The ISO country code of the Address resources to
      *                           read
      */
-    public function __construct($customerName = Values::NONE, $friendlyName = Values::NONE, $isoCountry = Values::NONE)
-    {
+    public function __construct($customerName = Values::NONE, $friendlyName = Values::NONE, $isoCountry = Values::NONE) {
         $this->options['customerName'] = $customerName;
         $this->options['friendlyName'] = $friendlyName;
         $this->options['isoCountry'] = $isoCountry;
@@ -319,8 +273,7 @@ class ReadAddressOptions extends Options
      *                             read
      * @return $this Fluent Builder
      */
-    public function setCustomerName($customerName)
-    {
+    public function setCustomerName($customerName) {
         $this->options['customerName'] = $customerName;
         return $this;
     }
@@ -332,8 +285,7 @@ class ReadAddressOptions extends Options
      *                             to read
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -345,8 +297,7 @@ class ReadAddressOptions extends Options
      *                           read
      * @return $this Fluent Builder
      */
-    public function setIsoCountry($isoCountry)
-    {
+    public function setIsoCountry($isoCountry) {
         $this->options['isoCountry'] = $isoCountry;
         return $this;
     }
@@ -356,8 +307,7 @@ class ReadAddressOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

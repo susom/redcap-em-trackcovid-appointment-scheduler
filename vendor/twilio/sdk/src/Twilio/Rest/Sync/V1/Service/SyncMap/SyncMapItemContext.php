@@ -19,8 +19,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SyncMapItemContext extends InstanceContext
-{
+class SyncMapItemContext extends InstanceContext {
     /**
      * Initialize the SyncMapItemContext
      *
@@ -32,12 +31,11 @@ class SyncMapItemContext extends InstanceContext
      * @param string $key The key value of the Sync Map Item resource to fetch
      * @return \Twilio\Rest\Sync\V1\Service\SyncMap\SyncMapItemContext
      */
-    public function __construct(Version $version, $serviceSid, $mapSid, $key)
-    {
+    public function __construct(Version $version, $serviceSid, $mapSid, $key) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'mapSid' => $mapSid, 'key' => $key,);
+        $this->solution = array('serviceSid' => $serviceSid, 'mapSid' => $mapSid, 'key' => $key, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Maps/' . \rawurlencode($mapSid) . '/Items/' . \rawurlencode($key) . '';
     }
@@ -48,8 +46,7 @@ class SyncMapItemContext extends InstanceContext
      * @return SyncMapItemInstance Fetched SyncMapItemInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -73,8 +70,7 @@ class SyncMapItemContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -85,8 +81,7 @@ class SyncMapItemContext extends InstanceContext
      * @return SyncMapItemInstance Updated SyncMapItemInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -117,8 +112,7 @@ class SyncMapItemContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

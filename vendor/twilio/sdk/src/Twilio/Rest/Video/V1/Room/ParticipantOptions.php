@@ -12,8 +12,7 @@ namespace Twilio\Rest\Video\V1\Room;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ParticipantOptions
-{
+abstract class ParticipantOptions {
     /**
      * @param string $status Read only the participants with this status
      * @param string $identity Read only the Participants with this user identity
@@ -24,12 +23,7 @@ abstract class ParticipantOptions
      *                                     before this date in ISO 8601 format
      * @return ReadParticipantOptions Options builder
      */
-    public static function read(
-        $status = Values::NONE,
-        $identity = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE
-    ) {
+    public static function read($status = Values::NONE, $identity = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE) {
         return new ReadParticipantOptions($status, $identity, $dateCreatedAfter, $dateCreatedBefore);
     }
 
@@ -37,14 +31,12 @@ abstract class ParticipantOptions
      * @param string $status The new status of the resource
      * @return UpdateParticipantOptions Options builder
      */
-    public static function update($status = Values::NONE)
-    {
+    public static function update($status = Values::NONE) {
         return new UpdateParticipantOptions($status);
     }
 }
 
-class ReadParticipantOptions extends Options
-{
+class ReadParticipantOptions extends Options {
     /**
      * @param string $status Read only the participants with this status
      * @param string $identity Read only the Participants with this user identity
@@ -54,12 +46,7 @@ class ReadParticipantOptions extends Options
      * @param \DateTime $dateCreatedBefore Read only Participants that started
      *                                     before this date in ISO 8601 format
      */
-    public function __construct(
-        $status = Values::NONE,
-        $identity = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE
-    ) {
+    public function __construct($status = Values::NONE, $identity = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE) {
         $this->options['status'] = $status;
         $this->options['identity'] = $identity;
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
@@ -72,8 +59,7 @@ class ReadParticipantOptions extends Options
      * @param string $status Read only the participants with this status
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -85,8 +71,7 @@ class ReadParticipantOptions extends Options
      *                         value
      * @return $this Fluent Builder
      */
-    public function setIdentity($identity)
-    {
+    public function setIdentity($identity) {
         $this->options['identity'] = $identity;
         return $this;
     }
@@ -98,8 +83,7 @@ class ReadParticipantOptions extends Options
      *                                    this date in UTC ISO 8601 format
      * @return $this Fluent Builder
      */
-    public function setDateCreatedAfter($dateCreatedAfter)
-    {
+    public function setDateCreatedAfter($dateCreatedAfter) {
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
         return $this;
     }
@@ -111,8 +95,7 @@ class ReadParticipantOptions extends Options
      *                                     before this date in ISO 8601 format
      * @return $this Fluent Builder
      */
-    public function setDateCreatedBefore($dateCreatedBefore)
-    {
+    public function setDateCreatedBefore($dateCreatedBefore) {
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
         return $this;
     }
@@ -122,8 +105,7 @@ class ReadParticipantOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -134,13 +116,11 @@ class ReadParticipantOptions extends Options
     }
 }
 
-class UpdateParticipantOptions extends Options
-{
+class UpdateParticipantOptions extends Options {
     /**
      * @param string $status The new status of the resource
      */
-    public function __construct($status = Values::NONE)
-    {
+    public function __construct($status = Values::NONE) {
         $this->options['status'] = $status;
     }
 
@@ -150,8 +130,7 @@ class UpdateParticipantOptions extends Options
      * @param string $status The new status of the resource
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -161,8 +140,7 @@ class UpdateParticipantOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

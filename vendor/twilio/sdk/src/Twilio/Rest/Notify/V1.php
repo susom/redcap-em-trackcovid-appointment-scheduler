@@ -21,8 +21,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Notify\V1\CredentialContext credentials(string $sid)
  * @method \Twilio\Rest\Notify\V1\ServiceContext services(string $sid)
  */
-class V1 extends Version
-{
+class V1 extends Version {
     protected $_credentials = null;
     protected $_services = null;
 
@@ -32,8 +31,7 @@ class V1 extends Version
      * @param \Twilio\Domain $domain Domain that contains the version
      * @return \Twilio\Rest\Notify\V1 V1 version of Notify
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'v1';
     }
@@ -41,8 +39,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Notify\V1\CredentialList
      */
-    protected function getCredentials()
-    {
+    protected function getCredentials() {
         if (!$this->_credentials) {
             $this->_credentials = new CredentialList($this);
         }
@@ -52,8 +49,7 @@ class V1 extends Version
     /**
      * @return \Twilio\Rest\Notify\V1\ServiceList
      */
-    protected function getServices()
-    {
+    protected function getServices() {
         if (!$this->_services) {
             $this->_services = new ServiceList($this);
         }
@@ -67,8 +63,7 @@ class V1 extends Version
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -85,8 +80,7 @@ class V1 extends Version
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -100,8 +94,7 @@ class V1 extends Version
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Notify.V1]';
     }
 }

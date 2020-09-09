@@ -11,18 +11,15 @@ namespace Twilio\Rest\Monitor\V1;
 
 use Twilio\Page;
 
-class AlertPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class AlertPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new AlertInstance($this->version, $payload);
     }
 
@@ -31,8 +28,7 @@ class AlertPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Monitor.V1.AlertPage]';
     }
 }

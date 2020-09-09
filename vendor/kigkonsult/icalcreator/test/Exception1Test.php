@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator;
 
@@ -48,8 +48,7 @@ class Exception1Test extends TestCase
     /**
      * DateTimeFactoryFactoryTest provider
      */
-    public function DateTimeFactoryFactoryTestProvider()
-    {
+    public function DateTimeFactoryFactoryTestProvider() {
 
         $dataArr = [];
 
@@ -97,26 +96,25 @@ class Exception1Test extends TestCase
      *
      * @test
      * @dataProvider DateTimeFactoryFactoryTestProvider
-     * @param int $case
-     * @param string $dateTimeString
-     * @param string $timezoneString
+     * @param int    $case
+     * @param string  $dateTimeString
+     * @param string  $timezoneString
      */
-    public function DateTimeFactoryFactoryTest($case, $dateTimeString, $timezoneString)
-    {
+    public function DateTimeFactoryFactoryTest( $case, $dateTimeString, $timezoneString ) {
         $ok = false;
         try {
-            $dateTime = DateTimeFactory::factory($dateTimeString, $timezoneString);
-        } catch (Exception $e) {
+            $dateTime = DateTimeFactory::factory( $dateTimeString, $timezoneString );
+        }
+        catch ( Exception $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
     /**
      * DateTimeFactoryGetYmdFromTimestampTest provider
      */
-    public function DateTimeFactoryGetYmdFromTimestampTestProvider()
-    {
+    public function DateTimeFactoryGetYmdFromTimestampTestProvider() {
 
         $dataArr = [];
 
@@ -134,7 +132,7 @@ class Exception1Test extends TestCase
 
         $dataArr[] = [
             3,
-            DateTimeFactory::factory('now')->getTimestamp(),
+            DateTimeFactory::factory( 'now' )->getTimestamp(),
             'invalid/timezone',
         ];
 
@@ -147,52 +145,51 @@ class Exception1Test extends TestCase
      *
      * @test
      * @dataProvider DateTimeFactoryGetYmdFromTimestampTestProvider
-     * @param int $case
-     * @param string $dateTimeString
-     * @param string $timezoneString
+     * @param int    $case
+     * @param string  $dateTimeString
+     * @param string  $timezoneString
      */
-    public function getYmdFromTimestampTest($case, $dateTimeString, $timezoneString)
-    {
+    public function getYmdFromTimestampTest( $case, $dateTimeString, $timezoneString ) {
         $ok = false;
         try {
-            $dateTime = DateTimeFactory::factory($dateTimeString, $timezoneString)
-                ->format(DateTimeFactory::$Ymd);
-        } catch (Exception $e) {
+            $dateTime = DateTimeFactory::factory( $dateTimeString, $timezoneString )
+                                       ->format( DateTimeFactory::$Ymd );
+        }
+        catch ( Exception $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
     /**
      * DateTimeFactorySetDateTest provider
      */
-    public function DateTimeFactorySetDateTestProvider()
-    {
+    public function DateTimeFactorySetDateTestProvider() {
 
         $dataArr = [];
 
         $dataArr[] = [
             1,
-            DateTimeFactory::factory('now'),
-            [Vcalendar::TZID => 'invalid/timezone']
+            DateTimeFactory::factory( 'now' ),
+            [ Vcalendar::TZID => 'invalid/timezone' ]
         ];
 
         $dataArr[] = [
             19,
             '011201010101',
-            [Vcalendar::TZID => 'invalid/timezone']
+            [ Vcalendar::TZID => 'invalid/timezone']
         ];
 
         $dataArr[] = [
             18,
-            ['timestamp' => 'Papegojan Ragatha'],
+            [ 'timestamp' => 'Papegojan Ragatha' ],
             []
         ];
 
         $dataArr[] = [
             19,
             [
-                'timestamp' => '1',
+                'timestamp'              => '1',
                 Util\RecurFactory::$LCtz => 'invalid/timezone'
             ],
             []
@@ -201,15 +198,15 @@ class Exception1Test extends TestCase
         $dataArr[] = [
             20,
             [
-                'timestamp' => '1',
+                'timestamp'              => '1',
                 Util\RecurFactory::$LCtz => Vcalendar::UTC
             ],
-            [Vcalendar::TZID => 'invalid/timezone']
+            [ Vcalendar::TZID => 'invalid/timezone']
         ];
 
         $dataArr[] = [
             21,
-            ['Kalle Stropp'],
+            [ 'Kalle Stropp'],
             []
         ];
 
@@ -221,19 +218,19 @@ class Exception1Test extends TestCase
      *
      * @test
      * @dataProvider DateTimeFactorySetDateTestProvider
-     * @param int $case
-     * @param mixed $value
-     * @param array $params
+     * @param int    $case
+     * @param mixed  $value
+     * @param array  $params
      */
-    public function DateTimeFactorySetDateTest($case, $value, $params)
-    {
+    public function DateTimeFactorySetDateTest(  $case,  $value,  $params ) {
         $ok = false;
         try {
-            $result = DateTimeFactory::setDate($value, $params);
-        } catch (Exception $e) {
+            $result = DateTimeFactory::setDate( $value, $params );
+        }
+        catch ( Exception $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
 }

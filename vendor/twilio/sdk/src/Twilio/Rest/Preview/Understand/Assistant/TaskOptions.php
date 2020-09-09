@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class TaskOptions
-{
+abstract class TaskOptions {
     /**
      * @param string $friendlyName A user-provided string that identifies this
      *                             resource. It is non-unique and can up to 255
@@ -28,8 +27,7 @@ abstract class TaskOptions
      *                           assistant fetches actions
      * @return CreateTaskOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE)
-    {
+    public static function create($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         return new CreateTaskOptions($friendlyName, $actions, $actionsUrl);
     }
 
@@ -47,18 +45,12 @@ abstract class TaskOptions
      *                           assistant fetches actions
      * @return UpdateTaskOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE,
-        $actions = Values::NONE,
-        $actionsUrl = Values::NONE
-    ) {
+    public static function update($friendlyName = Values::NONE, $uniqueName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         return new UpdateTaskOptions($friendlyName, $uniqueName, $actions, $actionsUrl);
     }
 }
 
-class CreateTaskOptions extends Options
-{
+class CreateTaskOptions extends Options {
     /**
      * @param string $friendlyName A user-provided string that identifies this
      *                             resource. It is non-unique and can up to 255
@@ -69,8 +61,7 @@ class CreateTaskOptions extends Options
      * @param string $actionsUrl User-provided HTTP endpoint where from the
      *                           assistant fetches actions
      */
-    public function __construct($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['actions'] = $actions;
         $this->options['actionsUrl'] = $actionsUrl;
@@ -84,8 +75,7 @@ class CreateTaskOptions extends Options
      *                             characters long.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -98,8 +88,7 @@ class CreateTaskOptions extends Options
      *                       non-unique.
      * @return $this Fluent Builder
      */
-    public function setActions($actions)
-    {
+    public function setActions($actions) {
         $this->options['actions'] = $actions;
         return $this;
     }
@@ -111,8 +100,7 @@ class CreateTaskOptions extends Options
      *                           assistant fetches actions
      * @return $this Fluent Builder
      */
-    public function setActionsUrl($actionsUrl)
-    {
+    public function setActionsUrl($actionsUrl) {
         $this->options['actionsUrl'] = $actionsUrl;
         return $this;
     }
@@ -122,8 +110,7 @@ class CreateTaskOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -134,8 +121,7 @@ class CreateTaskOptions extends Options
     }
 }
 
-class UpdateTaskOptions extends Options
-{
+class UpdateTaskOptions extends Options {
     /**
      * @param string $friendlyName A user-provided string that identifies this
      *                             resource. It is non-unique and can up to 255
@@ -149,12 +135,7 @@ class UpdateTaskOptions extends Options
      * @param string $actionsUrl User-provided HTTP endpoint where from the
      *                           assistant fetches actions
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $uniqueName = Values::NONE,
-        $actions = Values::NONE,
-        $actionsUrl = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $uniqueName = Values::NONE, $actions = Values::NONE, $actionsUrl = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['uniqueName'] = $uniqueName;
         $this->options['actions'] = $actions;
@@ -169,8 +150,7 @@ class UpdateTaskOptions extends Options
      *                             characters long.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -183,8 +163,7 @@ class UpdateTaskOptions extends Options
      *                           up to 64 characters long.
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -197,8 +176,7 @@ class UpdateTaskOptions extends Options
      *                       non-unique.
      * @return $this Fluent Builder
      */
-    public function setActions($actions)
-    {
+    public function setActions($actions) {
         $this->options['actions'] = $actions;
         return $this;
     }
@@ -210,8 +188,7 @@ class UpdateTaskOptions extends Options
      *                           assistant fetches actions
      * @return $this Fluent Builder
      */
-    public function setActionsUrl($actionsUrl)
-    {
+    public function setActionsUrl($actionsUrl) {
         $this->options['actionsUrl'] = $actionsUrl;
         return $this;
     }
@@ -221,8 +198,7 @@ class UpdateTaskOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

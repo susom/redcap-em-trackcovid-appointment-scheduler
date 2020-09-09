@@ -19,8 +19,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class VoiceInstance extends InstanceResource
-{
+class VoiceInstance extends InstanceResource {
     /**
      * Initialize the VoiceInstance
      *
@@ -28,8 +27,7 @@ class VoiceInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Pricing\V1\VoiceInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,8 +47,7 @@ class VoiceInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -68,8 +65,7 @@ class VoiceInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Pricing.V1.VoiceInstance]';
     }
 }

@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait TZIDtrait
 {
     /**
      * @var array component property TZID value
-     * @access protected
      */
     protected $tzid = null;
 
@@ -56,16 +55,18 @@ trait TZIDtrait
      */
     public function createTzid()
     {
-        if (empty($this->tzid)) {
+        if( empty( $this->tzid )) {
             return null;
         }
-        if (empty($this->tzid[Util::$LCvalue])) {
-            return ($this->getConfig(self::ALLOWEMPTY)) ? StringFactory::createElement(self::TZID) : null;
+        if( empty( $this->tzid[Util::$LCvalue] )) {
+            return $this->getConfig( self::ALLOWEMPTY )
+                ? StringFactory::createElement( self::TZID )
+                : null;
         }
         return StringFactory::createElement(
             self::TZID,
-            ParameterFactory::createParams($this->tzid[Util::$LCparams]),
-            StringFactory::strrep($this->tzid[Util::$LCvalue])
+            ParameterFactory::createParams( $this->tzid[Util::$LCparams] ),
+            StringFactory::strrep( $this->tzid[Util::$LCvalue] )
         );
     }
 
@@ -84,39 +85,39 @@ trait TZIDtrait
     /**
      * Get calendar component property tzid
      *
-     * @param bool $inclParam
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-13
      */
-    public function getTzid($inclParam = false)
+    public function getTzid( $inclParam = false )
     {
-        if (empty($this->tzid)) {
+        if( empty( $this->tzid )) {
             return false;
         }
-        return ($inclParam) ? $this->tzid : $this->tzid[Util::$LCvalue];
+        return ( $inclParam ) ? $this->tzid : $this->tzid[Util::$LCvalue];
     }
 
     /**
      * Set calendar component property tzid
      *
+     * @since 2.23.12 - 2017-04-22
      * @param string $value
-     * @param array $params
+     * @param array  $params
      * @return static
      * @throws InvalidArgumentException
-     * @since 2.23.12 - 2017-04-22
      * @since 2.27.3 2018-12-22
      * @todo assert PHP timezone ?
      */
-    public function setTzid($value = null, $params = [])
+    public function setTzid( $value = null, $params = [] )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::TZID);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::TZID );
+            $value  = Util::$SP0;
             $params = [];
         }
         $this->tzid = [
-            Util::$LCvalue => StringFactory::trimTrailNL($value),
-            Util::$LCparams => ParameterFactory::setParams($params),
+            Util::$LCvalue  => StringFactory::trimTrailNL( $value ),
+            Util::$LCparams => ParameterFactory::setParams( $params ),
         ];
         return $this;
     }

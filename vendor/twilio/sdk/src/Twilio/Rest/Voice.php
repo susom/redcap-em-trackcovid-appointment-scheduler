@@ -17,8 +17,7 @@ use Twilio\Rest\Voice\V1;
  * @property \Twilio\Rest\Voice\V1 $v1
  * @property \Twilio\Rest\Voice\V1\DialingPermissionsList $dialingPermissions
  */
-class Voice extends Domain
-{
+class Voice extends Domain {
     protected $_v1 = null;
 
     /**
@@ -28,8 +27,7 @@ class Voice extends Domain
      *                                    Twilio
      * @return \Twilio\Rest\Voice Domain for Voice
      */
-    public function __construct(Client $client)
-    {
+    public function __construct(Client $client) {
         parent::__construct($client);
 
         $this->baseUrl = 'https://voice.twilio.com';
@@ -38,8 +36,7 @@ class Voice extends Domain
     /**
      * @return \Twilio\Rest\Voice\V1 Version v1 of voice
      */
-    protected function getV1()
-    {
+    protected function getV1() {
         if (!$this->_v1) {
             $this->_v1 = new V1($this);
         }
@@ -53,8 +50,7 @@ class Voice extends Domain
      * @return \Twilio\Version The requested version
      * @throws TwilioException For unknown versions
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -71,8 +67,7 @@ class Voice extends Domain
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $method = 'context' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return \call_user_func_array(array($this, $method), $arguments);
@@ -84,8 +79,7 @@ class Voice extends Domain
     /**
      * @return \Twilio\Rest\Voice\V1\DialingPermissionsList
      */
-    protected function getDialingPermissions()
-    {
+    protected function getDialingPermissions() {
         return $this->v1->dialingPermissions;
     }
 
@@ -94,8 +88,7 @@ class Voice extends Domain
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Voice]';
     }
 }

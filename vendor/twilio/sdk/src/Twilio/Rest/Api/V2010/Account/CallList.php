@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryList $feedbackSummaries
  * @method \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryContext feedbackSummaries(string $sid)
  */
-class CallList extends ListResource
-{
+class CallList extends ListResource {
     protected $_feedbackSummaries = null;
 
     /**
@@ -32,12 +31,11 @@ class CallList extends ListResource
      * @param string $accountSid The SID of the Account that created this resource
      * @return \Twilio\Rest\Api\V2010\Account\CallList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls.json';
     }
@@ -51,8 +49,7 @@ class CallList extends ListResource
      * @return CallInstance Newly created CallInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($to, $from, $options = array())
-    {
+    public function create($to, $from, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -65,9 +62,7 @@ class CallList extends ListResource
             'FallbackUrl' => $options['fallbackUrl'],
             'FallbackMethod' => $options['fallbackMethod'],
             'StatusCallback' => $options['statusCallback'],
-            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'StatusCallbackEvent' => Serialize::map($options['statusCallbackEvent'], function($e) { return $e; }),
             'StatusCallbackMethod' => $options['statusCallbackMethod'],
             'SendDigits' => $options['sendDigits'],
             'Timeout' => $options['timeout'],
@@ -79,9 +74,7 @@ class CallList extends ListResource
             'SipAuthPassword' => $options['sipAuthPassword'],
             'MachineDetection' => $options['machineDetection'],
             'MachineDetectionTimeout' => $options['machineDetectionTimeout'],
-            'RecordingStatusCallbackEvent' => Serialize::map($options['recordingStatusCallbackEvent'], function ($e) {
-                return $e;
-            }),
+            'RecordingStatusCallbackEvent' => Serialize::map($options['recordingStatusCallbackEvent'], function($e) { return $e; }),
             'Trim' => $options['trim'],
             'CallerId' => $options['callerId'],
             'MachineDetectionSpeechThreshold' => $options['machineDetectionSpeechThreshold'],
@@ -119,8 +112,7 @@ class CallList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -144,8 +136,7 @@ class CallList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return CallInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -159,12 +150,7 @@ class CallList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of CallInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'To' => $options['to'],
@@ -198,8 +184,7 @@ class CallList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of CallInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -211,8 +196,7 @@ class CallList extends ListResource
     /**
      * Access the feedbackSummaries
      */
-    protected function getFeedbackSummaries()
-    {
+    protected function getFeedbackSummaries() {
         if (!$this->_feedbackSummaries) {
             $this->_feedbackSummaries = new FeedbackSummaryList($this->version, $this->solution['accountSid']);
         }
@@ -226,8 +210,7 @@ class CallList extends ListResource
      * @param string $sid The SID of the Call resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\CallContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new CallContext($this->version, $this->solution['accountSid'], $sid);
     }
 
@@ -238,8 +221,7 @@ class CallList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -256,8 +238,7 @@ class CallList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -271,8 +252,7 @@ class CallList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.CallList]';
     }
 }

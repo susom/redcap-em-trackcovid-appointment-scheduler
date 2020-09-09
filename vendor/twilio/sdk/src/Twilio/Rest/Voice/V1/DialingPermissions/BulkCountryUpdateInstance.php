@@ -20,8 +20,7 @@ use Twilio\Version;
  * @property int $updateCount
  * @property string $updateRequest
  */
-class BulkCountryUpdateInstance extends InstanceResource
-{
+class BulkCountryUpdateInstance extends InstanceResource {
     /**
      * Initialize the BulkCountryUpdateInstance
      *
@@ -29,8 +28,7 @@ class BulkCountryUpdateInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Voice\V1\DialingPermissions\BulkCountryUpdateInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -49,8 +47,7 @@ class BulkCountryUpdateInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -68,8 +65,7 @@ class BulkCountryUpdateInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Voice.V1.BulkCountryUpdateInstance]';
     }
 }

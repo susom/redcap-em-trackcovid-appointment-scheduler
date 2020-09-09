@@ -27,8 +27,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentContext deployments(string $sid)
  * @method \Twilio\Rest\Serverless\V1\Service\Environment\LogContext logs(string $sid)
  */
-class EnvironmentContext extends InstanceContext
-{
+class EnvironmentContext extends InstanceContext {
     protected $_variables = null;
     protected $_deployments = null;
     protected $_logs = null;
@@ -42,12 +41,11 @@ class EnvironmentContext extends InstanceContext
      * @param string $sid The SID of the Environment resource to fetch
      * @return \Twilio\Rest\Serverless\V1\Service\EnvironmentContext
      */
-    public function __construct(Version $version, $serviceSid, $sid)
-    {
+    public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'sid' => $sid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Environments/' . \rawurlencode($sid) . '';
     }
@@ -58,8 +56,7 @@ class EnvironmentContext extends InstanceContext
      * @return EnvironmentInstance Fetched EnvironmentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -82,8 +79,7 @@ class EnvironmentContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -92,8 +88,7 @@ class EnvironmentContext extends InstanceContext
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableList
      */
-    protected function getVariables()
-    {
+    protected function getVariables() {
         if (!$this->_variables) {
             $this->_variables = new VariableList(
                 $this->version,
@@ -110,8 +105,7 @@ class EnvironmentContext extends InstanceContext
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList
      */
-    protected function getDeployments()
-    {
+    protected function getDeployments() {
         if (!$this->_deployments) {
             $this->_deployments = new DeploymentList(
                 $this->version,
@@ -128,8 +122,7 @@ class EnvironmentContext extends InstanceContext
      *
      * @return \Twilio\Rest\Serverless\V1\Service\Environment\LogList
      */
-    protected function getLogs()
-    {
+    protected function getLogs() {
         if (!$this->_logs) {
             $this->_logs = new LogList($this->version, $this->solution['serviceSid'], $this->solution['sid']);
         }
@@ -144,8 +137,7 @@ class EnvironmentContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -162,8 +154,7 @@ class EnvironmentContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -177,8 +168,7 @@ class EnvironmentContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

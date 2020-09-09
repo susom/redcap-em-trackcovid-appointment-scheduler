@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property string $flowSid
  * @property string $url
  */
-class EngagementContextInstance extends InstanceResource
-{
+class EngagementContextInstance extends InstanceResource {
     /**
      * Initialize the EngagementContextInstance
      *
@@ -32,8 +31,7 @@ class EngagementContextInstance extends InstanceResource
      * @param string $engagementSid Engagement SID
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextInstance
      */
-    public function __construct(Version $version, array $payload, $flowSid, $engagementSid)
-    {
+    public function __construct(Version $version, array $payload, $flowSid, $engagementSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -45,7 +43,7 @@ class EngagementContextInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('flowSid' => $flowSid, 'engagementSid' => $engagementSid,);
+        $this->solution = array('flowSid' => $flowSid, 'engagementSid' => $engagementSid, );
     }
 
     /**
@@ -54,8 +52,7 @@ class EngagementContextInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Engagement\EngagementContextContext Context for this EngagementContextInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new EngagementContextContext(
                 $this->version,
@@ -73,8 +70,7 @@ class EngagementContextInstance extends InstanceResource
      * @return EngagementContextInstance Fetched EngagementContextInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -85,8 +81,7 @@ class EngagementContextInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -104,8 +99,7 @@ class EngagementContextInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

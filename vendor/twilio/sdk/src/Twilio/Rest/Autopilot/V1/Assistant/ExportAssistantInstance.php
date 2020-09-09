@@ -26,8 +26,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $schema
  */
-class ExportAssistantInstance extends InstanceResource
-{
+class ExportAssistantInstance extends InstanceResource {
     /**
      * Initialize the ExportAssistantInstance
      *
@@ -36,8 +35,7 @@ class ExportAssistantInstance extends InstanceResource
      * @param string $assistantSid The SID of the Assistant to export.
      * @return \Twilio\Rest\Autopilot\V1\Assistant\ExportAssistantInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid)
-    {
+    public function __construct(Version $version, array $payload, $assistantSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -51,7 +49,7 @@ class ExportAssistantInstance extends InstanceResource
             'schema' => Values::array_get($payload, 'schema'),
         );
 
-        $this->solution = array('assistantSid' => $assistantSid,);
+        $this->solution = array('assistantSid' => $assistantSid, );
     }
 
     /**
@@ -62,8 +60,7 @@ class ExportAssistantInstance extends InstanceResource
      *                                                                    for this
      *                                                                    ExportAssistantInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ExportAssistantContext($this->version, $this->solution['assistantSid']);
         }
@@ -77,8 +74,7 @@ class ExportAssistantInstance extends InstanceResource
      * @return ExportAssistantInstance Fetched ExportAssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -89,8 +85,7 @@ class ExportAssistantInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -108,8 +103,7 @@ class ExportAssistantInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

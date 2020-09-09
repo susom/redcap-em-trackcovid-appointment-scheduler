@@ -30,8 +30,7 @@ use Twilio\Version;
  * @property string $type
  * @property string $uri
  */
-class TranscriptionInstance extends InstanceResource
-{
+class TranscriptionInstance extends InstanceResource {
     /**
      * Initialize the TranscriptionInstance
      *
@@ -41,8 +40,7 @@ class TranscriptionInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\TranscriptionInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -62,7 +60,7 @@ class TranscriptionInstance extends InstanceResource
             'uri' => Values::array_get($payload, 'uri'),
         );
 
-        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -72,8 +70,7 @@ class TranscriptionInstance extends InstanceResource
      * @return \Twilio\Rest\Api\V2010\Account\TranscriptionContext Context for this
      *                                                             TranscriptionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new TranscriptionContext(
                 $this->version,
@@ -91,8 +88,7 @@ class TranscriptionInstance extends InstanceResource
      * @return TranscriptionInstance Fetched TranscriptionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -102,8 +98,7 @@ class TranscriptionInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -114,8 +109,7 @@ class TranscriptionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -133,8 +127,7 @@ class TranscriptionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

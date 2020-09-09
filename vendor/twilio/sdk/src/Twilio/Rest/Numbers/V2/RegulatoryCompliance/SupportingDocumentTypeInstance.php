@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property array $fields
  * @property string $url
  */
-class SupportingDocumentTypeInstance extends InstanceResource
-{
+class SupportingDocumentTypeInstance extends InstanceResource {
     /**
      * Initialize the SupportingDocumentTypeInstance
      *
@@ -32,8 +31,7 @@ class SupportingDocumentTypeInstance extends InstanceResource
      *                    Type resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentTypeInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -45,7 +43,7 @@ class SupportingDocumentTypeInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -55,8 +53,7 @@ class SupportingDocumentTypeInstance extends InstanceResource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentTypeContext Context for this
      *                                                                                    SupportingDocumentTypeInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new SupportingDocumentTypeContext($this->version, $this->solution['sid']);
         }
@@ -70,8 +67,7 @@ class SupportingDocumentTypeInstance extends InstanceResource
      * @return SupportingDocumentTypeInstance Fetched SupportingDocumentTypeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -82,8 +78,7 @@ class SupportingDocumentTypeInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -101,8 +96,7 @@ class SupportingDocumentTypeInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

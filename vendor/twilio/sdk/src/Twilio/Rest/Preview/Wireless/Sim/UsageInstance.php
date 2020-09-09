@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property array $dataCosts
  * @property string $url
  */
-class UsageInstance extends InstanceResource
-{
+class UsageInstance extends InstanceResource {
     /**
      * Initialize the UsageInstance
      *
@@ -38,8 +37,7 @@ class UsageInstance extends InstanceResource
      * @param string $simSid The sim_sid
      * @return \Twilio\Rest\Preview\Wireless\Sim\UsageInstance
      */
-    public function __construct(Version $version, array $payload, $simSid)
-    {
+    public function __construct(Version $version, array $payload, $simSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -55,7 +53,7 @@ class UsageInstance extends InstanceResource
             'url' => Values::array_get($payload, 'url'),
         );
 
-        $this->solution = array('simSid' => $simSid,);
+        $this->solution = array('simSid' => $simSid, );
     }
 
     /**
@@ -65,8 +63,7 @@ class UsageInstance extends InstanceResource
      * @return \Twilio\Rest\Preview\Wireless\Sim\UsageContext Context for this
      *                                                        UsageInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new UsageContext($this->version, $this->solution['simSid']);
         }
@@ -81,8 +78,7 @@ class UsageInstance extends InstanceResource
      * @return UsageInstance Fetched UsageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array())
-    {
+    public function fetch($options = array()) {
         return $this->proxy()->fetch($options);
     }
 
@@ -93,8 +89,7 @@ class UsageInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -112,8 +107,7 @@ class UsageInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -15,16 +15,14 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class InstalledAddOnOptions
-{
+abstract class InstalledAddOnOptions {
     /**
      * @param array $configuration The JSON object representing the configuration
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
      * @return CreateInstalledAddOnOptions Options builder
      */
-    public static function create($configuration = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public static function create($configuration = Values::NONE, $uniqueName = Values::NONE) {
         return new CreateInstalledAddOnOptions($configuration, $uniqueName);
     }
 
@@ -34,21 +32,18 @@ abstract class InstalledAddOnOptions
      *                           identifies the resource
      * @return UpdateInstalledAddOnOptions Options builder
      */
-    public static function update($configuration = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public static function update($configuration = Values::NONE, $uniqueName = Values::NONE) {
         return new UpdateInstalledAddOnOptions($configuration, $uniqueName);
     }
 }
 
-class CreateInstalledAddOnOptions extends Options
-{
+class CreateInstalledAddOnOptions extends Options {
     /**
      * @param array $configuration The JSON object representing the configuration
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
      */
-    public function __construct($configuration = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public function __construct($configuration = Values::NONE, $uniqueName = Values::NONE) {
         $this->options['configuration'] = $configuration;
         $this->options['uniqueName'] = $uniqueName;
     }
@@ -59,8 +54,7 @@ class CreateInstalledAddOnOptions extends Options
      * @param array $configuration The JSON object representing the configuration
      * @return $this Fluent Builder
      */
-    public function setConfiguration($configuration)
-    {
+    public function setConfiguration($configuration) {
         $this->options['configuration'] = $configuration;
         return $this;
     }
@@ -72,8 +66,7 @@ class CreateInstalledAddOnOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -83,8 +76,7 @@ class CreateInstalledAddOnOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -95,15 +87,13 @@ class CreateInstalledAddOnOptions extends Options
     }
 }
 
-class UpdateInstalledAddOnOptions extends Options
-{
+class UpdateInstalledAddOnOptions extends Options {
     /**
      * @param array $configuration The JSON object representing the configuration
      * @param string $uniqueName An application-defined string that uniquely
      *                           identifies the resource
      */
-    public function __construct($configuration = Values::NONE, $uniqueName = Values::NONE)
-    {
+    public function __construct($configuration = Values::NONE, $uniqueName = Values::NONE) {
         $this->options['configuration'] = $configuration;
         $this->options['uniqueName'] = $uniqueName;
     }
@@ -114,8 +104,7 @@ class UpdateInstalledAddOnOptions extends Options
      * @param array $configuration The JSON object representing the configuration
      * @return $this Fluent Builder
      */
-    public function setConfiguration($configuration)
-    {
+    public function setConfiguration($configuration) {
         $this->options['configuration'] = $configuration;
         return $this;
     }
@@ -127,8 +116,7 @@ class UpdateInstalledAddOnOptions extends Options
      *                           identifies the resource
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName)
-    {
+    public function setUniqueName($uniqueName) {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
@@ -138,8 +126,7 @@ class UpdateInstalledAddOnOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

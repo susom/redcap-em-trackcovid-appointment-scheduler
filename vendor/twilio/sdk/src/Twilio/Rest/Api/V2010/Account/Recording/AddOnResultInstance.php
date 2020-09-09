@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property string $referenceSid
  * @property array $subresourceUris
  */
-class AddOnResultInstance extends InstanceResource
-{
+class AddOnResultInstance extends InstanceResource {
     protected $_payloads = null;
 
     /**
@@ -42,8 +41,7 @@ class AddOnResultInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Recording\AddOnResultInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $referenceSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $accountSid, $referenceSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -75,8 +73,7 @@ class AddOnResultInstance extends InstanceResource
      *                                                                     for this
      *                                                                     AddOnResultInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new AddOnResultContext(
                 $this->version,
@@ -95,8 +92,7 @@ class AddOnResultInstance extends InstanceResource
      * @return AddOnResultInstance Fetched AddOnResultInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -106,8 +102,7 @@ class AddOnResultInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -116,8 +111,7 @@ class AddOnResultInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Recording\AddOnResult\PayloadList
      */
-    protected function getPayloads()
-    {
+    protected function getPayloads() {
         return $this->proxy()->payloads;
     }
 
@@ -128,8 +122,7 @@ class AddOnResultInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -147,8 +140,7 @@ class AddOnResultInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

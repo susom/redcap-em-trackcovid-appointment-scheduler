@@ -11,15 +11,13 @@ namespace Twilio\TwiML\Voice;
 
 use Twilio\TwiML\TwiML;
 
-class SsmlBreak extends TwiML
-{
+class SsmlBreak extends TwiML {
     /**
      * SsmlBreak constructor.
      *
      * @param array $attributes Optional attributes
      */
-    public function __construct($attributes = array())
-    {
+    public function __construct($attributes = array()) {
         parent::__construct('break', null, $attributes);
     }
 
@@ -29,8 +27,7 @@ class SsmlBreak extends TwiML
      * @param string $strength Set a pause based on strength
      * @return static $this.
      */
-    public function setStrength($strength)
-    {
+    public function setStrength($strength) {
         return $this->setAttribute('strength', $strength);
     }
 
@@ -41,8 +38,7 @@ class SsmlBreak extends TwiML
      *                     milliseconds, available values: [number]s, [number]ms
      * @return static $this.
      */
-    public function setTime($time)
-    {
+    public function setTime($time) {
         return $this->setAttribute('time', $time);
     }
 }

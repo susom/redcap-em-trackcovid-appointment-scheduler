@@ -12,8 +12,7 @@ namespace Twilio\Rest\Verify\V2;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class ServiceOptions
-{
+abstract class ServiceOptions {
     /**
      * @param int $codeLength The length of the verification code to generate
      * @param bool $lookupEnabled Whether to perform a lookup with each verification
@@ -30,17 +29,8 @@ abstract class ServiceOptions
      *                                       the end of an SMS.
      * @return CreateServiceOptions Options builder
      */
-    public static function create(
-        $codeLength = Values::NONE,
-        $lookupEnabled = Values::NONE,
-        $skipSmsToLandlines = Values::NONE,
-        $dtmfInputRequired = Values::NONE,
-        $ttsName = Values::NONE,
-        $psd2Enabled = Values::NONE,
-        $doNotShareWarningEnabled = Values::NONE
-    ) {
-        return new CreateServiceOptions($codeLength, $lookupEnabled, $skipSmsToLandlines, $dtmfInputRequired, $ttsName,
-            $psd2Enabled, $doNotShareWarningEnabled);
+    public static function create($codeLength = Values::NONE, $lookupEnabled = Values::NONE, $skipSmsToLandlines = Values::NONE, $dtmfInputRequired = Values::NONE, $ttsName = Values::NONE, $psd2Enabled = Values::NONE, $doNotShareWarningEnabled = Values::NONE) {
+        return new CreateServiceOptions($codeLength, $lookupEnabled, $skipSmsToLandlines, $dtmfInputRequired, $ttsName, $psd2Enabled, $doNotShareWarningEnabled);
     }
 
     /**
@@ -60,23 +50,12 @@ abstract class ServiceOptions
      *                                       the end of an SMS.
      * @return UpdateServiceOptions Options builder
      */
-    public static function update(
-        $friendlyName = Values::NONE,
-        $codeLength = Values::NONE,
-        $lookupEnabled = Values::NONE,
-        $skipSmsToLandlines = Values::NONE,
-        $dtmfInputRequired = Values::NONE,
-        $ttsName = Values::NONE,
-        $psd2Enabled = Values::NONE,
-        $doNotShareWarningEnabled = Values::NONE
-    ) {
-        return new UpdateServiceOptions($friendlyName, $codeLength, $lookupEnabled, $skipSmsToLandlines,
-            $dtmfInputRequired, $ttsName, $psd2Enabled, $doNotShareWarningEnabled);
+    public static function update($friendlyName = Values::NONE, $codeLength = Values::NONE, $lookupEnabled = Values::NONE, $skipSmsToLandlines = Values::NONE, $dtmfInputRequired = Values::NONE, $ttsName = Values::NONE, $psd2Enabled = Values::NONE, $doNotShareWarningEnabled = Values::NONE) {
+        return new UpdateServiceOptions($friendlyName, $codeLength, $lookupEnabled, $skipSmsToLandlines, $dtmfInputRequired, $ttsName, $psd2Enabled, $doNotShareWarningEnabled);
     }
 }
 
-class CreateServiceOptions extends Options
-{
+class CreateServiceOptions extends Options {
     /**
      * @param int $codeLength The length of the verification code to generate
      * @param bool $lookupEnabled Whether to perform a lookup with each verification
@@ -92,15 +71,7 @@ class CreateServiceOptions extends Options
      * @param bool $doNotShareWarningEnabled Whether to add a privacy warning at
      *                                       the end of an SMS.
      */
-    public function __construct(
-        $codeLength = Values::NONE,
-        $lookupEnabled = Values::NONE,
-        $skipSmsToLandlines = Values::NONE,
-        $dtmfInputRequired = Values::NONE,
-        $ttsName = Values::NONE,
-        $psd2Enabled = Values::NONE,
-        $doNotShareWarningEnabled = Values::NONE
-    ) {
+    public function __construct($codeLength = Values::NONE, $lookupEnabled = Values::NONE, $skipSmsToLandlines = Values::NONE, $dtmfInputRequired = Values::NONE, $ttsName = Values::NONE, $psd2Enabled = Values::NONE, $doNotShareWarningEnabled = Values::NONE) {
         $this->options['codeLength'] = $codeLength;
         $this->options['lookupEnabled'] = $lookupEnabled;
         $this->options['skipSmsToLandlines'] = $skipSmsToLandlines;
@@ -116,8 +87,7 @@ class CreateServiceOptions extends Options
      * @param int $codeLength The length of the verification code to generate
      * @return $this Fluent Builder
      */
-    public function setCodeLength($codeLength)
-    {
+    public function setCodeLength($codeLength) {
         $this->options['codeLength'] = $codeLength;
         return $this;
     }
@@ -128,8 +98,7 @@ class CreateServiceOptions extends Options
      * @param bool $lookupEnabled Whether to perform a lookup with each verification
      * @return $this Fluent Builder
      */
-    public function setLookupEnabled($lookupEnabled)
-    {
+    public function setLookupEnabled($lookupEnabled) {
         $this->options['lookupEnabled'] = $lookupEnabled;
         return $this;
     }
@@ -141,8 +110,7 @@ class CreateServiceOptions extends Options
      *                                 landlines
      * @return $this Fluent Builder
      */
-    public function setSkipSmsToLandlines($skipSmsToLandlines)
-    {
+    public function setSkipSmsToLandlines($skipSmsToLandlines) {
         $this->options['skipSmsToLandlines'] = $skipSmsToLandlines;
         return $this;
     }
@@ -155,8 +123,7 @@ class CreateServiceOptions extends Options
      *                                call
      * @return $this Fluent Builder
      */
-    public function setDtmfInputRequired($dtmfInputRequired)
-    {
+    public function setDtmfInputRequired($dtmfInputRequired) {
         $this->options['dtmfInputRequired'] = $dtmfInputRequired;
         return $this;
     }
@@ -168,8 +135,7 @@ class CreateServiceOptions extends Options
      *                        use in phone calls
      * @return $this Fluent Builder
      */
-    public function setTtsName($ttsName)
-    {
+    public function setTtsName($ttsName) {
         $this->options['ttsName'] = $ttsName;
         return $this;
     }
@@ -181,8 +147,7 @@ class CreateServiceOptions extends Options
      *                          starting a verification
      * @return $this Fluent Builder
      */
-    public function setPsd2Enabled($psd2Enabled)
-    {
+    public function setPsd2Enabled($psd2Enabled) {
         $this->options['psd2Enabled'] = $psd2Enabled;
         return $this;
     }
@@ -194,8 +159,7 @@ class CreateServiceOptions extends Options
      *                                       the end of an SMS.
      * @return $this Fluent Builder
      */
-    public function setDoNotShareWarningEnabled($doNotShareWarningEnabled)
-    {
+    public function setDoNotShareWarningEnabled($doNotShareWarningEnabled) {
         $this->options['doNotShareWarningEnabled'] = $doNotShareWarningEnabled;
         return $this;
     }
@@ -205,8 +169,7 @@ class CreateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -217,8 +180,7 @@ class CreateServiceOptions extends Options
     }
 }
 
-class UpdateServiceOptions extends Options
-{
+class UpdateServiceOptions extends Options {
     /**
      * @param string $friendlyName A string to describe the verification service
      * @param int $codeLength The length of the verification code to generate
@@ -235,16 +197,7 @@ class UpdateServiceOptions extends Options
      * @param bool $doNotShareWarningEnabled Whether to add a privacy warning at
      *                                       the end of an SMS.
      */
-    public function __construct(
-        $friendlyName = Values::NONE,
-        $codeLength = Values::NONE,
-        $lookupEnabled = Values::NONE,
-        $skipSmsToLandlines = Values::NONE,
-        $dtmfInputRequired = Values::NONE,
-        $ttsName = Values::NONE,
-        $psd2Enabled = Values::NONE,
-        $doNotShareWarningEnabled = Values::NONE
-    ) {
+    public function __construct($friendlyName = Values::NONE, $codeLength = Values::NONE, $lookupEnabled = Values::NONE, $skipSmsToLandlines = Values::NONE, $dtmfInputRequired = Values::NONE, $ttsName = Values::NONE, $psd2Enabled = Values::NONE, $doNotShareWarningEnabled = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['codeLength'] = $codeLength;
         $this->options['lookupEnabled'] = $lookupEnabled;
@@ -261,8 +214,7 @@ class UpdateServiceOptions extends Options
      * @param string $friendlyName A string to describe the verification service
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -273,8 +225,7 @@ class UpdateServiceOptions extends Options
      * @param int $codeLength The length of the verification code to generate
      * @return $this Fluent Builder
      */
-    public function setCodeLength($codeLength)
-    {
+    public function setCodeLength($codeLength) {
         $this->options['codeLength'] = $codeLength;
         return $this;
     }
@@ -285,8 +236,7 @@ class UpdateServiceOptions extends Options
      * @param bool $lookupEnabled Whether to perform a lookup with each verification
      * @return $this Fluent Builder
      */
-    public function setLookupEnabled($lookupEnabled)
-    {
+    public function setLookupEnabled($lookupEnabled) {
         $this->options['lookupEnabled'] = $lookupEnabled;
         return $this;
     }
@@ -298,8 +248,7 @@ class UpdateServiceOptions extends Options
      *                                 landlines
      * @return $this Fluent Builder
      */
-    public function setSkipSmsToLandlines($skipSmsToLandlines)
-    {
+    public function setSkipSmsToLandlines($skipSmsToLandlines) {
         $this->options['skipSmsToLandlines'] = $skipSmsToLandlines;
         return $this;
     }
@@ -312,8 +261,7 @@ class UpdateServiceOptions extends Options
      *                                call
      * @return $this Fluent Builder
      */
-    public function setDtmfInputRequired($dtmfInputRequired)
-    {
+    public function setDtmfInputRequired($dtmfInputRequired) {
         $this->options['dtmfInputRequired'] = $dtmfInputRequired;
         return $this;
     }
@@ -325,8 +273,7 @@ class UpdateServiceOptions extends Options
      *                        use in phone calls
      * @return $this Fluent Builder
      */
-    public function setTtsName($ttsName)
-    {
+    public function setTtsName($ttsName) {
         $this->options['ttsName'] = $ttsName;
         return $this;
     }
@@ -338,8 +285,7 @@ class UpdateServiceOptions extends Options
      *                          starting a verification
      * @return $this Fluent Builder
      */
-    public function setPsd2Enabled($psd2Enabled)
-    {
+    public function setPsd2Enabled($psd2Enabled) {
         $this->options['psd2Enabled'] = $psd2Enabled;
         return $this;
     }
@@ -351,8 +297,7 @@ class UpdateServiceOptions extends Options
      *                                       the end of an SMS.
      * @return $this Fluent Builder
      */
-    public function setDoNotShareWarningEnabled($doNotShareWarningEnabled)
-    {
+    public function setDoNotShareWarningEnabled($doNotShareWarningEnabled) {
         $this->options['doNotShareWarningEnabled'] = $doNotShareWarningEnabled;
         return $this;
     }
@@ -362,8 +307,7 @@ class UpdateServiceOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

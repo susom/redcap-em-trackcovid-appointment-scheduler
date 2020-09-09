@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class CertificateOptions
-{
+abstract class CertificateOptions {
     /**
      * @param string $friendlyName The human readable description for this
      *                             Certificate.
@@ -24,8 +23,7 @@ abstract class CertificateOptions
      *                          authenticated.
      * @return CreateCertificateOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE, $deviceSid = Values::NONE)
-    {
+    public static function create($friendlyName = Values::NONE, $deviceSid = Values::NONE) {
         return new CreateCertificateOptions($friendlyName, $deviceSid);
     }
 
@@ -34,8 +32,7 @@ abstract class CertificateOptions
      *                          Device.
      * @return ReadCertificateOptions Options builder
      */
-    public static function read($deviceSid = Values::NONE)
-    {
+    public static function read($deviceSid = Values::NONE) {
         return new ReadCertificateOptions($deviceSid);
     }
 
@@ -46,22 +43,19 @@ abstract class CertificateOptions
      *                          authenticated.
      * @return UpdateCertificateOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $deviceSid = Values::NONE)
-    {
+    public static function update($friendlyName = Values::NONE, $deviceSid = Values::NONE) {
         return new UpdateCertificateOptions($friendlyName, $deviceSid);
     }
 }
 
-class CreateCertificateOptions extends Options
-{
+class CreateCertificateOptions extends Options {
     /**
      * @param string $friendlyName The human readable description for this
      *                             Certificate.
      * @param string $deviceSid The unique identifier of a Device to be
      *                          authenticated.
      */
-    public function __construct($friendlyName = Values::NONE, $deviceSid = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $deviceSid = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['deviceSid'] = $deviceSid;
     }
@@ -73,8 +67,7 @@ class CreateCertificateOptions extends Options
      *                             Certificate.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -86,8 +79,7 @@ class CreateCertificateOptions extends Options
      *                          authenticated.
      * @return $this Fluent Builder
      */
-    public function setDeviceSid($deviceSid)
-    {
+    public function setDeviceSid($deviceSid) {
         $this->options['deviceSid'] = $deviceSid;
         return $this;
     }
@@ -97,8 +89,7 @@ class CreateCertificateOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -109,14 +100,12 @@ class CreateCertificateOptions extends Options
     }
 }
 
-class ReadCertificateOptions extends Options
-{
+class ReadCertificateOptions extends Options {
     /**
      * @param string $deviceSid Find all Certificates authenticating specified
      *                          Device.
      */
-    public function __construct($deviceSid = Values::NONE)
-    {
+    public function __construct($deviceSid = Values::NONE) {
         $this->options['deviceSid'] = $deviceSid;
     }
 
@@ -127,8 +116,7 @@ class ReadCertificateOptions extends Options
      *                          Device.
      * @return $this Fluent Builder
      */
-    public function setDeviceSid($deviceSid)
-    {
+    public function setDeviceSid($deviceSid) {
         $this->options['deviceSid'] = $deviceSid;
         return $this;
     }
@@ -138,8 +126,7 @@ class ReadCertificateOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -150,16 +137,14 @@ class ReadCertificateOptions extends Options
     }
 }
 
-class UpdateCertificateOptions extends Options
-{
+class UpdateCertificateOptions extends Options {
     /**
      * @param string $friendlyName The human readable description for this
      *                             Certificate.
      * @param string $deviceSid The unique identifier of a Device to be
      *                          authenticated.
      */
-    public function __construct($friendlyName = Values::NONE, $deviceSid = Values::NONE)
-    {
+    public function __construct($friendlyName = Values::NONE, $deviceSid = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['deviceSid'] = $deviceSid;
     }
@@ -171,8 +156,7 @@ class UpdateCertificateOptions extends Options
      *                             Certificate.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName)
-    {
+    public function setFriendlyName($friendlyName) {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -184,8 +168,7 @@ class UpdateCertificateOptions extends Options
      *                          authenticated.
      * @return $this Fluent Builder
      */
-    public function setDeviceSid($deviceSid)
-    {
+    public function setDeviceSid($deviceSid) {
         $this->options['deviceSid'] = $deviceSid;
         return $this;
     }
@@ -195,8 +178,7 @@ class UpdateCertificateOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

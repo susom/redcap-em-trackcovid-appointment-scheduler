@@ -13,8 +13,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class UserChannelList extends ListResource
-{
+class UserChannelList extends ListResource {
     /**
      * Construct the UserChannelList
      *
@@ -24,12 +23,11 @@ class UserChannelList extends ListResource
      * @param string $userSid The unique string that identifies the resource
      * @return \Twilio\Rest\Chat\V1\Service\User\UserChannelList
      */
-    public function __construct(Version $version, $serviceSid, $userSid)
-    {
+    public function __construct(Version $version, $serviceSid, $userSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'userSid' => $userSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'userSid' => $userSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Users/' . \rawurlencode($userSid) . '/Channels';
     }
@@ -52,8 +50,7 @@ class UserChannelList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -76,8 +73,7 @@ class UserChannelList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return UserChannelInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -90,8 +86,7 @@ class UserChannelList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of UserChannelInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -114,8 +109,7 @@ class UserChannelList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of UserChannelInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -129,8 +123,7 @@ class UserChannelList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Chat.V1.UserChannelList]';
     }
 }

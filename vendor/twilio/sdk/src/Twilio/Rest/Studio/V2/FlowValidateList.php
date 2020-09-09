@@ -19,16 +19,14 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class FlowValidateList extends ListResource
-{
+class FlowValidateList extends ListResource {
     /**
      * Construct the FlowValidateList
      *
      * @param Version $version Version that contains the resource
      * @return \Twilio\Rest\Studio\V2\FlowValidateList
      */
-    public function __construct(Version $version)
-    {
+    public function __construct(Version $version) {
         parent::__construct($version);
 
         // Path Solution
@@ -47,8 +45,7 @@ class FlowValidateList extends ListResource
      * @return FlowValidateInstance Updated FlowValidateInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($friendlyName, $status, $definition, $options = array())
-    {
+    public function update($friendlyName, $status, $definition, $options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -73,8 +70,7 @@ class FlowValidateList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Studio.V2.FlowValidateList]';
     }
 }

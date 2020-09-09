@@ -5,8 +5,7 @@ namespace Twilio\Jwt;
 
 use Twilio\Jwt\Grants\Grant;
 
-class AccessToken
-{
+class AccessToken {
     private $signingKeySid;
     private $accountSid;
     private $secret;
@@ -18,8 +17,7 @@ class AccessToken
     /** @var string[] $customClaims */
     private $customClaims;
 
-    public function __construct($accountSid, $signingKeySid, $secret, $ttl = 3600, $identity = null)
-    {
+    public function __construct($accountSid, $signingKeySid, $secret, $ttl = 3600, $identity = null) {
         $this->signingKeySid = $signingKeySid;
         $this->accountSid = $accountSid;
         $this->secret = $secret;
@@ -40,8 +38,7 @@ class AccessToken
      *
      * @return $this updated access token
      */
-    public function setIdentity($identity)
-    {
+    public function setIdentity($identity) {
         $this->identity = $identity;
         return $this;
     }
@@ -51,8 +48,7 @@ class AccessToken
      *
      * @return string the identity
      */
-    public function getIdentity()
-    {
+    public function getIdentity() {
         return $this->identity;
     }
 
@@ -63,8 +59,7 @@ class AccessToken
      *
      * @return $this updated access token
      */
-    public function setNbf($nbf)
-    {
+    public function setNbf($nbf) {
         $this->nbf = $nbf;
         return $this;
     }
@@ -74,8 +69,7 @@ class AccessToken
      *
      * @return integer the nbf in epoch seconds
      */
-    public function getNbf()
-    {
+    public function getNbf() {
         return $this->nbf;
     }
 
@@ -86,8 +80,7 @@ class AccessToken
      *
      * @return $this the updated access token
      */
-    public function addGrant(Grant $grant)
-    {
+    public function addGrant(Grant $grant) {
         $this->grants[] = $grant;
         return $this;
     }
@@ -98,13 +91,11 @@ class AccessToken
      * @param string $name
      * @param string $value
      */
-    public function addClaim($name, $value)
-    {
+    public function addClaim($name, $value) {
         $this->customClaims[$name] = $value;
     }
 
-    public function toJWT($algorithm = 'HS256')
-    {
+    public function toJWT($algorithm = 'HS256') {
         $header = array(
             'cty' => 'twilio-fpa;v=1',
             'typ' => 'JWT'
@@ -145,8 +136,7 @@ class AccessToken
         return JWT::encode($payload, $this->secret, $algorithm, $header);
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->toJWT();
     }
 }

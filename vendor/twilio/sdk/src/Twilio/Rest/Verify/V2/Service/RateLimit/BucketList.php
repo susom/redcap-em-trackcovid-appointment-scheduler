@@ -14,8 +14,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class BucketList extends ListResource
-{
+class BucketList extends ListResource {
     /**
      * Construct the BucketList
      *
@@ -25,12 +24,11 @@ class BucketList extends ListResource
      * @param string $rateLimitSid Rate Limit Sid.
      * @return \Twilio\Rest\Verify\V2\Service\RateLimit\BucketList
      */
-    public function __construct(Version $version, $serviceSid, $rateLimitSid)
-    {
+    public function __construct(Version $version, $serviceSid, $rateLimitSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'rateLimitSid' => $rateLimitSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'rateLimitSid' => $rateLimitSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/RateLimits/' . \rawurlencode($rateLimitSid) . '/Buckets';
     }
@@ -44,9 +42,8 @@ class BucketList extends ListResource
      * @return BucketInstance Newly created BucketInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($max, $interval)
-    {
-        $data = Values::of(array('Max' => $max, 'Interval' => $interval,));
+    public function create($max, $interval) {
+        $data = Values::of(array('Max' => $max, 'Interval' => $interval, ));
 
         $payload = $this->version->create(
             'POST',
@@ -81,8 +78,7 @@ class BucketList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -105,8 +101,7 @@ class BucketList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return BucketInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -119,8 +114,7 @@ class BucketList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of BucketInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -143,8 +137,7 @@ class BucketList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of BucketInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -159,8 +152,7 @@ class BucketList extends ListResource
      * @param string $sid A string that uniquely identifies this Bucket.
      * @return \Twilio\Rest\Verify\V2\Service\RateLimit\BucketContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new BucketContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -174,8 +166,7 @@ class BucketList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Verify.V2.BucketList]';
     }
 }

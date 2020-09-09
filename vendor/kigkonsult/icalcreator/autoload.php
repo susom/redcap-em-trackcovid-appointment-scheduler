@@ -5,7 +5,7 @@
  * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.21
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -33,41 +33,40 @@
  * iCalcreator package autoloader
  *
  * @author Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
- * @since  2.29.21 - 2020-01-31
+ * @since  2.29.25 - 2020-09-02
  */
 /**
  *         Do NOT alter or remove the constant!!
  */
-define('ICALCREATOR_VERSION', 'iCalcreator 2.29.21');
+define( 'ICALCREATOR_VERSION', 'iCalcreator 2.29.25' );
 /**
  * load iCalcreator src and support classes and Traits
  */
 spl_autoload_register(
-    function ($class) {
-        static $BS = '\\';
-        static $PHP = '.php';
-        static $PREFIX = 'Kigkonsult\\Icalcreator\\';
-        static $SRC = 'src';
-        static $SRCDIR = null;
-        static $TEST = 'test';
+    function( $class ) {
+        static $BS      = '\\';
+        static $PHP     = '.php';
+        static $PREFIX  = 'Kigkonsult\\Icalcreator\\';
+        static $SRC     = 'src';
+        static $SRCDIR  = null;
+        static $TEST    = 'test';
         static $TESTDIR = null;
-        if (is_null($SRCDIR)) {
-            $SRCDIR = __DIR__ . DIRECTORY_SEPARATOR . $SRC . DIRECTORY_SEPARATOR;
+        if( is_null( $SRCDIR )) {
+            $SRCDIR  = __DIR__ . DIRECTORY_SEPARATOR . $SRC . DIRECTORY_SEPARATOR;
             $TESTDIR = __DIR__ . DIRECTORY_SEPARATOR . $TEST . DIRECTORY_SEPARATOR;
         }
-        if (0 != strncmp($PREFIX, $class, 23)) {
+        if( 0 != strncmp( $PREFIX, $class, 23 ))
             return false;
-        }
-        $class = substr($class, 23);
-        if (false !== strpos($class, $BS)) {
-            $class = str_replace($BS, DIRECTORY_SEPARATOR, $class);
-        }
+        $class = substr( $class, 23 );
+        if( false !== strpos( $class, $BS ))
+            $class = str_replace( $BS, DIRECTORY_SEPARATOR, $class );
         $file = $SRCDIR . $class . $PHP;
-        if (file_exists($file)) {
+        if( file_exists( $file )) {
             include $file;
-        } else {
+        }
+        else {
             $file = $TESTDIR . $class . $PHP;
-            if (file_exists($file)) {
+            if( file_exists( $file )) {
                 include $file;
             }
         }

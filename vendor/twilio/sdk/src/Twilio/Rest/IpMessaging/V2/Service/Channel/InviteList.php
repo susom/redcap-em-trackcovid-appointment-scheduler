@@ -16,8 +16,7 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class InviteList extends ListResource
-{
+class InviteList extends ListResource {
     /**
      * Construct the InviteList
      *
@@ -27,12 +26,11 @@ class InviteList extends ListResource
      * @param string $channelSid The SID of the Channel the new resource belongs to
      * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\InviteList
      */
-    public function __construct(Version $version, $serviceSid, $channelSid)
-    {
+    public function __construct(Version $version, $serviceSid, $channelSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid,);
+        $this->solution = array('serviceSid' => $serviceSid, 'channelSid' => $channelSid, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Channels/' . \rawurlencode($channelSid) . '/Invites';
     }
@@ -46,11 +44,10 @@ class InviteList extends ListResource
      * @return InviteInstance Newly created InviteInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($identity, $options = array())
-    {
+    public function create($identity, $options = array()) {
         $options = new Values($options);
 
-        $data = Values::of(array('Identity' => $identity, 'RoleSid' => $options['roleSid'],));
+        $data = Values::of(array('Identity' => $identity, 'RoleSid' => $options['roleSid'], ));
 
         $payload = $this->version->create(
             'POST',
@@ -86,8 +83,7 @@ class InviteList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -111,8 +107,7 @@ class InviteList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return InviteInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -126,17 +121,10 @@ class InviteList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of InviteInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
-            'Identity' => Serialize::map($options['identity'], function ($e) {
-                return $e;
-            }),
+            'Identity' => Serialize::map($options['identity'], function($e) { return $e; }),
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
             'PageSize' => $pageSize,
@@ -158,8 +146,7 @@ class InviteList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of InviteInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -174,8 +161,7 @@ class InviteList extends ListResource
      * @param string $sid The SID of the Invite resource to fetch
      * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\InviteContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new InviteContext(
             $this->version,
             $this->solution['serviceSid'],
@@ -189,8 +175,7 @@ class InviteList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.IpMessaging.V2.InviteList]';
     }
 }

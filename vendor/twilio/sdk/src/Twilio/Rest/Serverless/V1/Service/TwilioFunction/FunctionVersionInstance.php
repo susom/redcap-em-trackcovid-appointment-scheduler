@@ -27,8 +27,7 @@ use Twilio\Version;
  * @property \DateTime $dateCreated
  * @property string $url
  */
-class FunctionVersionInstance extends InstanceResource
-{
+class FunctionVersionInstance extends InstanceResource {
     /**
      * Initialize the FunctionVersionInstance
      *
@@ -42,8 +41,7 @@ class FunctionVersionInstance extends InstanceResource
      *                    fetch
      * @return \Twilio\Rest\Serverless\V1\Service\TwilioFunction\FunctionVersionInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $functionSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $serviceSid, $functionSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -72,8 +70,7 @@ class FunctionVersionInstance extends InstanceResource
      * @return \Twilio\Rest\Serverless\V1\Service\TwilioFunction\FunctionVersionContext Context for this
      *                                                                                  FunctionVersionInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new FunctionVersionContext(
                 $this->version,
@@ -92,8 +89,7 @@ class FunctionVersionInstance extends InstanceResource
      * @return FunctionVersionInstance Fetched FunctionVersionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -104,8 +100,7 @@ class FunctionVersionInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -123,8 +118,7 @@ class FunctionVersionInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

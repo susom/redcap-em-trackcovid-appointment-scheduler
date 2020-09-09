@@ -11,18 +11,15 @@ namespace Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle;
 
 use Twilio\Page;
 
-class ItemAssignmentPage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class ItemAssignmentPage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new ItemAssignmentInstance($this->version, $payload, $this->solution['bundleSid']);
     }
 
@@ -31,8 +28,7 @@ class ItemAssignmentPage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Numbers.V2.ItemAssignmentPage]';
     }
 }

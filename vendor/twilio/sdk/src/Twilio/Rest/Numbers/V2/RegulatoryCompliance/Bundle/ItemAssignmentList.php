@@ -14,8 +14,7 @@ use Twilio\ListResource;
 use Twilio\Values;
 use Twilio\Version;
 
-class ItemAssignmentList extends ListResource
-{
+class ItemAssignmentList extends ListResource {
     /**
      * Construct the ItemAssignmentList
      *
@@ -24,12 +23,11 @@ class ItemAssignmentList extends ListResource
      *                          resource.
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentList
      */
-    public function __construct(Version $version, $bundleSid)
-    {
+    public function __construct(Version $version, $bundleSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('bundleSid' => $bundleSid,);
+        $this->solution = array('bundleSid' => $bundleSid, );
 
         $this->uri = '/RegulatoryCompliance/Bundles/' . \rawurlencode($bundleSid) . '/ItemAssignments';
     }
@@ -41,9 +39,8 @@ class ItemAssignmentList extends ListResource
      * @return ItemAssignmentInstance Newly created ItemAssignmentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($objectSid)
-    {
-        $data = Values::of(array('ObjectSid' => $objectSid,));
+    public function create($objectSid) {
+        $data = Values::of(array('ObjectSid' => $objectSid, ));
 
         $payload = $this->version->create(
             'POST',
@@ -73,8 +70,7 @@ class ItemAssignmentList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -97,8 +93,7 @@ class ItemAssignmentList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return ItemAssignmentInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -111,8 +106,7 @@ class ItemAssignmentList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of ItemAssignmentInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -135,8 +129,7 @@ class ItemAssignmentList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of ItemAssignmentInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -151,8 +144,7 @@ class ItemAssignmentList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\Bundle\ItemAssignmentContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new ItemAssignmentContext($this->version, $this->solution['bundleSid'], $sid);
     }
 
@@ -161,8 +153,7 @@ class ItemAssignmentList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Numbers.V2.ItemAssignmentList]';
     }
 }

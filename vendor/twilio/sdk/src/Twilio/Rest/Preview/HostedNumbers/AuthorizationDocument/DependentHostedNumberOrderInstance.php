@@ -41,8 +41,7 @@ use Twilio\Version;
  * @property string $verificationCode
  * @property string $verificationCallSids
  */
-class DependentHostedNumberOrderInstance extends InstanceResource
-{
+class DependentHostedNumberOrderInstance extends InstanceResource {
     /**
      * Initialize the DependentHostedNumberOrderInstance
      *
@@ -51,8 +50,7 @@ class DependentHostedNumberOrderInstance extends InstanceResource
      * @param string $signingDocumentSid LOA document sid.
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocument\DependentHostedNumberOrderInstance
      */
-    public function __construct(Version $version, array $payload, $signingDocumentSid)
-    {
+    public function __construct(Version $version, array $payload, $signingDocumentSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -81,7 +79,7 @@ class DependentHostedNumberOrderInstance extends InstanceResource
             'verificationCallSids' => Values::array_get($payload, 'verification_call_sids'),
         );
 
-        $this->solution = array('signingDocumentSid' => $signingDocumentSid,);
+        $this->solution = array('signingDocumentSid' => $signingDocumentSid, );
     }
 
     /**
@@ -91,8 +89,7 @@ class DependentHostedNumberOrderInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -110,8 +107,7 @@ class DependentHostedNumberOrderInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Preview.HostedNumbers.DependentHostedNumberOrderInstance]';
     }
 }

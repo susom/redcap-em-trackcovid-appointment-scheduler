@@ -16,8 +16,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class AssignedAddOnExtensionList extends ListResource
-{
+class AssignedAddOnExtensionList extends ListResource {
     /**
      * Construct the AssignedAddOnExtensionList
      *
@@ -29,8 +28,7 @@ class AssignedAddOnExtensionList extends ListResource
      *                                 assigned Add-on installation
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOn\AssignedAddOnExtensionList
      */
-    public function __construct(Version $version, $accountSid, $resourceSid, $assignedAddOnSid)
-    {
+    public function __construct(Version $version, $accountSid, $resourceSid, $assignedAddOnSid) {
         parent::__construct($version);
 
         // Path Solution
@@ -62,8 +60,7 @@ class AssignedAddOnExtensionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null)
-    {
+    public function stream($limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -86,8 +83,7 @@ class AssignedAddOnExtensionList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return AssignedAddOnExtensionInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null)
-    {
+    public function read($limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
@@ -101,8 +97,7 @@ class AssignedAddOnExtensionList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of AssignedAddOnExtensionInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
-    {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -126,8 +121,7 @@ class AssignedAddOnExtensionList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of AssignedAddOnExtensionInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -142,8 +136,7 @@ class AssignedAddOnExtensionList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\AssignedAddOn\AssignedAddOnExtensionContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new AssignedAddOnExtensionContext(
             $this->version,
             $this->solution['accountSid'],
@@ -158,8 +151,7 @@ class AssignedAddOnExtensionList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.AssignedAddOnExtensionList]';
     }
 }

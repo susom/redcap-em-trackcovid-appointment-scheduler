@@ -12,8 +12,7 @@ namespace Twilio\Rest\Taskrouter\V1\Workspace;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class WorkspaceStatisticsOptions
-{
+abstract class WorkspaceStatisticsOptions {
     /**
      * @param int $minutes Only calculate statistics since this many minutes in the
      *                     past
@@ -27,19 +26,12 @@ abstract class WorkspaceStatisticsOptions
      *                                statistics on
      * @return FetchWorkspaceStatisticsOptions Options builder
      */
-    public static function fetch(
-        $minutes = Values::NONE,
-        $startDate = Values::NONE,
-        $endDate = Values::NONE,
-        $taskChannel = Values::NONE,
-        $splitByWaitTime = Values::NONE
-    ) {
+    public static function fetch($minutes = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE, $taskChannel = Values::NONE, $splitByWaitTime = Values::NONE) {
         return new FetchWorkspaceStatisticsOptions($minutes, $startDate, $endDate, $taskChannel, $splitByWaitTime);
     }
 }
 
-class FetchWorkspaceStatisticsOptions extends Options
-{
+class FetchWorkspaceStatisticsOptions extends Options {
     /**
      * @param int $minutes Only calculate statistics since this many minutes in the
      *                     past
@@ -52,13 +44,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      *                                describes the thresholds to calculate
      *                                statistics on
      */
-    public function __construct(
-        $minutes = Values::NONE,
-        $startDate = Values::NONE,
-        $endDate = Values::NONE,
-        $taskChannel = Values::NONE,
-        $splitByWaitTime = Values::NONE
-    ) {
+    public function __construct($minutes = Values::NONE, $startDate = Values::NONE, $endDate = Values::NONE, $taskChannel = Values::NONE, $splitByWaitTime = Values::NONE) {
         $this->options['minutes'] = $minutes;
         $this->options['startDate'] = $startDate;
         $this->options['endDate'] = $endDate;
@@ -73,8 +59,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      *                     past
      * @return $this Fluent Builder
      */
-    public function setMinutes($minutes)
-    {
+    public function setMinutes($minutes) {
         $this->options['minutes'] = $minutes;
         return $this;
     }
@@ -86,8 +71,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      *                             date
      * @return $this Fluent Builder
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->options['startDate'] = $startDate;
         return $this;
     }
@@ -99,8 +83,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      *                           and earlier
      * @return $this Fluent Builder
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->options['endDate'] = $endDate;
         return $this;
     }
@@ -111,8 +94,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      * @param string $taskChannel Only calculate statistics on this TaskChannel.
      * @return $this Fluent Builder
      */
-    public function setTaskChannel($taskChannel)
-    {
+    public function setTaskChannel($taskChannel) {
         $this->options['taskChannel'] = $taskChannel;
         return $this;
     }
@@ -125,8 +107,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      *                                statistics on
      * @return $this Fluent Builder
      */
-    public function setSplitByWaitTime($splitByWaitTime)
-    {
+    public function setSplitByWaitTime($splitByWaitTime) {
         $this->options['splitByWaitTime'] = $splitByWaitTime;
         return $this;
     }
@@ -136,8 +117,7 @@ class FetchWorkspaceStatisticsOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

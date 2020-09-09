@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class AuthorizationDocumentInstance extends InstanceResource
-{
+class AuthorizationDocumentInstance extends InstanceResource {
     protected $_dependentHostedNumberOrders = null;
 
     /**
@@ -41,8 +40,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      * @param string $sid AuthorizationDocument sid.
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -58,7 +56,7 @@ class AuthorizationDocumentInstance extends InstanceResource
             'links' => Values::array_get($payload, 'links'),
         );
 
-        $this->solution = array('sid' => $sid ?: $this->properties['sid'],);
+        $this->solution = array('sid' => $sid ?: $this->properties['sid'], );
     }
 
     /**
@@ -67,8 +65,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocumentContext Context for this AuthorizationDocumentInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new AuthorizationDocumentContext($this->version, $this->solution['sid']);
         }
@@ -82,8 +79,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      * @return AuthorizationDocumentInstance Fetched AuthorizationDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -94,8 +90,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      * @return AuthorizationDocumentInstance Updated AuthorizationDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array())
-    {
+    public function update($options = array()) {
         return $this->proxy()->update($options);
     }
 
@@ -104,8 +99,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Preview\HostedNumbers\AuthorizationDocument\DependentHostedNumberOrderList
      */
-    protected function getDependentHostedNumberOrders()
-    {
+    protected function getDependentHostedNumberOrders() {
         return $this->proxy()->dependentHostedNumberOrders;
     }
 
@@ -116,8 +110,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -135,8 +128,7 @@ class AuthorizationDocumentInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

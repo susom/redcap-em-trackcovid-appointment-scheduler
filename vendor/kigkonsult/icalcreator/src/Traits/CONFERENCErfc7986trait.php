@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -45,7 +45,6 @@ trait CONFERENCErfc7986trait
 {
     /**
      * @var array component property CONFERENCE value
-     * @access protected
      */
     protected $conference = null;
 
@@ -56,84 +55,95 @@ trait CONFERENCErfc7986trait
      */
     public function createConference()
     {
-        if (empty($this->conference)) {
+        if( empty( $this->conference )) {
             return null;
         }
         $output = null;
-        $lang = $this->getConfig(self::LANGUAGE);
-        foreach ($this->conference as $aix => $conferencePart) {
-            if (!empty($conferencePart[Util::$LCvalue])) {
+        $lang   = $this->getConfig( self::LANGUAGE );
+        foreach( $this->conference as $aix => $conferencePart ) {
+            if( ! empty( $conferencePart[Util::$LCvalue] )) {
                 $output .= StringFactory::createElement(
                     self::CONFERENCE,
                     ParameterFactory::createParams(
                         $conferencePart[Util::$LCparams],
-                        [self::FEATURE, self::LABEL, self::LANGUAGE],
+                        [ self::FEATURE, self::LABEL, self::LANGUAGE ],
                         $lang
                     ),
                     $conferencePart[Util::$LCvalue]
                 );
-            } elseif ($this->getConfig(self::ALLOWEMPTY)) {
-                $output .= StringFactory::createElement(self::CONFERENCE);
             }
-        }
+            elseif( $this->getConfig( self::ALLOWEMPTY )) {
+                $output .= StringFactory::createElement( self::CONFERENCE );
+            }
+        } // end foreach
         return $output;
     }
 
     /**
      * Delete calendar component property conference
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      */
-    public function deleteConference($propDelIx = null)
+    public function deleteConference( $propDelIx = null )
     {
-        if (empty($this->conference)) {
-            unset($this->propDelIx[self::CONFERENCE]);
+        if( empty( $this->conference )) {
+            unset( $this->propDelIx[self::CONFERENCE] );
             return false;
         }
-        return $this->deletePropertyM($this->conference, self::CONFERENCE, $propDelIx);
+        return $this->deletePropertyM(
+            $this->conference,
+            self::CONFERENCE,
+            $propDelIx
+        );
     }
 
     /**
      * Get calendar component property conference
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      */
-    public function getConference($propIx = null, $inclParam = false)
+    public function getConference( $propIx = null, $inclParam = false )
     {
-        if (empty($this->conference)) {
-            unset($this->propIx[self::CONFERENCE]);
+        if( empty( $this->conference )) {
+            unset( $this->propIx[self::CONFERENCE] );
             return false;
         }
-        return $this->getPropertyM($this->conference, self::CONFERENCE, $propIx, $inclParam);
+        return $this->getPropertyM(
+            $this->conference,
+            self::CONFERENCE,
+            $propIx,
+            $inclParam
+        );
     }
 
     /**
      * Set calendar component property conference
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @todo fix featureparam - AUDIO, CHAT, FEED, MODERATOR, PHONE, SCREEN, VIDEO, x-name, iana-token
      * @todo fix labelparam   - LABEL
      */
-    public function setConference($value = null, $params = [], $index = null)
+    public function setConference( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::CONFERENCE);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::CONFERENCE );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            $params = array_change_key_case($params, CASE_UPPER);
-            if (!isset($param[self::VALUE])) { // required
+        }
+        else {
+            $params = array_change_key_case( $params, CASE_UPPER );
+            if( ! isset( $param[self::VALUE] ) ) { // required
                 $params[self::VALUE] = self::URI;
             }
         }
-        $this->setMval($this->conference, $value, $params, null, $index);
+        $this->setMval( $this->conference, $value, $params, null, $index );
         return $this;
     }
 }

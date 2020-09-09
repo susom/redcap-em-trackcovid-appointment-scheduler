@@ -12,8 +12,7 @@ namespace Twilio\Rest\Video\V1\Room;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class RoomRecordingOptions
-{
+abstract class RoomRecordingOptions {
     /**
      * @param string $status Read only the recordings with this status
      * @param string $sourceSid Read only the recordings that have this source_sid
@@ -24,18 +23,12 @@ abstract class RoomRecordingOptions
      *                                     this ISO 8601 date-time with time zone
      * @return ReadRoomRecordingOptions Options builder
      */
-    public static function read(
-        $status = Values::NONE,
-        $sourceSid = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE
-    ) {
+    public static function read($status = Values::NONE, $sourceSid = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE) {
         return new ReadRoomRecordingOptions($status, $sourceSid, $dateCreatedAfter, $dateCreatedBefore);
     }
 }
 
-class ReadRoomRecordingOptions extends Options
-{
+class ReadRoomRecordingOptions extends Options {
     /**
      * @param string $status Read only the recordings with this status
      * @param string $sourceSid Read only the recordings that have this source_sid
@@ -45,12 +38,7 @@ class ReadRoomRecordingOptions extends Options
      * @param \DateTime $dateCreatedBefore Read only Recordings that started before
      *                                     this ISO 8601 date-time with time zone
      */
-    public function __construct(
-        $status = Values::NONE,
-        $sourceSid = Values::NONE,
-        $dateCreatedAfter = Values::NONE,
-        $dateCreatedBefore = Values::NONE
-    ) {
+    public function __construct($status = Values::NONE, $sourceSid = Values::NONE, $dateCreatedAfter = Values::NONE, $dateCreatedBefore = Values::NONE) {
         $this->options['status'] = $status;
         $this->options['sourceSid'] = $sourceSid;
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
@@ -63,8 +51,7 @@ class ReadRoomRecordingOptions extends Options
      * @param string $status Read only the recordings with this status
      * @return $this Fluent Builder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->options['status'] = $status;
         return $this;
     }
@@ -75,8 +62,7 @@ class ReadRoomRecordingOptions extends Options
      * @param string $sourceSid Read only the recordings that have this source_sid
      * @return $this Fluent Builder
      */
-    public function setSourceSid($sourceSid)
-    {
+    public function setSourceSid($sourceSid) {
         $this->options['sourceSid'] = $sourceSid;
         return $this;
     }
@@ -89,8 +75,7 @@ class ReadRoomRecordingOptions extends Options
      *                                    zone
      * @return $this Fluent Builder
      */
-    public function setDateCreatedAfter($dateCreatedAfter)
-    {
+    public function setDateCreatedAfter($dateCreatedAfter) {
         $this->options['dateCreatedAfter'] = $dateCreatedAfter;
         return $this;
     }
@@ -102,8 +87,7 @@ class ReadRoomRecordingOptions extends Options
      *                                     this ISO 8601 date-time with time zone
      * @return $this Fluent Builder
      */
-    public function setDateCreatedBefore($dateCreatedBefore)
-    {
+    public function setDateCreatedBefore($dateCreatedBefore) {
         $this->options['dateCreatedBefore'] = $dateCreatedBefore;
         return $this;
     }
@@ -113,8 +97,7 @@ class ReadRoomRecordingOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

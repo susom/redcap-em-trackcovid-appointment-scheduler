@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -44,7 +44,6 @@ trait RESOURCEStrait
 {
     /**
      * @var array component property RESOURCES value
-     * @access protected
      */
     protected $resources = null;
 
@@ -59,8 +58,8 @@ trait RESOURCEStrait
         return self::createCatRes(
             self::RESOURCES,
             $this->resources,
-            $this->getConfig(self::LANGUAGE),
-            $this->getConfig(self::ALLOWEMPTY),
+            $this->getConfig( self::LANGUAGE ),
+            $this->getConfig( self::ALLOWEMPTY ),
             self::$ALTRPLANGARR
         );
     }
@@ -68,57 +67,63 @@ trait RESOURCEStrait
     /**
      * Delete calendar component property resources
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteResources($propDelIx = null)
+    public function deleteResources( $propDelIx = null )
     {
-        if (empty($this->resources)) {
-            unset($this->propDelIx[self::RESOURCES]);
+        if( empty( $this->resources )) {
+            unset( $this->propDelIx[self::RESOURCES] );
             return false;
         }
-        return $this->deletePropertyM($this->resources, self::RESOURCES, $propDelIx);
+        return $this->deletePropertyM( $this->resources, self::RESOURCES, $propDelIx );
     }
 
     /**
      * Get calendar component property resources
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getResources($propIx = null, $inclParam = false)
+    public function getResources( $propIx = null, $inclParam = false )
     {
-        if (empty($this->resources)) {
-            unset($this->propIx[self::RESOURCES]);
+        if( empty( $this->resources )) {
+            unset( $this->propIx[self::RESOURCES] );
             return false;
         }
-        return $this->getPropertyM($this->resources, self::RESOURCES, $propIx, $inclParam);
+        return $this->getPropertyM(
+            $this->resources,
+            self::RESOURCES,
+            $propIx,
+            $inclParam
+        );
     }
 
     /**
      * Set calendar component property resources
      *
-     * @param mixed $value
-     * @param array $params
+     * @param mixed   $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since 2.29.14 2019-09-03
      */
-    public function setResources($value = null, $params = [], $index = null)
+    public function setResources( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::RESOURCES);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::RESOURCES );
+            $value  = Util::$SP0;
             $params = [];
-        } else {
-            Util::assertString($value, self::RESOURCES);
-            $value = StringFactory::trimTrailNL($value);
         }
-        $this->setMval($this->resources, $value, $params, null, $index);
+        else {
+            Util::assertString( $value, self::RESOURCES );
+            $value = StringFactory::trimTrailNL( $value );
+        }
+        $this->setMval( $this->resources, $value, $params, null, $index );
         return $this;
     }
 }

@@ -29,8 +29,7 @@ use Twilio\Version;
  * @property string $url
  * @property array $links
  */
-class ExecutionStepInstance extends InstanceResource
-{
+class ExecutionStepInstance extends InstanceResource {
     protected $_stepContext = null;
 
     /**
@@ -43,8 +42,7 @@ class ExecutionStepInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStepInstance
      */
-    public function __construct(Version $version, array $payload, $flowSid, $executionSid, $sid = null)
-    {
+    public function __construct(Version $version, array $payload, $flowSid, $executionSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -78,8 +76,7 @@ class ExecutionStepInstance extends InstanceResource
      *                                                                    for this
      *                                                                    ExecutionStepInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new ExecutionStepContext(
                 $this->version,
@@ -98,8 +95,7 @@ class ExecutionStepInstance extends InstanceResource
      * @return ExecutionStepInstance Fetched ExecutionStepInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -108,8 +104,7 @@ class ExecutionStepInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Studio\V1\Flow\Execution\ExecutionStep\ExecutionStepContextList
      */
-    protected function getStepContext()
-    {
+    protected function getStepContext() {
         return $this->proxy()->stepContext;
     }
 
@@ -120,8 +115,7 @@ class ExecutionStepInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -139,8 +133,7 @@ class ExecutionStepInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

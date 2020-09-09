@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.9
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -47,8 +47,7 @@ class Exception3Test extends TestCase
     /**
      * DateIntervalFactoryTest provider
      */
-    public function DateIntervalFactoryTestProvider()
-    {
+    public function DateIntervalFactoryTestProvider() {
 
         $dataArr = [];
 
@@ -81,8 +80,8 @@ class Exception3Test extends TestCase
      *
      * @test
      * @dataProvider DateIntervalFactoryTestProvider
-     * @param int $case
-     * @param mixed $value
+     * @param int    $case
+     * @param mixed  $value
      */
     public function DateIntervalFactoryTest(
         $case,
@@ -90,11 +89,12 @@ class Exception3Test extends TestCase
     ) {
         $ok = false;
         try {
-            $result = DateIntervalFactory::factory($value);
-        } catch (Exception $e) {
+            $result = DateIntervalFactory::factory( $value );
+        }
+        catch ( Exception $e ) {
             $ok = true;
         }
-        $this->assertTrue($ok, 'error in case #' . $case);
+        $this->assertTrue( $ok, 'error in case #' . $case );
     }
 
 }

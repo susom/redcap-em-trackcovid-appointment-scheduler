@@ -5,7 +5,7 @@
  * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
  * Link      https://kigkonsult.se
  * Package   iCalcreator
- * Version   2.29.14
+ * Version   2.29.25
  * License   Subject matter of licence is the software iCalcreator.
  *           The above copyright, link, package and version notices,
  *           this licence notice and the invariant [rfc5545] PRODID result use
@@ -26,7 +26,7 @@
  *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  *
  * This file is a part of iCalcreator.
- */
+*/
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -44,7 +44,6 @@ trait ATTENDEEtrait
 {
     /**
      * @var array component property ATTENDEE value
-     * @access protected
      */
     protected $attendee = null;
 
@@ -55,77 +54,77 @@ trait ATTENDEEtrait
      */
     public function createAttendee()
     {
-        if (empty($this->attendee)) {
+        if( empty( $this->attendee )) {
             return null;
         }
         return CalAddressFactory::outputFormatAttendee(
             $this->attendee,
-            $this->getConfig(self::ALLOWEMPTY)
+            $this->getConfig( self::ALLOWEMPTY )
         );
     }
 
     /**
      * Delete calendar component property attendee
      *
-     * @param int $propDelIx specific property in case of multiply occurrence
+     * @param int   $propDelIx   specific property in case of multiply occurrence
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteAttendee($propDelIx = null)
+    public function deleteAttendee( $propDelIx = null )
     {
-        if (empty($this->attendee)) {
-            unset($this->propDelIx[self::ATTENDEE]);
+        if( empty( $this->attendee )) {
+            unset( $this->propDelIx[self::ATTENDEE] );
             return false;
         }
-        return $this->deletePropertyM($this->attendee, self::ATTENDEE, $propDelIx);
+        return $this->deletePropertyM( $this->attendee, self::ATTENDEE, $propDelIx );
     }
 
     /**
      * Get calendar component property attendee
      *
-     * @param int $propIx specific property in case of multiply occurrence
-     * @param bool $inclParam
+     * @param int    $propIx specific property in case of multiply occurrence
+     * @param bool   $inclParam
      * @return bool|array
      * @since  2.27.1 - 2018-12-12
      */
-    public function getAttendee($propIx = null, $inclParam = false)
+    public function getAttendee( $propIx = null, $inclParam = false )
     {
-        if (empty($this->attendee)) {
-            unset($this->propIx[self::ATTENDEE]);
+        if( empty( $this->attendee )) {
+            unset( $this->propIx[self::ATTENDEE] );
             return false;
         }
-        return $this->getPropertyM($this->attendee, self::ATTENDEE, $propIx, $inclParam);
+        return $this->getPropertyM( $this->attendee, self::ATTENDEE, $propIx, $inclParam );
     }
 
     /**
      * Set calendar component property attendee
      *
-     * @param string $value
-     * @param array $params
+     * @param string  $value
+     * @param array   $params
      * @param integer $index
      * @return static
      * @throws InvalidArgumentException
      * @since  2.27.8 - 2019-03-17
      */
-    public function setAttendee($value = null, $params = [], $index = null)
+    public function setAttendee( $value = null, $params = [], $index = null )
     {
-        if (empty($value)) {
-            $this->assertEmptyValue($value, self::ATTENDEE);
-            $value = Util::$SP0;
+        if( empty( $value )) {
+            $this->assertEmptyValue( $value, self::ATTENDEE );
+            $value  = Util::$SP0;
             $params = [];
         }
-        $value = CalAddressFactory::conformCalAddress($value);
-        if (!empty($value)) {
-            CalAddressFactory::assertCalAddress($value);
+        $value = CalAddressFactory::conformCalAddress( $value );
+        if( ! empty( $value )) {
+            CalAddressFactory::assertCalAddress( $value );
         }
-        $params = array_change_key_case((array)$params, CASE_UPPER);
-        CalAddressFactory::sameValueAndEMAILparam($value, $params);
+        $params = array_change_key_case( (array) $params, CASE_UPPER );
+        CalAddressFactory::sameValueAndEMAILparam( $value, $params );
         $params = CalAddressFactory::inputPrepAttendeeParams(
             $params,
             $this->getCompType(),
-            $this->getConfig(self::LANGUAGE)
+            $this->getConfig( self::LANGUAGE )
         );
-        $this->setMval($this->attendee, $value, $params, null, $index);
+        $this->setMval($this->attendee, $value, $params,null, $index );
         return $this;
     }
 }

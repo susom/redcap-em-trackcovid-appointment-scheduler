@@ -21,8 +21,7 @@ use Twilio\Version;
  * @property int $validationCode
  * @property string $callSid
  */
-class ValidationRequestInstance extends InstanceResource
-{
+class ValidationRequestInstance extends InstanceResource {
     /**
      * Initialize the ValidationRequestInstance
      *
@@ -31,8 +30,7 @@ class ValidationRequestInstance extends InstanceResource
      * @param string $accountSid The SID of the Account that created the resource
      * @return \Twilio\Rest\Api\V2010\Account\ValidationRequestInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid)
-    {
+    public function __construct(Version $version, array $payload, $accountSid) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -44,7 +42,7 @@ class ValidationRequestInstance extends InstanceResource
             'callSid' => Values::array_get($payload, 'call_sid'),
         );
 
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
     }
 
     /**
@@ -54,8 +52,7 @@ class ValidationRequestInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -73,8 +70,7 @@ class ValidationRequestInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.ValidationRequestInstance]';
     }
 }

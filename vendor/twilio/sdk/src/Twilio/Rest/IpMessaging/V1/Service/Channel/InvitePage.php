@@ -11,18 +11,15 @@ namespace Twilio\Rest\IpMessaging\V1\Service\Channel;
 
 use Twilio\Page;
 
-class InvitePage extends Page
-{
-    public function __construct($version, $response, $solution)
-    {
+class InvitePage extends Page {
+    public function __construct($version, $response, $solution) {
         parent::__construct($version, $response);
 
         // Path Solution
         $this->solution = $solution;
     }
 
-    public function buildInstance(array $payload)
-    {
+    public function buildInstance(array $payload) {
         return new InviteInstance(
             $this->version,
             $payload,
@@ -36,8 +33,7 @@ class InvitePage extends Page
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.IpMessaging.V1.InvitePage]';
     }
 }

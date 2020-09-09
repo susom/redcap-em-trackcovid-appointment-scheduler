@@ -15,8 +15,7 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class SettingsOptions
-{
+abstract class SettingsOptions {
     /**
      * @param bool $dialingPermissionsInheritance `true` for the sub-account to
      *                                            inherit voice dialing permissions
@@ -24,22 +23,19 @@ abstract class SettingsOptions
      *                                            otherwise `false`
      * @return UpdateSettingsOptions Options builder
      */
-    public static function update($dialingPermissionsInheritance = Values::NONE)
-    {
+    public static function update($dialingPermissionsInheritance = Values::NONE) {
         return new UpdateSettingsOptions($dialingPermissionsInheritance);
     }
 }
 
-class UpdateSettingsOptions extends Options
-{
+class UpdateSettingsOptions extends Options {
     /**
      * @param bool $dialingPermissionsInheritance `true` for the sub-account to
      *                                            inherit voice dialing permissions
      *                                            from the Master Project;
      *                                            otherwise `false`
      */
-    public function __construct($dialingPermissionsInheritance = Values::NONE)
-    {
+    public function __construct($dialingPermissionsInheritance = Values::NONE) {
         $this->options['dialingPermissionsInheritance'] = $dialingPermissionsInheritance;
     }
 
@@ -52,8 +48,7 @@ class UpdateSettingsOptions extends Options
      *                                            otherwise `false`
      * @return $this Fluent Builder
      */
-    public function setDialingPermissionsInheritance($dialingPermissionsInheritance)
-    {
+    public function setDialingPermissionsInheritance($dialingPermissionsInheritance) {
         $this->options['dialingPermissionsInheritance'] = $dialingPermissionsInheritance;
         return $this;
     }
@@ -63,8 +58,7 @@ class UpdateSettingsOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -12,8 +12,7 @@ namespace Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountry;
 use Twilio\Options;
 use Twilio\Values;
 
-abstract class TollFreeOptions
-{
+abstract class TollFreeOptions {
     /**
      * @param int $areaCode The area code of the phone numbers to read
      * @param string $contains The pattern on which to match phone numbers
@@ -47,35 +46,12 @@ abstract class TollFreeOptions
      * @param bool $faxEnabled Whether the phone numbers can receive faxes
      * @return ReadTollFreeOptions Options builder
      */
-    public static function read(
-        $areaCode = Values::NONE,
-        $contains = Values::NONE,
-        $smsEnabled = Values::NONE,
-        $mmsEnabled = Values::NONE,
-        $voiceEnabled = Values::NONE,
-        $excludeAllAddressRequired = Values::NONE,
-        $excludeLocalAddressRequired = Values::NONE,
-        $excludeForeignAddressRequired = Values::NONE,
-        $beta = Values::NONE,
-        $nearNumber = Values::NONE,
-        $nearLatLong = Values::NONE,
-        $distance = Values::NONE,
-        $inPostalCode = Values::NONE,
-        $inRegion = Values::NONE,
-        $inRateCenter = Values::NONE,
-        $inLata = Values::NONE,
-        $inLocality = Values::NONE,
-        $faxEnabled = Values::NONE
-    ) {
-        return new ReadTollFreeOptions($areaCode, $contains, $smsEnabled, $mmsEnabled, $voiceEnabled,
-            $excludeAllAddressRequired, $excludeLocalAddressRequired, $excludeForeignAddressRequired, $beta,
-            $nearNumber, $nearLatLong, $distance, $inPostalCode, $inRegion, $inRateCenter, $inLata, $inLocality,
-            $faxEnabled);
+    public static function read($areaCode = Values::NONE, $contains = Values::NONE, $smsEnabled = Values::NONE, $mmsEnabled = Values::NONE, $voiceEnabled = Values::NONE, $excludeAllAddressRequired = Values::NONE, $excludeLocalAddressRequired = Values::NONE, $excludeForeignAddressRequired = Values::NONE, $beta = Values::NONE, $nearNumber = Values::NONE, $nearLatLong = Values::NONE, $distance = Values::NONE, $inPostalCode = Values::NONE, $inRegion = Values::NONE, $inRateCenter = Values::NONE, $inLata = Values::NONE, $inLocality = Values::NONE, $faxEnabled = Values::NONE) {
+        return new ReadTollFreeOptions($areaCode, $contains, $smsEnabled, $mmsEnabled, $voiceEnabled, $excludeAllAddressRequired, $excludeLocalAddressRequired, $excludeForeignAddressRequired, $beta, $nearNumber, $nearLatLong, $distance, $inPostalCode, $inRegion, $inRateCenter, $inLata, $inLocality, $faxEnabled);
     }
 }
 
-class ReadTollFreeOptions extends Options
-{
+class ReadTollFreeOptions extends Options {
     /**
      * @param int $areaCode The area code of the phone numbers to read
      * @param string $contains The pattern on which to match phone numbers
@@ -108,26 +84,7 @@ class ReadTollFreeOptions extends Options
      * @param string $inLocality Limit results to a particular locality
      * @param bool $faxEnabled Whether the phone numbers can receive faxes
      */
-    public function __construct(
-        $areaCode = Values::NONE,
-        $contains = Values::NONE,
-        $smsEnabled = Values::NONE,
-        $mmsEnabled = Values::NONE,
-        $voiceEnabled = Values::NONE,
-        $excludeAllAddressRequired = Values::NONE,
-        $excludeLocalAddressRequired = Values::NONE,
-        $excludeForeignAddressRequired = Values::NONE,
-        $beta = Values::NONE,
-        $nearNumber = Values::NONE,
-        $nearLatLong = Values::NONE,
-        $distance = Values::NONE,
-        $inPostalCode = Values::NONE,
-        $inRegion = Values::NONE,
-        $inRateCenter = Values::NONE,
-        $inLata = Values::NONE,
-        $inLocality = Values::NONE,
-        $faxEnabled = Values::NONE
-    ) {
+    public function __construct($areaCode = Values::NONE, $contains = Values::NONE, $smsEnabled = Values::NONE, $mmsEnabled = Values::NONE, $voiceEnabled = Values::NONE, $excludeAllAddressRequired = Values::NONE, $excludeLocalAddressRequired = Values::NONE, $excludeForeignAddressRequired = Values::NONE, $beta = Values::NONE, $nearNumber = Values::NONE, $nearLatLong = Values::NONE, $distance = Values::NONE, $inPostalCode = Values::NONE, $inRegion = Values::NONE, $inRateCenter = Values::NONE, $inLata = Values::NONE, $inLocality = Values::NONE, $faxEnabled = Values::NONE) {
         $this->options['areaCode'] = $areaCode;
         $this->options['contains'] = $contains;
         $this->options['smsEnabled'] = $smsEnabled;
@@ -154,8 +111,7 @@ class ReadTollFreeOptions extends Options
      * @param int $areaCode The area code of the phone numbers to read
      * @return $this Fluent Builder
      */
-    public function setAreaCode($areaCode)
-    {
+    public function setAreaCode($areaCode) {
         $this->options['areaCode'] = $areaCode;
         return $this;
     }
@@ -166,8 +122,7 @@ class ReadTollFreeOptions extends Options
      * @param string $contains The pattern on which to match phone numbers
      * @return $this Fluent Builder
      */
-    public function setContains($contains)
-    {
+    public function setContains($contains) {
         $this->options['contains'] = $contains;
         return $this;
     }
@@ -178,8 +133,7 @@ class ReadTollFreeOptions extends Options
      * @param bool $smsEnabled Whether the phone numbers can receive text messages
      * @return $this Fluent Builder
      */
-    public function setSmsEnabled($smsEnabled)
-    {
+    public function setSmsEnabled($smsEnabled) {
         $this->options['smsEnabled'] = $smsEnabled;
         return $this;
     }
@@ -190,8 +144,7 @@ class ReadTollFreeOptions extends Options
      * @param bool $mmsEnabled Whether the phone numbers can receive MMS messages
      * @return $this Fluent Builder
      */
-    public function setMmsEnabled($mmsEnabled)
-    {
+    public function setMmsEnabled($mmsEnabled) {
         $this->options['mmsEnabled'] = $mmsEnabled;
         return $this;
     }
@@ -202,8 +155,7 @@ class ReadTollFreeOptions extends Options
      * @param bool $voiceEnabled Whether the phone numbers can receive calls.
      * @return $this Fluent Builder
      */
-    public function setVoiceEnabled($voiceEnabled)
-    {
+    public function setVoiceEnabled($voiceEnabled) {
         $this->options['voiceEnabled'] = $voiceEnabled;
         return $this;
     }
@@ -215,8 +167,7 @@ class ReadTollFreeOptions extends Options
      *                                        require an Address
      * @return $this Fluent Builder
      */
-    public function setExcludeAllAddressRequired($excludeAllAddressRequired)
-    {
+    public function setExcludeAllAddressRequired($excludeAllAddressRequired) {
         $this->options['excludeAllAddressRequired'] = $excludeAllAddressRequired;
         return $this;
     }
@@ -228,8 +179,7 @@ class ReadTollFreeOptions extends Options
      *                                          that require a local address
      * @return $this Fluent Builder
      */
-    public function setExcludeLocalAddressRequired($excludeLocalAddressRequired)
-    {
+    public function setExcludeLocalAddressRequired($excludeLocalAddressRequired) {
         $this->options['excludeLocalAddressRequired'] = $excludeLocalAddressRequired;
         return $this;
     }
@@ -241,8 +191,7 @@ class ReadTollFreeOptions extends Options
      *                                            that require a foreign address
      * @return $this Fluent Builder
      */
-    public function setExcludeForeignAddressRequired($excludeForeignAddressRequired)
-    {
+    public function setExcludeForeignAddressRequired($excludeForeignAddressRequired) {
         $this->options['excludeForeignAddressRequired'] = $excludeForeignAddressRequired;
         return $this;
     }
@@ -253,8 +202,7 @@ class ReadTollFreeOptions extends Options
      * @param bool $beta Whether to read phone numbers new to the Twilio platform
      * @return $this Fluent Builder
      */
-    public function setBeta($beta)
-    {
+    public function setBeta($beta) {
         $this->options['beta'] = $beta;
         return $this;
     }
@@ -266,8 +214,7 @@ class ReadTollFreeOptions extends Options
      *                           number within distance miles. (US/Canada only)
      * @return $this Fluent Builder
      */
-    public function setNearNumber($nearNumber)
-    {
+    public function setNearNumber($nearNumber) {
         $this->options['nearNumber'] = $nearNumber;
         return $this;
     }
@@ -280,8 +227,7 @@ class ReadTollFreeOptions extends Options
      *                            miles. (US/Canada only)
      * @return $this Fluent Builder
      */
-    public function setNearLatLong($nearLatLong)
-    {
+    public function setNearLatLong($nearLatLong) {
         $this->options['nearLatLong'] = $nearLatLong;
         return $this;
     }
@@ -293,8 +239,7 @@ class ReadTollFreeOptions extends Options
      *                      (US/Canada only)
      * @return $this Fluent Builder
      */
-    public function setDistance($distance)
-    {
+    public function setDistance($distance) {
         $this->options['distance'] = $distance;
         return $this;
     }
@@ -306,8 +251,7 @@ class ReadTollFreeOptions extends Options
      *                             (US/Canada only)
      * @return $this Fluent Builder
      */
-    public function setInPostalCode($inPostalCode)
-    {
+    public function setInPostalCode($inPostalCode) {
         $this->options['inPostalCode'] = $inPostalCode;
         return $this;
     }
@@ -319,8 +263,7 @@ class ReadTollFreeOptions extends Options
      *                         only)
      * @return $this Fluent Builder
      */
-    public function setInRegion($inRegion)
-    {
+    public function setInRegion($inRegion) {
         $this->options['inRegion'] = $inRegion;
         return $this;
     }
@@ -333,8 +276,7 @@ class ReadTollFreeOptions extends Options
      *                             center as that number. (US/Canada only)
      * @return $this Fluent Builder
      */
-    public function setInRateCenter($inRateCenter)
-    {
+    public function setInRateCenter($inRateCenter) {
         $this->options['inRateCenter'] = $inRateCenter;
         return $this;
     }
@@ -346,8 +288,7 @@ class ReadTollFreeOptions extends Options
      *                       area. (US/Canada only)
      * @return $this Fluent Builder
      */
-    public function setInLata($inLata)
-    {
+    public function setInLata($inLata) {
         $this->options['inLata'] = $inLata;
         return $this;
     }
@@ -358,8 +299,7 @@ class ReadTollFreeOptions extends Options
      * @param string $inLocality Limit results to a particular locality
      * @return $this Fluent Builder
      */
-    public function setInLocality($inLocality)
-    {
+    public function setInLocality($inLocality) {
         $this->options['inLocality'] = $inLocality;
         return $this;
     }
@@ -370,8 +310,7 @@ class ReadTollFreeOptions extends Options
      * @param bool $faxEnabled Whether the phone numbers can receive faxes
      * @return $this Fluent Builder
      */
-    public function setFaxEnabled($faxEnabled)
-    {
+    public function setFaxEnabled($faxEnabled) {
         $this->options['faxEnabled'] = $faxEnabled;
         return $this;
     }
@@ -381,8 +320,7 @@ class ReadTollFreeOptions extends Options
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

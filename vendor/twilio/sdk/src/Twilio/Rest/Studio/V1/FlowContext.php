@@ -22,8 +22,7 @@ use Twilio\Version;
  * @method \Twilio\Rest\Studio\V1\Flow\EngagementContext engagements(string $sid)
  * @method \Twilio\Rest\Studio\V1\Flow\ExecutionContext executions(string $sid)
  */
-class FlowContext extends InstanceContext
-{
+class FlowContext extends InstanceContext {
     protected $_engagements = null;
     protected $_executions = null;
 
@@ -34,12 +33,11 @@ class FlowContext extends InstanceContext
      * @param string $sid The SID that identifies the resource to fetch
      * @return \Twilio\Rest\Studio\V1\FlowContext
      */
-    public function __construct(Version $version, $sid)
-    {
+    public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid,);
+        $this->solution = array('sid' => $sid, );
 
         $this->uri = '/Flows/' . \rawurlencode($sid) . '';
     }
@@ -50,8 +48,7 @@ class FlowContext extends InstanceContext
      * @return FlowInstance Fetched FlowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,8 +66,7 @@ class FlowContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -79,8 +75,7 @@ class FlowContext extends InstanceContext
      *
      * @return \Twilio\Rest\Studio\V1\Flow\EngagementList
      */
-    protected function getEngagements()
-    {
+    protected function getEngagements() {
         if (!$this->_engagements) {
             $this->_engagements = new EngagementList($this->version, $this->solution['sid']);
         }
@@ -93,8 +88,7 @@ class FlowContext extends InstanceContext
      *
      * @return \Twilio\Rest\Studio\V1\Flow\ExecutionList
      */
-    protected function getExecutions()
-    {
+    protected function getExecutions() {
         if (!$this->_executions) {
             $this->_executions = new ExecutionList($this->version, $this->solution['sid']);
         }
@@ -109,8 +103,7 @@ class FlowContext extends InstanceContext
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -127,8 +120,7 @@ class FlowContext extends InstanceContext
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -142,8 +134,7 @@ class FlowContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

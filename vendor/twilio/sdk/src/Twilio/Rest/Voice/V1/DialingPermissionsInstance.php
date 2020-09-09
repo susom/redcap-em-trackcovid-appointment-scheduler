@@ -17,8 +17,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DialingPermissionsInstance extends InstanceResource
-{
+class DialingPermissionsInstance extends InstanceResource {
     /**
      * Initialize the DialingPermissionsInstance
      *
@@ -26,8 +25,7 @@ class DialingPermissionsInstance extends InstanceResource
      * @param mixed[] $payload The response payload
      * @return \Twilio\Rest\Voice\V1\DialingPermissionsInstance
      */
-    public function __construct(Version $version, array $payload)
-    {
+    public function __construct(Version $version, array $payload) {
         parent::__construct($version);
 
         $this->solution = array();
@@ -40,8 +38,7 @@ class DialingPermissionsInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -59,8 +56,7 @@ class DialingPermissionsInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Voice.V1.DialingPermissionsInstance]';
     }
 }

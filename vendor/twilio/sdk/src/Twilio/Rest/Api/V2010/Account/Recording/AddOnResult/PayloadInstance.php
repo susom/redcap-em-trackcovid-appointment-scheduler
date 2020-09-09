@@ -28,8 +28,7 @@ use Twilio\Version;
  * @property string $referenceSid
  * @property array $subresourceUris
  */
-class PayloadInstance extends InstanceResource
-{
+class PayloadInstance extends InstanceResource {
     /**
      * Initialize the PayloadInstance
      *
@@ -44,14 +43,7 @@ class PayloadInstance extends InstanceResource
      * @param string $sid The unique string that identifies the resource to fetch
      * @return \Twilio\Rest\Api\V2010\Account\Recording\AddOnResult\PayloadInstance
      */
-    public function __construct(
-        Version $version,
-        array $payload,
-        $accountSid,
-        $referenceSid,
-        $addOnResultSid,
-        $sid = null
-    ) {
+    public function __construct(Version $version, array $payload, $accountSid, $referenceSid, $addOnResultSid, $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -83,8 +75,7 @@ class PayloadInstance extends InstanceResource
      *
      * @return \Twilio\Rest\Api\V2010\Account\Recording\AddOnResult\PayloadContext Context for this PayloadInstance
      */
-    protected function proxy()
-    {
+    protected function proxy() {
         if (!$this->context) {
             $this->context = new PayloadContext(
                 $this->version,
@@ -104,8 +95,7 @@ class PayloadInstance extends InstanceResource
      * @return PayloadInstance Fetched PayloadInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         return $this->proxy()->fetch();
     }
 
@@ -115,8 +105,7 @@ class PayloadInstance extends InstanceResource
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->proxy()->delete();
     }
 
@@ -127,8 +116,7 @@ class PayloadInstance extends InstanceResource
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -146,8 +134,7 @@ class PayloadInstance extends InstanceResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

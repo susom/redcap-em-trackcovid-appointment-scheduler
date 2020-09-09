@@ -24,8 +24,7 @@ use Twilio\Version;
  * @property \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\MobileList $mobile
  * @property \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumber\TollFreeList $tollFree
  */
-class IncomingPhoneNumberList extends ListResource
-{
+class IncomingPhoneNumberList extends ListResource {
     protected $_local = null;
     protected $_mobile = null;
     protected $_tollFree = null;
@@ -37,12 +36,11 @@ class IncomingPhoneNumberList extends ListResource
      * @param string $accountSid The SID of the Account that created the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberList
      */
-    public function __construct(Version $version, $accountSid)
-    {
+    public function __construct(Version $version, $accountSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid,);
+        $this->solution = array('accountSid' => $accountSid, );
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/IncomingPhoneNumbers.json';
     }
@@ -67,8 +65,7 @@ class IncomingPhoneNumberList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null)
-    {
+    public function stream($options = array(), $limit = null, $pageSize = null) {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -92,8 +89,7 @@ class IncomingPhoneNumberList extends ListResource
      *                        efficient page size, i.e. min(limit, 1000)
      * @return IncomingPhoneNumberInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null)
-    {
+    public function read($options = array(), $limit = null, $pageSize = null) {
         return \iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
@@ -107,12 +103,7 @@ class IncomingPhoneNumberList extends ListResource
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of IncomingPhoneNumberInstance
      */
-    public function page(
-        $options = array(),
-        $pageSize = Values::NONE,
-        $pageToken = Values::NONE,
-        $pageNumber = Values::NONE
-    ) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
         $options = new Values($options);
         $params = Values::of(array(
             'Beta' => Serialize::booleanToString($options['beta']),
@@ -140,8 +131,7 @@ class IncomingPhoneNumberList extends ListResource
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of IncomingPhoneNumberInstance
      */
-    public function getPage($targetUrl)
-    {
+    public function getPage($targetUrl) {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -157,8 +147,7 @@ class IncomingPhoneNumberList extends ListResource
      * @return IncomingPhoneNumberInstance Newly created IncomingPhoneNumberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($options = array())
-    {
+    public function create($options = array()) {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -201,8 +190,7 @@ class IncomingPhoneNumberList extends ListResource
     /**
      * Access the local
      */
-    protected function getLocal()
-    {
+    protected function getLocal() {
         if (!$this->_local) {
             $this->_local = new LocalList($this->version, $this->solution['accountSid']);
         }
@@ -213,8 +201,7 @@ class IncomingPhoneNumberList extends ListResource
     /**
      * Access the mobile
      */
-    protected function getMobile()
-    {
+    protected function getMobile() {
         if (!$this->_mobile) {
             $this->_mobile = new MobileList($this->version, $this->solution['accountSid']);
         }
@@ -225,8 +212,7 @@ class IncomingPhoneNumberList extends ListResource
     /**
      * Access the tollFree
      */
-    protected function getTollFree()
-    {
+    protected function getTollFree() {
         if (!$this->_tollFree) {
             $this->_tollFree = new TollFreeList($this->version, $this->solution['accountSid']);
         }
@@ -240,8 +226,7 @@ class IncomingPhoneNumberList extends ListResource
      * @param string $sid The unique string that identifies the resource
      * @return \Twilio\Rest\Api\V2010\Account\IncomingPhoneNumberContext
      */
-    public function getContext($sid)
-    {
+    public function getContext($sid) {
         return new IncomingPhoneNumberContext($this->version, $this->solution['accountSid'], $sid);
     }
 
@@ -252,8 +237,7 @@ class IncomingPhoneNumberList extends ListResource
      * @return \Twilio\ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -270,8 +254,7 @@ class IncomingPhoneNumberList extends ListResource
      * @return \Twilio\InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -285,8 +268,7 @@ class IncomingPhoneNumberList extends ListResource
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '[Twilio.Api.V2010.IncomingPhoneNumberList]';
     }
 }

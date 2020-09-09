@@ -18,8 +18,7 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class SyncMapPermissionContext extends InstanceContext
-{
+class SyncMapPermissionContext extends InstanceContext {
     /**
      * Initialize the SyncMapPermissionContext
      *
@@ -33,12 +32,11 @@ class SyncMapPermissionContext extends InstanceContext
      *                         to fetch
      * @return \Twilio\Rest\Sync\V1\Service\SyncMap\SyncMapPermissionContext
      */
-    public function __construct(Version $version, $serviceSid, $mapSid, $identity)
-    {
+    public function __construct(Version $version, $serviceSid, $mapSid, $identity) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('serviceSid' => $serviceSid, 'mapSid' => $mapSid, 'identity' => $identity,);
+        $this->solution = array('serviceSid' => $serviceSid, 'mapSid' => $mapSid, 'identity' => $identity, );
 
         $this->uri = '/Services/' . \rawurlencode($serviceSid) . '/Maps/' . \rawurlencode($mapSid) . '/Permissions/' . \rawurlencode($identity) . '';
     }
@@ -49,8 +47,7 @@ class SyncMapPermissionContext extends InstanceContext
      * @return SyncMapPermissionInstance Fetched SyncMapPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch()
-    {
+    public function fetch() {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -74,8 +71,7 @@ class SyncMapPermissionContext extends InstanceContext
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete()
-    {
+    public function delete() {
         return $this->version->delete('delete', $this->uri);
     }
 
@@ -88,8 +84,7 @@ class SyncMapPermissionContext extends InstanceContext
      * @return SyncMapPermissionInstance Updated SyncMapPermissionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($read, $write, $manage)
-    {
+    public function update($read, $write, $manage) {
         $data = Values::of(array(
             'Read' => Serialize::booleanToString($read),
             'Write' => Serialize::booleanToString($write),
@@ -117,8 +112,7 @@ class SyncMapPermissionContext extends InstanceContext
      *
      * @return string Machine friendly representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
