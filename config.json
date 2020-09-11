@@ -74,6 +74,12 @@
       "type": "project-id"
     },
     {
+      "key": "validation-field",
+      "name": "<b>Select the field that user information will be validated against.</b>",
+      "required": true,
+      "type": "field-list"
+    },
+    {
       "key": "slots-project-event-id",
       "name": "<b>Set the event name for the slot from slots project.</b>",
       "required": true,

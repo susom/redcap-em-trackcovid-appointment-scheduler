@@ -365,7 +365,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $affiliation = null
     ) {
         try {
-            if ($eventId) {
+            if ($this->getScheduler()->getSlotsEventId()) {
 
                 $variable = 'start' . $this->getSuffix();
                 if ($month != '' && $year != '') {
@@ -1150,11 +1150,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     {
         try {
 
-            $projectId = ($_GET['projectid'] != null ? filter_var($_GET['projectid'],
-                FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
-
-            $project = new \Project($projectId);
-            $locations = $project->metadata[LOCATION]['element_enum'];
+//            $projectId = ($_GET['projectid'] != null ? filter_var($_GET['projectid'],
+//                FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
+//
+//            $project = new \Project($projectId);
+            $locations = $this->getScheduler()->getProject()->metadata[LOCATION]['element_enum'];
             return parseEnum($locations);
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -1221,7 +1221,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function verifyUser($newuniq, $zipcode_abs)
     {
-        $filter = "[newuniq] = '" . strtoupper($newuniq) . "' AND [zipcode_abs] = '" . $zipcode_abs . "'";
+        $filter = "[" . $this->getProjectSetting('validation-field') . "] = '" . strtoupper($newuniq) . "' AND [zipcode_abs] = '" . $zipcode_abs . "'";
         $param = array(
             'project_id' => $this->getProjectId(),
             'filterLogic' => $filter,
@@ -1272,8 +1272,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             );
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
-                if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $id) {
-                    $this->setUserCookie('login', $this->generateUniqueCodeHash($id));
+                if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
+                    $this->setUserCookie('login', $this->generateUniqueCodeHash($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
                     return array('id' => $id, 'record' => $record);
                 }
             }
@@ -1285,7 +1285,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             );
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
-                $hash = $this->generateUniqueCodeHash(filter_var($id, FILTER_SANITIZE_STRING));
+                $hash = $this->generateUniqueCodeHash(filter_var($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')], FILTER_SANITIZE_STRING));
                 // this to check if participant withdraw from the ths study.
                 $withdraw = $record[$id][$this->getFirstEventId()]['calc_inactive'];
                 if ($hash == $_COOKIE[$name]) {

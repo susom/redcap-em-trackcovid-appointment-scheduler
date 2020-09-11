@@ -15,7 +15,7 @@ $data = $module->getMonthSlots($eventId, null, null, $baseline, $offset, $affili
 $result = array();
 $result['data'] = array();
 if (!empty($data)) {
-    $reservationEventId = $module->getReservationEventIdViaSlotEventId($eventId);
+    #$reservationEventId = $module->getReservationEventIdViaSlotEventId($eventId);
     /**
      * prepare data
      */
