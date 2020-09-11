@@ -127,12 +127,6 @@
           ]
         },
         {
-          "key": "slot_event_id",
-          "name": "<b>Appointment Slot Event</b><br>Select the arm/event where each record corresponds to an appointment slot that can be reserved.  This event must have the 'Slots' form enabled",
-          "required": true,
-          "type": "event-list"
-        },
-        {
           "key": "reservation_event_id",
           "name": "<b>Appointment Reservation Event</b><br>Select the arm/event where each record corresponds to a reserved appointment slot.  This event must have the 'Reservation' form enabled",
           "required": true,
