@@ -42,14 +42,14 @@ if (!empty($data)) {
         }
 
 
-        $counter = $module->getParticipant()->getSlotActualCountReservedSpots($slot['record_id'],
-            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
-
-        $available = (int)($slot['number_of_participants' . $suffix] - $counter['counter']);;
-
-        if ($available <= 0) {
-            continue;
-        }
+//        $counter = $module->getParticipant()->getSlotActualCountReservedSpots($slot['record_id'],
+//            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
+//
+//        $available = (int)($slot['number_of_participants' . $suffix] - $counter['counter']);;
+//
+//        if ($available <= 0) {
+//            continue;
+//        }
 
         $cancelButton = '';
         $bookButton = '<button type="button"
