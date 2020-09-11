@@ -562,7 +562,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                     {
                         dom: '<"day-filter-slots"><"location-filter-slots"><lf<t>ip>',
                         pageLength: 50,
-                        "aaSorting": [[3, "asc"], [4, "asc"]],
+                        "aaSorting": [[2, "asc"], [3, "asc"]],
                         columnDefs: [
                             {"type": "date", "targets": 3}
                         ],
