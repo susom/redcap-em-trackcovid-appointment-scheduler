@@ -35,11 +35,11 @@ define('CAMPUS_ONLY_TEXT', 'Redwood City Campus');
 /**
  * Constants for participation statuses
  */
-#define('AVAILABLE', 0);
+define('AVAILABLE', 0);
 define('RESERVED', 1);
 define('CANCELED', 2);
 define('NO_SHOW', 3);
-#define('NOT_SCHEDULED', 4);
+define('NOT_SCHEDULED', 4);
 define('COMPLETE', 5);
 define('SKIPPED', 6);
 
@@ -1341,6 +1341,7 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function verifyUser($newuniq, $zipcode_abs)
     {
         #$filter = "[newuniq] = '" . strtoupper($newuniq) . "' AND [zipcode_abs] = '" . $zipcode_abs . "'";
+        //
         $param = array(
             'project_id' => $this->getProjectId(),
             'records' => [$newuniq],
