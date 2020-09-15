@@ -1486,18 +1486,18 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                     $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
                     $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
                 } else {
-                    #$start = date('Y-m-d', strtotime('+7 days'));
+                    $start = date('Y-m-d', strtotime('+7 days'));
 
                     #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-                    $start = date('Y-m-d');
+                    #$start = date('Y-m-d');
                     $end = date('Y-m-d', strtotime('+30 days'));
                 }
 
             } else {
-                #$start = date('Y-m-d', strtotime('+7 days'));
+                $start = date('Y-m-d', strtotime('+7 days'));
 
                 #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-                $start = date('Y-m-d');
+                #$start = date('Y-m-d');
                 $end = date('Y-m-d', strtotime('+30 days'));
             }
 
