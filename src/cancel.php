@@ -18,7 +18,10 @@ try {
         $data['reservation_datetime'] = false;
         $data['reservation_date'] = false;
         $data['reservation_participant_location'] = false;
-        $data['reservation_participant_status'] = NOT_SCHEDULED;
+        $data['reservation_participant_status'] = false;
+        $data['visit_status'] = false;
+
+        $data['summary_notes'] = '[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
 
         $rescheduleCounter = $module->getRecordRescheduleCounter($data[$module->getPrimaryRecordFieldName()], $eventId);
         if ($rescheduleCounter == '') {
@@ -27,7 +30,7 @@ try {
 
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
-
+        $module->emError($response);
         if (empty($response['errors'])) {
 
             $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());
@@ -37,7 +40,11 @@ try {
             //TODO notify instructor about the cancellation
             echo json_encode(array('status' => 'ok', 'message' => 'Appointment canceled successfully!'));
         } else {
-            throw new \LogicException(implode(",", $response['errors']));
+            if (is_array($response['errors'])) {
+                throw new \Exception(implode(",", $response['errors']));
+            } else {
+                throw new \Exception($response['errors']);
+            }
         }
 
     }

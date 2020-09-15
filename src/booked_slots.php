@@ -16,7 +16,7 @@ try {
     //get records for all reservations.
     $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
         array_keys($module->getProject()->events['1']['events']));
-
+    $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
     if ($records) {
@@ -33,6 +33,7 @@ try {
                     <th>Appointment time</th>
                     <th>Consent status</th>
                     <th>Survey status</th>
+                    <th>Visit status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -42,7 +43,8 @@ try {
                     $user = $module->getParticipant()->getUserInfo($id, $module->getFirstEventId());
                     foreach ($events as $eventId => $record) {
 
-                        //skip past or empty reservation
+                        //skip past, skipped or empty reservation
+                        #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
                         if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
                             continue;
                         }
@@ -86,21 +88,13 @@ try {
                                         strtotime($slot['end'])) ?></td>
                             <td><?php echo $user['consent_date'] ? 'Completed' : 'Incomplete' ?></td>
                             <td><?php echo $status ?></td>
+                            <td><?php echo $statuses[$record['visit_status']]; ?></td>
                             <td>
-                                <select data-participant-id="<?php echo $id ?>"
+                                <button data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"
-                                        data-slot-id="<?php echo $record['reservation_slot_id'] ?>"
-                                        class="participants-no-show">
-                                    <option>CHANGE STATUS</option>
-                                    <?php
-                                    foreach ($module->getParticipantStatus() as $key => $status) {
-                                        // list all statuses from reservation instrument. update comment.
-                                        ?>
-                                        <option value="<?php echo $key ?>" <?php echo($record['reservation_participant_status'] == $key ? 'selected' : '') ?>><?php echo $status ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                </select>
+                                        data-status="<?php echo false ?>"
+                                        class="participants-no-show btn btn-sm btn-danger">Cancel
+                                </button>
                                 <div class="clear"></div>
                                 <strong><a target="_blank" href="<?php echo rtrim(APP_PATH_WEBROOT_FULL,
                                             '/') . APP_PATH_WEBROOT . 'DataEntry/index.php?pid=' . $module->getProjectId() . '&page=trackcovid_visit_summary&id=' . $id . '&event_id=' . $eventId ?>">Go

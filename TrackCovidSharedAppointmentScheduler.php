@@ -112,7 +112,6 @@ define("PARTICIPANT_STATUS", "reservation_participant_status");
 class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExternalModule
 {
 
-
     use emLoggerTrait;
 
     /**
@@ -276,32 +275,32 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      * @param int $event_id
      * @return array
      */
-    public function getDateAvailableSlots($date, $event_id)
-    {
-        try {
-            if (!empty($date)) {
-
-                /*
-                 * TODO Check if date within allowed window
-                 */
-                $filter = "[start] > '" . date('Y-m-d', strtotime($date)) . "' AND " . "[start] < '" . date('Y-m-d',
-                        strtotime($date . ' + 1 DAY')) . "' AND [slot_status] != '" . CANCELED . "'";
-                $param = array(
-                    'project_id' => $this->getProjectId(),
-                    'filterLogic' => $filter,
-                    'return_format' => 'array',
-                    'events' => $event_id
-                );
-                $data = REDCap::getData($param);
-                $x = $this->sortRecordsByDate($data, $event_id);
-                return $x;
-            } else {
-                throw new \LogicException('Not a valid date, Aborting!');
-            }
-        } catch (\LogicException $e) {
-            echo $e->getMessage();
-        }
-    }
+//    public function getDateAvailableSlots($date, $event_id)
+//    {
+//        try {
+//            if (!empty($date)) {
+//
+//                /*
+//                 * TODO Check if date within allowed window
+//                 */
+//                $filter = "[start] > '" . date('Y-m-d', strtotime($date)) . "' AND " . "[start] < '" . date('Y-m-d',
+//                        strtotime($date . ' + 1 DAY')) . "' AND [slot_status] != '" . CANCELED . "'";
+//                $param = array(
+//                    'project_id' => $this->getProjectId(),
+//                    'filterLogic' => $filter,
+//                    'return_format' => 'array',
+//                    'events' => $event_id
+//                );
+//                $data = REDCap::getData($param);
+//                $x = $this->sortRecordsByDate($data, $event_id);
+//                return $x;
+//            } else {
+//                throw new \LogicException('Not a valid date, Aborting!');
+//            }
+//        } catch (\LogicException $e) {
+//            echo $e->getMessage();
+//        }
+//    }
 
     /**
      * @param int $event_id
@@ -378,6 +377,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                     $end = date('Y-m-d', strtotime($baseline) + $add + $week);
                 } else {
                     $start = date('Y-m-d', strtotime('+7 days'));
+
                     # change logic to get the next 21 days instead o just the end of this month.
                     $end = date('Y-m-d', strtotime('+30 days'));
                 }
@@ -683,7 +683,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function forceCancellation($recordId, $eventId)
     {
-        $data['reservation_participant_status'] = CANCELED;
+        $data['reservation_participant_status'] = false;
         $data[$this->getPrimaryRecordFieldName()] = $recordId;
         $data['redcap_event_name'] = \REDCap::getEventNames(true, true, $eventId);
         $response = \REDCap::saveData('json', json_encode(array($data)));
@@ -752,118 +752,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
         }
         return false;
-    }
-
-    /**
-     * call REDCap hook
-     */
-    public function redcap_survey_complete(
-        $project_id,
-        $record = null,
-        $instrument,
-        $event_id,
-        $group_id = null,
-        $survey_hash,
-        $response_id = null,
-        $repeat_instance = 1
-    ) {
-        /*$instances = $this->getInstances();
-        $survey = filter_var($_GET['page'], FILTER_SANITIZE_STRING);
-        $uri = '';
-        foreach ($instances as $instance) {
-            if ($instance['instrument_id_for_complementary_appointment'] == $survey) {
-                $uri = $this->buildSurveyComplementaryInputsURI($instance);
-                break;
-            }
-        }
-        $url = $this->getUrl('src/types.php', false, true) . $uri;*/
-        /**
-         * get survey record
-         */
-        $this->setMainSurveyId($instrument);
-        $primary = $this->getPrimaryRecordFieldName();
-        $filter = "[$primary] = '" . $record . "'";
-        $param = array(
-            'project_id' => $this->getProjectId(),
-            'filterLogic' => $filter,
-            'return_format' => 'array',
-            'events' => $event_id
-        );
-        $survey = REDCap::getData($param);
-        if (!empty($survey)) {
-            /**
-             * get reservation record for the survey
-             */
-            $reservationId = $survey[$record][$event_id][SURVEY_RESERVATION_FIELD];
-            $reservationEventId = $this->getReservationEventId();
-            $filter = "[$primary] = '" . $reservationId . "'";
-            $param = array(
-                'project_id' => $this->getProjectId(),
-                'filterLogic' => $filter,
-                'return_format' => 'array',
-                'events' => $reservationEventId
-            );
-            $reservation = REDCap::getData($param);
-
-            if (!empty($reservation)) {
-                /**
-                 * get slot record for the reservation.
-                 */
-                $slotId = $reservation[$reservationId][$reservationEventId][RESERVATION_SLOT_FIELD];
-                $slotEventId = $this->getSlotsEventId();
-
-                $filter = "[$primary] = '" . $slotId . "'";
-                $param = array(
-                    'project_id' => $this->getProjectId(),
-                    'filterLogic' => $filter,
-                    'return_format' => 'array',
-                    'events' => $slotEventId
-                );
-                $slot = REDCap::getData($param);
-                if (!empty($slot)) {
-                    require __DIR__ . '/src/survey.php';
-                    $record = $slot[$slotId][$slotEventId];
-                    $status = $reservation[$reservationId][$reservationEventId]['reservation_participant_status'];
-                    switch ($status) {
-                        case CANCELED:
-                            echo "Your reservation at " . date('M/d/Y', strtotime($record['start'])) . ' was canceled';
-                            break;
-                        case NO_SHOW:
-                            echo "You missed your reservation at " . date('M/d/Y',
-                                    strtotime($record['start'])) . ' and Marked as No Show';
-                            break;
-                        default:
-                            require __DIR__ . '/src/survey.php';
-                            echo "You have a reservation on " . date('M/d/Y',
-                                    strtotime($record['start'])) . " between " . date('H:i',
-                                    strtotime($record['start'])) . " and " . date('H:i',
-                                    strtotime($record['end'])) . " <a class='manage' href='javascript:;'>Click Here</a> edit your reservation.";
-                            break;
-                    }
-
-                }
-            }
-        }
-    }
-
-    /**
-     * @param array $instance
-     * @return string
-     */
-    private function buildSurveyComplementaryInputsURI($instance)
-    {
-        $email = filter_var($_POST[$instance[COMPLEMENTARY_EMAIL]], FILTER_SANITIZE_STRING);
-        $result = '&' . COMPLEMENTARY_EMAIL . '=' . $email;
-        $name = filter_var($_POST[$instance[COMPLEMENTARY_NAME]], FILTER_SANITIZE_STRING);
-        $result .= '&' . COMPLEMENTARY_NAME . '=' . $name;
-        $mobile = filter_var($_POST[$instance[COMPLEMENTARY_MOBILE]], FILTER_SANITIZE_NUMBER_INT);
-        $result .= '&' . COMPLEMENTARY_MOBILE . '=' . $mobile;
-        $notes = filter_var($_POST[$instance[COMPLEMENTARY_NOTES]], FILTER_SANITIZE_STRING);
-        $result .= '&' . COMPLEMENTARY_NOTES . '=' . $notes;
-        $result .= '&complementary=true';
-        $result .= '&complementary_suffix=' . $instance[COMPLEMENTARY_SUFFIX];
-
-        return $result;
     }
 
     /**
@@ -1221,10 +1109,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function verifyUser($newuniq, $zipcode_abs)
     {
-        $filter = "[" . $this->getProjectSetting('validation-field') . "] = '" . strtoupper($newuniq) . "' AND [zipcode_abs] = '" . $zipcode_abs . "'";
+        #$filter = "[newuniq] = '" . strtoupper($newuniq) . "' AND [zipcode_abs] = '" . $zipcode_abs . "'";
+        //
         $param = array(
             'project_id' => $this->getProjectId(),
-            'filterLogic' => $filter,
+            'records' => [$newuniq],
+            #'filterLogic' => $filter,
             'return_format' => 'array',
             'events' => $this->getFirstEventId()
         );
@@ -1253,23 +1143,27 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         setcookie($name, $value, time() + $time);
     }
 
-    public function verifyCookie($name)
+    public function verifyCookie($name, $recordID = false)
     {
 //        if(!isset($_COOKIE[$name])){
 //            return false;
 //        }
-        if (defined('USERID')) {
-            $right = REDCap::getUserRights();
-            $user = $right[USERID];
-            $this->emLog($user['forms']);
-        }
+
         // when manager hits user page. they must be logged in and have right permission on redcap.
         if (defined('USERID') && isset($_GET['code']) && isset($_GET['zip']) && self::isUserHasManagePermission()) {
-            $param = array(
-                'project_id' => $this->getProjectId(),
-                'return_format' => 'array',
-                'records' => [filter_var($_GET['code'], FILTER_SANITIZE_STRING)]
-            );
+            if ($recordID) {
+                $param = array(
+                    'project_id' => $this->getProjectId(),
+                    'return_format' => 'array',
+                    'records' => [$recordID]
+                );
+            } else {
+                $param = array(
+                    'project_id' => $this->getProjectId(),
+                    'return_format' => 'array',
+                    //'events' => [$this->getFirstEventId()]
+                );
+            }
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
                 if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
@@ -1278,11 +1172,19 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 }
             }
         } else {
-            $param = array(
-                'project_id' => $this->getProjectId(),
-                'return_format' => 'array',
-                'events' => array_keys($this->getProject()->events['1']['events'])
-            );
+            if ($recordID) {
+                $param = array(
+                    'project_id' => $this->getProjectId(),
+                    'return_format' => 'array',
+                    'records' => [$recordID]
+                );
+            } else {
+                $param = array(
+                    'project_id' => $this->getProjectId(),
+                    'return_format' => 'array',
+                    //'events' => [$this->getFirstEventId()]
+                );
+            }
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
                 $hash = $this->generateUniqueCodeHash(filter_var($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')], FILTER_SANITIZE_STRING));
@@ -1355,11 +1257,17 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                     $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
                 } else {
                     $start = date('Y-m-d', strtotime('+7 days'));
+
+                    #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
+                    #$start = date('Y-m-d');
                     $end = date('Y-m-d', strtotime('+30 days'));
                 }
 
             } else {
                 $start = date('Y-m-d', strtotime('+7 days'));
+
+                #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
+                #$start = date('Y-m-d');
                 $end = date('Y-m-d', strtotime('+30 days'));
             }
 
@@ -1372,12 +1280,13 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getCancelActionButton($user, $eventId, $slot)
     {
-        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $slot[$this->getScheduler()->getProject()->table_pk] . '" class="cancel-appointment btn btn-sm btn-danger">Cancel</button>';
+        return '<button data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-slot-id="' . $slot[$this->getScheduler()->getProject()->table_pk] . '" class="cancel-appointment btn btn-danger">Cancel</button>';
     }
 
     public function getSkipActionButton($user, $eventId)
     {
-        return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '"  class="skip-appointment btn btn-sm btn-warning">Skip</button>';
+        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '" data-status="' . $this->getSkippedIndex() . '"  class="skip-appointment btn btn-sm btn-warning">Skip</button>';
     }
 
     public function getBaseLineEventID()
@@ -1466,6 +1375,21 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return false;
     }
 
+
+    public function getRecordSummaryNotes($recordId, $eventId)
+    {
+        $param = array(
+            'project_id' => $this->getProjectId(),
+            'events' => [$eventId],
+            'recocrds' => [$recordId]
+        );
+        $data = REDCap::getData($param);
+        if (isset($data[$recordId][$eventId]['summary_notes'])) {
+            return $data[$recordId][$eventId]['summary_notes'];
+        }
+        return false;
+    }
+
     /**
      * @param array $instances
      * @param int $slotEventId
@@ -1536,6 +1460,18 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $result[] = $instance['reservation_event_id'];
         }
         return $result;
+    }
+
+    public function getSkippedIndex()
+    {
+        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        return array_search('Skipped', $statuses);
+    }
+
+
+    public function isAppointmentSkipped($status)
+    {
+        return $status == $this->getSkippedIndex();
     }
 
     /**
