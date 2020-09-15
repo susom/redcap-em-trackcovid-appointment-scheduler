@@ -13,7 +13,7 @@ try {
         echo json_encode(array(
             'status' => 'success',
             'cookie' => $module->generateUniqueCodeHash($newuniq),
-            'link' => $module->getUrl('src/user.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH'
+            'link' => $module->getUrl('src/user.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH' . '&' . $module->getProject()->table_pk . '=' . $newuniq
         ));
     } else {
         throw new \LogicException("No user was found for provided information");

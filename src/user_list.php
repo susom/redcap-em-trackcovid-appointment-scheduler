@@ -12,6 +12,7 @@ try {
         $result = array();
         $noSkip = false;
         $regularUser = !defined('USERID') && !$module::isUserHasManagePermission();
+        $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
         foreach ($events as $eventId => $event) {
             if ($event['day_offset'] == 0) {
                 $module->setBaseLine(true);
@@ -27,17 +28,17 @@ try {
                 continue;
             }
             // check if user has record for this event
-            $status = 'Not Scheduled';
+            $status = '';
             if (isset($user['record'][$eventId])) {
                 $slot = $module->getReservationArray($user['record'][$eventId]);
                 if (empty($slot)) {
                     $time = '';
-                    if ($user['record'][$eventId]['reservation_participant_status'] == SKIPPED) {
+                    if ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
                         $action = 'This appointment is skipped';
                         $noSkip = true;
                         // determine the status
-                        $statuses = parseEnum($module->getProject()->metadata['reservation_participant_status']["element_enum"]);
-                        $status = $statuses[$user['record'][$eventId]['reservation_participant_status']];
+
+                        $status = $statuses[$user['record'][$eventId]['visit_status']];
                     } else {
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
                             $event['day_offset']);
@@ -71,18 +72,15 @@ try {
                         $action = 'This Appointment is in less than 48 hours please call to cancel!';
                     } elseif (strtotime($slot['start']) - time() < 0) {
                         $action = 'Appointment Completed';
-                    } elseif ($user['record'][$eventId]['reservation_participant_status'] == CANCELED) {
-                        $action = '';
-                    } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED) {
+                    }  elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED) {
                         $action = $module->getCancelActionButton($user, $eventId, $slot);
-                    } elseif ($user['record'][$eventId]['reservation_participant_status'] == SKIPPED) {
+                    } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
                         $action = 'This appointment is skipped';
                         $noSkip = true;
                     }
 
                     // determine the status
-                    $statuses = parseEnum($module->getProject()->metadata['reservation_participant_status']["element_enum"]);
-                    $status = $statuses[$user['record'][$eventId]['reservation_participant_status']];
+                    $status = $statuses[$user['record'][$eventId]['visit_status']];
                 }
 
             } else {

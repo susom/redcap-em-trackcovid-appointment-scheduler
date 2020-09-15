@@ -5,8 +5,8 @@ namespace Stanford\TrackCovidAppointmentScheduler;
 /** @var \Stanford\TrackCovidAppointmentScheduler\TrackCovidAppointmentScheduler $module */
 
 try {
-
-    if ($user = $module->verifyCookie('login')) {
+    $recordId = filter_var(isset($_GET[$module->getProject()->table_pk]) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
+    if ($user = $module->verifyCookie('login', $recordId)) {
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
         $url = $module->getUrl('src/list.php', true, true,

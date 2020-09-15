@@ -588,10 +588,8 @@ class TrackCovidAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                     $start = date('Y-m-d', strtotime($baseline) + $add - $week);
                     $end = date('Y-m-d', strtotime($baseline) + $add + $week);
                 } else {
-                    #$start = date('Y-m-d', strtotime('+7 days'));
+                    $start = date('Y-m-d', strtotime('+7 days'));
 
-                    #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-                    $start = date('Y-m-d');
                     # change logic to get the next 21 days instead o just the end of this month.
                     $end = date('Y-m-d', strtotime('+30 days'));
                 }
