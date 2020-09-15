@@ -29,7 +29,7 @@ try {
 
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
-
+        $module->emError($response);
         if (empty($response['errors'])) {
             //TODO notify instructor about the cancellation
             echo json_encode(array('status' => 'ok', 'message' => 'Appointment canceled successfully!'));
