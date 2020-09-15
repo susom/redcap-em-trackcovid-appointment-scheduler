@@ -34,7 +34,11 @@ try {
             //TODO notify instructor about the cancellation
             echo json_encode(array('status' => 'ok', 'message' => 'Appointment canceled successfully!'));
         } else {
-            throw new \LogicException(implode(",", $response['errors']));
+            if (is_array($response['errors'])) {
+                throw new \Exception(implode(",", $response['errors']));
+            } else {
+                throw new \Exception($response['errors']);
+            }
         }
 
     }

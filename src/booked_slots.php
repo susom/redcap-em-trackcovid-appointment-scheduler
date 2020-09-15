@@ -44,7 +44,8 @@ try {
                     foreach ($events as $eventId => $record) {
 
                         //skip past, skipped or empty reservation
-                        if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
+                        #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
+                        if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
                             continue;
                         }
                         //if past reservation we do not want to see it.
