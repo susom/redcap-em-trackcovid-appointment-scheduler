@@ -43,6 +43,7 @@ try {
             $data['reservation_participant_location'] = false;
             $data['reservation_participant_status'] = false;
             $data['visit_status'] = false;
+            $data['reservation_site_affiliation'] = false;
             $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primaryField],
                     $eventId) . '\n[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
 
@@ -65,8 +66,7 @@ try {
             }
 
 
-            $reservation = $module::getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $eventId,
-                $module->getProjectId(), $primaryField);
+            $reservation = $module->getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $eventId);
 
             $instance = $module->getEventInstance();
             $user = $module->getParticipant()->getUserInfo($data[$primaryField], $module->getFirstEventId());
@@ -80,9 +80,8 @@ try {
                     $body, $body
                 );
             } else {
-                $slot = $module::getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
-                    $module->getSlotEventIdFromReservationEventId($eventId),
-                    $module->getProjectId(), $primaryField);
+                $slot = $module->getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
+                    $module->getSlotEventIdFromReservationEventId($eventId));
                 $eventName = $module->getProject()->events[$eventId]['name'];
                 $body = '--CONFIRMATION-- ' . $eventName . ' has been skipped';
                 $module->sendEmail($user['email'],
