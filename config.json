@@ -21,17 +21,13 @@
     "redcap_survey_page_top"
   ],
   "no-auth-pages": [
-    "src/calendar",
     "src/slots",
-    "src/summary",
     "src/book",
-    "src/manage",
     "src/manage_calendars",
     "src/cancel",
-    "src/reschedule",
+    "src/update_slot",
     "src/participants_list",
     "src/list",
-    "src/types",
     "src/user",
     "src/user_list",
     "src/verify",

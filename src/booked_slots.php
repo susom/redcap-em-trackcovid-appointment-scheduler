@@ -62,7 +62,7 @@ try {
                                 $slot = end($slots[$record['reservation_slot_id']]);
                             }
                         }
-                        $locations = parseEnum($module->getProject()->metadata['location']['element_enum']);
+                        $locations = $module->getDefinedLocations();
                         $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
                         if ($record['trackcovid_baseline_survey_complete']) {
                             $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];

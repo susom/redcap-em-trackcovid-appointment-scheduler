@@ -12,7 +12,6 @@ try {
         throw new \LogicException("You are allowed to access this page");
     }
 
-    $url = $module->getUrl('src/types.php', false, true, true) . '&projectid=' . $module->getProjectId();
 } catch (\LogicException $e) {
     echo $e->getMessage();
 }

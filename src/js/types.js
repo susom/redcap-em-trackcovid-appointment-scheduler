@@ -137,51 +137,6 @@ jQuery(document).on('click', '.cancel-appointment', function (e) {
     }
 });
 
-function populateMonthSummary(key, year, month) {
-    setTimeout(function () {
-        var url = jQuery("#summary-url").val();
-        if (month == undefined) {
-            month = ''
-        }
-        if (year == undefined) {
-            year = ''
-        }
-        jQuery.ajax({
-            'url': url + '&event_id=' + key + '&month=' + month + '&year=' + year,
-            'type': 'GET',
-            'success': function (response) {
-                response = JSON.parse(response);
-                jQuery(".ui-datepicker-calendar td").each(function (index, item) {
-
-                    var day = jQuery(this).text();
-
-                    if (response[day] != undefined) {
-                        /**
-                         * if date has open time slots
-                         */
-                        if (response[day].available != undefined) {
-                            if (response[day].availableText != undefined) {
-                                jQuery(this).find("a").attr('data-content', response[day].availableText);
-                            }
-                            if (response[day].REDCapAvailableText != undefined) {
-                                var $a = jQuery(this).find("a");
-                                jQuery(this).append(response[day].REDCapAvailableText)
-                                //jQuery(this).find("a").insertAfter(response[day].REDCapAvailableText);
-                            }
-                        } else {
-                            jQuery(this).find("a").attr('data-content', "All slots are booked for this date");
-                        }
-                        jQuery(this).find("a").toggleClass('changed');
-                    }
-                });
-            },
-            'error': function (request, error) {
-                alert("Request: " + JSON.stringify(request));
-            }
-        });
-
-    }, 0)
-}
 
 
 /**
