@@ -475,7 +475,12 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                                 // need to check the preferred location does exist in the list.
                                 var exists = false;
                                 $('#location-options option').each(function () {
-                                    if (this.value == getCookie('preferred-location')) {
+                                    console.log(this.value)
+                                    console.log(getCookie('preferred-location'))
+                                    console.log(this.value == getCookie('preferred-location'))
+                                    console.log(this.value === getCookie('preferred-location'))
+
+                                    if (this.value === getCookie('preferred-location')) {
                                         exists = true;
                                         return false;
                                     }
