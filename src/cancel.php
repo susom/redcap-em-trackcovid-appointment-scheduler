@@ -19,7 +19,7 @@ try {
         $data['reservation_participant_location'] = false;
         $data['reservation_participant_status'] = false;
         $data['visit_status'] = false;
-
+        // get previous notes
         $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primary],
                 $eventId) . '&#13;&#10;[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
 
