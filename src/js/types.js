@@ -608,7 +608,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                                 if (getCookie('preferred-location') != null) {
                                     // need to check the preferred location does exist in the list.
                                     var exists = false;
-                                    $('#location-options option').each(function () {
+                                    $('#location-options-manager option').each(function () {
 
                                         if (this.value === getCookie('preferred-location')) {
                                             exists = true;
