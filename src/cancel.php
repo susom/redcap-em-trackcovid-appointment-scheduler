@@ -20,7 +20,8 @@ try {
         $data['reservation_participant_status'] = false;
         $data['visit_status'] = false;
 
-        $data['summary_notes'] = '[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
+        $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primary],
+                $eventId) . '[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
 
         $rescheduleCounter = $module->getRecordRescheduleCounter($data[$module->getPrimaryRecordFieldName()], $eventId);
         if ($rescheduleCounter == '') {
