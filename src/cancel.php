@@ -26,6 +26,12 @@ try {
         $rescheduleCounter = $module->getRecordRescheduleCounter($data[$module->getPrimaryRecordFieldName()], $eventId);
         if ($rescheduleCounter == '') {
             $data['reservation_reschedule_counter'] = 0;
+
+            //if this cancellation for baseline visit then use its date as med point for the window.
+            if ($module->getProject()->events['1']['events'][$eventId]['day_offset'] == 0) {
+                $data['reservation_baseline_cancellation_date'] = $module->getRecordReservationDateTime($data[$primary], $eventId);
+            }
+
         }
 
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
