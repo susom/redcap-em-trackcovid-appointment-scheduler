@@ -430,7 +430,8 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                                 // need to check the preferred location does exist in the list.
                                 var exists = false;
                                 $('#location-options option').each(function () {
-                                    if (this.value == getCookie('preferred-location')) {
+
+                                    if (this.value === getCookie('preferred-location')) {
                                         exists = true;
                                         return false;
                                     }
@@ -560,7 +561,18 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
 
                                 // if preferred location is saved then select that
                                 if (getCookie('preferred-location') != null) {
-                                    $("#location-options").val(getCookie('preferred-location')).trigger('change');
+                                    // need to check the preferred location does exist in the list.
+                                    var exists = false;
+                                    $('#location-options-manager option').each(function () {
+
+                                        if (this.value === getCookie('preferred-location')) {
+                                            exists = true;
+                                            return false;
+                                        }
+                                    });
+                                    if (exists === true) {
+                                        $("#location-options-manager").val(getCookie('preferred-location')).trigger('change');
+                                    }
                                 }
                             });
                         }

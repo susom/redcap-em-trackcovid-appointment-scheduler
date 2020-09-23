@@ -1250,18 +1250,21 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         if ($this->isBaseLine() || $this->getBaseLineDate()) {
 
             if ($this->getBaseLineDate()) {
-                if ($offset > 0) {
-                    $add = $offset * 60 * 60 * 24;
-                    $week = 604800;
-                    $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
-                    $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
-                } else {
-                    $start = date('Y-m-d', strtotime('+7 days'));
+//                if ($offset > 0) {
+//                    $add = $offset * 60 * 60 * 24;
+//                    $week = 604800;
+//                    $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
+//                    $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
+//                } else {
+//                    $start = date('Y-m-d', strtotime('+7 days'));
+//
+//                    $end = date('Y-m-d', strtotime('+30 days'));
+//                }
 
-                    #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-                    #$start = date('Y-m-d');
-                    $end = date('Y-m-d', strtotime('+30 days'));
-                }
+                $add = $offset * 60 * 60 * 24;
+                $week = 604800;
+                $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
+                $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
 
             } else {
                 $start = date('Y-m-d', strtotime('+7 days'));
@@ -1375,6 +1378,19 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return false;
     }
 
+    public function getRecordReservationDateTime($recordId, $eventId)
+    {
+        $param = array(
+            'project_id' => $this->getProjectId(),
+            'events' => [$eventId],
+            'recocrds' => [$recordId]
+        );
+        $data = REDCap::getData($param);
+        if (isset($data[$recordId][$eventId]['reservation_datetime'])) {
+            return $data[$recordId][$eventId]['reservation_datetime'];
+        }
+        return false;
+    }
 
     public function getRecordSummaryNotes($recordId, $eventId)
     {

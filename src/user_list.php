@@ -40,8 +40,15 @@ try {
 
                         $status = $statuses[$user['record'][$eventId]['visit_status']];
                     } else {
+                        //if you reach this then the appointment was created then canceled. then we lets use
+                        if ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
+                            $module->setBaseLineDate($user['record'][$eventId]['reservation_baseline_cancellation_date']);
+                        }
+
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
                             $event['day_offset']);
+
+                        $module->setBaseLineDate('');
                     }
 
                 } else {
