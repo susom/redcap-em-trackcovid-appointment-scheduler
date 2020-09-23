@@ -94,6 +94,12 @@
       "type": "textarea"
     },
     {
+      "key": "not-login-redirect-page",
+      "name": "<b>Please add content to be displayed to not login users. (You can use HTML for formatting) </b>",
+      "required": false,
+      "type": "textarea"
+    },
+    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,

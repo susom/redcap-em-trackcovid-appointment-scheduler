@@ -8,7 +8,7 @@ use REDCap;
 
 //JS and CSS with inputs URLs
 require_once 'urls.php';
-if (!isset($_COOKIE['participant_login'])) {
+if ($module->getProjectSetting('not-login-redirect-page') == '') {
     ?>
     <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/verification_form.css', true, true) ?>">
     <script src="<?php echo $module->getUrl('src/js/login.js', true, true) ?>"></script>
@@ -175,6 +175,12 @@ if (!isset($_COOKIE['participant_login'])) {
     </div>
     <?php
 } else {
-    //todo redirect to complete list.
+    ?>
+    <div class="container">
+        <?php
+        echo $module->getProjectSetting('not-login-redirect-page');
+        ?>
+    </div>
+    <?php
 }
 ?>
