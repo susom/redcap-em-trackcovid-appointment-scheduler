@@ -110,7 +110,13 @@ if ($module->getProjectSetting('not-login-redirect-page') == '') {
             <h1 id="title">TrackCOVID Login</h1>
         </div>
         <div id="new-form" class="container ">
-
+            <div class="alert alert-warning text-left" role="alert">
+                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i>Please Note!</h4>
+                <p>If you received a postcard with an erroneous ID number, please email <a
+                            href="mailto:signup@trackcovidbayarea.com">signup@trackcovidbayarea.com</a> including the
+                    mailing address where you received the postcard and we will email you back the correct ID. We
+                    apologize for the inconvenience.</p>
+            </div>
             <div id="errors" class="row col-10 offset-1 text-left alert alert-danger" style="display: none"></div>
             <section>
                 <h2 class="code_info">Enter your ID<br><span class="help_text">Where is my ID</span> <i
