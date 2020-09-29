@@ -100,6 +100,12 @@
       "type": "textarea"
     },
     {
+      "key": "manager-scheduler-url",
+      "name": "<b>Query to be added to the scheduler link in Manager page. Example: code=[record_id]&zip=[zipcode_abs] </b>",
+      "required": true,
+      "type": "text"
+    },
+    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,

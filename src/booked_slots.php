@@ -101,7 +101,7 @@ try {
                                         to Visit Summary</a></strong>
                                 <div class="clear"></div>
                                 <strong><a target="_blank" href="<?php echo $module->getUrl('src/user.php', false,
-                                            true) . '&code=' . $id . '&zip=' . $user['zipcode_abs'] ?>">Go
+                                            true) . $module->replaceRecordLabels('&' . $module->getProjectSetting('manager-scheduler-url'), $user) ?>">Go
                                         to Scheduling Page</a></strong>
                             </td>
                         </tr>

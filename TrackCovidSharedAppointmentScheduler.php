@@ -1349,7 +1349,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 } elseif ($match == 'start') {
                     $text = str_replace($match, date('F jS, Y', strtotime($row[$match])), $text);
                 } else {
-                    $text = str_replace($match, $row[$match], $text);
+                    $text = str_replace("[" . $match . "]", $row[$match], $text);
                 }
             }
         }
