@@ -601,6 +601,7 @@ jQuery(document).on('click', '.participants-no-show', function (e) {
     e.stopImmediatePropagation();
     var participation_id = jQuery(this).data('participant-id');
     var event_id = jQuery(this).data('event-id');
+    var reservation_slot_id = jQuery(this).data('reservation-slot-id');
     var url = jQuery('#participants-no-show-url').val();
     var status = jQuery(this).data('status');
     if (confirm("Are you sure you want to update the status of this reservation")) {
@@ -609,7 +610,7 @@ jQuery(document).on('click', '.participants-no-show', function (e) {
          * Get Manage modal to let user manage their saved appointments
          */
         jQuery.ajax({
-            url: url + '&participations_id=' + participation_id + "&event_id=" + event_id + "&reservation_participant_status=" + status,
+            url: url + '&participations_id=' + participation_id + "&event_id=" + event_id + "&reservation_participant_status=" + status + "&reservation_slot_id=" + reservation_slot_id,
             type: 'GET',
             datatype: 'json',
             success: function (data) {

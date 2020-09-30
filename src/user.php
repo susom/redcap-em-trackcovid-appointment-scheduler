@@ -72,11 +72,11 @@ try {
                 echo $instance['instance_description'];
                 $locations = $module->getLocationRecords();
                 $array = array();
-                $counties = parseEnum($module->getProject()->metadata['county']['element_enum']);
-
+                $counties = parseEnum($module->getScheduler()->getProject()->metadata['county']['element_enum']);
+                $aaaaa = $module->getProjectSetting('slots-project-testing-sites-event-id');
                 foreach ($locations as $location) {
-                    $county = $location[$module->getProjectSetting('testing-sites-event')]['county'];
-                    $array[$county][] = $location[$module->getProjectSetting('testing-sites-event')];
+                    $county = $location[$module->getProjectSetting('slots-project-testing-sites-event-id')]['county'];
+                    $array[$county][] = $location[$module->getProjectSetting('slots-project-testing-sites-event-id')];
                 }
                 ?>
 

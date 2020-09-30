@@ -92,6 +92,7 @@ try {
                             <td>
                                 <button data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"
+                                        data-reservation-slot-id="<?php echo $record['reservation_slot_id'] ?>"
                                         data-status="<?php echo false ?>"
                                         class="participants-no-show btn btn-sm btn-danger">Cancel
                                 </button>
