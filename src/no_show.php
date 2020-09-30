@@ -66,7 +66,7 @@ try {
             }
 
 
-            $reservation = $module->getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $eventId);
+            $slot = $module->getSlot($slotId, $eventId);
 
             $instance = $module->getEventInstance();
             $user = $module->getParticipant()->getUserInfo($data[$primaryField], $module->getFirstEventId());
@@ -80,8 +80,6 @@ try {
                     $body, $body
                 );
             } else {
-                $slot = $module->getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
-                    $module->getSlotEventIdFromReservationEventId($eventId));
                 $eventName = $module->getProject()->events[$eventId]['name'];
                 $body = '--CONFIRMATION-- ' . $eventName . ' has been skipped';
                 $module->sendEmail($user['email'],
