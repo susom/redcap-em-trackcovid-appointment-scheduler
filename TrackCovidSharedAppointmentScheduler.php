@@ -1326,6 +1326,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $results = \REDCap::getData($param);
             $locations = array();
             $this->emLog($results);
+            $this->emLog($this->getScheduler()->getSites());
 
             //filter the locations based on what defined on config.json
             foreach ($results as $id => $result) {
