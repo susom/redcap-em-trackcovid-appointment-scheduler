@@ -5,7 +5,7 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 try {
-    $recordId = filter_var(isset($_GET[$module->getProject()->table_pk]) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
+    $recordId = filter_var(isset($_GET['code']) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
     if ($user = $module->verifyCookie('login', $recordId)) {
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
@@ -22,7 +22,7 @@ try {
                     true) . '&pid=' . $module->getProjectId()  ?>"
             User.cancelURL = "<?php echo $module->getUrl('src/cancel.php', true,
                     true) . '&pid=' . $module->getProjectId() ?>"
-            User.userListURL = "<?php echo $module->getUrl('src/user_list.php', defined('USERID') ? false : true, true)?>"
+            User.userListURL = "<?php echo $module->getUrl('src/user_list.php', defined('USERID') ? false : true, true) . '&id=' . $recordId ?>"
             User.loginURL = "<?php echo $module->getUrl('src/login.php', true, true) ?>"
             User.locationsEventId = "<?php echo $module->getProjectSetting('slots-project-testing-sites-event-id') ?>"
             User.locations = <?php echo json_encode($module->locationRecords) ?>
