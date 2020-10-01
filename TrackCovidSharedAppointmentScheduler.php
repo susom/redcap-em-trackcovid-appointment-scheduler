@@ -421,7 +421,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $filter = "[start$suffix] > '" . date('Y-m-d') . "' AND " . "[slot_status$suffix] != '" . CANCELED . "'";
             $param = array(
                 'project_id' => $this->getScheduler()->getProject()->project_id,
-                'filterLogic' => $filter,
+                #'filterLogic' => $filter,
                 'return_format' => 'array'
             );
             return REDCap::getData($param);

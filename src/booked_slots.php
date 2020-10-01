@@ -19,6 +19,8 @@ try {
     $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
+    $firstEvent = $module->getFirstEventId();
+    $locations = $module->getDefinedLocations();
     if ($records) {
         ?>
         <div class="container-fluid">
@@ -40,7 +42,7 @@ try {
                 <tbody>
                 <?php
                 foreach ($records as $id => $events) {
-                    $user = $module->getParticipant()->getUserInfo($id, $module->getFirstEventId());
+                    $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
                     foreach ($events as $eventId => $record) {
 
                         //skip past, skipped or empty reservation
@@ -62,7 +64,7 @@ try {
                                 $slot = end($slots[$record['reservation_slot_id']]);
                             }
                         }
-                        $locations = $module->getDefinedLocations();
+
                         $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
                         if ($record['trackcovid_baseline_survey_complete']) {
                             $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];
