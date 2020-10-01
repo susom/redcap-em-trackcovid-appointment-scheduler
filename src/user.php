@@ -5,7 +5,7 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 try {
-    $recordId = filter_var(isset($_GET['code']) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
+    $recordId = filter_var(isset($_GET[$module->getProject()->table_pk]) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
     if ($user = $module->verifyCookie('login', $recordId)) {
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
