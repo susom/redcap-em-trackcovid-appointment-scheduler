@@ -21,6 +21,10 @@ try {
     $slots = $module->getAllOpenSlots();
     $firstEvent = $module->getFirstEventId();
     $locations = $module->getDefinedLocations();
+    $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
+    $managerURL = $module->getProjectSetting('manager-scheduler-url');
+    $url = $module->getUrl('src/user.php', false,
+        true);
     if ($records) {
         ?>
         <div class="container-fluid">
@@ -65,7 +69,7 @@ try {
                             }
                         }
 
-                        $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
+
                         if ($record['trackcovid_baseline_survey_complete']) {
                             $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];
                         } elseif ($record['trackcovid_monthly_followup_survey_complete']) {
@@ -103,8 +107,8 @@ try {
                                             '/') . APP_PATH_WEBROOT . 'DataEntry/index.php?pid=' . $module->getProjectId() . '&page=trackcovid_visit_summary&id=' . $id . '&event_id=' . $eventId ?>">Go
                                         to Visit Summary</a></strong>
                                 <div class="clear"></div>
-                                <strong><a target="_blank" href="<?php echo $module->getUrl('src/user.php', false,
-                                            true) . $module->replaceRecordLabels('&' . $module->getProjectSetting('manager-scheduler-url'), $user) ?>">Go
+                                <strong><a target="_blank"
+                                           href="<?php echo $url . $module->replaceRecordLabels('&' . $managerURL, $user) ?>">Go
                                         to Scheduling Page</a></strong>
                             </td>
                         </tr>
