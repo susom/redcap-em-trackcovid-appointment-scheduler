@@ -92,7 +92,7 @@ try {
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
-                            <td><?php echo $user['consent_date'] ? 'Completed' : 'Incomplete' ?></td>
+                            <td><?php echo $user['consent_date'] || $user['consent_date_esp'] || $user['consent_date_chi'] || $user['consent_date_tag'] || $user['consent_date'] ? 'Completed' : 'Incomplete' ?></td>
                             <td><?php echo $status ?></td>
                             <td><?php echo $statuses[$record['visit_status']]; ?></td>
                             <td>
