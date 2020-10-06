@@ -6,6 +6,12 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 try {
     $recordId = filter_var(isset($_GET[$module->getProject()->table_pk]) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
+
+    // if record id passed redirect to login page.
+    if (!$recordId) {
+        redirect($module->getUrl('src/login.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH');
+    }
+
     if ($user = $module->verifyCookie('login', $recordId)) {
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
