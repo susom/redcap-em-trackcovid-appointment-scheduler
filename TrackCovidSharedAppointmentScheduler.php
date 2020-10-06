@@ -1307,10 +1307,10 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         if (strpos($body, '[location]') !== false) {
             $locations = $this->getLocationRecords();
             $location = $locations['SITE' . $locationId];
-            $text = "<br>Title: " . $location[$this->getProjectSetting('testing-sites-event')]['title'];
-            $text .= "<br>Address: " . $location[$this->getProjectSetting('testing-sites-event')]['testing_site_address'];
-            $text .= "<br>Details: " . $location[$this->getProjectSetting('testing-sites-event')]['site_details'];
-            $text .= "<br>Google Map Link: <a href='" . $location[$this->getProjectSetting('testing-sites-event')]['map_link'] . "'>" . $location[$this->getProjectSetting('testing-sites-event')]['map_link'] . "</a>";
+            $text = "<br>Title: " . $location[$this->getScheduler()->getTestingSitesEventId()]['title'];
+            $text .= "<br>Address: " . $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'];
+            $text .= "<br>Details: " . $location[$this->getScheduler()->getTestingSitesEventId()]['site_details'];
+            $text .= "<br>Google Map Link: <a href='" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "'>" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "</a>";
             return str_replace('[location]', $text, $body);
         }
     }
