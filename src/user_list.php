@@ -23,6 +23,7 @@ try {
             list($month, $year) = $module->getEventMonthYear($event['day_offset']);
 
             $location = '';
+            $canceledBaseline = false;
             $row = array();
             //if we did not define reservation for this event skip it.
             if (!in_array('reservation', $module->getProject()->eventsForms[$eventId])) {
@@ -44,10 +45,11 @@ try {
                         //if you reach this then the appointment was created then canceled. then we lets use
                         if ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                             $module->setBaseLineDate($user['record'][$eventId]['reservation_baseline_cancellation_date']);
+                            $canceledBaseline = true;
                         }
 
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
-                            $event['day_offset']);
+                            $event['day_offset'], $canceledBaseline);
 
                         $module->setBaseLineDate('');
                     }

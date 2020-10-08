@@ -361,26 +361,14 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $month = null,
         $baseline = '',
         $offset = 0,
-        $affiliation = null
+        $affiliation = null,
+        $canceledBaseline = false
     ) {
         try {
             if ($this->getScheduler()->getSlotsEventId()) {
 
                 $variable = 'start' . $this->getSuffix();
-                if ($month != '' && $year != '') {
-                    $start = "$year-$month-01";
-                    $end = date('Y-m-t', strtotime($start));
-                } elseif ($baseline) {
-                    $add = $offset * 60 * 60 * 24;
-                    $week = 604800;
-                    $start = date('Y-m-d', strtotime($baseline) + $add - $week);
-                    $end = date('Y-m-d', strtotime($baseline) + $add + $week);
-                } else {
-                    $start = date('Y-m-d', strtotime('+7 days'));
-
-                    # change logic to get the next 21 days instead o just the end of this month.
-                    $end = date('Y-m-d', strtotime('+30 days'));
-                }
+                list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline);
 
 
                 $records = $this->getScheduler()->getSlots();
@@ -1244,12 +1232,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return array($month, $year);
     }
 
-
-    public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0)
+    private function getStartEndWindow($baseline, $offset, $canceledBaseline)
     {
-        if ($this->isBaseLine() || $this->getBaseLineDate()) {
-
-            if ($this->getBaseLineDate()) {
+        if ($baseline) {
 //                if ($offset > 0) {
 //                    $add = $offset * 60 * 60 * 24;
 //                    $week = 604800;
@@ -1261,20 +1246,39 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //                    $end = date('Y-m-d', strtotime('+30 days'));
 //                }
 
-                $add = $offset * 60 * 60 * 24;
-                $week = 604800;
-                $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
-                $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
-
+            $add = $offset * 60 * 60 * 24;
+            $week = 604800;
+            if (!$canceledBaseline) {
+                $start = date('Y-m-d', strtotime($baseline) + $add - $week);
             } else {
-                $start = date('Y-m-d', strtotime('+7 days'));
-
-                #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-                #$start = date('Y-m-d');
-                $end = date('Y-m-d', strtotime('+30 days'));
+                $start = date('Y-m-d', strtotime($baseline));
             }
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . $start . ' and ' . $end . ')</small>';
+
+            // is start in the past then make start within next 12 horus to give CRC time to prepare.
+            if (strtotime($start) < time() + 43200) {
+                $start = date('Y-m-d', time() + 43200);;
+            }
+
+            $end = date('Y-m-d', strtotime($baseline) + $add + $week);
+
+        } else {
+            $start = date('Y-m-d', strtotime('+7 days'));
+
+            #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
+            #$start = date('Y-m-d');
+            $end = date('Y-m-d', strtotime('+30 days'));
+        }
+        return array($start, $end);
+    }
+
+    public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0, $canceledBaseline = false)
+    {
+        if ($this->isBaseLine() || $this->getBaseLineDate()) {
+
+            list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline);
+
+            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . $start . ' and ' . $end . ')</small>';
         } else {
             return 'Please schedule Baseline Visit First to be able to schedule other visits!';
         }
