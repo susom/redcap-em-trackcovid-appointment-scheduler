@@ -20,8 +20,9 @@ jQuery(document).on('click', '.cancel-slot', function (e) {
             type: 'GET',
             datatype: 'json',
             success: function (response) {
-                jQuery('.manage-calendars').trigger('click')
                 alert(response.message)
+                jQuery('.manage-calendars').trigger('click')
+
             },
             error: function (request, error) {
                 alert("Request: " + JSON.stringify(request));
