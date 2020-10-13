@@ -526,7 +526,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                             this.api().columns([1, 4]).every(function (index) {
 
                                 var column = this;
-                                if (index === 1 && column.data().any() === true) {
+                                if (index === 4 && column.data().any() === true) {
                                     var select = $('<select id="day-options-manager"><option value=""></option></select>')
                                         .appendTo($('.day-filter-slots'))
                                         .on('change', function () {
@@ -540,7 +540,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                                                 .draw();
                                         });
                                 }
-                                if (index === 4 && column.data().any() === true) {
+                                if (index === 1 && column.data().any() === true) {
                                     var select = $('<select id="location-options-manager"><option value=""></option></select>')
                                         .appendTo($('.location-filter-slots'))
                                         .on('change', function () {
@@ -564,7 +564,6 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                                     // need to check the preferred location does exist in the list.
                                     var exists = false;
                                     $('#location-options-manager option').each(function () {
-
                                         if (this.value === getCookie('preferred-location')) {
                                             exists = true;
                                             return false;
