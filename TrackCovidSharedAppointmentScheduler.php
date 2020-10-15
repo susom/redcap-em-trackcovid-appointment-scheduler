@@ -1262,6 +1262,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             $end = date('Y-m-d', strtotime($baseline) + $add + $week);
 
+
+            // final check if $end is lower than start add one week to end
+            if (strtotime($start) > strtotime($end)) {
+                $end = date('Y-m-d', strtotime($start) + $week);
+            }
         } else {
             $start = date('Y-m-d', strtotime('+7 days'));
 
