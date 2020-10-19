@@ -1279,9 +1279,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0, $canceledBaseline = false)
     {
-        $this->emLog('baseline :' . $this->isBaseLine());
-        $this->emLog('getBaseLineDate :' . $this->getBaseLineDate());
-        $this->emLog('eventId :' . $eventId);
         if ($this->isBaseLine() || $this->getBaseLineDate()) {
 
             list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline);
