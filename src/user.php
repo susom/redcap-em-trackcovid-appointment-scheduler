@@ -31,7 +31,7 @@ try {
             User.userListURL = "<?php echo $module->getUrl('src/user_list.php', defined('USERID') ? false : true, true) . '&id=' . $recordId ?>"
             User.loginURL = "<?php echo $module->getUrl('src/login.php', true, true) ?>"
             User.locationsEventId = "<?php echo $module->getProjectSetting('slots-project-testing-sites-event-id') ?>"
-            User.locations = <?php echo json_encode($module->locationRecords) ?>
+            User.locations = <?php echo json_encode($module->getLocationRecords()) ?>
         </script>
 
         <div id="brandbar">

@@ -70,13 +70,13 @@ try {
                         //$module->setBaseLineDate(date('Y-m-d H:i:s',strtotime($user['record'][$module->getFirstEventId()]['consent_date'])));
 
                         // also we need to define the default affiliation to be enforced for next appointments.
-                        $locations = $module->getLocationRecords();
-
-
-                        $l = end($locations['SITE' . $user['record'][$eventId]['reservation_participant_location']]);
-                        $module->emLog($l);
-                        $defaultAffiliate = $l['site_affiliation'];
-                        $module->setDefaultAffiliation($defaultAffiliate);
+//                        $locations = $module->getLocationRecords();
+//
+//
+//                        $l = end($locations['SITE' . $user['record'][$eventId]['reservation_site_affiliation']]);
+//                        $module->emLog($l);
+//                        $defaultAffiliate = $l['site_affiliation'];
+                        $module->setDefaultAffiliation($user['record'][$eventId]['reservation_site_affiliation']);
                     }
 
                     // prevent cancel if appointment is in less than 48 hours
