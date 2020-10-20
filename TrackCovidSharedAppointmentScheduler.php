@@ -1335,9 +1335,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $locations = array();
             //filter the locations based on what defined on config.json
             foreach ($results as $id => $result) {
-                if (in_array($id, $this->getScheduler()->getSites())) {
+               // if (in_array($id, $this->getScheduler()->getSites())) {
                     $locations[$id] = $result;
-                }
+                // }
             }
             $this->locationRecords = $locations;
             return $this->locationRecords;
