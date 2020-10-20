@@ -71,8 +71,10 @@ try {
 
                         // also we need to define the default affiliation to be enforced for next appointments.
                         $locations = $module->getLocationRecords();
-                        $l = end($locations['SITE' . $user['record'][$eventId]['reservation_participant_location']]);
 
+                        $module->emLog($locations);
+                        $l = end($locations['SITE' . $user['record'][$eventId]['reservation_participant_location']]);
+                        $module->emLog($l);
                         $defaultAffiliate = $l['site_affiliation'];
                         $module->setDefaultAffiliation($defaultAffiliate);
                     }
