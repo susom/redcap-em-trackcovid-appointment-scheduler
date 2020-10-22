@@ -33,6 +33,14 @@ try {
             $status = '';
             if (isset($user['record'][$eventId])) {
                 $slot = $module->getReservationArray($user['record'][$eventId]);
+
+                // capture edge case for imported reservation records with no slot id.
+                if (empty($slot) && $user['record'][$eventId]['reservation_datetime'] != '') {
+                    $slot['start'] = $user['record'][$eventId]['reservation_datetime'];
+                    $slot['end'] = date('Y-m-d H:i:s', strtotime($user['record'][$eventId]['reservation_datetime']) + 60 * 15);
+                }
+
+
                 if (empty($slot)) {
                     $time = '';
                     if ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
