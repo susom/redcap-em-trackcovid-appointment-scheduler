@@ -50,7 +50,8 @@ try {
                         // determine the status
 
                         $status = $statuses[$user['record'][$eventId]['visit_status']];
-                    } else {
+                        // for proto check if baseline was ever canceled.
+                    } elseif ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                         //if you reach this then the appointment was created then canceled. then we lets use
                         if ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                             $module->setBaseLineDate($user['record'][$eventId]['reservation_baseline_cancellation_date']);
