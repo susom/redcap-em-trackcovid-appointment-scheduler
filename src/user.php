@@ -5,7 +5,16 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 try {
-    $recordId = filter_var(isset($_GET[$module->getProject()->table_pk]) ? $_GET[$module->getProject()->table_pk] : $_GET['code'], FILTER_SANITIZE_STRING);
+    if (isset($_GET[$module->getProject()->table_pk])) {
+        $field = $_GET[$module->getProject()->table_pk];
+    } elseif (isset($_GET['code'])) {
+        $field = $_GET['code'];
+    } elseif (isset($_GET['id'])) {
+        $field = $_GET['id'];
+    } else {
+        $field = '';
+    }
+    $recordId = filter_var($field, FILTER_SANITIZE_STRING);
 
     // if record id passed redirect to login page.
     if (!$recordId) {
