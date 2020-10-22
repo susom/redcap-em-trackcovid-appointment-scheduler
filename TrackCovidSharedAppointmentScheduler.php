@@ -1138,7 +1138,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //        }
 
         // when manager hits user page. they must be logged in and have right permission on redcap.
-        if (defined('USERID') && isset($_GET['code']) && isset($_GET['zip']) && self::isUserHasManagePermission()) {
+        if (defined('USERID') && ((isset($_GET['code']) && isset($_GET['zip'])) || $recordID) && self::isUserHasManagePermission()) {
             if ($recordID) {
                 $param = array(
                     'project_id' => $this->getProjectId(),
@@ -1157,6 +1157,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
                     $this->setUserCookie('login', $this->generateUniqueCodeHash($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
                     return array('id' => $id, 'record' => $record);
+                }
+                if ($recordID && $this->getProjectSetting('validation-field') == $this->getProject()->table_pk) {
+                    if ($recordID == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
+                        $this->setUserCookie('login', $this->generateUniqueCodeHash($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
+                        return array('id' => $id, 'record' => $record);
+                    }
                 }
             }
         } else {
