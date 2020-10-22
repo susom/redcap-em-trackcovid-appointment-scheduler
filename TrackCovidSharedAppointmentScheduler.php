@@ -1138,6 +1138,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //        }
 
         // when manager hits user page. they must be logged in and have right permission on redcap.
+        $this->emLog(self::isUserHasManagePermission());
+        $this->emLog(((isset($_GET['code']) && isset($_GET['zip'])) || $recordID));
         if (defined('USERID') && ((isset($_GET['code']) && isset($_GET['zip'])) || $recordID) && self::isUserHasManagePermission()) {
             if ($recordID) {
                 $param = array(
@@ -1154,13 +1156,14 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             }
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
+                $this->emLog($recordID);
                 if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
                     $this->setUserCookie('login', $this->generateUniqueCodeHash($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
                     return array('id' => $id, 'record' => $record);
                 }
                 if ($recordID && $this->getProjectSetting('validation-field') == $this->getProject()->table_pk) {
-                    if ($recordID == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
-                        $this->setUserCookie('login', $this->generateUniqueCodeHash($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
+                    if ($recordID == $id) {
+                        $this->setUserCookie('login', $this->generateUniqueCodeHash($id));
                         return array('id' => $id, 'record' => $record);
                     }
                 }
