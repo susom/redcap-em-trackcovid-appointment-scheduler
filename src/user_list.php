@@ -91,13 +91,13 @@ try {
                     // prevent cancel if appointment is in less than 48 hours
                     if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0) {
                         $action = 'This Appointment is in less than 48 hours please call to cancel!';
+                    } elseif ($user['record'][$eventId]['visit_status'] == 1) {
+                        $action = 'Appointment Completed';
                     } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED) {
                         $action = $module->getCancelActionButton($user, $eventId, $slot);
                     } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
                         $action = 'This appointment is skipped';
                         $noSkip = true;
-                    } elseif (strtotime($slot['start']) - time() < 0) {
-                        $action = 'Appointment Completed';
                     }
 
                     // determine the status
