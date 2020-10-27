@@ -38,7 +38,6 @@ try {
 
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
-        $module->emError($response);
         if (empty($response['errors'])) {
 
             $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());

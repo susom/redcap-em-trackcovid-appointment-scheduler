@@ -40,7 +40,7 @@ try {
                     $slot['end'] = date('Y-m-d H:i:s', strtotime($user['record'][$eventId]['reservation_datetime']) + 60 * 15);
                 }
 
-
+                $module->emLog($slot);
                 if (empty($slot)) {
                     $time = '';
                     if ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
@@ -64,7 +64,7 @@ try {
                     }
 
                 } else {
-
+                    $module->emLog($user['record'][$eventId]['visit_status']);
                     $time = date('D m/d/Y H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                             strtotime($slot['end']));
                     $locations = $module->getDefinedLocations();
