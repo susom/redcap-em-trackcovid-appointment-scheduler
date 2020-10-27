@@ -40,6 +40,7 @@ try {
                     $slot['end'] = date('Y-m-d H:i:s', strtotime($user['record'][$eventId]['reservation_datetime']) + 60 * 15);
                 }
 
+
                 if (empty($slot)) {
                     $time = '';
                     if ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
@@ -63,6 +64,7 @@ try {
                     }
 
                 } else {
+
                     $time = date('D m/d/Y H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                             strtotime($slot['end']));
                     $locations = $module->getDefinedLocations();
@@ -100,6 +102,8 @@ try {
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
                     }
 
+                    // determine the status
+                    $status = $statuses[$user['record'][$eventId]['visit_status']];
                 }
 
             } else {
