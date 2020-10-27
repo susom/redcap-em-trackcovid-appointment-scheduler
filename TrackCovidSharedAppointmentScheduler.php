@@ -1502,6 +1502,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     public function isAppointmentNoShow($status)
     {
         $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $this->emLog($status);
+        $this->emLog($statuses);
         $s = array_search('No Show', $statuses);
         return $status == $s;
     }

@@ -102,8 +102,6 @@ try {
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
                     }
 
-                    // determine the status
-                    $status = $statuses[$user['record'][$eventId]['visit_status']];
                 }
 
             } else {
