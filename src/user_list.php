@@ -98,6 +98,8 @@ try {
                     } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
                         $action = 'This appointment is skipped';
                         $noSkip = true;
+                    } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status'])) {
+                        $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
                     }
 
                     // determine the status

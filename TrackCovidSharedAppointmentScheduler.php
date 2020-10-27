@@ -1499,6 +1499,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return array_search('Skipped', $statuses);
     }
 
+    public function isAppointmentNoShow($status)
+    {
+        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $s = array_search('No Show', $statuses);
+        return $status == $s;
+    }
 
     public function isAppointmentSkipped($status)
     {
