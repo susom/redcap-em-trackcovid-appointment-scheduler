@@ -50,7 +50,7 @@ try {
 
                         $status = $statuses[$user['record'][$eventId]['visit_status']];
                         // for proto check if baseline was ever canceled.
-                    } else {
+                    } elseif ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                         //if you reach this then the appointment was created then canceled. then we lets use
                         if ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                             $module->setBaseLineDate($user['record'][$eventId]['reservation_baseline_cancellation_date']);
@@ -61,6 +61,10 @@ try {
                             $event['day_offset'], $canceledBaseline);
 
                         $module->setBaseLineDate('');
+                    } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status'])) {
+                        //for no show.
+                        $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
+                            $event['day_offset'], $canceledBaseline);
                     }
 
                 } else {
