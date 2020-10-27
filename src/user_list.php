@@ -40,7 +40,6 @@ try {
                     $slot['end'] = date('Y-m-d H:i:s', strtotime($user['record'][$eventId]['reservation_datetime']) + 60 * 15);
                 }
 
-                $module->emLog($slot);
                 if (empty($slot)) {
                     $time = '';
                     if ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
@@ -50,7 +49,7 @@ try {
 
                         $status = $statuses[$user['record'][$eventId]['visit_status']];
                         // for proto check if baseline was ever canceled.
-                    } elseif ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
+                    } else {
                         //if you reach this then the appointment was created then canceled. then we lets use
                         if ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                             $module->setBaseLineDate($user['record'][$eventId]['reservation_baseline_cancellation_date']);
@@ -64,7 +63,6 @@ try {
                     }
 
                 } else {
-                    $module->emLog($user['record'][$eventId]['visit_status']);
                     $time = date('D m/d/Y H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                             strtotime($slot['end']));
                     $locations = $module->getDefinedLocations();
