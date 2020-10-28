@@ -61,7 +61,7 @@ try {
                             $event['day_offset'], $canceledBaseline);
 
                         $module->setBaseLineDate('');
-                    } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status'])) {
+                    } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status']) || $user['record'][$eventId]['reservation_reschedule_counter'] != '') {
                         //for no show.
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
                             $event['day_offset'], $canceledBaseline);
