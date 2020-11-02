@@ -23,6 +23,7 @@ try {
     $locations = $module->getDefinedLocations();
     $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
     $managerURL = $module->getProjectSetting('manager-scheduler-url');
+    $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
         true);
     if ($records) {
@@ -104,7 +105,7 @@ try {
                                 </button>
                                 <div class="clear"></div>
                                 <strong><a target="_blank" href="<?php echo rtrim(APP_PATH_WEBROOT_FULL,
-                                            '/') . APP_PATH_WEBROOT . 'DataEntry/index.php?pid=' . $module->getProjectId() . '&page=trackcovid_visit_summary&id=' . $id . '&event_id=' . $eventId ?>">Go
+                                            '/') . APP_PATH_WEBROOT . 'DataEntry/index.php?pid=' . $module->getProjectId() . '&page=' . $visitSummary . '&id=' . $id . '&event_id=' . $eventId ?>">Go
                                         to Visit Summary</a></strong>
                                 <div class="clear"></div>
                                 <strong><a target="_blank"

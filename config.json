@@ -94,6 +94,12 @@
       "type": "textarea"
     },
     {
+      "key": "visit-summary-instrument",
+      "name": "<b>Select the instrument which will the manager page will link to.</b>",
+      "required": true,
+      "type": "form-list"
+    },
+    {
       "key": "manager-scheduler-url",
       "name": "<b>Query to be added to the scheduler link in Manager page. Example: code=[record_id]&zip=[zipcode_abs] </b>",
       "required": true,
