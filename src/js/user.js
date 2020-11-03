@@ -279,6 +279,9 @@ User = {
             $('#complete-modal').modal('show');
         });
 
+        setTimeout(function () {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }, 500);
     },
     loadUserVisits: function () {
         jQuery.ajax({

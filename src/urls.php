@@ -25,6 +25,7 @@ if (!$module->getMainSurveyId()) {
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js"></script>
 
 </html>
 <?php
@@ -100,3 +101,5 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
 <input type="hidden" name="triggered-instance" id="triggered-instance"
        value="<?php echo(isset($_GET['trigger']) ? filter_var($_GET['trigger'],
            FILTER_SANITIZE_STRING) : '') ?>">
+
+<div id="google_translate_element"></div>

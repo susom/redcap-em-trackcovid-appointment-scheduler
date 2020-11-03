@@ -5,6 +5,10 @@ Form = {
 
         var body = $('body');
 
+        setTimeout(function () {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }, 500);
+
         $(".code_info").on('click', function () {
             $(".example_code").fadeIn("fast");
 
