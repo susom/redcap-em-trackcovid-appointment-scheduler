@@ -92,19 +92,25 @@ try {
                         $module->setDefaultAffiliation($user['record'][$eventId]['reservation_site_affiliation']);
                     }
 
-                    // prevent cancel if appointment is in less than 48 hours
-                    if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0) {
-                        $action = 'This Appointment is in less than 48 hours please call to cancel!';
-                    } elseif ($user['record'][$eventId]['visit_status'] == 1) {
-                        $action = 'Appointment Completed';
-                    } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED) {
-                        $action = $module->getCancelActionButton($user, $eventId, $slot);
-                    } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
-                        $action = 'This appointment is skipped';
-                        $noSkip = true;
-                    } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status'])) {
-                        $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+                    // for stanford participants do not allow schedule non-baseline visits
+                    if (!$module->isBaseLine() && $module->getDefaultAffiliation() == '1') {
+                        $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
+                    } else {
+                        // prevent cancel if appointment is in less than 48 hours
+                        if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0) {
+                            $action = 'This Appointment is in less than 48 hours please call to cancel!';
+                        } elseif ($user['record'][$eventId]['visit_status'] == 1) {
+                            $action = 'Appointment Completed';
+                        } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED) {
+                            $action = $module->getCancelActionButton($user, $eventId, $slot);
+                        } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
+                            $action = 'This appointment is skipped';
+                            $noSkip = true;
+                        } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status'])) {
+                            $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+                        }
                     }
+
 
                     // determine the status
                     $status = $statuses[$user['record'][$eventId]['visit_status']];
@@ -112,7 +118,16 @@ try {
 
             } else {
                 $time = '';
-                $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+
+
+                // for stanford participants do not allow schedule non-baseline visits
+                if (!$module->isBaseLine() && $module->getDefaultAffiliation() == '1') {
+                    $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
+                } else {
+                    $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+                }
+
+
             }
 
             //when manager is viewing this page give the option to skip this visit.
