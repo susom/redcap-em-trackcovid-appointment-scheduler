@@ -79,16 +79,6 @@ try {
                         //use baseline appointment
                         $module->setBaseLineDate($slot['start']);
 
-                        //use consent date
-                        //$module->setBaseLineDate(date('Y-m-d H:i:s',strtotime($user['record'][$module->getFirstEventId()]['consent_date'])));
-
-                        // also we need to define the default affiliation to be enforced for next appointments.
-//                        $locations = $module->getLocationRecords();
-//
-//
-//                        $l = end($locations['SITE' . $user['record'][$eventId]['reservation_site_affiliation']]);
-//                        $module->emLog($l);
-//                        $defaultAffiliate = $l['site_affiliation'];
                         $module->setDefaultAffiliation($user['record'][$eventId]['reservation_site_affiliation']);
                     }
 
