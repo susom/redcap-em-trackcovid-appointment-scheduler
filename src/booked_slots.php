@@ -60,7 +60,7 @@ try {
                         if (empty($record['reservation_slot_id'])) {
                             $slot['start'] = $record['reservation_datetime'];
                             // because we do not know the end of the lost we assumed its 15 minutes after the start
-                            $slot['_end'] = date('Y-m-d H:i:s', strtotime($record['reservation_datetime']) + 900);
+                            $slot['end'] = date('Y-m-d H:i:s', strtotime($record['reservation_datetime']) + 900);
                         } else {
                             //if past reservation we do not want to see it.
                             if (!array_key_exists($record['reservation_slot_id'], $slots)) {
