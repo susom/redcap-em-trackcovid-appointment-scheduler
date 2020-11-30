@@ -161,6 +161,7 @@ jQuery(document).on('click', '.time-slot', function (e) {
         console.log(option)
         if (option === VIRTUAL_ONLY) {
             jQuery("#type-online").prop('checked', true);
+            g
         } else if (option === CAMPUS_ONLY) {
             jQuery("#type-campus").prop('checked', true);
         }
@@ -384,7 +385,7 @@ jQuery(document).on('click', '.booked-slots', function (e) {
                 jQuery('#booked-slots').DataTable({
                     dom: '<"day-filter"><"location-filter"><lf<t>ip>',
                     pageLength: 50,
-                    order: [[3, "asc"], [4, "asc"]],
+                    order: [[4, "asc"], [5, "asc"]],
                     columnDefs: [
                         {"type": "date", "targets": 3}
                     ],
