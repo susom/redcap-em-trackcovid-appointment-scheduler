@@ -362,7 +362,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $baseline = '',
         $offset = 0,
         $affiliation = null,
-        $canceledBaseline = false
+        $canceledBaseline = false,
+        $reservationEventId = ''
     ) {
         try {
             if ($this->getScheduler()->getSlotsEventId()) {
@@ -371,8 +372,18 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline);
 
 
+                $blockingDate = null;
+                if ($reservationEventId && $this->isEventBookingBlocked($reservationEventId)) {
+                    $blockingDate = $this->getBookingBlockDate($reservationEventId);
+                }
+
                 $records = $this->getScheduler()->getSlots();
                 foreach ($records as $record) {
+                    //check if booking is blocked for this record
+                    if ($blockingDate && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) >= strtotime($blockingDate)) {
+                        continue;
+                    }
+
                     if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
                         if ($affiliation) {
                             $locations = $this->getLocationRecords();
@@ -1435,6 +1446,28 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 return $instance['slot_event_id'];
             }
 
+        }
+        return false;
+    }
+
+    public function isEventBookingBlocked($eventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+            if ($instance['reservation_event_id'] == $eventId && $instance['block-booking']) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getBookingBlockDate($eventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+            if ($instance['reservation_event_id'] == $eventId && $instance['block-booking']) {
+                return $instance['block-booking-date'];
+            }
         }
         return false;
     }

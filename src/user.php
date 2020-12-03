@@ -25,14 +25,14 @@ try {
         //JS and CSS with inputs URLs
         $recordId = $user['id'];
         $url = $module->getUrl('src/list.php', true, true,
-                true) . '&event_id=' . $module->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
+                true) . '&event_id=' . $module->getScheduler()->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
         require_once 'urls.php';
         ?>
         <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/types.css', true, true) ?>">
         <script src="<?php echo $module->getUrl('src/js/user.js', true, true) ?>"></script>
         <script>
             User.listURL = "<?php echo $url ?>"
-            User.slotsEventId = "<?php echo $module->getSlotsEventId() ?>"
+            User.slotsEventId = "<?php echo $module->getScheduler()->getSlotsEventId() ?>"
             User.submitURL = "<?php echo $module->getUrl('src/book.php', true,
                     true) . '&pid=' . $module->getProjectId()  ?>"
             User.cancelURL = "<?php echo $module->getUrl('src/cancel.php', true,

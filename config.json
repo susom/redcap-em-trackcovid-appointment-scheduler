@@ -320,6 +320,22 @@
           "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i>",
           "required": false,
           "type": "textarea"
+        },
+        {
+          "key": "block-booking",
+          "name": "<b>Check this if you want to block this event from being booked.</i>",
+          "required": false,
+          "type": "checkbox"
+        },
+        {
+          "key": "block-booking-date",
+          "name": "<b>Specify the date which slots will blocked after.(yyyy-mm-dd)</i>",
+          "required": false,
+          "type": "text",
+          "branchingLogic": {
+            "field": "block-booking",
+            "value": "1"
+          }
         }
       ]
     },

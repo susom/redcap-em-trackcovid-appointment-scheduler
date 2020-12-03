@@ -6,13 +6,14 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 $suffix = $module->getSuffix();
 $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
+$reservationEventId = filter_var($_GET['reservation_event_id'], FILTER_SANITIZE_NUMBER_INT);
 //$month = filter_var($_GET['month'], FILTER_SANITIZE_NUMBER_INT);
 //$year = filter_var($_GET['year'], FILTER_SANITIZE_NUMBER_INT);
 $baseline = filter_var($_GET['baseline'], FILTER_SANITIZE_STRING);
 $offset = filter_var($_GET['offset'], FILTER_VALIDATE_INT);
 $affiliation = filter_var($_GET['affiliation'], FILTER_VALIDATE_INT);
 $canceledBaseline = filter_var($_GET['canceled_baseline'], FILTER_VALIDATE_INT);
-$data = $module->getMonthSlots($eventId, null, null, $baseline, $offset, $affiliation, $canceledBaseline);
+$data = $module->getMonthSlots($eventId, null, null, $baseline, $offset, $affiliation, $canceledBaseline, $reservationEventId);
 $result = array();
 $result['data'] = array();
 if (!empty($data)) {
