@@ -1275,10 +1275,10 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             // is start in the past then make start within next 12 horus to give CRC time to prepare.
             if (strtotime($start) < time() + 43200) {
-                $start = date('Y-m-d', time() + 43200);;
+                $start = date('Y-m-d H:i:s', time() + 43200);;
             }
 
-            $end = date('Y-m-d', strtotime($baseline) + $add + $week);
+            $end = date('Y-m-d H:i:s', strtotime($baseline) + $add + $week);
 
 
             // final check if $end is lower than start add one week to end
