@@ -11,7 +11,6 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 <html>
 <?php
 if (!$module->getMainSurveyId()) {
-
 ?>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
