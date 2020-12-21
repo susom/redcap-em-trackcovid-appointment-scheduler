@@ -88,11 +88,7 @@ try {
                 $locations = $module->getLocationRecords();
                 $array = array();
                 $counties = parseEnum($module->getScheduler()->getProject()->metadata['county']['element_enum']);
-                $aaaaa = $module->getProjectSetting('slots-project-testing-sites-event-id');
                 foreach ($locations as $location) {
-                    if ($location[$module->getScheduler()->getTestingSitesEventId()]['site_closed']) {
-                        continue;
-                    }
                     $county = $location[$module->getScheduler()->getTestingSitesEventId()]['county'];
                     $array[$county][] = $location[$module->getScheduler()->getTestingSitesEventId()];
                 }
@@ -121,6 +117,9 @@ try {
                                             <ul>
                                                 <?php
                                                 foreach ($county as $site) {
+                                                    if ($site['site_closed']) {
+                                                        continue;
+                                                    }
                                                     ?>
                                                     <li><strong><?php echo $site['title'] ?>
                                                             : <?php echo $site['testing_site_address'] ?></strong>
