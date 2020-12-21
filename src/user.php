@@ -86,6 +86,7 @@ try {
                 $instance = $instances[0];
                 echo $instance['instance_description'];
                 $locations = $module->getLocationRecords();
+                $module->emLog($locations);
                 $array = array();
                 $counties = parseEnum($module->getScheduler()->getProject()->metadata['county']['element_enum']);
                 foreach ($locations as $location) {
@@ -117,7 +118,7 @@ try {
                                             <ul>
                                                 <?php
                                                 foreach ($county as $site) {
-                                                    $module->emLog($site);
+
                                                     if ($site['site_closed']) {
                                                         continue;
                                                     }
