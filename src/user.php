@@ -90,8 +90,11 @@ try {
                 $counties = parseEnum($module->getScheduler()->getProject()->metadata['county']['element_enum']);
                 $aaaaa = $module->getProjectSetting('slots-project-testing-sites-event-id');
                 foreach ($locations as $location) {
-                    $county = $location[$module->getProjectSetting('slots-project-testing-sites-event-id')]['county'];
-                    $array[$county][] = $location[$module->getProjectSetting('slots-project-testing-sites-event-id')];
+                    if ($location[$module->getScheduler()->getTestingSitesEventId()]['site_closed']) {
+                        continue;
+                    }
+                    $county = $location[$module->getScheduler()->getTestingSitesEventId()]['county'];
+                    $array[$county][] = $location[$module->getScheduler()->getTestingSitesEventId()];
                 }
                 ?>
 
