@@ -117,6 +117,7 @@ try {
                                             <ul>
                                                 <?php
                                                 foreach ($county as $site) {
+                                                    $module->emLog($site);
                                                     if ($site['site_closed']) {
                                                         continue;
                                                     }
