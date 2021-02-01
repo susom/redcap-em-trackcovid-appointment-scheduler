@@ -80,6 +80,7 @@ require_once 'urls.php';
                                 <a class="manage-calendars nav-link" href="#">Manage Time Slots</a>
                                 <a class="booked-slots nav-link" href="#">Manage Booked Slots</a>
                                 <a class="instance-description nav-link" href="#">Manage Instance Description</a>
+                                <a class="weekly-totals nav-link" data-index="0" href="#">Weekly Totals</a>
                             </div>
                         </li>
                         <?php
@@ -108,6 +109,10 @@ require_once 'urls.php';
             <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
                aria-controls="description" aria-selected="false">Manage Description</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="totals-tab" data-toggle="tab" href="#totals" role="tab"
+               aria-controls="totals" aria-selected="false">Weekly Totals</a>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade  show active  card card-body" id="booked" role="tabpanel"
@@ -119,6 +124,9 @@ require_once 'urls.php';
         </div>
         <div class="tab-pane fade card card-body" id="description" role="tabpanel" aria-labelledby="description-tab">
             <div id="instance-description-container"></div>
+        </div>
+        <div class="tab-pane fade card card-body" id="totals" role="tabpanel" aria-labelledby="totals-tab">
+            <div id="totals-container"></div>
         </div>
     </div>
 

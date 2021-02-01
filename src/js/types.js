@@ -10,6 +10,7 @@ const CAMPUS_ONLY = 2;
 const LIST_VIEW = 1;
 const CALENDAR_VIEW = 2;
 
+var index = 0;
 $body = jQuery("body");
 
 jQuery(document).on({
@@ -136,7 +137,6 @@ jQuery(document).on('click', '.cancel-appointment', function (e) {
         });
     }
 });
-
 
 
 /**
@@ -491,6 +491,34 @@ jQuery(document).on('click', '.instance-description', function (e) {
          */
         location.reload();
     }
+});
+jQuery(document).on('click', '.get-totals', function (e) {
+    index = $(this).data('index');
+    $(".weekly-totals").trigger('click');
+});
+
+
+/**
+ * Get Instance description
+ */
+jQuery(document).on('click', '.weekly-totals', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var url = jQuery("#manage-weekly-totals").val();
+    jQuery.ajax({
+        url: url,
+        type: 'GET',
+        data: {index: index},
+        datatype: 'json',
+        success: function (data) {
+            jQuery('#totals-container').html(data);
+            jQuery('#weekly-totals-table').DataTable();
+        },
+        error: function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
 });
 
 

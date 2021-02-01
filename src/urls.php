@@ -76,6 +76,10 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
        value="<?php echo $module->getUrl('src/manage_description.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>
+<input type="hidden" id="manage-weekly-totals"
+       value="<?php echo $module->getUrl('src/manage_weekly_totals.php', false,
+               true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
+       class="hidden"/>
 <input type="hidden" id="cancel-appointment-url"
        value="<?php echo $module->getUrl('src/cancel.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&' . PROJECTID . '=' . $module->getProjectId() . $noAuth ?>"

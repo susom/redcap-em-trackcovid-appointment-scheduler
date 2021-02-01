@@ -1389,6 +1389,66 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
+    public function getFormattedTimestamp($timestamp)
+    {
+        return date('m-d-Y', $timestamp);
+    }
+
+    public function buildWeeklyTotalsTable($weekDays)
+    {
+        $result = array();
+        $records = $this->getParticipant()->getAllReservedSlots($this->getProjectId(), array_keys($this->getProject()->events['1']['events']));
+        foreach ($records as $id => $events) {
+            foreach ($events as $eventId => $record) {
+                // make sure there is date to check for
+                if (empty($record['reservation_date'])) {
+                    continue;
+                }
+                $date = $this->getFormattedTimestamp(strtotime($record['reservation_date']));
+                if ($this->isDateInWeek($weekDays, $date)) {
+                    if (array_key_exists($record['reservation_participant_location'], $result)) {
+                        if (array_key_exists($date, $result[$record['reservation_participant_location']])) {
+                            $result[$record['reservation_participant_location']][$date]++;
+                        } else {
+                            $result[$record['reservation_participant_location']][$date] = 1;
+                        }
+                        $result[$record['reservation_participant_location']]['total']++;
+                    } else {
+                        $result[$record['reservation_participant_location']][$date] = 1;
+                        $result[$record['reservation_participant_location']]['total'] = 1;
+                    }
+
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function isDateInWeek($weekDays, $date)
+    {
+        return in_array($date, $weekDays);
+    }
+
+    public function getWeekdaysDates($index = 0)
+    {
+        $week = 604800;
+        $day = 60 * 60 * 24;
+        $result = array();
+        // get closest sunday as starting point
+        $lastSunday = strtotime('Last Sunday', time());
+        // if we are looking for different week from current one then adjust the starting sunday based on index
+        if ($index != 0) {
+
+            $delta = $week * $index;
+            $startSunday = $lastSunday + $delta;
+        } else {
+            $startSunday = $lastSunday;
+        }
+        for ($i = 1; $i <= 5; $i++) {
+            $result[] = $this->getFormattedTimestamp($startSunday + ($i * $day));
+        }
+        return $result;
+    }
 
     public function getRecordRescheduleCounter($recordId, $eventId)
     {
