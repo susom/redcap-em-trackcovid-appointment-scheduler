@@ -513,7 +513,9 @@ jQuery(document).on('click', '.weekly-totals', function (e) {
         datatype: 'json',
         success: function (data) {
             jQuery('#totals-container').html(data);
-            jQuery('#weekly-totals-table').DataTable();
+            jQuery('#weekly-totals-table').DataTable({
+                pageLength: 50,
+            });
         },
         error: function (request, error) {
             alert("Request: " + JSON.stringify(request));
