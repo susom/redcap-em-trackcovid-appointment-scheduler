@@ -515,6 +515,9 @@ jQuery(document).on('click', '.weekly-totals', function (e) {
             jQuery('#totals-container').html(data);
             jQuery('#weekly-totals-table').DataTable({
                 pageLength: 50,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
             });
         },
         error: function (request, error) {
