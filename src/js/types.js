@@ -514,6 +514,7 @@ jQuery(document).on('click', '.weekly-totals', function (e) {
         success: function (data) {
             jQuery('#totals-container').html(data);
             jQuery('#weekly-totals-table').DataTable({
+                dom: '<lf<t>Bip>',
                 pageLength: 50,
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
