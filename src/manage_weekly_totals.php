@@ -41,7 +41,7 @@ try {
                                 <th><?php echo $day ?></th>
                                 <?php
                             } ?>
-                            <th>Totals</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -63,6 +63,19 @@ try {
                         }
                         ?>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Total:</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
                     </table>
                     <?php
                 } else {

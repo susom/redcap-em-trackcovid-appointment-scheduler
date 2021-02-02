@@ -519,6 +519,27 @@ jQuery(document).on('click', '.weekly-totals', function (e) {
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ],
+                footerCallback: function (tfoot, data, start, end, display) {
+                    var api = this.api(), data;
+                    var colNumber = [1, 2, 3, 4, 5, 6, 7, 8];
+
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[, ₹]|(\.\d{2})/g, "") * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+                    for (i = 0; i < colNumber.length; i++) {
+                        var colNo = colNumber[i];
+                        var total2 = api
+                            .column(colNo, {page: 'current'})
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        $(api.column(colNo).footer()).html(total2);
+                    }
+                }
             });
         },
         error: function (request, error) {
