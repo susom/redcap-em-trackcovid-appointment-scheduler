@@ -1444,7 +1444,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         } else {
             $startSunday = $lastSunday;
         }
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
             $result[] = $this->getFormattedTimestamp($startSunday + ($i * $day));
         }
         return $result;
