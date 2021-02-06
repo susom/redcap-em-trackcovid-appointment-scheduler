@@ -133,7 +133,7 @@ try {
         echo 'No saved participation for you';
     }
 } catch (\LogicException $e) {
-    $module->emError($e->getMessage());
+    $module->emError($e);
     echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
 }
 ?>
