@@ -12,10 +12,11 @@ try {
     if (!$module::isUserHasManagePermission()) {
         throw new \LogicException('You cant be here');
     }
-
+    $module->emLog('Line 15: before pulling records');
     //get records for all reservations.
     $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
         array_keys($module->getProject()->events['1']['events']));
+    $module->emLog('Line 15: after pulling records');
     $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
@@ -26,6 +27,7 @@ try {
     $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
         true);
+    $module->emLog('before foreach');
     if ($records) {
         ?>
         <div class="container-fluid">
