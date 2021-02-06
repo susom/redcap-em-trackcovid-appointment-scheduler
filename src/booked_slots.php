@@ -3,8 +3,6 @@
 
 namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 try {
@@ -47,6 +45,7 @@ try {
                 </thead>
                 <tbody>
                 <?php
+                $module->emLog('Line 50');
                 foreach ($records as $id => $events) {
                     $module->emLog('Line 51');
                     $module->emLog('get user info');
