@@ -161,18 +161,18 @@ class Participant
     {
         try {
 
-            $filter = "[reservation_participant_status] ='" . RESERVED . "'";
+            $filter = "[reservation_date] >'" . date('Y-m-d', strtotime('2021-01-01')) . "'";
             if (!is_null($events)) {
                 $param = array(
                     'project_id' => $projectId,
-                    //'filterLogic' => $filter,
+                    'filterLogic' => $filter,
                     'return_format' => 'array',
                     'events' => $events
                 );
             } else {
                 $param = array(
                     'project_id' => $projectId,
-                    //'filterLogic' => $filter,
+                    'filterLogic' => $filter,
                     'return_format' => 'array'
                 );
             }
