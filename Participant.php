@@ -272,7 +272,7 @@ class Participant
     {
         if (!$this->users) {
             $param = array(
-                'filterLogic' => $recordId,
+                #'filterLogic' => $recordId,
                 'return_format' => 'array',
                 'event_id' => $eventId
             );

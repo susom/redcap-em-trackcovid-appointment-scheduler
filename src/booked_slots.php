@@ -48,9 +48,11 @@ try {
                 <tbody>
                 <?php
                 foreach ($records as $id => $events) {
+                    $module->emLog('Line 51');
+                    $module->emLog('get user info');
                     $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
                     foreach ($events as $eventId => $record) {
-                        $module->emLog('Line 51');
+                        $module->emLog('Line 55');
                         $module->emLog($id);
                         //skip past, skipped or empty reservation
                         #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
