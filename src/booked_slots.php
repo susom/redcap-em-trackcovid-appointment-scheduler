@@ -3,9 +3,8 @@
 
 namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('display_errors', 'on');
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 try {
@@ -49,16 +48,18 @@ try {
                 <tbody>
                 <?php
                 foreach ($records as $id => $events) {
-                    $module->emLog('Line 49: inside loop');
                     $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
-                    $module->emLog($user);
                     foreach ($events as $eventId => $record) {
-                        $module->emLog($eventId);
+                        $module->emLog('Line 51');
+                        $module->emLog($id);
                         //skip past, skipped or empty reservation
                         #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
                         if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
                             continue;
                         }
+
+                        $module->emLog('Line 59');
+                        $module->emLog($module->isReservationInPast($record['reservation_datetime']));
                         //if past reservation we do not want to see it.
                         //exception for imported reservation.
                         if (empty($record['reservation_slot_id'])) {
@@ -74,8 +75,6 @@ try {
                             }
                         }
 
-                        $module->emLog('line 74');
-                        $module->emLog($record);
                         if ($record['trackcovid_baseline_survey_complete']) {
                             $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];
                         } elseif ($record['trackcovid_monthly_followup_survey_complete']) {
@@ -121,7 +120,6 @@ try {
                             </td>
                         </tr>
                         <?php
-                        $module->emLog('line 121');
                     }
                 }
                 ?>
@@ -135,6 +133,7 @@ try {
         echo 'No saved participation for you';
     }
 } catch (\LogicException $e) {
+    $module->emError($e->getMessage());
     echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
 }
 ?>
