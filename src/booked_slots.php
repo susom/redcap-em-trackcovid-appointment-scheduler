@@ -12,11 +12,9 @@ try {
     if (!$module::isUserHasManagePermission()) {
         throw new \LogicException('You cant be here');
     }
-    $module->emLog('Line 15: before pulling records');
     //get records for all reservations.
     $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
         array_keys($module->getProject()->events['1']['events']));
-    $module->emLog('Line 15: after pulling records');
     $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
@@ -27,7 +25,6 @@ try {
     $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
         true);
-    $module->emLog('before foreach');
     if ($records) {
         ?>
         <div class="container-fluid">
@@ -49,9 +46,11 @@ try {
                 <tbody>
                 <?php
                 foreach ($records as $id => $events) {
+                    $module->emLog('Line 49: inside loop');
                     $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
+                    $module->emLog($user);
                     foreach ($events as $eventId => $record) {
-
+                        $module->emLog($eventId);
                         //skip past, skipped or empty reservation
                         #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
                         if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
@@ -72,7 +71,8 @@ try {
                             }
                         }
 
-
+                        $module->emLog('line 74');
+                        $module->emLog($record);
                         if ($record['trackcovid_baseline_survey_complete']) {
                             $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];
                         } elseif ($record['trackcovid_monthly_followup_survey_complete']) {
@@ -118,6 +118,7 @@ try {
                             </td>
                         </tr>
                         <?php
+                        $module->emLog('line 121');
                     }
                 }
                 ?>
