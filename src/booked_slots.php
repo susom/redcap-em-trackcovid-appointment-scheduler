@@ -13,8 +13,11 @@ try {
         throw new \LogicException('You cant be here');
     }
     //get records for all reservations.
+    $module->emLog('before records call');
+    $module->emLog(array_keys($module->getProject()->events['1']['events']));
     $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
         array_keys($module->getProject()->events['1']['events']));
+    $module->emLog(count($records));
     $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
