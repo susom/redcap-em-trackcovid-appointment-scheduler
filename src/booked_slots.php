@@ -28,6 +28,7 @@ try {
     $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
         true);
+    $module->emLog('before if statement');
     if ($records) {
         ?>
         <div class="container-fluid">
