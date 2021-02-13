@@ -13,11 +13,8 @@ try {
         throw new \LogicException('You cant be here');
     }
     //get records for all reservations.
-    $module->emLog('before records call');
-    $module->emLog(array_keys($module->getProject()->events['1']['events']));
     $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
         array_keys($module->getProject()->events['1']['events']));
-    $module->emLog(count($records));
     $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
@@ -28,7 +25,6 @@ try {
     $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
         true);
-    $module->emLog('before if statement');
     if ($records) {
         ?>
         <div class="container-fluid">
@@ -51,12 +47,10 @@ try {
                 <?php
 
                 foreach ($records as $id => $events) {
-                    $module->emLog('record ' . $id);
-                    $module->emLog('inside first loop ');
+
                     $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
-                    $module->emLog('get user info');
                     foreach ($events as $eventId => $record) {
-                        $module->emLog('inside events loop ');
+
                         //skip past, skipped or empty reservation
                         #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
                         if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
@@ -123,9 +117,7 @@ try {
                             </td>
                         </tr>
                         <?php
-                        $module->emLog('end of events loop  ');
                     }
-                    $module->emLog('end of first  loop  ');
                 }
                 ?>
                 </tbody>
