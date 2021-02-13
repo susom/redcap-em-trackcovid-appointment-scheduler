@@ -269,16 +269,25 @@ class Participant
 
     public function getUserInfo($recordId, $eventId)
     {
-        if (!$this->users) {
-            $param = array(
-                #'filterLogic' => $recordId,
-                'return_format' => 'array',
-                'event_id' => $eventId
-            );
-            $this->users = \REDCap::getData($param);
-            return $this->users[$recordId][$eventId];
-        } else {
-            return $this->users[$recordId][$eventId];
-        }
+        $param = array(
+            #'filterLogic' => $recordId,
+            'return_format' => 'array',
+            'event_id' => $eventId,
+            'recods' => [$recordId]
+        );
+        $this->users = \REDCap::getData($param);
+        return $this->users[$recordId][$eventId];
+//        if (!$this->users) {
+//            $param = array(
+//                #'filterLogic' => $recordId,
+//                'return_format' => 'array',
+//                'event_id' => $eventId,
+//                'recods' => [$recordId]
+//            );
+//            $this->users = \REDCap::getData($param);
+//            return $this->users[$recordId][$eventId];
+//        } else {
+//            return $this->users[$recordId][$eventId];
+//        }
     }
 }
