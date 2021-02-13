@@ -161,7 +161,7 @@ class Participant
     {
         try {
 
-            $filter = "[reservation_date] >'" . date('Y-m-d', strtotime('-5 days')) . "'";
+            $filter = "[reservation_date] >'" . date('Y-m-d', strtotime('-2 days')) . "'";
             if (!is_null($events)) {
                 $param = array(
                     'project_id' => $projectId,
