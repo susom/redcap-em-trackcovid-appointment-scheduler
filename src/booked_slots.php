@@ -51,10 +51,12 @@ try {
                 <?php
 
                 foreach ($records as $id => $events) {
-
+                    $module->emLog('record ' . $id);
+                    $module->emLog('inside first loop ');
                     $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
+                    $module->emLog('get user info');
                     foreach ($events as $eventId => $record) {
-
+                        $module->emLog('inside events loop ');
                         //skip past, skipped or empty reservation
                         #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
                         if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
@@ -121,7 +123,9 @@ try {
                             </td>
                         </tr>
                         <?php
+                        $module->emLog('end of events loop  ');
                     }
+                    $module->emLog('end of first  loop  ');
                 }
                 ?>
                 </tbody>
