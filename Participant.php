@@ -176,7 +176,6 @@ class Participant
                     'return_format' => 'array'
                 );
             }
-
             $records = \REDCap::getData($param);
             return $records;
         } catch (\LogicException $e) {
