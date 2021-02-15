@@ -48,7 +48,8 @@ try {
 
                 foreach ($records as $id => $events) {
 
-                    $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
+                    //$user = $module->getParticipant()->getUserInfo($id, $firstEvent);
+                    $user = $records[$id][$firstEvent];
                     foreach ($events as $eventId => $record) {
 
                         //skip past, skipped or empty reservation
