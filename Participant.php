@@ -281,7 +281,7 @@ class Participant
             $param = array(
                 #'filterLogic' => $recordId,
                 'return_format' => 'array',
-                'event_id' => $eventId,
+                //'event_id' => $eventId,
                 //'recods' => [$recordId]
             );
             $this->users = \REDCap::getData($param);
