@@ -47,10 +47,11 @@ try {
                 </thead>
                 <tbody>
                 <?php
-
+                $ids = array_keys($records);
+                $users = $module->getParticipant()->getUserInfo(null, $firstEvent, $ids);
                 foreach ($records as $id => $events) {
 
-                    $user = $module->getParticipant()->getUserInfo($id, $firstEvent);
+                    $user = $users[$id][$firstEvent];
                     //$user = $records[$id][$firstEvent];
                     foreach ($events as $eventId => $record) {
 
