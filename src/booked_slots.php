@@ -12,13 +12,15 @@ try {
     if (!$module::isUserHasManagePermission()) {
         throw new \LogicException('You cant be here');
     }
+    $firstEvent = $module->getFirstEventId();
+    $eventIds = array_merge(array_keys($module->getProject()->events['1']['events']));
+    $eventIds[] = $firstEvent;
     //get records for all reservations.
-    $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(),
-        array_keys($module->getProject()->events['1']['events']));
+    $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(), $eventIds);
     $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
-    $firstEvent = $module->getFirstEventId();
+
     $locations = $module->getDefinedLocations();
     $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
     $managerURL = $module->getProjectSetting('manager-scheduler-url');
