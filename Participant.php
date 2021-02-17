@@ -272,7 +272,7 @@ class Participant
         $param = array(
             'return_format' => 'array',
             'event_id' => $eventId,
-            'records' => [$ids]
+            'records' => $ids
         );
         return \REDCap::getData($param);
     }
