@@ -267,34 +267,44 @@ class Participant
         return $result;
     }
 
-    public function getUserInfo($recordId, $eventId, $ids = null)
+    public function getAllUsersInfo($eventId, $ids)
     {
-//        $param = array(
-//            #'filterLogic' => $recordId,
-//            'return_format' => 'array',
-//            'event_id' => $eventId,
-//            'records' => [$recordId]
-//        );
-//        $this->users = \REDCap::getData($param);
-//        return $this->users[$recordId][$eventId];
-        if (!$this->users) {
-            if (!is_null($ids)) {
-                $param = array(
-                    'return_format' => 'array',
-                    'event_id' => $eventId,
-                    'records' => $ids
-                );
-            } else {
-                $param = array(
-                    'return_format' => 'array',
-                    'event_id' => $eventId
-                );
-            }
+        $param = array(
+            'return_format' => 'array',
+            'event_id' => $eventId,
+            'records' => [$ids]
+        );
+        return \REDCap::getData($param);
+    }
 
-            return \REDCap::getData($param);
-            //return $this->users[$recordId][$eventId];
-        } else {
-            return $this->users[$recordId][$eventId];
-        }
+    public function getUserInfo($recordId, $eventId)
+    {
+        $param = array(
+            #'filterLogic' => $recordId,
+            'return_format' => 'array',
+            'event_id' => $eventId,
+            'records' => [$recordId]
+        );
+        $this->users = \REDCap::getData($param);
+        return $this->users[$recordId][$eventId];
+//        if (!$this->users) {
+//            if (!is_null($ids)) {
+//                $param = array(
+//                    'return_format' => 'array',
+//                    'event_id' => $eventId,
+//                    'records' => $ids
+//                );
+//            } else {
+//                $param = array(
+//                    'return_format' => 'array',
+//                    'event_id' => $eventId
+//                );
+//            }
+//
+//            return \REDCap::getData($param);
+//            //return $this->users[$recordId][$eventId];
+//        } else {
+//            return $this->users[$recordId][$eventId];
+//        }
     }
 }
