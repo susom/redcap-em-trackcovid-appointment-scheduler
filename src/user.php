@@ -57,8 +57,14 @@ try {
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
                                 <ul class="navbar-nav"><?php
-                                    $r = $module->getParticipant()->getUserInfo($user['id'],
-                                        $module->getFirstEventId());
+                                    $param = array(
+                                        #'filterLogic' => $recordId,
+                                        'return_format' => 'array',
+                                        'event_id' => $module->getFirstEventId(),
+                                        'records' => [$user['id']]
+                                    );
+                                    $this->users = \REDCap::getData($param);
+                                    $r = $this->users[$user['id']][$module->getFirstEventId()];
                                     if ($r['first_name']) {
                                         ?>
                                         <li class="nav-item active">
