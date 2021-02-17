@@ -47,6 +47,7 @@ try {
                 </thead>
                 <tbody>
                 <?php
+                //list all ids in one array
                 $ids = array_keys($records);
                 $users = $module->getParticipant()->getAllUsersInfo($firstEvent, $ids);
                 foreach ($records as $id => $events) {
