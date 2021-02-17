@@ -267,7 +267,7 @@ class Participant
         return $result;
     }
 
-    public function getUserInfo($recordId, $eventId, $ids)
+    public function getUserInfo($recordId, $eventId, $ids = null)
     {
 //        $param = array(
 //            #'filterLogic' => $recordId,
@@ -278,12 +278,19 @@ class Participant
 //        $this->users = \REDCap::getData($param);
 //        return $this->users[$recordId][$eventId];
         if (!$this->users) {
-            $param = array(
-                #'filterLogic' => $recordId,
-                'return_format' => 'array',
-                'event_id' => $eventId,
-                'records' => $ids
-            );
+            if (!is_null($ids)) {
+                $param = array(
+                    'return_format' => 'array',
+                    'event_id' => $eventId,
+                    'records' => $ids
+                );
+            } else {
+                $param = array(
+                    'return_format' => 'array',
+                    'event_id' => $eventId
+                );
+            }
+
             return \REDCap::getData($param);
             //return $this->users[$recordId][$eventId];
         } else {
