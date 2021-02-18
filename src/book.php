@@ -7,8 +7,8 @@ use REDCap;
 
 
 try {
-    $module->emLog('before user check');
-    if ($user = $module->verifyCookie('login')) {
+    $recordId = filter_var($_POST['user_record_id'], FILTER_SANITIZE_STRING);
+    if ($user = $module->verifyCookie('login', $recordId)) {
         $module->emLog('user verified');
         /**
          * if survey booking with NOAUTH ignore login validation.

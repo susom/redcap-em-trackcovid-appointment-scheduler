@@ -273,6 +273,7 @@ jQuery(document).on('click', '#submit-booking-form', function (e) {
     record.type = jQuery("input[name='type']:checked").val();
     record.project_id = $('#project_id').find(":selected").val();
     record.date = record.calendarDate;
+    record.user_record_id = $('#user-record-id').val()
 
     var url = jQuery("#book-submit-url").val();
     jQuery.ajax({

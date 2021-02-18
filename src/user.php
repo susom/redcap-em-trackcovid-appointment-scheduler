@@ -28,6 +28,7 @@ try {
                 true) . '&event_id=' . $module->getScheduler()->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
         require_once 'urls.php';
         ?>
+        <input name="user-record-id" id="user-record-id" value="<?php echo $recordId ?>">
         <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/types.css', true, true) ?>">
         <script src="<?php echo $module->getUrl('src/js/user.js', true, true) ?>"></script>
         <script>
