@@ -7,7 +7,7 @@ use REDCap;
 
 
 try {
-    $recordId = filter_var($_POST['user_record_id'], FILTER_SANITIZE_STRING);
+    $recordId = filter_var($_POST['participant_id'], FILTER_SANITIZE_STRING);
     if ($user = $module->verifyCookie('login', $recordId)) {
         $module->emLog('user verified');
         /**
