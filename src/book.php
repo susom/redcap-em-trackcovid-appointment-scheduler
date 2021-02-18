@@ -7,7 +7,9 @@ use REDCap;
 
 
 try {
+    $module->emLog('before user check');
     if ($user = $module->verifyCookie('login')) {
+        $module->emLog('user verified');
         /**
          * if survey booking with NOAUTH ignore login validation.
          */
@@ -24,16 +26,16 @@ try {
         } else {
             $data['reservation_participant_id'] = filter_var($_POST['participant_id'], FILTER_SANITIZE_STRING);
         }
-
+        $module->emLog('before getting slot');
         $reservationEventId = filter_var($_POST['reservation_event_id'], FILTER_VALIDATE_INT);
         $slot = $module->getSlot(filter_var($_POST['record_id'], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
-
+        $module->emLog($slot);
 
         // check if any slot is available
         $counter = $module->getParticipant()->getSlotActualCountReservedSpots(filter_var($_POST['record_id'],
             FILTER_SANITIZE_STRING),
             $reservationEventId, '', $module->getProjectId(), $slot);
-
+        $module->emLog($counter);
         if ((int)($slot['number_of_participants'] - $counter['counter']) <= 0) {
             throw new \Exception("All time slots are booked please try different time");
         }
@@ -58,7 +60,7 @@ try {
         $locations = $module->getLocationRecords();
         $location = end($locations['SITE' . $data['reservation_participant_location']]);
         $data['reservation_site_affiliation'] = $location['site_affiliation'];
-
+        $module->emLog($locations);
         $data['reservation_datetime'] = $slot['start'];
         $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
         $data['reservation_created_at'] = date('Y-m-d H:i:s');
@@ -75,7 +77,7 @@ try {
         if ($rescheduleCounter != '') {
             $data['reservation_reschedule_counter'] = $rescheduleCounter + 1;
         }
-
+        $module->emLog($rescheduleCounter);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
         if (empty($response['errors'])) {
 
