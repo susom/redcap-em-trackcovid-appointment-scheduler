@@ -302,30 +302,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //        }
 //    }
 
-    /**
-     * @param int $event_id
-     * @return array
-     */
-    public function getTimeSlot($record_id, $event_id)
-    {
-        try {
-            if ($event_id) {
-
-                $filter = "[record_id] = '" . $record_id . "'";
-                $param = array(
-                    'filterLogic' => $filter,
-                    'return_format' => 'array',
-                    'events' => REDCap::getEventNames(true, false, $event_id)
-                );
-                $record = REDCap::getData($param);
-                return $record[$record_id][$event_id];
-            } else {
-                throw new \LogicException('Not event id passed, Aborting!');
-            }
-        } catch (\LogicException $e) {
-            echo $e->getMessage();
-        }
-    }
 
     private function sortRecordsByDate($records, $eventId)
     {
@@ -429,26 +405,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getBookedSlots($suffix)
-    {
-        try {
-            /*
-                 * TODO Check if date within allowed window
-                 */
-            $filter = "[start$suffix] > '" . date('Y-m-d') . "' AND " . "[slot_status$suffix] = '" . RESERVED . "'";
-            $param = array(
-                'project_id' => $this->getProjectId(),
-                'filterLogic' => $filter,
-                'return_format' => 'array'
-            );
-            return REDCap::getData($param);
-        } catch (\LogicException $e) {
-            echo $e->getMessage();
-        }
-    }
 
     /**
      * @return array
