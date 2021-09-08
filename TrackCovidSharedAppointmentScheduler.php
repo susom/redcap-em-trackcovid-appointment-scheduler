@@ -104,6 +104,7 @@ define("PARTICIPANT_STATUS", "reservation_participant_status");
  * @property int $recordId
  * @property \Project $project
  * @property boolean $baseLine
+ * @property boolean $bonusVisit
  * @property string $baseLineDate
  * @property array $locationRecords
  * @property int $defaultAffiliation
@@ -180,6 +181,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     private $defaultAffiliation;
 
     private $scheduler;
+
+    private $bonusVisit = false;
 
     /**
      * TrackCovidSharedAppointmentScheduler constructor.
@@ -1777,5 +1780,21 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     public function setInstances()
     {
         $this->instances = $this->getSubSettings('instance', $this->getProjectId());;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBonusVisit()
+    {
+        return $this->bonusVisit;
+    }
+
+    /**
+     * @param bool $bonusVisit
+     */
+    public function setBonusVisit($bonusVisit)
+    {
+        $this->bonusVisit = $bonusVisit;
     }
 }

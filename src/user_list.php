@@ -22,6 +22,16 @@ try {
             }
             list($month, $year) = $module->getEventMonthYear($event['day_offset']);
 
+            // for regular user skip the bonus visits. but not for coordinator
+            if ($event['day_offset'] >= 200 && $regularUser && $user['record'][$eventId]['reservation_datetime'] == '') {
+                continue;
+            } elseif ($event['day_offset'] >= 200) {
+                $event['day_offset'] = -1;
+                $module->setBonusVisit(true);
+            } else {
+                $module->setBonusVisit(false);
+            }
+
             $location = '';
             $canceledBaseline = false;
             $row = array();
@@ -88,12 +98,14 @@ try {
                         $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
                     } else {
                         // prevent cancel if appointment is in less than 48 hours
-                        if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0) {
+                        if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0 && !$module->isBonusVisit()) {
                             $action = 'This Appointment is in less than 48 hours please call to cancel!';
                         } elseif ($user['record'][$eventId]['visit_status'] == 1) {
                             $action = 'Appointment Completed';
-                        } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED) {
+                        } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && !$module->isBonusVisit()) {
                             $action = $module->getCancelActionButton($user, $eventId, $slot);
+                        } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && $module->isBonusVisit()) {
+                            $action = 'This is a bonus visit because you tested positive. To cancel please call us!';
                         } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
                             $action = 'This appointment is skipped';
                             $noSkip = true;
