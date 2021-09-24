@@ -72,6 +72,21 @@ try {
         if ($rescheduleCounter != '') {
             $data['reservation_reschedule_counter'] = $rescheduleCounter + 1;
         }
+
+        if ($module->getProjectSetting('pbmc-flag')) {
+            $data['is_pbmc'] = '0';
+            $dailyTotal = $module->getProjectSetting('pbmc-daily-spots');
+            $a1 = $reservationEventId;
+            $a2 = $module->getProjectId();
+            $a3 = date('Y-m-d', strtotime($slot['start']));
+            $a4 = $recordId;
+            $a5 = $module->getFirstEventId();
+            $pbmc = $module->getParticipant()->getSlotPBMCCountReservedSpots($reservationEventId, $module->getProjectId(), date('Y-m-d', strtotime($slot['start'])), $recordId, $module->getFirstEventId());
+            if ($pbmc < $dailyTotal) {
+                $data['is_pbmc'] = '1';
+            }
+        }
+
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
         if (empty($response['errors'])) {
 

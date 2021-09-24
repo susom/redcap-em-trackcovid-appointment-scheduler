@@ -106,6 +106,24 @@
       "type": "text"
     },
     {
+      "key": "pbmc-flag",
+      "name": "<b>PBMC flag. ",
+      "required": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "pbmc-daily-spots",
+      "name": "<b>Number of daily PBMC spots</b>",
+      "required": false,
+      "default": "10",
+      "type": "text",
+      "branchingLogic": {
+        "field": "pbmc-flag",
+        "op": "=",
+        "value": "1"
+      }
+    },
+    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,

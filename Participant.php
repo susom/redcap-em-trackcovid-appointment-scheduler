@@ -8,6 +8,8 @@ class Participant
 
     private $counter;
 
+    private $pbmcCounter;
+
     public $users;
 
     /**
@@ -126,6 +128,57 @@ class Participant
 //                }
 //            }
 //            return array('counter' => $counter, 'userBookThisSlot' => $userBookThisSlot);
+        } catch (\LogicException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    /**
+     * @param string $slotId
+     * @param int $eventId
+     * @param string $suffix
+     * @param int $projectId
+     * @param array $slot
+     * @return mixed
+     */
+    public function getSlotPBMCCountReservedSpots($eventId, $projectId, $date, $recordID, $firstEvent)
+    {
+        try {
+            //this flag will determine if logged in user booked this slot
+            if (!$this->pbmcCounter) {
+                $userBookThisSlot = false;
+                $counter = 0;
+                $param = array(
+                    'project_id' => $projectId,
+                    'return_format' => 'array',
+                    'events' => $eventId
+                );
+                $records = \REDCap::getData($param);
+                foreach ($records as $id => $record) {
+                    if ($recordID == $id) {
+                        // if pbmc is disabled then ignore
+                        if ($record[$firstEvent]['pbmc'] == "0") {
+                            return false;
+                        }
+                    }
+                    // if array then loop over that to events
+                    if (is_array($eventId)) {
+                        foreach ($eventId as $event) {
+                            if ($record[$event]["is_pbmc"] == "1" && date('Y-m-d', strtotime($record[$event]["reservation_date"])) == $date) {
+                                $this->pbmcCounter[$date]["pbmc_counter"]++;
+                            }
+                        }
+                    } else {
+                        if ($record[$eventId]["is_pbmc"] == "1" && date('Y-m-d', strtotime($record[$eventId]["reservation_date"])) == $date) {
+                            $this->pbmcCounter[$date]["pbmc_counter"]++;
+                        }
+                    }
+                }
+
+            }
+
+            return $this->pbmcCounter[$date]["pbmc_counter"];
         } catch (\LogicException $e) {
             echo $e->getMessage();
         }

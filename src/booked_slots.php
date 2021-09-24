@@ -38,6 +38,7 @@ try {
                     <th>Visit type</th>
                     <th>Location</th>
                     <th>Date</th>
+                    <th>Is PBMC?</th>
                     <th>Appointment time</th>
                     <th>Consent status</th>
                     <th>Survey status</th>
@@ -99,6 +100,7 @@ try {
                             <!--                            <td>-->
                             <td><?php echo $locations[$record['reservation_participant_location']] ? $locations[$record['reservation_participant_location']] : 'N/A'; ?></td>
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
+                            <td><?php echo $record['is_pbmc'] == '1' ? 'Yes' : 'No' ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
                             <td><?php echo $user['consent_date'] || $user['consent_date_esp'] || $user['consent_date_chi'] || $user['consent_date_tag'] || $user['consent_date'] ? 'Completed' : 'Incomplete' ?></td>
