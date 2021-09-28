@@ -1245,11 +1245,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 $end = date('Y-m-d', strtotime($start) + $week);
             }
         } else {
-            $start = date('Y-m-d', strtotime('+7 days'));
+            $start = date('Y-m-d  H:i:s', strtotime('tomorrow') + 12 * 60 * 60);
 
             #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
             #$start = date('Y-m-d');
-            $end = date('Y-m-d', strtotime('+30 days'));
+            $end = date('Y-m-d', strtotime('+22 days'));
         }
         return array($start, $end);
     }
@@ -1260,7 +1260,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline);
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . $start . ' and ' . $end . ')</small>';
+            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . $end . ')</small>';
         } else {
             return 'Please schedule Baseline Visit First to be able to schedule other visits!';
         }
