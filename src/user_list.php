@@ -20,6 +20,14 @@ try {
             } else {
                 $module->setBaseLine(false);
             }
+
+            # if this event has assigned cohort then check user cohort
+            if ($module->getEventCohort($eventId) != '') {
+                if ($module->getEventCohort($eventId) != $user['record'][$module->getFirstEventId()]['cohort']) {
+                    continue;
+                }
+            }
+
             list($month, $year) = $module->getEventMonthYear($event['day_offset']);
 
             // for regular user skip the bonus visits. but not for coordinator

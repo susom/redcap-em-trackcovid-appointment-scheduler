@@ -354,6 +354,26 @@
             "field": "block-booking",
             "value": "1"
           }
+        },
+        {
+          "key": "assigned-cohort",
+          "name": "<b>Optional: select cohort for this event</b>",
+          "required": false,
+          "type": "dropdown",
+          "choices": [
+            {
+              "name": "ALL",
+              "value": ""
+            },
+            {
+              "name": "Cohort 1",
+              "value": "1"
+            },
+            {
+              "name": "Cohort 2",
+              "value": "2"
+            }
+          ]
         }
       ]
     },

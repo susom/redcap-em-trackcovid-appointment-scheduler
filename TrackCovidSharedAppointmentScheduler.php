@@ -789,6 +789,20 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return $instance['show_location_options'];
     }
 
+    /**
+     * @return int
+     */
+    public function getEventCohort($eventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+
+            if ($instance['reservation_event_id'] == $eventId) {
+                return $instance['assigned-cohort'];
+            }
+        }
+        return false;
+    }
 
     /**
      * @return int
@@ -1245,8 +1259,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 $end = date('Y-m-d', strtotime($start) + $week);
             }
         } else {
-            # allow participant to book up 12 pm on next day.
-            $start = date('Y-m-d  H:i:s', strtotime('tomorrow') + 12 * 60 * 60);
+            # allow participant to book up 12 pm after two days.
+            $start = date('Y-m-d  H:i:s', strtotime('tomorrow') + 36 * 60 * 60);
 
             #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
             #$start = date('Y-m-d');
