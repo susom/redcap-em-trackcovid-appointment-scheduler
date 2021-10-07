@@ -94,7 +94,18 @@ try {
                                 <div class="row"><?php echo $user['email'] ?> </div>
                                 <div class="row"><?php echo $user['phone_number'] ?></div>
                                 <div class="row">
-                                    MRN: <?php echo $user['mrn_ucsf'] ? $user['mrn_ucsf'] : $user['mrn_stanford'] ?></div>
+                                    <?php
+                                    if ($user['mrn_ucsf'] != '') {
+                                        ?>
+                                        <div class="row">UCSF MRN: <?php echo $user['mrn_ucsf'] ?></div>
+                                        <?php
+                                    }
+                                    if ($user['mrn_stanford'] != '') {
+                                        ?>
+                                        <div class="row">Stanford MRN: <?php echo $user['mrn_stanford'] ?></div>
+                                        <?php
+                                    }
+                                    ?></div>
                             </td>
                             <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
                             <!--                            <td>-->
