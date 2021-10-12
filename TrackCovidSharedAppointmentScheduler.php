@@ -32,7 +32,17 @@ define('CAMPUS_AND_VIRTUAL_TEXT', 'Redwood City Campus , or Virtual via Zoom Mee
 define('VIRTUAL_ONLY_TEXT', 'Virtual via Zoom Meeting.');
 define('CAMPUS_ONLY_TEXT', 'Redwood City Campus');
 
+/**
+ * site Affiliation
+ */
+define('STANFORD_SITE_AFFILIATION', 1);
+define('UCSF_SITE_AFFILIATION', 2);
 
+/**
+ * COHORT
+ */
+define('COHOR_1', 1);
+define('COHOR_2', 2);
 /**
  * Constants for participation statuses
  */

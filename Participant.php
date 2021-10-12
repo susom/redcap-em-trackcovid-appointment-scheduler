@@ -142,13 +142,12 @@ class Participant
      * @param array $slot
      * @return mixed
      */
-    public function getSlotPBMCCountReservedSpots($eventId, $projectId, $date, $recordID, $firstEvent)
+    public function getSlotPBMCCountReservedSpots($eventId, $projectId, $date, $recordID, $firstEvent, $siteAffiliation)
     {
         try {
             //this flag will determine if logged in user booked this slot
             if (!$this->pbmcCounter) {
-                $userBookThisSlot = false;
-                $counter = 0;
+
                 $param = array(
                     'project_id' => $projectId,
                     'return_format' => 'array',
@@ -165,20 +164,20 @@ class Participant
                     // if array then loop over that to events
                     if (is_array($eventId)) {
                         foreach ($eventId as $event) {
-                            if ($record[$event]["is_pbmc"] == "1" && date('Y-m-d', strtotime($record[$event]["reservation_date"])) == $date) {
-                                $this->pbmcCounter[$date]["pbmc_counter"]++;
+                            if ($record[$event]["is_pbmc"] == "1" && date('Y-m-d', strtotime($record[$event]["reservation_date"])) == $date && $record[$event]['reservation_site_affiliation'] == $siteAffiliation) {
+                                $this->pbmcCounter[$date][$siteAffiliation]["pbmc_counter"]++;
                             }
                         }
                     } else {
-                        if ($record[$eventId]["is_pbmc"] == "1" && date('Y-m-d', strtotime($record[$eventId]["reservation_date"])) == $date) {
-                            $this->pbmcCounter[$date]["pbmc_counter"]++;
+                        if ($record[$eventId]["is_pbmc"] == "1" && date('Y-m-d', strtotime($record[$eventId]["reservation_date"])) == $date && $record[$eventId]['reservation_site_affiliation'] == $siteAffiliation) {
+                            $this->pbmcCounter[$date][$siteAffiliation]["pbmc_counter"]++;
                         }
                     }
                 }
 
             }
 
-            return $this->pbmcCounter[$date]["pbmc_counter"];
+            return $this->pbmcCounter[$date][$siteAffiliation]["pbmc_counter"];
         } catch (\LogicException $e) {
             echo $e->getMessage();
         }

@@ -112,8 +112,20 @@
       "type": "checkbox"
     },
     {
-      "key": "pbmc-daily-spots",
-      "name": "<b>Number of daily PBMC spots</b>",
+      "key": "pbmc-ucsf-daily-spots",
+      "name": "<b>Number of daily PBMC spots for UCSF</b>",
+      "required": false,
+      "default": "10",
+      "type": "text",
+      "branchingLogic": {
+        "field": "pbmc-flag",
+        "op": "=",
+        "value": "1"
+      }
+    },
+    {
+      "key": "pbmc-stanford-daily-spots",
+      "name": "<b>Number of daily PBMC spots for Stanford</b>",
       "required": false,
       "default": "10",
       "type": "text",
