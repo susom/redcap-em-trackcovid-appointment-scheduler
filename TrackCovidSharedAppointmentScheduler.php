@@ -397,6 +397,42 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
+    public function isWeekend($date)
+    {
+        $weekDay = date('w', strtotime($date));
+        return ($weekDay == 0 || $weekDay == 6);
+    }
+
+    public function determinePBMCEligibility($user, $data, $recordId, $slot, $reservationEventId)
+    {
+        // only cohort 1 with pbmc flag equal true
+        if ($user['record'][$this->getFirstEventId()]['cohort'] == COHOR_1 && $user['record'][$this->getFirstEventId()]['pbmc'] && $this->getProjectSetting('pbmc-flag')) {
+
+            if ($data['reservation_site_affiliation'] == STANFORD_SITE_AFFILIATION) {
+                $dailyTotal = $this->getProjectSetting('pbmc-stanford-daily-spots');
+            } elseif ($data['reservation_site_affiliation'] == UCSF_SITE_AFFILIATION) {
+                $dailyTotal = $this->getProjectSetting('pbmc-ucsf-daily-spots');
+
+                // no PBMC on weekends
+                if ($this->isWeekend($slot['start'])) {
+                    return false;
+                }
+
+                // if appt after 2 pm
+                if (date("H", strtotime($slot['start'])) >= 2 && date("H", strtotime($slot['start'])) <= 8) {
+                    return false;
+                }
+            }
+
+
+            $pbmc = $this->getParticipant()->getSlotPBMCCountReservedSpots($reservationEventId, $this->getProjectId(), date('Y-m-d', strtotime($slot['start'])), $recordId, $this->getFirstEventId(), $data['reservation_site_affiliation']);
+            if ($pbmc < $dailyTotal) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @return array
      */

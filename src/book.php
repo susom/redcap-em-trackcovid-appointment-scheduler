@@ -73,20 +73,8 @@ try {
             $data['reservation_reschedule_counter'] = $rescheduleCounter + 1;
         }
         $data['is_pbmc'] = '0';
-        // only cohort 1 with pbmc flag equal true
-        if ($user['record'][$module->getFirstEventId()]['cohort'] == COHOR_1 && $user['record'][$module->getFirstEventId()]['pbmc'] && $module->getProjectSetting('pbmc-flag')) {
-
-            if ($data['reservation_site_affiliation'] == STANFORD_SITE_AFFILIATION) {
-                $dailyTotal = $module->getProjectSetting('pbmc-stanford-daily-spots');
-            } elseif ($data['reservation_site_affiliation'] == UCSF_SITE_AFFILIATION) {
-                $dailyTotal = $module->getProjectSetting('pbmc-ucsf-daily-spots');
-            }
-
-
-            $pbmc = $module->getParticipant()->getSlotPBMCCountReservedSpots($reservationEventId, $module->getProjectId(), date('Y-m-d', strtotime($slot['start'])), $recordId, $module->getFirstEventId(), $data['reservation_site_affiliation']);
-            if ($pbmc < $dailyTotal) {
-                $data['is_pbmc'] = '1';
-            }
+        if ($module->determinePBMCEligibility($user, $data, $recordId, $slot, $reservationEventId)) {
+            $data['is_pbmc'] = '1';
         }
 
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
