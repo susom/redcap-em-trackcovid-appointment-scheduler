@@ -102,6 +102,7 @@ try {
                                     }
                                     if ($user['mrn_stanford'] != '') {
                                         ?>
+                                        <br>
                                         <div class="row">Stanford MRN: <?php echo $user['mrn_stanford'] ?></div>
                                         <?php
                                     }
