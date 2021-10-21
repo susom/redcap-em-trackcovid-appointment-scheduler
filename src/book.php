@@ -73,7 +73,7 @@ try {
             $data['reservation_reschedule_counter'] = $rescheduleCounter + 1;
         }
 
-        if ($this->getProjectSetting('pbmc-flag')) {
+        if ($module->getProjectSetting('pbmc-flag')) {
             $data['is_pbmc'] = '0';
 
             if ($module->determinePBMCEligibility($user, $data, $recordId, $slot, $reservationEventId)) {
