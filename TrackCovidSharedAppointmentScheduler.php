@@ -1284,8 +1284,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //                }
 
             $add = $offset * 60 * 60 * 24;
-            // fro bonus visits end after two weeks
-            $week = 604800 * $offset == -1 ? 1 : 2;
+            $week = 604800;
             if (!$canceledBaseline) {
                 $start = date('Y-m-d', strtotime($baseline) + $add - $week);
             } else {
@@ -1303,7 +1302,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             // final check if $end is lower than start add one week to end
             if (strtotime($start) > strtotime($end)) {
-                $end = date('Y-m-d', strtotime($start) + $week);
+                if ($offset == -1) {
+                    $end = date('Y-m-d', strtotime($start) + $week * 2);
+                } else {
+                    $end = date('Y-m-d', strtotime($start) + $week);
+                }
             }
         } else {
             # allow participant to book up 12 pm after two days.
