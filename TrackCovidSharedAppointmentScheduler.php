@@ -1311,13 +1311,14 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
             #$start = date('Y-m-d');
             $end = date('Y-m-d', strtotime('+22 days'));
-            $this->emLog("Start: $start");
-            $this->emLog("End: $end");
         }
         if ($offset == -1) {
             $this->emLog("Baseline: $baseline");
             $this->emLog("Start: $start");
             $this->emLog("End: $end");
+            $this->emLog("Raw date: " . date('Y-m-d'));
+            $this->emLog("Raw time: " . strtotime('+22 days'));
+            $this->emLog("Raw: " . date('Y-m-d', strtotime('+22 days')));
         }
         return array($start, $end);
     }
