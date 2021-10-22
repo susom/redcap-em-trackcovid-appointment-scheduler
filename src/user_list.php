@@ -34,7 +34,7 @@ try {
             if ($event['day_offset'] >= 200 && $regularUser && $user['record'][$eventId]['reservation_datetime'] == '') {
                 continue;
             } elseif ($event['day_offset'] >= 200) {
-                $event['day_offset'] = -1;
+                $event['day_offset'] = 14;
                 $module->setBonusVisit(true);
             } else {
                 $module->setBonusVisit(false);
