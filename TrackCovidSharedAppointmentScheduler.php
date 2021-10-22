@@ -1284,7 +1284,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //                }
 
             $add = $offset * 60 * 60 * 24;
-            $week = 604800;
+            // fro bonus visits end after two weeks
+            $week = 604800 * $offset == -1 ? 1 : 2;
             if (!$canceledBaseline) {
                 $start = date('Y-m-d', strtotime($baseline) + $add - $week);
             } else {
