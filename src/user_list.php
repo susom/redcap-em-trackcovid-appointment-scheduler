@@ -113,7 +113,7 @@ try {
                         } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && !$module->isBonusVisit()) {
                             $action = $module->getCancelActionButton($user, $eventId, $slot);
                         } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && $module->isBonusVisit()) {
-                            $action = 'This is a bonus visit because you tested positive. To cancel please call us!';
+                            $action = 'To cancel please call us!';
                         } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
                             $action = 'This appointment is skipped';
                             $noSkip = true;
