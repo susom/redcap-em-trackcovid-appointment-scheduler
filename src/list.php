@@ -33,7 +33,6 @@ if (!empty($data)) {
          * skip past slots.
          */
         if ($module->isSlotInPast($slot, $suffix)) {
-            $module->emLog($slot['start' . $suffix]);
             continue;
         }
 
@@ -49,7 +48,7 @@ if (!empty($data)) {
 //            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
 
         $available = (int)($slot['number_of_participants' . $suffix] - ($slot['number_of_booked_slots'] + $slot['number_of_external_booked_slots']));;
-
+        $module->emLog($slot['start' . $suffix] . ' available' . $available . ' number_of_participants ' . $slot['number_of_participants' . $suffix] . ' number_of_booked_slots: ' . $slot['number_of_booked_slots'] . ' number_of_external_booked_slots ' . $slot['number_of_external_booked_slots']);
         if ($available <= 0) {
             continue;
         }
