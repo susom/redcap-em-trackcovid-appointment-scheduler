@@ -372,7 +372,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                     if ($blockingDate && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) >= strtotime($blockingDate)) {
                         continue;
                     }
-                    $this->emLog("date: " . $record[$this->getScheduler()->getSlotsEventId()][$variable]);
+
                     if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
                         if ($affiliation) {
                             $locations = $this->getLocationRecords();
@@ -384,7 +384,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                         } else {
                             $data[] = $record;
                         }
-
+                        $this->emLog("date: " . $record[$this->getScheduler()->getSlotsEventId()][$variable]);
                     }
                 }
                 return $this->sortRecordsByDate($data, $eventId);
