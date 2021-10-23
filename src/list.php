@@ -33,6 +33,7 @@ if (!empty($data)) {
          * skip past slots.
          */
         if ($module->isSlotInPast($slot, $suffix)) {
+            $module->emLog($slot['start' . $suffix]);
             continue;
         }
 
@@ -43,7 +44,7 @@ if (!empty($data)) {
             $slot['record_id'] = array_pop(array_reverse($slot));
         }
 
-
+        $module->emLog($slot['start' . $suffix]);
 //        $counter = $module->getParticipant()->getSlotActualCountReservedSpots($slot['record_id'],
 //            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
 

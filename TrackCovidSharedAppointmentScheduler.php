@@ -387,7 +387,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
                     }
                 }
-                $this->emLog($data);
+                foreach ($data as $item) {
+                    $this->emLog($item);
+                }
                 return $this->sortRecordsByDate($data, $eventId);
             } else {
                 throw new \LogicException('Not event id passed, Aborting!');
