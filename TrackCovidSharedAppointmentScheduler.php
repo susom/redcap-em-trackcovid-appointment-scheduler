@@ -1311,7 +1311,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             }
         } else {
             # allow participant to book up 12 pm after two days.
-            $start = date('Y-m-d  H:i:s', strtotime('tomorrow') + 36 * 60 * 60);
+            $start = date('Y-m-d  H:i:s', strtotime('tomorrow') + 1 * 60 * 60);
 
             #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
             #$start = date('Y-m-d');
