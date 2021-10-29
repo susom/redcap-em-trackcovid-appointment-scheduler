@@ -22,7 +22,7 @@ try {
     $slots = $module->getAllOpenSlots();
 
     $locations = $module->getDefinedLocations();
-    $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata['trackcovid_monthly_followup_survey_complete']['element_enum']);
+    $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata["trackcovid_followup_survey_complete"]['element_enum']);
     $managerURL = $module->getProjectSetting('manager-scheduler-url');
     $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
