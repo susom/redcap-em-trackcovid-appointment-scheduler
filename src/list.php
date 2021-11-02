@@ -4,6 +4,7 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
+$id = filter_var($_GET['record_id'], FILTER_SANITIZE_STRING);
 $suffix = $module->getSuffix();
 $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
 $reservationEventId = filter_var($_GET['reservation_event_id'], FILTER_SANITIZE_NUMBER_INT);
@@ -16,6 +17,7 @@ $canceledBaseline = filter_var($_GET['canceled_baseline'], FILTER_VALIDATE_INT);
 $data = $module->getMonthSlots($eventId, null, null, $baseline, $offset, $affiliation, $canceledBaseline, $reservationEventId);
 $result = array();
 $result['data'] = array();
+$user = $module->verifyCookie('login', $id);
 if (!empty($data)) {
     #$reservationEventId = $module->getReservationEventIdViaSlotEventId($eventId);
     /**
@@ -29,6 +31,22 @@ if (!empty($data)) {
          */
         $day = date('d', strtotime($slot['start' . $suffix]));
 
+        /**
+         * skip for blackout dates if specified
+         */
+
+        if ($module->getProjectSetting('blackout_start') != '' && $module->getProjectSetting('blackout_end') != '') {
+            $date = date('Y-m-d', strtotime($slot['start' . $suffix]));
+            $cohort = true;
+
+            if ($module->getProjectSetting('blackout_cohort') != '') {
+                $cohort = $user['record'][$module->getFirstEventId()]['cohort'] == $module->getProjectSetting('blackout_cohort');
+            }
+
+            if ($cohort && strtotime($date) >= strtotime($module->getProjectSetting('blackout_start')) && strtotime($date) <= strtotime($module->getProjectSetting('blackout_end'))) {
+                continue;
+            }
+        }
         /**
          * skip past slots.
          */
