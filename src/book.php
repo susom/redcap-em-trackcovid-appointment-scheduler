@@ -74,13 +74,6 @@ try {
             $data['reservation_reschedule_counter'] = $rescheduleCounter + 1;
         }
 
-        if ($module->getProjectSetting('pbmc-flag')) {
-            $data['is_pbmc'] = '0';
-
-            if ($module->determinePBMCEligibility($user, $data, $recordId, $slot, $reservationEventId)) {
-                $data['is_pbmc'] = '1';
-            }
-        }
 
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
         if (empty($response['errors'])) {

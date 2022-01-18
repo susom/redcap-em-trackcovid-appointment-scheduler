@@ -39,7 +39,6 @@ try {
                     <th>Location</th>
                     <th>Date</th>
                     <th>Cohort</th>
-                    <th>Is PBMC?</th>
                     <th>Appointment time</th>
                     <th>Consent status</th>
                     <th>Survey status</th>
@@ -114,7 +113,6 @@ try {
                             <td><?php echo $locations[$record['reservation_participant_location']] ? $locations[$record['reservation_participant_location']] : 'N/A'; ?></td>
                             <td><?php echo date('m/d/Y', strtotime($slot['start'])) ?></td>
                             <td><?php echo $user['cohort'] == '1' ? 'Cohort 1' : 'Cohort 2' ?></td>
-                            <td><?php echo $record['is_pbmc'] == '1' ? 'Yes' : 'No' ?></td>
                             <td><?php echo date('H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
                                         strtotime($slot['end'])) ?></td>
                             <td><?php echo $user['consent_pdf'] ? 'Completed' : 'Incomplete' ?></td>

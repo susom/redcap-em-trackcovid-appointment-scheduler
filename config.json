@@ -106,36 +106,6 @@
       "type": "text"
     },
     {
-      "key": "pbmc-flag",
-      "name": "<b>PBMC flag. ",
-      "required": false,
-      "type": "checkbox"
-    },
-    {
-      "key": "pbmc-ucsf-daily-spots",
-      "name": "<b>Number of daily PBMC spots for UCSF</b>",
-      "required": false,
-      "default": "10",
-      "type": "text",
-      "branchingLogic": {
-        "field": "pbmc-flag",
-        "op": "=",
-        "value": "1"
-      }
-    },
-    {
-      "key": "pbmc-stanford-daily-spots",
-      "name": "<b>Number of daily PBMC spots for Stanford</b>",
-      "required": false,
-      "default": "10",
-      "type": "text",
-      "branchingLogic": {
-        "field": "pbmc-flag",
-        "op": "=",
-        "value": "1"
-      }
-    },
-    {
       "key": "blackout_start",
       "name": "<b>Blackout start</b>",
       "required": false,
