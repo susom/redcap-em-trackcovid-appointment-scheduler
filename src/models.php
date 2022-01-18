@@ -1,5 +1,5 @@
 <?php
-/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
+/** @var \Stanford\WISESharedAppointmentScheduler\WISESharedAppointmentScheduler $module */
 //this when called for redcap hook
 if (!isset($module)) {
     $module = $this;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
-/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
+/** @var \Stanford\WISESharedAppointmentScheduler\WISESharedAppointmentScheduler $module */
 
 use REDCap;
 
@@ -30,9 +30,9 @@ require_once 'urls.php';
         <div class="row">
             <div class="col-3">
                 <a href="http://www.stanford.edu"><img
-                            src="<?php echo $module->getUrl('src/images/trackcovid_logo.png', true,
+                            src="<?php echo $module->getUrl('src/images/WISE_logo.png', true,
                                 true) ?>"
-                            alt="TrackCovid" class="h-auto"></a>
+                            alt="WISE" class="h-auto"></a>
             </div>
             <div class="col-9">
                 <nav class="navbar-expand-sm navbar-light">

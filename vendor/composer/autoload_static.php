@@ -4,17 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8
+class ComposerStaticInit8aca58806e7aa488abdb5fb4cae376b0
 {
-    public static $files = array (
+    public static $files = array(
         '47b18101462cdeb25f661813113e3182' => __DIR__ . '/..' . '/kigkonsult/icalcreator/autoload.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'T' => 
-        array (
-            'Twilio\\' => 7,
-        ),
+    public static $prefixLengthsPsr4 = array(
+        'T' =>
+            array(
+                'Twilio\\' => 7,
+            ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -47,19 +47,24 @@ class ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
-        'Kigkonsult\\Icalcreator\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',
-            1 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Util',
-            2 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Traits',
-        ),
+        'Kigkonsult\\Icalcreator\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',
+                1 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Util',
+                2 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src/Traits',
+            ),
+    );
+
+    public static $classMap = array(
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd7b90f3202537ad4f1a6843c539c7ad8::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8aca58806e7aa488abdb5fb4cae376b0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8aca58806e7aa488abdb5fb4cae376b0::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8aca58806e7aa488abdb5fb4cae376b0::$classMap;
 
         }, null, ClassLoader::class);
     }

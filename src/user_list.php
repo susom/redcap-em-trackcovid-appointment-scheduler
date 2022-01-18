@@ -1,8 +1,8 @@
 <?php
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
-/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
+/** @var \Stanford\WISESharedAppointmentScheduler\WISESharedAppointmentScheduler $module */
 
 try {
     $id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);

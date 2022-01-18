@@ -1,11 +1,11 @@
 <?php
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
 
 /**
  * Class Scheduler
- * @package Stanford\TrackCovidSharedAppointmentScheduler
+ * @package Stanford\WISESharedAppointmentScheduler
  * @property \Project $project
  * @property array $sites;
  * @property string $slotsEventId

@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
-/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
+/** @var \Stanford\WISESharedAppointmentScheduler\WISESharedAppointmentScheduler $module */
 
 try {
     /**
@@ -22,7 +22,7 @@ try {
     $slots = $module->getAllOpenSlots();
 
     $locations = $module->getDefinedLocations();
-    $trackcovid_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata["trackcovid_followup_survey_complete"]['element_enum']);
+    $WISE_monthly_followup_survey_complete_statuses = parseEnum($module->getProject()->metadata["WISE_followup_survey_complete"]['element_enum']);
     $managerURL = $module->getProjectSetting('manager-scheduler-url');
     $visitSummary = $module->getProjectSetting('visit-summary-instrument');
     $url = $module->getUrl('src/user.php', false,
@@ -79,10 +79,10 @@ try {
                             }
                         }
 
-                        if ($record['trackcovid_baseline_survey_complete']) {
-                            $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_baseline_survey_complete']];
-                        } elseif ($record['trackcovid_monthly_followup_survey_complete']) {
-                            $status = $trackcovid_monthly_followup_survey_complete_statuses[$record['trackcovid_monthly_followup_survey_complete']];
+                        if ($record['WISE_baseline_survey_complete']) {
+                            $status = $WISE_monthly_followup_survey_complete_statuses[$record['WISE_baseline_survey_complete']];
+                        } elseif ($record['WISE_monthly_followup_survey_complete']) {
+                            $status = $WISE_monthly_followup_survey_complete_statuses[$record['WISE_monthly_followup_survey_complete']];
                         } else {
                             $status = 'Incomplete';
                         }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
 use REDCap;
 
 include_once 'emLoggerTrait.php';
 include_once 'Participant.php';
 include_once 'Scheduler.php';
-include_once 'TrackCovidSharedCalendarEmail.php';
+include_once 'WISESharedCalendarEmail.php';
 
 if (file_exists(__DIR__ . '../vendor/autoload.php')) {
     // Required if your environment does not handle autoloading
@@ -98,15 +98,15 @@ define("LOCATION", "location");
 define("PARTICIPANT_STATUS", "reservation_participant_status");
 
 /**
- * Class TrackCovidSharedAppointmentScheduler
- * @package Stanford\TrackCovidSharedAppointmentScheduler
- * @property \TrackCovidSharedCalendarEmail $emailClient
+ * Class WISESharedAppointmentScheduler
+ * @package Stanford\WISESharedAppointmentScheduler
+ * @property \WISESharedCalendarEmail $emailClient
  * @property Client $twilioClient
  * @property  array $instances
  * @property int $eventId
  * @property array $eventInstance
  * @property array $calendarParams
- * @property \Stanford\TrackCovidSharedAppointmentScheduler\Participant $participant
+ * @property \Stanford\WISESharedAppointmentScheduler\Participant $participant
  * @property \Monolog\Logger $logger
  * @property string $suffix
  * @property int $mainSurveyId
@@ -118,15 +118,15 @@ define("PARTICIPANT_STATUS", "reservation_participant_status");
  * @property string $baseLineDate
  * @property array $locationRecords
  * @property int $defaultAffiliation
- * @property \Stanford\TrackCovidSharedAppointmentScheduler\Scheduler $scheduler
+ * @property \Stanford\WISESharedAppointmentScheduler\Scheduler $scheduler
  */
-class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExternalModule
+class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalModule
 {
 
     use emLoggerTrait;
 
     /**
-     * @var \TrackCovidSharedCalendarEmail|null
+     * @var \WISESharedCalendarEmail|null
      */
     private $emailClient = null;
 
@@ -195,7 +195,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     private $bonusVisit = false;
 
     /**
-     * TrackCovidSharedAppointmentScheduler constructor.
+     * WISESharedAppointmentScheduler constructor.
      */
     public function __construct()
     {
@@ -257,7 +257,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             /**
              * Initiate Email Participant
              */
-            $this->setParticipant(new  \Stanford\TrackCovidSharedAppointmentScheduler\Participant());
+            $this->setParticipant(new  \Stanford\WISESharedAppointmentScheduler\Participant());
 
             /**
              * Only call this class when event is provided.
@@ -353,7 +353,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $affiliation = null,
         $canceledBaseline = false,
         $reservationEventId = ''
-    ) {
+    )
+    {
         try {
             if ($this->getScheduler()->getSlotsEventId()) {
 
@@ -1378,8 +1379,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $locations = array();
             //filter the locations based on what defined on config.json
             foreach ($results as $id => $result) {
-               // if (in_array($id, $this->getScheduler()->getSites())) {
-                    $locations[$id] = $result;
+                // if (in_array($id, $this->getScheduler()->getSites())) {
+                $locations[$id] = $result;
                 // }
             }
             $this->locationRecords = $locations;
@@ -1759,7 +1760,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     }
 
     /**
-     * @return \TrackCovidSharedCalendarEmail
+     * @return \WISESharedCalendarEmail
      */
     public function getEmailClient()
     {
@@ -1767,16 +1768,16 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     }
 
     /**
-     * @param \TrackCovidSharedCalendarEmail $emailClient
+     * @param \WISESharedCalendarEmail $emailClient
      */
     public function setEmailClient()
     {
-        $this->emailClient = new \TrackCovidSharedCalendarEmail;
+        $this->emailClient = new \WISESharedCalendarEmail;
     }
 
 
     /**
-     * @return \Stanford\TrackCovidSharedAppointmentScheduler\Participant
+     * @return \Stanford\WISESharedAppointmentScheduler\Participant
      */
     public function getParticipant()
     {
@@ -1784,7 +1785,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     }
 
     /**
-     * @param \Stanford\TrackCovidSharedAppointmentScheduler\Participant $participant
+     * @param \Stanford\WISESharedAppointmentScheduler\Participant $participant
      */
     public function setParticipant($participant)
     {

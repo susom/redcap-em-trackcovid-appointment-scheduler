@@ -1,7 +1,7 @@
 {
-  "name": "Track COVID-19 Shared Appointment Scheduler",
-  "namespace": "Stanford\\TrackCovidSharedAppointmentScheduler",
-  "description": "Allow users to Schedule COVID-19 testing.",
+  "name": "WISE Shared Appointment Scheduler",
+  "namespace": "Stanford\\WISESharedAppointmentScheduler",
+  "description": "Allow users to Schedule Appointments",
   "authors": [
     {
       "name": "Ihab Zeedia",

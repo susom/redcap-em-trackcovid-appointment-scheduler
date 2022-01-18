@@ -1,6 +1,6 @@
 <?php
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
 
 class Participant
@@ -68,7 +68,7 @@ class Participant
 
     public static function canUserUpdateReservations($sunetId)
     {
-        if ((defined('USERID') && USERID == $sunetId) || TrackCovidSharedAppointmentScheduler::isUserHasManagePermission()) {
+        if ((defined('USERID') && USERID == $sunetId) || WISESharedAppointmentScheduler::isUserHasManagePermission()) {
             return true;
         }
         return false;

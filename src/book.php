@@ -1,15 +1,16 @@
 <?php
 
-namespace Stanford\TrackCovidSharedAppointmentScheduler;
+namespace Stanford\WISESharedAppointmentScheduler;
 
 use REDCap;
-/** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
+
+/** @var \Stanford\WISESharedAppointmentScheduler\WISESharedAppointmentScheduler $module */
 
 
 try {
     $recordId = filter_var($_POST['participant_id'], FILTER_SANITIZE_STRING);
     if ($user = $module->verifyCookie('login', $recordId)) {
-         /**
+        /**
          * if survey booking with NOAUTH ignore login validation.
          */
         if (!defined('USERID') && !defined('NOAUTH')) {
