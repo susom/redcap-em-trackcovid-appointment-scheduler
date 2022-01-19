@@ -2,7 +2,7 @@ User = {
     listURL: '',
     slotsEventId: '',
     cancelURL: '',
-    userListURL: '',
+    instancesListURL: '',
     loginURL: '',
     record: {},
     locations: [],
@@ -285,7 +285,7 @@ User = {
     },
     loadUserVisits: function () {
         jQuery.ajax({
-            'url': User.userListURL,
+            'url': User.instancesListURL,
             'type': 'GET',
             'beforeSend': function () {
                 /**

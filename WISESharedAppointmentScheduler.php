@@ -406,6 +406,23 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
 
+    public function verifyInstanceLogic($eventId, $recordId)
+    {
+        $instance = $this->getEventIdInstance($eventId);
+        if (!empty($instance)) {
+            if ($instance['instance-logic-enabler'] != '') {
+                $aa = REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
+                return REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
+            } else {
+                // if no logic defined for this instance then use default config
+                return $instance['default-instance-visibility'] == '1' ? true : false;
+            }
+        }
+
+        // by default if instance is not defined for scheduler the
+        return false;
+    }
+
     /**
      * @return array
      */
@@ -1573,6 +1590,15 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $this->defaultAffiliation = $defaultAffiliation;
     }
 
+    public function getEventIdInstance($eventId)
+    {
+        foreach ($this->getInstances() as $instance) {
+            if ($instance['reservation_event_id'] == $eventId) {
+                return $instance;
+            }
+        }
+        return array();
+    }
 
     public function getReservationEvents()
     {

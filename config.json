@@ -29,7 +29,7 @@
     "src/participants_list",
     "src/list",
     "src/user",
-    "src/user_list",
+    "src/instances_list",
     "src/verify",
     "src/login"
   ],
@@ -171,6 +171,29 @@
           "name": "<b>Appointment Reservation Event</b><br>Select the arm/event where each record corresponds to a reserved appointment slot.  This event must have the 'Reservation' form enabled",
           "required": true,
           "type": "event-list"
+        },
+        {
+          "key": "default-instance-visibility",
+          "name": "Select instance visibility if no logic available to determine instance visibility",
+          "required": true,
+          "type": "dropdown",
+          "default": "1",
+          "choices": [
+            {
+              "name": "Display",
+              "value": "1"
+            },
+            {
+              "name": "Hide",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "key": "instance-logic-enabler",
+          "name": "<b>(OPTIONAL)</b> Add REDCap logic that determines to display scheduler instance.",
+          "required": false,
+          "type": "textarea"
         },
         {
           "key": "participant_identifier",

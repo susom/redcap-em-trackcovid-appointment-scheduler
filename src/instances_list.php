@@ -47,6 +47,13 @@ try {
             if (!in_array('reservation', $module->getProject()->eventsForms[$eventId])) {
                 continue;
             }
+
+            // verify logic is valid
+            if (!$module->verifyInstanceLogic($eventId, $id)) {
+                continue;
+            }
+
+
             // check if user has record for this event
             $status = '';
             if (isset($user['record'][$eventId])) {
