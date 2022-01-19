@@ -144,6 +144,7 @@ try {
                    cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th>Offset</th>
                     <th>Visit</th>
                     <th>Status</th>
                     <th>Date</th>

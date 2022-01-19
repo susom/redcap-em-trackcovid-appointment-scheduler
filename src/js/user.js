@@ -299,10 +299,14 @@ User = {
                     data: data.data,
                     pageLength: 50,
                     "bDestroy": true,
-                    "aaSorting": [[0, "asc"]],
+                    columnDefs: [{
+                        targets: 0,
+                        visible: false
+                    }],
+                    // "aaSorting": [[0, "asc"]],
                     initComplete: function () {
                         // we only need day and location filter.
-                        this.api().columns([1]).every(function (index) {
+                        this.api().columns([2]).every(function (index) {
                             // below function will add filter to remove previous/completed appointments
                             var column = this;
                             $('<input type="checkbox" id="previous-filter" name="old" checked/>')

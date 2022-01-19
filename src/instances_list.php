@@ -153,6 +153,7 @@ try {
                 $action .= $module->getSkipActionButton($user, $eventId);
             }
 
+            $row[] = '22';
             $row[] = $event['descrip'];
             $row[] = $status;
             $row[] = $time;
