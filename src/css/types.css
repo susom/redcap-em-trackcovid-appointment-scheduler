@@ -42,6 +42,10 @@ body.loading .loader {
     min-height: 30px;
 }
 
+small {
+    font-size: 60%
+}
+
 #brandbar img {
     margin-top: 9px;
     margin-bottom: 9px;

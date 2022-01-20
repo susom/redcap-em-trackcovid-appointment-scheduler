@@ -6,10 +6,20 @@ User = {
     loginURL: '',
     record: {},
     locations: [],
+    timezones: {
+        300: 'EST',
+        360: 'CST',
+        420: 'MST',
+        480: 'PST',
+    },
     currentOffset: null,
+    userTimezone: '',
     init: function () {
         //$("#appointments").dataTable();
         User.loadUserVisits();
+
+        // calculate user timezone
+        User.calculateUserTimezone();
 
 
         $(document).on("click", ".logout", function () {
@@ -48,7 +58,7 @@ User = {
             User.currentOffset = jQuery(this).data('offset');
             ;
             jQuery.ajax({
-                'url': User.listURL + "&event_id=" + User.slotsEventId + "&baseline=" + jQuery(this).data('baseline') + "&offset=" + jQuery(this).data('offset') + "&affiliation=" + jQuery(this).data('affiliation') + "&canceled_baseline=" + jQuery(this).data('canceled-baseline') + "&reservation_event_id=" + jQuery(this).data('key') + "&record_id=" + jQuery(this).data('record-id'),
+                'url': User.listURL + "&event_id=" + User.slotsEventId + "&user_timezone=" + User.userTimezone + "&baseline=" + jQuery(this).data('baseline') + "&offset=" + jQuery(this).data('offset') + "&affiliation=" + jQuery(this).data('affiliation') + "&canceled_baseline=" + jQuery(this).data('canceled-baseline') + "&reservation_event_id=" + jQuery(this).data('key') + "&record_id=" + jQuery(this).data('record-id'),
                 'type': 'GET',
                 'beforeSend': function () {
                     /**
@@ -283,6 +293,17 @@ User = {
             new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
         }, 500);
     },
+    calculateUserTimezone: function () {
+        var offset = new Date().getTimezoneOffset();
+
+        // offset = 360
+        // only if not PST
+        if (offset !== '480') {
+            User.userTimezone = offset
+            $("#timezone").text('Time(' + User.timezones[offset] + ')')
+
+        }
+    },
     loadUserVisits: function () {
         jQuery.ajax({
             'url': User.instancesListURL,
@@ -339,6 +360,13 @@ User = {
                 $("#previous-filter").trigger('change')
             }
         });
+    },
+    pad: function (number, length) {
+        var str = "" + number
+        while (str.length < length) {
+            str = '0' + str
+        }
+        return str
     }
 }
 window.onload = function () {

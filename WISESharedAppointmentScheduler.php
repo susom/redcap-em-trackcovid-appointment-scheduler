@@ -97,6 +97,8 @@ define("LOCATION", "location");
 
 define("PARTICIPANT_STATUS", "reservation_participant_status");
 
+define('PST', 480);
+
 /**
  * Class WISESharedAppointmentScheduler
  * @package Stanford\WISESharedAppointmentScheduler
@@ -282,39 +284,6 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         }
     }
 
-    /**
-     * Get available time slots for specific date
-     * @param string $date
-     * @param int $event_id
-     * @return array
-     */
-//    public function getDateAvailableSlots($date, $event_id)
-//    {
-//        try {
-//            if (!empty($date)) {
-//
-//                /*
-//                 * TODO Check if date within allowed window
-//                 */
-//                $filter = "[start] > '" . date('Y-m-d', strtotime($date)) . "' AND " . "[start] < '" . date('Y-m-d',
-//                        strtotime($date . ' + 1 DAY')) . "' AND [slot_status] != '" . CANCELED . "'";
-//                $param = array(
-//                    'project_id' => $this->getProjectId(),
-//                    'filterLogic' => $filter,
-//                    'return_format' => 'array',
-//                    'events' => $event_id
-//                );
-//                $data = REDCap::getData($param);
-//                $x = $this->sortRecordsByDate($data, $event_id);
-//                return $x;
-//            } else {
-//                throw new \LogicException('Not a valid date, Aborting!');
-//            }
-//        } catch (\LogicException $e) {
-//            echo $e->getMessage();
-//        }
-//    }
-
 
     private function sortRecordsByDate($records, $eventId)
     {
@@ -421,6 +390,22 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
         // by default if instance is not defined for scheduler the
         return false;
+    }
+
+    /**
+     * @param $slot
+     * @param $userTimezone
+     * @return mixed
+     */
+    public function modifySlotBasedOnUserTimezone($slot, $userTimezone)
+    {
+        // differance between user timezone and PST
+        $diff = (PST - $userTimezone) * 60;
+        $slot['start_orig'] = $slot['start'];
+        $slot['end_orig'] = $slot['end'];
+        $slot['start'] = date('Y-m-d H:i:s', (strtotime($slot['start']) + $diff));
+        $slot['end'] = date('Y-m-d H:i:s', (strtotime($slot['end']) + $diff));
+        return $slot;
     }
 
     /**

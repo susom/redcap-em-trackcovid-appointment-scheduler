@@ -106,38 +106,6 @@
       "type": "text"
     },
     {
-      "key": "blackout_start",
-      "name": "<b>Blackout start</b>",
-      "required": false,
-      "type": "text"
-    },
-    {
-      "key": "blackout_end",
-      "name": "<b>Blackout End</b>",
-      "required": false,
-      "type": "text"
-    },
-    {
-      "key": "blackout_cohort",
-      "name": "<b>Optional: Specify blackout cohort</b>",
-      "required": false,
-      "type": "dropdown",
-      "choices": [
-        {
-          "name": "ALL",
-          "value": ""
-        },
-        {
-          "name": "Cohort 1",
-          "value": "1"
-        },
-        {
-          "name": "Cohort 2",
-          "value": "2"
-        }
-      ]
-    },
-    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,

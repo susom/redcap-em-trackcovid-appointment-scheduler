@@ -25,7 +25,7 @@ if (!isset($module)) {
                     <tr>
                         <th>Date</th>
                         <th>Location</th>
-                        <th>Time(PDT)</th>
+                        <th id="timezone">Time(PDT)</th>
                         <th>Available Slots</th>
                         <th>Action</th>
                     </tr>

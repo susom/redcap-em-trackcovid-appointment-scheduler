@@ -5,6 +5,7 @@ namespace Stanford\WISESharedAppointmentScheduler;
 /** @var \Stanford\WISESharedAppointmentScheduler\WISESharedAppointmentScheduler $module */
 
 $id = filter_var($_GET['record_id'], FILTER_SANITIZE_STRING);
+$userTimezone = filter_var($_GET['user_timezone'], FILTER_SANITIZE_STRING);
 $suffix = $module->getSuffix();
 $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
 $reservationEventId = filter_var($_GET['reservation_event_id'], FILTER_SANITIZE_NUMBER_INT);
@@ -26,27 +27,10 @@ if (!empty($data)) {
     foreach ($data as $record_id => $slot) {
         $slot = array_pop($slot);
 
-        /**
-         * group by day
-         */
-        $day = date('d', strtotime($slot['start' . $suffix]));
-
-        /**
-         * skip for blackout dates if specified
-         */
-
-        if ($module->getProjectSetting('blackout_start') != '' && $module->getProjectSetting('blackout_end') != '') {
-            $date = date('Y-m-d', strtotime($slot['start' . $suffix]));
-            $cohort = true;
-
-            if ($module->getProjectSetting('blackout_cohort') != '') {
-                $cohort = $user['record'][$module->getFirstEventId()]['cohort'] == $module->getProjectSetting('blackout_cohort');
-            }
-
-            if ($cohort && strtotime($date) >= strtotime($module->getProjectSetting('blackout_start')) && strtotime($date) <= strtotime($module->getProjectSetting('blackout_end'))) {
-                continue;
-            }
+        if ($userTimezone != PST) {
+            $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
         }
+
         /**
          * skip past slots.
          */
@@ -65,7 +49,7 @@ if (!empty($data)) {
 //        $counter = $module->getParticipant()->getSlotActualCountReservedSpots($slot['record_id'],
 //            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
 
-        $available = (int)($slot['number_of_participants' . $suffix] - ($slot['number_of_booked_slots'] + $slot['number_of_external_booked_slots']));;
+        $available = (int)($slot['number_of_participants' . $suffix] - ($slot['number_of_booked_slots']));
 //        $module->emLog($slot['start' . $suffix] . ' available' . $available);
         if ($available <= 0) {
             continue;
@@ -95,7 +79,8 @@ if (!empty($data)) {
         $row[] = date('m/d/Y', strtotime($slot['start' . $suffix]));
         $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
         $row[] = date('h:i A', strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A',
-                strtotime($slot['end' . $suffix]));;
+                strtotime($slot['end' . $suffix])) . ($userTimezone != PST ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
+                    strtotime($slot['end_orig'])) . ' (PST)</small></strong>' : '');
         $row[] = '<h5 class="text-center">' . $available . '</h5>';;
         $row[] = $bookButton . $cancelButton;;
 
