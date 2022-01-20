@@ -6,6 +6,7 @@ namespace Stanford\WISESharedAppointmentScheduler;
 
 try {
     $id = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
+    $userTimezone = filter_var($_GET['user_timezone'], FILTER_SANITIZE_STRING);
     if ($user = $module->verifyCookie('login', $id)) {
         $events = $module->getProject()->events['1']['events'];
         $url = $module->getUrl('src/list.php', true, true,
@@ -13,7 +14,7 @@ try {
         $result = array();
         $noSkip = false;
         $regularUser = !defined('USERID') && !$module::isUserHasManagePermission();
-        $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
+        $statuses = parseEnum($module->getProject()->metadata['reservation_visit_status']["element_enum"]);
         foreach ($events as $eventId => $event) {
             if ($event['day_offset'] == 0) {
                 $module->setBaseLine(true);
@@ -68,12 +69,12 @@ try {
 
                 if (empty($slot)) {
                     $time = '';
-                    if ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
+                    if ($module->isAppointmentSkipped($user['record'][$eventId]['reservation_visit_status'])) {
                         $action = 'This appointment is skipped';
                         $noSkip = true;
                         // determine the status
 
-                        $status = $statuses[$user['record'][$eventId]['visit_status']];
+                        $status = $statuses[$user['record'][$eventId]['reservation_visit_status']];
                         // for proto check if baseline was ever canceled.
                     } elseif ($user['record'][$eventId]['reservation_baseline_cancellation_date']) {
                         //if you reach this then the appointment was created then canceled.
@@ -86,7 +87,7 @@ try {
                             $event['day_offset'], $canceledBaseline);
 
                         $module->setBaseLineDate('');
-                        //} elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status']) || $user['record'][$eventId]['reservation_reschedule_counter'] != '') {
+                        //} elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status']) || $user['record'][$eventId]['reservation_reschedule_counter'] != '') {
                     } else {
                         //when some forms in this event are filled but nothing related to reservation.
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
@@ -95,8 +96,14 @@ try {
 
                 } else {
 
+                    // update slot to user timezone
+                    if ($userTimezone != PST) {
+                        $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
+                    }
+
                     $time = date('D m/d/Y H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
-                            strtotime($slot['end']));
+                            strtotime($slot['end'])) . ($userTimezone != PST ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
+                                strtotime($slot['end_orig'])) . ' (PST)</small></strong>' : '');
                     $locations = $module->getDefinedLocations();
 
                     $location = $locations[$user['record'][$eventId]['reservation_participant_location']] . ' <svg class="location-info" data-location="' . $user['record'][$eventId]['reservation_participant_location'] . '" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-question" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745z"/><path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/></svg>';
@@ -115,23 +122,23 @@ try {
                         // prevent cancel if appointment is in less than 48 hours
                         if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0 && !$module->isBonusVisit()) {
                             $action = 'This Appointment is in less than 48 hours please call to cancel!';
-                        } elseif ($user['record'][$eventId]['visit_status'] == 1) {
+                        } elseif ($user['record'][$eventId]['reservation_visit_status'] == 1) {
                             $action = 'Appointment Completed';
                         } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && !$module->isBonusVisit()) {
                             $action = $module->getCancelActionButton($user, $eventId, $slot);
                         } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && $module->isBonusVisit()) {
                             $action = 'To cancel please call us!';
-                        } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['visit_status'])) {
-                            $action = 'This appointment is skipped';
-                            $noSkip = true;
-                        } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['visit_status'])) {
+//                        } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['reservation_visit_status'])) {
+//                            $action = 'This appointment is skipped';
+//                            $noSkip = true;
+                        } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status'])) {
                             $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
                         }
                     }
 
 
                     // determine the status
-                    $status = $statuses[$user['record'][$eventId]['visit_status']];
+                    $status = $statuses[$user['record'][$eventId]['reservation_visit_status']];
                 }
 
             } else {
@@ -153,7 +160,7 @@ try {
                 $action .= $module->getSkipActionButton($user, $eventId);
             }
 
-            $row[] = '22';
+            $row[] = $event['day_offset'];
             $row[] = $event['descrip'];
             $row[] = $status;
             $row[] = $time;

@@ -34,7 +34,7 @@ try {
             $data['summary_notes'] = filter_var($_GET['notes'], FILTER_SANITIZE_STRING);
 
 
-            $data['visit_status'] = $data['reservation_participant_status'];
+            $data['reservation_visit_status'] = $data['reservation_participant_status'];
         } else {
             $data['reservation_slot_id'] = false;
             $data['reservation_participant_id'] = false;
@@ -42,7 +42,7 @@ try {
             $data['reservation_date'] = false;
             $data['reservation_participant_location'] = false;
             $data['reservation_participant_status'] = false;
-            $data['visit_status'] = false;
+            $data['reservation_visit_status'] = false;
             $data['reservation_site_affiliation'] = false;
             $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primaryField],
                     $eventId) . '\n[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';

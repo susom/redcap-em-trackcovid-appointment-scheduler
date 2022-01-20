@@ -1314,7 +1314,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getSkipActionButton($user, $eventId)
     {
-        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $statuses = parseEnum($this->getProject()->metadata['reservation_visit_status']["element_enum"]);
         return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '" data-status="' . $this->getSkippedIndex() . '"  class="skip-appointment btn btn-sm btn-warning">Skip</button>';
     }
 
@@ -1596,13 +1596,13 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getSkippedIndex()
     {
-        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $statuses = parseEnum($this->getProject()->metadata['reservation_visit_status']["element_enum"]);
         return array_search('Skipped', $statuses);
     }
 
     public function isAppointmentNoShow($status)
     {
-        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $statuses = parseEnum($this->getProject()->metadata['reservation_visit_status']["element_enum"]);
         $s = array_search('No Show', $statuses);
         return $status == $s;
     }

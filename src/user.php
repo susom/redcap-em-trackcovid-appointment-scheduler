@@ -147,7 +147,7 @@ try {
                     <th>Offset</th>
                     <th>Visit</th>
                     <th>Status</th>
-                    <th>Date</th>
+                    <th id="visits-timezone">Date(PST)</th>
                     <th>Location</th>
                     <th>Action</th>
                 </tr>

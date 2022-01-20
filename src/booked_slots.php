@@ -17,7 +17,7 @@ try {
     $eventIds[] = $firstEvent;
     //get records for all reservations.
     $records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(), $eventIds);
-    $statuses = parseEnum($module->getProject()->metadata['visit_status']["element_enum"]);
+    $statuses = parseEnum($module->getProject()->metadata['reservation_visit_status']["element_enum"]);
     //get all open time slots so we can exclude past reservations.
     $slots = $module->getAllOpenSlots();
 
@@ -58,7 +58,7 @@ try {
                     foreach ($events as $eventId => $record) {
 
                         //skip past, skipped or empty reservation
-                        #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['visit_status'])) {
+                        #if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime']) || $module->isAppointmentSkipped($record['reservation_visit_status'])) {
                         if (empty($record['reservation_datetime']) || $module->isReservationInPast($record['reservation_datetime'])) {
                             continue;
                         }
@@ -117,7 +117,7 @@ try {
                                         strtotime($slot['end'])) ?></td>
                             <td><?php echo $user['consent_pdf'] ? 'Completed' : 'Incomplete' ?></td>
                             <td><?php echo $status ?></td>
-                            <td><?php echo $statuses[$record['visit_status']]; ?></td>
+                            <td><?php echo $statuses[$record['reservation_visit_status']]; ?></td>
                             <td>
                                 <button data-participant-id="<?php echo $id ?>"
                                         data-event-id="<?php echo $eventId ?>"

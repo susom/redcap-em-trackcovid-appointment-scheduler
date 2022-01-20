@@ -15,11 +15,13 @@ User = {
     currentOffset: null,
     userTimezone: '',
     init: function () {
-        //$("#appointments").dataTable();
-        User.loadUserVisits();
+
 
         // calculate user timezone
-        User.calculateUserTimezone();
+        this.calculateUserTimezone();
+
+        //$("#appointments").dataTable();
+        this.loadUserVisits();
 
 
         $(document).on("click", ".logout", function () {
@@ -296,17 +298,18 @@ User = {
     calculateUserTimezone: function () {
         var offset = new Date().getTimezoneOffset();
 
-        // offset = 360
+        //offset = 420
         // only if not PST
         if (offset !== '480') {
             User.userTimezone = offset
             $("#timezone").text('Time(' + User.timezones[offset] + ')')
+            $("#visits-timezone").text('Date(' + User.timezones[offset] + ')')
 
         }
     },
     loadUserVisits: function () {
         jQuery.ajax({
-            'url': User.instancesListURL,
+            'url': User.instancesListURL + "&user_timezone=" + User.userTimezone,
             'type': 'GET',
             'beforeSend': function () {
                 /**
