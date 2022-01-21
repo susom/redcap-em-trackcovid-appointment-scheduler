@@ -380,8 +380,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $instance = $this->getEventIdInstance($eventId);
         if (!empty($instance)) {
             if ($instance['instance-logic-enabler'] != '') {
-                $aa = REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
-                return REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
+                 return REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
             } else {
                 // if no logic defined for this instance then use default config
                 return $instance['default-instance-visibility'] == '1' ? true : false;
@@ -466,9 +465,9 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     /**
      * @param array $user
      */
-    public function notifyUser($user, $slot = null)
+    public function notifyUser($user, $reservationEventId, $slot = null)
     {
-        $instance = $this->getEventInstance();
+        $instance = $this->getEventIdInstance($reservationEventId);
         $this->calendarParams['calendarOrganizerEmail'] = ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL);
         $this->calendarParams['calendarOrganizer'] = ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME);
         $this->calendarParams['calendarDescription'] = $instance['calendar_body'];
