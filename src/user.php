@@ -47,7 +47,7 @@ try {
             <div class="container">
                 <div class="row">
                     <div class="col-3">
-                        <a href="http://www.stanford.edu"><img
+                        <a href="#"><img
                                     src="<?php echo $module->getUrl('src/images/wise_logo.png', true,
                                         true) ?>"
                                     alt="WISE" class="w-100 h-auto"></a>

@@ -82,12 +82,12 @@ try {
             $module->getScheduler()->updateSlotBookedSpots($slot);
 
             // add email and mobile to notify the user about
-            if ($user['record'][$module->getFirstEventId()]['email'] != '') {
-                $data['email'] = $user['record'][$module->getFirstEventId()]['email'];
+            if ($user['record'][$module->getFirstEventId()]['sparentemail'] != '') {
+                $data['email'] = $user['record'][$module->getFirstEventId()]['sparentemail'];
             }
 
-            if ($user['record'][$module->getFirstEventId()]['phone_number'] != '') {
-                $data['mobile'] = $user['record'][$module->getFirstEventId()]['phone_number'];
+            if ($user['record'][$module->getFirstEventId()]['sparentcell'] != '') {
+                $data['mobile'] = $user['record'][$module->getFirstEventId()]['sparentcell'];
             }
             $data['newuniq'] = $user['id'];
             $return = $module->notifyUser($data, $slot);

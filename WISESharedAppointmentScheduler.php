@@ -492,18 +492,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             true
         );
 
-        if ($user['instructor']) {
-            $this->sendEmail($user['instructor'] . '@stanford.edu',
-                ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
-                ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
-                '--APPT CONFIRMATION-- ' . $user['email'] . ' scheduled an appointment at ' . date('m/d/Y',
-                    strtotime($this->calendarParams['calendarDate'])) . ' from ' . date('h:i A',
-                    strtotime($this->calendarParams['calendarStartTime'])) . ' to ' . date('h:i A',
-                    strtotime($this->calendarParams['calendarEndTime'])),
-                $instance['calendar_body'],
-                true
-            );
-        }
+
         if ($user['mobile'] && $this->getTwilioClient()) {
             $message = array(
                 'from' => '+' . $this->getProjectSetting('phone_number_country_code',
