@@ -34,7 +34,7 @@ User = {
 
             var locationId = $(this).data('location');
             // add SITE to record id
-            var location = User.locations['SITE' + locationId];
+            var location = User.locations['SITE_' + locationId];
             var text = ''
             text += "<br><strong>Address:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
             text += "<br><strong>Details:</strong> " + location[User.locationsEventId]['site_details'];
