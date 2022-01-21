@@ -48,7 +48,7 @@ try {
                 <div class="row">
                     <div class="col-3">
                         <a href="http://www.stanford.edu"><img
-                                    src="<?php echo $module->getUrl('src/images/WISE_logo.png', true,
+                                    src="<?php echo $module->getUrl('src/images/wise_logo.png', true,
                                         true) ?>"
                                     alt="WISE" class="w-100 h-auto"></a>
                     </div>
@@ -59,11 +59,11 @@ try {
                                 <ul class="navbar-nav"><?php
                                     $r = $module->getParticipant()->getUserInfo($user['id'],
                                         $module->getFirstEventId());
-                                    if ($r['first_name']) {
+                                    if ($r['sparentfname']) {
                                         ?>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="#">
-                                                <h5><?php echo $r['first_name'] . ' ' . $r['last_name'] ?></h5>
+                                                <h5><?php echo $r['sparentfname'] . ' ' . $r['sparentlname'] ?></h5>
                                             </a>
                                         </li>
                                         <?php
