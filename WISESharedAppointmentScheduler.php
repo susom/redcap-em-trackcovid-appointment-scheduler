@@ -330,7 +330,8 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             if ($this->getScheduler()->getSlotsEventId()) {
 
                 $variable = 'start' . $this->getSuffix();
-                list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline);
+                $instance = $this->getSchedulerInstanceViaReservationId($eventId);
+                list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline, $instance);
 
 
                 $blockingDate = null;
@@ -1234,8 +1235,9 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return array($month, $year);
     }
 
-    private function getStartEndWindow($baseline, $offset, $canceledBaseline)
+    private function getStartEndWindow($baseline, $offset, $canceledBaseline, $instance)
     {
+        $windowSize = $instance['window-size'] ?: 20;
         if ($baseline) {
 
             $add = $offset * 60 * 60 * 24;
@@ -1252,7 +1254,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 $start = date('Y-m-d H:i:s', time() + 43200);;
             }
 
-            $end = date('Y-m-d H:i:s', strtotime('12/31'));
+            $end = date('Y-m-d H:i:s', strtotime($start) + $windowSize * 24 * 60 * 60);
 
 
             // final check if $end is lower than start add one week to end
@@ -1272,8 +1274,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             # allow participant to book up 12 pm after two days.
             $start = date('Y-m-d  H:i:s', time() + $add);
 
-            #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-            #$start = date('Y-m-d');
+            #open till end of year days restriction.
             $end = date('Y-m-d', strtotime('12/31'));
         }
         return array($start, $end);
@@ -1283,7 +1284,9 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         if ($this->isBaseLine() || $this->getBaseLineDate()) {
 
-            list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline);
+            $instance = $this->getSchedulerInstanceViaReservationId($eventId);
+
+            list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline, $instance);
 
             return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
         } else {
@@ -1488,6 +1491,25 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
             if ($instance['reservation_event_id'] == $reservationEventId) {
                 return $instance['slot_event_id'];
+            }
+
+        }
+        return false;
+    }
+
+
+    /**
+     * @param array $instances
+     * @param int $slotEventId
+     * @return bool
+     */
+    public function getSchedulerInstanceViaReservationId($reservationEventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+
+            if ($instance['reservation_event_id'] == $reservationEventId) {
+                return $instance;
             }
 
         }

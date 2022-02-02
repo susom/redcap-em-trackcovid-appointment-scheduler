@@ -119,26 +119,16 @@
           "type": "textarea"
         },
         {
-          "key": "default_view",
-          "name": "<b>Select Default View</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "List",
-              "value": "1"
-            },
-            {
-              "name": "Calendar",
-              "value": "2"
-            }
-          ]
-        },
-        {
           "key": "reservation_event_id",
           "name": "<b>Appointment Reservation Event</b><br>Select the arm/event where each record corresponds to a reserved appointment slot.  This event must have the 'Reservation' form enabled",
           "required": true,
           "type": "event-list"
+        },
+        {
+          "key": "window-size",
+          "name": "Number of days booking is available. Based on event days offset.<br/>",
+          "required": false,
+          "type": "text"
         },
         {
           "key": "default-instance-visibility",
@@ -164,155 +154,10 @@
           "type": "textarea"
         },
         {
-          "key": "participant_identifier",
-          "name": "<b>Please select the field where the user identifier will be saved.(not implemented yet)</b>",
-          "required": false,
-          "type": "field-list"
-        },
-        {
-          "key": "survey_section",
-          "name": "<h6 style='text-align:center;color:red'><b>Config for Scheduling Appointment after completing a survey</b></h6>",
-          "type": "descriptive"
-        },
-        {
-          "key": "instrument_id_for_complementary_appointment",
-          "name": "<b>Select Survey Instrument</b></br>Select Survey Instrument to be followed by Option to Book follow up appointment.",
-          "required": false,
-          "type": "form-list"
-        },
-        {
-          "key": "survey-scheduler-header",
-          "name": "<b>Header for Survey Scheduler",
-          "required": false,
-          "type": "text",
-          "branchingLogic": {
-            "field": "instrument_id_for_complementary_appointment",
-            "op": "<>",
-            "value": ""
-          }
-        },
-        {
-          "key": "survey_record_id_field",
-          "name": "<b>Please select survey instrument field that will be replaced with reservation button and will hold reservation ID after submitting the survey.</b>",
-          "required": false,
-          "type": "field-list",
-          "branchingLogic": {
-            "field": "instrument_id_for_complementary_appointment",
-            "op": "<>",
-            "value": ""
-          }
-        },
-        {
           "key": "title",
           "name": "<b>Title for Appointment</b><br/>Alternately you can add a title before you pipe in the result",
           "required": false,
           "type": "textarea"
-        },
-        {
-          "key": "options_config",
-          "name": "<b>Options</b>",
-          "required": false,
-          "type": "descriptive"
-        },
-        {
-          "key": "enable-redcap-calendar",
-          "name": "<b>Integrate REDCap calendar</b> Show REDCap calendar records in Appointment scheduler. ",
-          "required": false,
-          "type": "checkbox"
-        },
-        {
-          "key": "show_location_options",
-          "name": "<b>Display Location Options</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "key": "show_attending_options",
-          "name": "<b>Display Attending Options</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "key": "show_attending_default",
-          "name": "<b>Select the Default Attending Option</b>",
-          "required": false,
-          "type": "dropdown",
-          "branchingLogic": {
-            "field": "show_attending_options",
-            "value": "0"
-          },
-          "choices": [
-            {
-              "name": "Virtual via Zoom Meeting",
-              "value": "1"
-            },
-            {
-              "name": "Redwood City Campus",
-              "value": "2"
-            }
-          ]
-        },
-        {
-          "key": "show_notes",
-          "name": "<b>Display Notes field on reservation form</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "key": "note_textarea_label",
-          "name": "<b>Textarea Label</b><br>Label will be displayed above note textarea",
-          "required": false,
-          "type": "text",
-          "branchingLogic": {
-            "field": "show_notes",
-            "value": "1"
-          }
-        },
-        {
-          "key": "show_projects",
-          "name": "<b>Display Projects ID field on reservation form</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
         },
         {
           "key": "emails_config",
@@ -343,42 +188,6 @@
           "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i>",
           "required": false,
           "type": "textarea"
-        },
-        {
-          "key": "block-booking",
-          "name": "<b>Check this if you want to block this event from being booked.</i>",
-          "required": false,
-          "type": "checkbox"
-        },
-        {
-          "key": "block-booking-date",
-          "name": "<b>Specify the date which slots will blocked after.(yyyy-mm-dd)</i>",
-          "required": false,
-          "type": "text",
-          "branchingLogic": {
-            "field": "block-booking",
-            "value": "1"
-          }
-        },
-        {
-          "key": "assigned-cohort",
-          "name": "<b>Optional: select cohort for this event</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "ALL",
-              "value": ""
-            },
-            {
-              "name": "Cohort 1",
-              "value": "1"
-            },
-            {
-              "name": "Cohort 2",
-              "value": "2"
-            }
-          ]
         }
       ]
     },
