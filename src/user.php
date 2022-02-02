@@ -46,9 +46,9 @@ try {
         <div id="brandbar">
             <div class="container">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <a href="#"><img
-                                    src="<?php echo $module->getUrl('src/images/wise_logo.png', true,
+                                    src="<?php echo $module->getUrl('src/images/wise_logo_new.png', true,
                                         true) ?>"
                                     alt="WISE" class="w-100 h-auto"></a>
                     </div>

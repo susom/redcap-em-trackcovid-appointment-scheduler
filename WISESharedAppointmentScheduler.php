@@ -120,6 +120,7 @@ define('PST', 480);
  * @property string $baseLineDate
  * @property array $locationRecords
  * @property int $defaultAffiliation
+ * @property float $childEligibility
  * @property \Stanford\WISESharedAppointmentScheduler\Scheduler $scheduler
  */
 class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalModule
@@ -196,6 +197,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     private $bonusVisit = false;
 
+    private $childEligibility;
     /**
      * WISESharedAppointmentScheduler constructor.
      */
@@ -1235,21 +1237,11 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     private function getStartEndWindow($baseline, $offset, $canceledBaseline)
     {
         if ($baseline) {
-//                if ($offset > 0) {
-//                    $add = $offset * 60 * 60 * 24;
-//                    $week = 604800;
-//                    $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
-//                    $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
-//                } else {
-//                    $start = date('Y-m-d', strtotime('+7 days'));
-//
-//                    $end = date('Y-m-d', strtotime('+30 days'));
-//                }
 
             $add = $offset * 60 * 60 * 24;
             $week = 604800;
             if (!$canceledBaseline) {
-                $start = date('Y-m-d', strtotime($baseline) + $add - $week);
+                $start = date('Y-m-d', strtotime($baseline) + $add);
             } else {
                 $start = date('Y-m-d', strtotime($baseline));
             }
@@ -1260,7 +1252,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 $start = date('Y-m-d H:i:s', time() + 43200);;
             }
 
-            $end = date('Y-m-d H:i:s', strtotime($baseline) + $add + $week);
+            $end = date('Y-m-d H:i:s', strtotime('12/31'));
 
 
             // final check if $end is lower than start add one week to end
@@ -1272,12 +1264,17 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 }
             }
         } else {
+            if ($this->getChildEligibility() == '1') {
+                $add = 60 * 60 * 24 * 2;
+            } elseif ($this->getChildEligibility() == '0.5') {
+                $add = 60 * 60 * 24 * 7;
+            }
             # allow participant to book up 12 pm after two days.
-            $start = date('Y-m-d  H:i:s', time() + 1 * 60 * 60);
+            $start = date('Y-m-d  H:i:s', time() + $add);
 
             #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
             #$start = date('Y-m-d');
-            $end = date('Y-m-d', strtotime('+22 days'));
+            $end = date('Y-m-d', strtotime('12/31'));
         }
         return array($start, $end);
     }
@@ -1288,7 +1285,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
             list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline);
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . $end . ')</small>';
+            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
         } else {
             return 'Please schedule Baseline Visit First to be able to schedule other visits!';
         }
@@ -1834,4 +1831,22 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         $this->bonusVisit = $bonusVisit;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getChildEligibility()
+    {
+        return $this->childEligibility;
+    }
+
+    /**
+     * @param mixed $childEligibility
+     */
+    public function setChildEligibility($childEligibility): void
+    {
+        $this->childEligibility = $childEligibility;
+    }
+
+
 }

@@ -30,7 +30,7 @@ require_once 'urls.php';
         <div class="row">
             <div class="col-3">
                 <a href="http://www.stanford.edu"><img
-                            src="<?php echo $module->getUrl('src/images/wise_logo.png', true,
+                            src="<?php echo $module->getUrl('src/images/wise_logo_new.png', true,
                                 true) ?>"
                             alt="WISE" class="h-auto"></a>
             </div>

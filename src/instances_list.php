@@ -9,6 +9,8 @@ try {
     $userTimezone = filter_var($_GET['user_timezone'], FILTER_SANITIZE_STRING);
     if ($user = $module->verifyCookie('login', $id)) {
         $events = $module->getProject()->events['1']['events'];
+
+        $module->setChildEligibility($user['record'][$module->getFirstEventId()]['elig_child']);
         $url = $module->getUrl('src/list.php', true, true,
                 true) . '&event_id=' . $module->getSlotsEventId() . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix();
         $result = array();
@@ -22,12 +24,6 @@ try {
                 $module->setBaseLine(false);
             }
 
-            # if this event has assigned cohort then check user cohort
-            if ($module->getEventCohort($eventId) != '') {
-                if ($module->getEventCohort($eventId) != $user['record'][$module->getFirstEventId()]['cohort']) {
-                    continue;
-                }
-            }
 
             list($month, $year) = $module->getEventMonthYear($event['day_offset']);
 

@@ -15,10 +15,13 @@ $baseline = filter_var($_GET['baseline'], FILTER_SANITIZE_STRING);
 $offset = filter_var($_GET['offset'], FILTER_VALIDATE_INT);
 $affiliation = filter_var($_GET['affiliation'], FILTER_VALIDATE_INT);
 $canceledBaseline = filter_var($_GET['canceled_baseline'], FILTER_VALIDATE_INT);
+$user = $module->verifyCookie('login', $id);
+$module->setChildEligibility($user['record'][$module->getFirstEventId()]['elig_child']);
+
 $data = $module->getMonthSlots($eventId, null, null, $baseline, $offset, $affiliation, $canceledBaseline, $reservationEventId);
 $result = array();
 $result['data'] = array();
-$user = $module->verifyCookie('login', $id);
+
 if (!empty($data)) {
     #$reservationEventId = $module->getReservationEventIdViaSlotEventId($eventId);
     /**
