@@ -18,6 +18,10 @@ try {
         $regularUser = !defined('USERID') && !$module::isUserHasManagePermission();
         $statuses = parseEnum($module->getProject()->metadata['reservation_visit_status']["element_enum"]);
         foreach ($events as $eventId => $event) {
+
+            if (empty($module->getSchedulerInstanceViaReservationId($eventId))) {
+                continue;
+            }
             if ($event['day_offset'] == 0) {
                 $module->setBaseLine(true);
             } else {

@@ -1238,6 +1238,11 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     private function getStartEndWindow($baseline, $offset, $canceledBaseline, $instance)
     {
         $windowSize = $instance['window-size'] ?: 20;
+        if ($this->getChildEligibility() == '1') {
+            $add = 60 * 60 * 24 * 2;
+        } elseif ($this->getChildEligibility() == '0.5') {
+            $add = 60 * 60 * 24 * 7;
+        }
         if ($baseline) {
 
             $add = $offset * 60 * 60 * 24;
@@ -1251,7 +1256,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
             // is start in the past then make start within next 12 horus to give CRC time to prepare.
             if (strtotime($start) < time() + 43200) {
-                $start = date('Y-m-d H:i:s', time() + 43200);;
+                $start = date('Y-m-d H:i:s', time() + $add);
             }
 
             $end = date('Y-m-d H:i:s', strtotime($start) + $windowSize * 24 * 60 * 60);
@@ -1259,18 +1264,10 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
             // final check if $end is lower than start add one week to end
             if (strtotime($start) > strtotime($end)) {
-                if ($offset == -1) {
-                    $end = date('Y-m-d', strtotime($start) + $week * 2);
-                } else {
-                    $end = date('Y-m-d', strtotime($start) + $week);
-                }
+                $end = date('Y-m-d', strtotime($start) + $windowSize);
             }
         } else {
-            if ($this->getChildEligibility() == '1') {
-                $add = 60 * 60 * 24 * 2;
-            } elseif ($this->getChildEligibility() == '0.5') {
-                $add = 60 * 60 * 24 * 7;
-            }
+
             # allow participant to book up 12 pm after two days.
             $start = date('Y-m-d  H:i:s', time() + $add);
 
