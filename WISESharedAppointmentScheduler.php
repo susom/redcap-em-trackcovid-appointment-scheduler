@@ -118,6 +118,7 @@ define('PST', 480);
  * @property boolean $baseLine
  * @property boolean $bonusVisit
  * @property string $baseLineDate
+ * @property string $offsetDate
  * @property array $locationRecords
  * @property int $defaultAffiliation
  * @property float $childEligibility
@@ -198,6 +199,9 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     private $bonusVisit = false;
 
     private $childEligibility;
+
+    private $offsetDates;
+
     /**
      * WISESharedAppointmentScheduler constructor.
      */
@@ -865,6 +869,23 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
     /**
+     * @return string|null
+     */
+    public function getOffsetDate()
+    {
+        return $this->offsetDates;
+    }
+
+    /**
+     * @param string $offsetDate
+     */
+    public function setOffsetDate(string $offsetDate): void
+    {
+        $this->offsetDates = $offsetDate;
+    }
+
+
+    /**
      * @return string
      */
     public function getBaseLineDate()
@@ -1279,13 +1300,13 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0, $canceledBaseline = false)
     {
-        if ($this->isBaseLine() || $this->getBaseLineDate()) {
+        if ($this->isBaseLine() || $this->getBaseLineDate() || $this->getOffsetDate()) {
 
             $instance = $this->getSchedulerInstanceViaReservationId($eventId);
 
-            list($start, $end) = $this->getStartEndWindow($this->getBaseLineDate(), $offset, $canceledBaseline, $instance);
+            list($start, $end) = $this->getStartEndWindow(($this->getOffsetDate() ?: $this->getBaseLineDate()), $offset, $canceledBaseline, $instance);
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
+            return '<button data-baseline="' . ($this->getOffsetDate() ?: $this->getBaseLineDate()) . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
         } else {
             return 'Unavailable';
         }

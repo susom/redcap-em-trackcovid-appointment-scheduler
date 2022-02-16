@@ -125,6 +125,18 @@
           "type": "event-list"
         },
         {
+          "key": "offset-date-field",
+          "name": "Select date field which will be as starting point to calculate booking window. If no date was selected the scheduler will use visit time from event with 0 offset days.<br/>",
+          "required": false,
+          "type": "field-list"
+        },
+        {
+          "key": "offset-date-field-event",
+          "name": "If you picked a offset date you MUST pick date event.<br/>",
+          "required": false,
+          "type": "event-list"
+        },
+        {
           "key": "window-size",
           "name": "Number of days booking is available. Based on event days offset.<br/>",
           "required": false,

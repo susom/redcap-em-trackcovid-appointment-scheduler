@@ -18,7 +18,9 @@ try {
         $regularUser = !defined('USERID') && !$module::isUserHasManagePermission();
         $statuses = parseEnum($module->getProject()->metadata['reservation_visit_status']["element_enum"]);
         foreach ($events as $eventId => $event) {
-
+            $instance = $module->getSchedulerInstanceViaReservationId($eventId);
+            //reset offset date
+            $module->setOffsetDate('');
             if (empty($module->getSchedulerInstanceViaReservationId($eventId))) {
                 continue;
             }
@@ -113,6 +115,10 @@ try {
                         $module->setBaseLineDate($slot['start']);
 
                         $module->setDefaultAffiliation($user['record'][$eventId]['reservation_site_affiliation']);
+                    } else {
+                        if ($instance['offset-date-field'] && $user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]) {
+                            $module->setOffsetDate($user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]);
+                        }
                     }
 
                     // for stanford participants do not allow schedule non-baseline visits
@@ -144,6 +150,12 @@ try {
             } else {
                 $time = '';
 
+                if (!$module->isBaseLine()) {
+
+                    if ($instance['offset-date-field'] && $user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]) {
+                        $module->setOffsetDate($user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]);
+                    }
+                }
 
                 // for stanford participants do not allow schedule non-baseline visits
                 if (!$module->isBaseLine() && $module->getDefaultAffiliation() == '1') {
