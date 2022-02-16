@@ -36,9 +36,18 @@ User = {
             // add SITE to record id
             var location = User.locations['SITE_' + locationId];
             var text = ''
-            text += "<br><strong>Address:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
+            var link = '#'
+            if (location[User.locationsEventId]['map_link'] != '') {
+                link = location[User.locationsEventId]['map_link']
+            }
+            if (validURL(location[User.locationsEventId]['testing_site_address'])) {
+                link = location[User.locationsEventId]['testing_site_address']
+            }
+            text += "<br><strong>Address:</strong> <a target='_blank' href='" + link + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
             text += "<br><strong>Details:</strong> " + location[User.locationsEventId]['site_details'];
-            text += "<br><strong>Google Map Link:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['map_link'] + "</a>";
+            if (location[User.locationsEventId]['map_link'] != '') {
+                text += "<br><strong>Google Map Link:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['map_link'] + "</a>";
+            }
             jQuery('#location-modal').find('.modal-title').html(location[User.locationsEventId]['title'] + " Information");
             jQuery('#location-modal').find('.modal-body').html(text);
             jQuery('#location-modal').css('top', '50%');
@@ -399,6 +408,16 @@ function getCookie(name) {
 
 function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return !!pattern.test(str);
 }
 
 $body = jQuery("body");

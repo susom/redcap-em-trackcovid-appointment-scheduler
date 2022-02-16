@@ -382,7 +382,7 @@ class WISESharedCalendarEmail extends Message
                     [
                         Vcalendar::ROLE => Vcalendar::REQ_PARTICIPANT,
                         Vcalendar::PARTSTAT => Vcalendar::NEEDS_ACTION,
-                        Vcalendar::RSVP => Vcalendar::TRUE,
+                        Vcalendar::RSVP => Vcalendar::FALSE,
                         Vcalendar::CN => $name,
                     ]
                 );

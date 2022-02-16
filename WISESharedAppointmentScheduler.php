@@ -1287,7 +1287,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
             return '<button data-baseline="' . $this->getBaseLineDate() . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
         } else {
-            return 'Please schedule Baseline Visit First to be able to schedule other visits!';
+            return 'Unavailable';
         }
 
     }
@@ -1321,7 +1321,10 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             $text = "<br>Title: " . $location[$this->getScheduler()->getTestingSitesEventId()]['title'];
             $text .= "<br>Address: " . $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'];
             $text .= "<br>Details: " . $location[$this->getScheduler()->getTestingSitesEventId()]['site_details'];
-            $text .= "<br>Google Map Link: <a href='" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "'>" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "</a>";
+            if ($location[$this->getScheduler()->getTestingSitesEventId()]['map_link']) {
+                $text .= "<br>Google Map Link: <a href='" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "'>" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "</a>";
+
+            }
             return str_replace('[location]', $text, $body);
         }
     }
