@@ -174,7 +174,7 @@ try {
 
             $row[] = $event['day_offset'];
             //$row[] = $event['descrip'];
-            $row[] = $instance['instance_description'];
+            $row[] = $module->getProject()->eventInfo[$eventId]['custom_event_label'];
             $row[] = $status;
             $row[] = $time;
             $row[] = $location;
