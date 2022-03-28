@@ -29,6 +29,12 @@ try {
         $reservationEventId = filter_var($_POST['reservation_event_id'], FILTER_VALIDATE_INT);
         $slot = $module->getSlot(filter_var($_POST['record_id'], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
 
+        $userTimezone = filter_var($_POST['usertimezone'], FILTER_SANITIZE_STRING);
+
+        if ($userTimezone != $module->getPST()) {
+            $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
+        }
+
         // check if any slot is available
         $counter = $module->getParticipant()->getSlotActualCountReservedSpots(filter_var($_POST['record_id'],
             FILTER_SANITIZE_STRING),
@@ -60,6 +66,10 @@ try {
         $data['reservation_datetime'] = $slot['start'];
         $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
         $data['reservation_created_at'] = date('Y-m-d H:i:s');
+
+        $data['local_start_time'] = date('H:i', strtotime($slot['start']));
+        $data['local_end_time'] = date('H:i', strtotime($slot['end']));
+        $data['formatted_date'] = date('Y-m-d', strtotime($slot['start']));
 
 
         $data['redcap_event_name'] = $module->getUniqueEventName($reservationEventId);

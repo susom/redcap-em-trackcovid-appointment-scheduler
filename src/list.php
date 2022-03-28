@@ -61,6 +61,7 @@ if (!empty($data)) {
         $cancelButton = '';
         $bookButton = '<button type="button"
                                         data-record-id="' . $slot['record_id'] . '"
+                                        data-user-timezone="' . $userTimezone . '"
                                         data-event-id="' . $eventId . '"
                                         data-notes-label="' . $module->getNoteLabel() . '"
                                         data-show-projects="' . $module->showProjectIds() . '"

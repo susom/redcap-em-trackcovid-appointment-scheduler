@@ -187,6 +187,11 @@ User = {
              * Capture date for Email calendar
              */
             User.record.calendarDate = jQuery(this).data('date');
+
+            /**
+             * get user timezoen
+             */
+            User.record.usertimezone = jQuery(this).data('user-timezone');
             data = User.record
             $.ajax({
                 url: User.submitURL,
@@ -320,7 +325,7 @@ User = {
                 420: 'PST',
             }
         }
-        //offset = 420
+        // offset = 360
         // only if not PST
         User.userTimezone = offset
         $("#timezone").text('Time(' + User.timezones[offset] + ')')

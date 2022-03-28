@@ -490,11 +490,12 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $this->sendEmail($user['email'],
             ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
             ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
-            '--APPT CONFIRMATION-- ' . $user['newuniq'] . ' Please arrive' .
-            ' on ' . date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
-            ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
-            ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),
-            $this->replaceRecordLabels($instance['calendar_body'], $slot),
+//            '--APPT CONFIRMATION-- ' . $user['newuniq'] . ' Please arrive' .
+//            ' on ' . date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
+//            ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
+//            ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),
+            $instance['calendar_subject'],
+            $this->replaceREDCapCustomLabels($instance['calendar_body'], array(), $user['newuniq']),
             true
         );
 
@@ -1396,6 +1397,24 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         if ($origin != $text) {
             $text = str_replace("]", "", $text);
             $text = str_replace("[", "", $text);
+            return $text;
+        } else {
+            return $origin;
+        }
+    }
+
+    public function replaceREDCapCustomLabels($text, $row, $recordId)
+    {
+        $origin = $text;
+        preg_match_all("/\[(\w.*)\]/", $text, $matches);
+        foreach ($matches[0] as $match) {
+            $label = \Piping::replaceVariablesInLabel($match, $recordId, null, 1, $row, true, null, false);
+            if ($label) {
+                $text = str_replace($match, $label, $text);
+            }
+        }
+
+        if ($origin != $text) {
             return $text;
         } else {
             return $origin;
