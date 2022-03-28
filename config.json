@@ -138,7 +138,7 @@
         },
         {
           "key": "window-size",
-          "name": "Window size to schedule an event. Based on event days offset.<br/>",
+          "name": "Window size to schedule an event. Based on event days offset. Default is 20 days.<br/>",
           "required": false,
           "type": "text"
         },
