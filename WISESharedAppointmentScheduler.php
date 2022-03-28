@@ -495,7 +495,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 //            ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
 //            ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),
             $instance['calendar_subject'],
-            $this->replaceREDCapCustomLabels($instance['calendar_body'], array(), $user['newuniq']),
+            $this->replaceREDCapCustomLabels($this->replaceRecordLabels($instance['calendar_body'], $slot), array(), $user['newuniq']),
             true
         );
 
@@ -1344,16 +1344,17 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     {
         if (strpos($body, '[location]') !== false) {
             $locations = $this->getLocationRecords();
-            $location = $locations['SITE' . $locationId];
-            $text = "<br>Title: " . $location[$this->getScheduler()->getTestingSitesEventId()]['title'];
-            $text .= "<br>Address: " . $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'];
-            $text .= "<br>Details: " . $location[$this->getScheduler()->getTestingSitesEventId()]['site_details'];
-            if ($location[$this->getScheduler()->getTestingSitesEventId()]['map_link']) {
-                $text .= "<br>Google Map Link: <a href='" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "'>" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "</a>";
-
-            }
-            return str_replace('[location]', $text, $body);
+            $location = $locations['SITE_' . $locationId];
+//            $text = "<br>Title: " . $location[$this->getScheduler()->getTestingSitesEventId()]['title'];
+//            $text .= "<br>Address: " . $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'];
+//            $text .= "<br>Details: " . $location[$this->getScheduler()->getTestingSitesEventId()]['site_details'];
+//            if ($location[$this->getScheduler()->getTestingSitesEventId()]['map_link']) {
+//                $text .= "<br>Google Map Link: <a href='" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "'>" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "</a>";
+//
+//            }
+            return str_replace('[location]', $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'], $body);
         }
+        return $body;
     }
 
     public function getLocationRecords()
@@ -1387,7 +1388,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                 if ($match == 'location') {
                     $text = $this->insertLocationInEmailBody($row['location'], $text);
                 } elseif ($match == 'start') {
-                    $text = str_replace($match, date('F jS, Y', strtotime($row[$match])), $text);
+                    $text = str_replace("[" . $match . "]", date('F jS, Y', strtotime($row[$match])), $text);
                 } else {
                     $text = str_replace("[" . $match . "]", $row[$match], $text);
                 }
@@ -1395,8 +1396,6 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         }
 
         if ($origin != $text) {
-            $text = str_replace("]", "", $text);
-            $text = str_replace("[", "", $text);
             return $text;
         } else {
             return $origin;
