@@ -30,6 +30,7 @@ try {
         $slot = $module->getSlot(filter_var($_POST['record_id'], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
 
         $userTimezone = filter_var($_POST['usertimezone'], FILTER_SANITIZE_STRING);
+        $instance = $module->getSchedulerInstanceViaReservationId($reservationEventId);
 
         if ($userTimezone != $module->getPST()) {
             $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
@@ -92,7 +93,9 @@ try {
             $module->getScheduler()->updateSlotBookedSpots($slot);
 
             // add email and mobile to notify the user about
-            if ($user['record'][$module->getFirstEventId()]['sparentemail'] != '') {
+            if ($instance['receiver_email_field'] && $user['record'][$reservationEventId][$instance['receiver_email_field']]) {
+                $data['email'] = $user['record'][$reservationEventId][$instance['receiver_email_field']];
+            } elseif ($user['record'][$module->getFirstEventId()]['sparentemail'] != '') {
                 $data['email'] = $user['record'][$module->getFirstEventId()]['sparentemail'];
             }
 

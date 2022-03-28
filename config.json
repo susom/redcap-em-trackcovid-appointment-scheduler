@@ -178,6 +178,12 @@
           "type": "descriptive"
         },
         {
+          "key": "receiver_email_field",
+          "name": "<b>Specify REDCap field that will contain Participant email. </b>",
+          "required": false,
+          "type": "field-list"
+        },
+        {
           "key": "sender_email",
           "name": "<b>Sender Email(By default redcap-scheduler@stanford.edu)</b>",
           "required": false,
