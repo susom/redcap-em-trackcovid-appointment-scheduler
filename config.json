@@ -138,7 +138,7 @@
         },
         {
           "key": "window-size",
-          "name": "Number of days booking is available. Based on event days offset.<br/>",
+          "name": "Window size to schedule an event. Based on event days offset.<br/>",
           "required": false,
           "type": "text"
         },

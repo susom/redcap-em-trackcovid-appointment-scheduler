@@ -99,12 +99,12 @@ try {
                 } else {
 
                     // update slot to user timezone
-                    if ($userTimezone != PST) {
+                    if ($userTimezone != $module->getPST()) {
                         $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
                     }
 
                     $time = date('D m/d/Y H:i', strtotime($slot['start'])) . ' - ' . date('H:i',
-                            strtotime($slot['end'])) . ($userTimezone != PST ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
+                            strtotime($slot['end'])) . ($userTimezone != $module->getPST() ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
                                 strtotime($slot['end_orig'])) . ' (PST)</small></strong>' : '');
                     $locations = $module->getDefinedLocations();
 

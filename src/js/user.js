@@ -83,7 +83,7 @@ User = {
 
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
-                            dom: '<"day-filter"><"location-filter"><lf<t>ip>',
+                            dom: '<"day-filter"><lf<t>ip>',
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
@@ -307,14 +307,25 @@ User = {
     calculateUserTimezone: function () {
         var offset = new Date().getTimezoneOffset();
 
+        var diff = 0
+
+        var today = new Date()
+        // daylight save time!!
+        if (today.isDstObserved()) {
+            diff = 60
+            User.timezones = {
+                240: 'EST',
+                300: 'CST',
+                360: 'MST',
+                420: 'PST',
+            }
+        }
         //offset = 420
         // only if not PST
-        if (offset !== '480') {
-            User.userTimezone = offset
-            $("#timezone").text('Time(' + User.timezones[offset] + ')')
-            $("#visits-timezone").text('Date(' + User.timezones[offset] + ')')
+        User.userTimezone = offset
+        $("#timezone").text('Time(' + User.timezones[offset] + ')')
+        $("#visits-timezone").text('Date(' + User.timezones[offset] + ')')
 
-        }
     },
     loadUserVisits: function () {
         jQuery.ajax({
@@ -430,3 +441,13 @@ jQuery(document).on({
         $body.removeClass("loading");
     }
 });
+
+Date.prototype.stdTimezoneOffset = function () {
+    var jan = new Date(this.getFullYear(), 0, 1);
+    var jul = new Date(this.getFullYear(), 6, 1);
+    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+}
+
+Date.prototype.isDstObserved = function () {
+    return this.getTimezoneOffset() < this.stdTimezoneOffset();
+}

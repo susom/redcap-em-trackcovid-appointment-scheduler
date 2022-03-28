@@ -30,7 +30,7 @@ if (!empty($data)) {
     foreach ($data as $record_id => $slot) {
         $slot = array_pop($slot);
 
-        if ($userTimezone != PST) {
+        if ($userTimezone != $module->getPST()) {
             $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
         }
 
@@ -80,11 +80,11 @@ if (!empty($data)) {
 
         $row = array();
         $row[] = date('m/d/Y', strtotime($slot['start' . $suffix]));
-        $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
+//        $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
         $row[] = date('h:i A', strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A',
-                strtotime($slot['end' . $suffix])) . ($userTimezone != PST ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
+                strtotime($slot['end' . $suffix])) . ($userTimezone != $module->getPST() ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
                     strtotime($slot['end_orig'])) . ' (PST)</small></strong>' : '');
-        $row[] = '<h5 class="text-center">' . $available . '</h5>';;
+//        $row[] = '<h5 class="text-center">' . $available . '</h5>';;
         $row[] = $bookButton . $cancelButton;;
 
         $result['data'][] = $row;

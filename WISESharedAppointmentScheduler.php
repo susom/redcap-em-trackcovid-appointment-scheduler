@@ -406,7 +406,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function modifySlotBasedOnUserTimezone($slot, $userTimezone)
     {
         // differance between user timezone and PST
-        $diff = (PST - $userTimezone) * 60;
+        $diff = ($this->getPST() - $userTimezone) * 60;
         $slot['start_orig'] = $slot['start'];
         $slot['end_orig'] = $slot['end'];
         $slot['start'] = date('Y-m-d H:i:s', (strtotime($slot['start']) + $diff));
@@ -1254,6 +1254,11 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             $year += 1;
         }
         return array($month, $year);
+    }
+
+    public function getPST()
+    {
+        return PST - (date('I') ? 60 : 0);
     }
 
     private function getStartEndWindow($baseline, $offset, $canceledBaseline, $instance)
