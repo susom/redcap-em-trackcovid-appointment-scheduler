@@ -98,7 +98,7 @@ try {
                                 <?php //echo $user['phone_number'] ?><!--</div>-->
                                 <div class="row">
                                     <?php
-                                    echo $user['xschedulerdemo'];
+                                    echo $user['scheddemo'];
                                     ?></div>
                             </td>
                             <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
