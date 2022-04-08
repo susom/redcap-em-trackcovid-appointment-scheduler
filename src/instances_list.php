@@ -114,7 +114,6 @@ try {
                         //use baseline appointment
                         $module->setBaseLineDate($slot['start']);
 
-                        $module->setDefaultAffiliation($user['record'][$eventId]['reservation_site_affiliation']);
                     } else {
                         if ($instance['offset-date-field'] && $user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]) {
                             $module->setOffsetDate($user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]);
@@ -122,25 +121,25 @@ try {
                     }
 
                     // for stanford participants do not allow schedule non-baseline visits
-                    if (!$module->isBaseLine() && $module->getDefaultAffiliation() == '1') {
-                        $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
-                    } else {
-                        // prevent cancel if appointment is in less than 48 hours
-                        if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0 && !$module->isBonusVisit()) {
-                            $action = 'This Appointment is in less than 48 hours please call to cancel!';
-                        } elseif ($user['record'][$eventId]['reservation_visit_status'] == 1) {
-                            $action = 'Appointment Completed';
-                        } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && !$module->isBonusVisit()) {
-                            $action = $module->getCancelActionButton($user, $eventId, $slot);
-                        } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && $module->isBonusVisit()) {
-                            $action = 'To cancel please call us!';
+//                    if (false) {
+//                        $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
+//                    } else {
+                    // prevent cancel if appointment is in less than 48 hours
+                    if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0 && !$module->isBonusVisit()) {
+                        $action = 'This Appointment is in less than 48 hours please call to cancel!';
+                    } elseif ($user['record'][$eventId]['reservation_visit_status'] == 1) {
+                        $action = 'Appointment Completed';
+                    } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && !$module->isBonusVisit()) {
+                        $action = $module->getCancelActionButton($user, $eventId, $slot);
+                    } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && $module->isBonusVisit()) {
+                        $action = 'To cancel please call us!';
 //                        } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['reservation_visit_status'])) {
 //                            $action = 'This appointment is skipped';
 //                            $noSkip = true;
                         } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status'])) {
                             $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
                         }
-                    }
+                    //}
 
 
                     // determine the status
@@ -157,12 +156,7 @@ try {
                     }
                 }
 
-                // for stanford participants do not allow schedule non-baseline visits
-                if (!$module->isBaseLine() && $module->getDefaultAffiliation() == '1') {
-                    $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
-                } else {
-                    $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
-                }
+                $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
 
 
             }

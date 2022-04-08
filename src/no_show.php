@@ -43,7 +43,6 @@ try {
             $data['reservation_participant_location'] = false;
             $data['reservation_participant_status'] = false;
             $data['reservation_visit_status'] = false;
-            $data['reservation_site_affiliation'] = false;
             $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primaryField],
                     $eventId) . '\n[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
 

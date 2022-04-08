@@ -17,7 +17,6 @@ try {
         $data['reservation_participant_id'] = false;
         $data['reservation_datetime'] = false;
         $data['reservation_date'] = false;
-        $data['reservation_site_affiliation'] = false;
         $data['reservation_participant_location'] = false;
         $data['reservation_participant_status'] = false;
         $data['reservation_visit_status'] = false;

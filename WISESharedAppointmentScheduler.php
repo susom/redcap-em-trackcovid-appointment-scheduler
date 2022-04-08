@@ -33,12 +33,6 @@ define('VIRTUAL_ONLY_TEXT', 'Virtual via Zoom Meeting.');
 define('CAMPUS_ONLY_TEXT', 'Redwood City Campus');
 
 /**
- * site Affiliation
- */
-define('STANFORD_SITE_AFFILIATION', 1);
-define('UCSF_SITE_AFFILIATION', 2);
-
-/**
  * COHORT
  */
 define('COHOR_1', 1);
@@ -120,7 +114,6 @@ define('PST', 480);
  * @property string $baseLineDate
  * @property string $offsetDate
  * @property array $locationRecords
- * @property int $defaultAffiliation
  * @property float $childEligibility
  * @property \Stanford\WISESharedAppointmentScheduler\Scheduler $scheduler
  */
@@ -129,6 +122,12 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     use emLoggerTrait;
 
+    public static $timezones = [
+        300 => 'EST',
+        360 => 'CST',
+        420 => 'MST',
+        480 => 'PST',
+    ];
     /**
      * @var \WISESharedCalendarEmail|null
      */
@@ -192,7 +191,6 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public $locationRecords;
 
-    private $defaultAffiliation;
 
     private $scheduler;
 
@@ -351,17 +349,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
                     }
 
                     if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
-                        if ($affiliation) {
-                            $locations = $this->getLocationRecords();
-                            $location = end($locations['SITE' . $record[$this->getScheduler()->getSlotsEventId()]['location']]);
-                            if ($location['site_affiliation'] == $affiliation) {
-                                $data[] = $record;
-                            }
-
-                        } else {
-                            $data[] = $record;
-                        }
-
+                        $data[] = $record;
                     }
                 }
 
@@ -1262,6 +1250,11 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return PST - (date('I') ? 60 : 0);
     }
 
+    public function getTimezoneAbbr($offset)
+    {
+        return WISESharedAppointmentScheduler::$timezones[$offset + (date('I') ? 60 : 0)];
+    }
+
     private function getStartEndWindow($baseline, $offset, $canceledBaseline, $instance)
     {
         $windowSize = $instance['window-size'] ?: 20;
@@ -1312,7 +1305,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
             list($start, $end) = $this->getStartEndWindow(($this->getOffsetDate() ?: $this->getBaseLineDate()), $offset, $canceledBaseline, $instance);
 
-            return '<button data-baseline="' . ($this->getOffsetDate() ?: $this->getBaseLineDate()) . '" data-canceled-baseline="' . $canceledBaseline . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
+            return '<button data-baseline="' . ($this->getOffsetDate() ?: $this->getBaseLineDate()) . '" data-canceled-baseline="' . $canceledBaseline . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
         } else {
             return 'Unavailable';
         }
@@ -1610,21 +1603,6 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return $result;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultAffiliation()
-    {
-        return $this->defaultAffiliation;
-    }
-
-    /**
-     * @param int $defaultAffiliation
-     */
-    public function setDefaultAffiliation($defaultAffiliation)
-    {
-        $this->defaultAffiliation = $defaultAffiliation;
-    }
 
     public function getEventIdInstance($eventId)
     {

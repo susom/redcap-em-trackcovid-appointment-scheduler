@@ -62,12 +62,11 @@ try {
 
         // find out what is the site affiliation.
         $locations = $module->getLocationRecords();
-        $location = end($locations['SITE' . $data['reservation_participant_location']]);
-        $data['reservation_site_affiliation'] = $location['site_affiliation'];
         $data['reservation_datetime'] = $slot['start'];
         $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
         $data['reservation_created_at'] = date('Y-m-d H:i:s');
 
+        $data['local_timezone'] = $module->getTimezoneAbbr($userTimezone);
         $data['local_start_time'] = date('H:i', strtotime($slot['start']));
         $data['local_end_time'] = date('H:i', strtotime($slot['end']));
         $data['formatted_date'] = date('Y-m-d', strtotime($slot['start']));
