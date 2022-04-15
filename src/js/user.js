@@ -7,10 +7,10 @@ User = {
     record: {},
     locations: [],
     timezones: {
-        300: 'EST',
-        360: 'CST',
-        420: 'MST',
-        480: 'PST',
+        300: 'ET',
+        360: 'CT',
+        420: 'MT',
+        480: 'PT',
     },
     currentOffset: null,
     userTimezone: '',
@@ -319,14 +319,14 @@ User = {
         if (today.isDstObserved()) {
             diff = 60
             User.timezones = {
-                240: 'EST',
-                300: 'CST',
-                360: 'MST',
-                420: 'PST',
+                240: 'ET',
+                300: 'CT',
+                360: 'MT',
+                420: 'PT',
             }
         }
-        // offset = 360
-        // only if not PST
+        offset = 300
+        // only if not PT
         User.userTimezone = offset
         $("#timezone").text('Time(' + User.timezones[offset] + ')')
         $("#visits-timezone").text('Date(' + User.timezones[offset] + ')')

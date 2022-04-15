@@ -84,7 +84,7 @@ if (!empty($data)) {
 //        $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
         $row[] = date('h:i A', strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A',
                 strtotime($slot['end' . $suffix])) . ($userTimezone != $module->getPST() ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
-                    strtotime($slot['end_orig'])) . ' (PST)</small></strong>' : '');
+                    strtotime($slot['end_orig'])) . ' (PT)</small></strong>' : '');
 //        $row[] = '<h5 class="text-center">' . $available . '</h5>';;
         $row[] = $bookButton . $cancelButton;;
 

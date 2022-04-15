@@ -151,7 +151,7 @@ try {
                     <th>Offset</th>
                     <th>Appointment</th>
                     <th>Status</th>
-                    <th id="visits-timezone">Date(PST)</th>
+                    <th id="visits-timezone">Date(PT)</th>
                     <th>Location</th>
                     <th>Action</th>
                 </tr>

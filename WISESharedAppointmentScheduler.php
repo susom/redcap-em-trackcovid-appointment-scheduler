@@ -91,7 +91,7 @@ define("LOCATION", "location");
 
 define("PARTICIPANT_STATUS", "reservation_participant_status");
 
-define('PST', 480);
+define('PT', 480);
 
 /**
  * Class WISESharedAppointmentScheduler
@@ -123,10 +123,10 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     use emLoggerTrait;
 
     public static $timezones = [
-        300 => 'EST',
-        360 => 'CST',
-        420 => 'MST',
-        480 => 'PST',
+        300 => 'ET',
+        360 => 'CT',
+        420 => 'MT',
+        480 => 'PT',
     ];
     /**
      * @var \WISESharedCalendarEmail|null
@@ -393,7 +393,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      */
     public function modifySlotBasedOnUserTimezone($slot, $userTimezone)
     {
-        // differance between user timezone and PST
+        // differance between user timezone and PT
         $diff = ($this->getPST() - $userTimezone) * 60;
         $slot['start_orig'] = $slot['start'];
         $slot['end_orig'] = $slot['end'];
@@ -1247,7 +1247,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     public function getPST()
     {
-        return PST - (date('I') ? 60 : 0);
+        return PT - (date('I') ? 60 : 0);
     }
 
     public function getTimezoneAbbr($offset)

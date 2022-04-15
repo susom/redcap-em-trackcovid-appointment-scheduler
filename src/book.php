@@ -62,7 +62,9 @@ try {
 
         // find out what is the site affiliation.
         $locations = $module->getLocationRecords();
-        $data['reservation_datetime'] = $slot['start'];
+
+        // if user has different timezone. use start_orig from slot.
+        $data['reservation_datetime'] = $slot['start_orig'] ?? $slot['start'];
         $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
         $data['reservation_created_at'] = date('Y-m-d H:i:s');
 
