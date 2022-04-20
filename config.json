@@ -53,7 +53,7 @@
   ],
   "project-settings": [
     {
-      "key": "description",
+      "key": "description-0",
       "name": "<h6 style='text-align:center;color:red'><b>Appointment Scheduler</b></h6>This tool will allow users to book pre-defined time slots for different purposes. Office Hours/ Health tests/ Survey Followup.",
       "type": "descriptive"
     },
@@ -88,10 +88,46 @@
       "type": "textarea"
     },
     {
+      "key": "description",
+      "name": "<hr>Not Logged users",
+      "type": "descriptive"
+    },
+    {
+      "key": "redirect-to-login-survey",
+      "name": "<b>If you want to redirect not Logged in User to a login Survey. (You MUST enable and configure 'Scheduler Login EM' for current project)</b>",
+      "required": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "login-instrument",
+      "name": "<b>Login Survey</b>",
+      "required": true,
+      "type": "form-list",
+      "branchingLogic": {
+        "field": "redirect-to-login-survey",
+        "value": "1"
+      }
+    },
+    {
+      "key": "login-instrument-event",
+      "name": "<b>Login Instrument Event</b>",
+      "required": true,
+      "type": "event-list",
+      "branchingLogic": {
+        "field": "redirect-to-login-survey",
+        "value": "1"
+      }
+    },
+    {
       "key": "not-login-redirect-page",
       "name": "<b>Please add content to be displayed to not login users. (You can use HTML for formatting) </b>",
       "required": false,
       "type": "textarea"
+    },
+    {
+      "key": "description-1",
+      "name": "<hr>",
+      "type": "descriptive"
     },
     {
       "key": "visit-summary-instrument",

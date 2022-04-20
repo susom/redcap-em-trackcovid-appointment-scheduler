@@ -169,7 +169,12 @@ try {
 
         <?php
     } else {
-        redirect($module->getUrl('src/login.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH');
+        if ($recordId && $module->getProjectSetting('redirect-to-login-survey')) {
+            $url = \REDCap::getSurveyLink($recordId, $module->getProjectSetting('login-instrument'), $module->getProjectSetting('login-instrument-event'));
+            redirect($url);
+        } else {
+            redirect($module->getUrl('src/login.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH');
+        }
     }
 
     require_once 'models.php';
