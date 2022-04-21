@@ -325,7 +325,7 @@ User = {
                 420: 'PT',
             }
         }
-        offset = 300
+        //offset = 300
         // only if not PT
         User.userTimezone = offset
         $("#timezone").text('Time(' + User.timezones[offset] + ')')
