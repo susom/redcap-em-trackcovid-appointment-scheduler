@@ -424,6 +424,7 @@ class TrackCovidSharedCalendarEmail extends Message
         }
     }
 
+    // test
     public function send($removeDisplayName = false, $recipientIsSurveyParticipant = null, $enforceProtectedEmail = false, $emailCategory = null, $lang_id = null)
     {
         try {
