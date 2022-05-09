@@ -1659,22 +1659,6 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
 
     /**
-     * @return int
-     */
-    public function getRecordId()
-    {
-        return $this->recordId;
-    }
-
-    /**
-     * @param int $recordId
-     */
-    public function setRecordId($recordId)
-    {
-        $this->recordId = $recordId;
-    }
-
-    /**
      * @return \Project
      */
     public function getProject()

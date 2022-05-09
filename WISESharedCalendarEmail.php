@@ -424,7 +424,7 @@ class WISESharedCalendarEmail extends Message
         }
     }
 
-    public function send()
+    public function send($removeDisplayName = false, $recipientIsSurveyParticipant = null, $enforceProtectedEmail = false, $emailCategory = null, $lang_id = null)
     {
         try {
             $email = new PHPMailer();
