@@ -171,6 +171,7 @@ try {
     } else {
         if ($recordId && $module->getProjectSetting('redirect-to-login-survey')) {
             $url = \REDCap::getSurveyLink($recordId, $module->getProjectSetting('login-instrument'), $module->getProjectSetting('login-instrument-event'));
+            $module->setUserCookie('login', '', time() - 3600);
             redirect($url);
         } else {
             redirect($module->getUrl('src/login.php', true, true) . '&pid=' . $module->getProjectId() . '&NOAUTH');
