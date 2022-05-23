@@ -102,8 +102,11 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
 <input type="hidden" id="event-id" value="" class="hidden"/>
 <input type="hidden" id="user-email" value="<?php echo $user_email ?>" class="hidden"/>
 <input type="hidden" id="complementary-suffix" value="<?php echo $module->getSuffix() ?>" class="hidden"/>
+<?php
+$temp = $module->getProjectSetting("survey-scheduler-header") ?: [];
+?>
 <input type="hidden" id="survey-scheduler-header"
-       value="<?php echo(isset($_GET['pid']) ? end($module->getProjectSetting("survey-scheduler-header")) : '') ?>"
+       value="<?php echo isset($_GET['pid']) ? end($temp) : '' ?>"
        class="hidden"/>
 
 <!-- trigger below instance after loading the page. -->
