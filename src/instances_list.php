@@ -125,9 +125,10 @@ try {
 //                        $action = 'Please schedule your next appointments using MyHealth App. Please note your MyHealth Account will be created for you on your baseline visits.';
 //                    } else {
                     // prevent cancel if appointment is in less than 48 hours
-                    if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0 && !$module->isBonusVisit()) {
-                        $action = 'This Appointment is in less than 48 hours please call to cancel!';
-                    } elseif ($user['record'][$eventId]['reservation_visit_status'] == 1) {
+//                    if (strtotime($slot['start']) - time() < 172812 && strtotime($slot['start']) - time() > 0 && !$module->isBonusVisit()) {
+//                        $action = 'This Appointment is in less than 48 hours please call to cancel!';
+//                    } else
+                    if ($user['record'][$eventId]['reservation_visit_status'] == 1) {
                         $action = 'Appointment Completed';
                     } elseif ($user['record'][$eventId]['reservation_participant_status'] == RESERVED && !$module->isBonusVisit()) {
                         $action = $module->getCancelActionButton($user, $eventId, $slot);
@@ -136,9 +137,9 @@ try {
 //                        } elseif ($module->isAppointmentSkipped($user['record'][$eventId]['reservation_visit_status'])) {
 //                            $action = 'This appointment is skipped';
 //                            $noSkip = true;
-                        } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status'])) {
-                            $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
-                        }
+                    } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status'])) {
+                        $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+                    }
                     //}
 
 
