@@ -15,15 +15,15 @@ class ComposerStaticInit8aca58806e7aa488abdb5fb4cae376b0
             array(
                 'Twilio\\' => 7,
             ),
-        'P' => 
-        array (
-            'Psr\\Log\\' => 8,
-            'PHPMailer\\PHPMailer\\' => 20,
-        ),
-        'M' => 
-        array (
-            'Monolog\\' => 8,
-        ),
+        'P' =>
+            array(
+                'Psr\\Log\\' => 8,
+                'PHPMailer\\PHPMailer\\' => 20,
+            ),
+        'M' =>
+            array(
+                'Monolog\\' => 8,
+            ),
         'K' => 
         array (
             'Kigkonsult\\Icalcreator\\' => 23,
@@ -39,14 +39,14 @@ class ComposerStaticInit8aca58806e7aa488abdb5fb4cae376b0
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
-        'PHPMailer\\PHPMailer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-        ),
-        'Monolog\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
-        ),
+        'PHPMailer\\PHPMailer\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+            ),
+        'Monolog\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+            ),
         'Kigkonsult\\Icalcreator\\' =>
             array(
                 0 => __DIR__ . '/..' . '/kigkonsult/icalcreator/src',

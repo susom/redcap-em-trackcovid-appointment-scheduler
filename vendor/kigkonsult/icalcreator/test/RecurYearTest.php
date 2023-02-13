@@ -2,32 +2,30 @@
 /**
  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
- * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
- * Link      https://kigkonsult.se
- * Package   iCalcreator
- * Version   2.29.25
- * License   Subject matter of licence is the software iCalcreator.
- *           The above copyright, link, package and version notices,
- *           this licence notice and the invariant [rfc5545] PRODID result use
- *           as implemented and invoked in iCalcreator shall be included in
- *           all copies or substantial portions of the iCalcreator.
- *
- *           iCalcreator is free software: you can redistribute it and/or modify
- *           it under the terms of the GNU Lesser General Public License as published
- *           by the Free Software Foundation, either version 3 of the License,
- *           or (at your option) any later version.
- *
- *           iCalcreator is distributed in the hope that it will be useful,
- *           but WITHOUT ANY WARRANTY; without even the implied warranty of
- *           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *           GNU Lesser General Public License for more details.
- *
- *           You should have received a copy of the GNU Lesser General Public License
- *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
- *
  * This file is a part of iCalcreator.
-*/
-
+ *
+ * @author    Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
+ * @copyright 2007-2021 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      https://kigkonsult.se
+ * @license   Subject matter of licence is the software iCalcreator.
+ *            The above copyright, link, package and version notices,
+ *            this licence notice and the invariant [rfc5545] PRODID result use
+ *            as implemented and invoked in iCalcreator shall be included in
+ *            all copies or substantial portions of the iCalcreator.
+ *
+ *            iCalcreator is free software: you can redistribute it and/or modify
+ *            it under the terms of the GNU Lesser General Public License as
+ *            published by the Free Software Foundation, either version 3 of
+ *            the License, or (at your option) any later version.
+ *
+ *            iCalcreator is distributed in the hope that it will be useful,
+ *            but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *            GNU Lesser General Public License for more details.
+ *
+ *            You should have received a copy of the GNU Lesser General Public License
+ *            along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
+ */
 namespace Kigkonsult\Icalcreator;
 
 use Kigkonsult\Icalcreator\Util\DateTimeFactory;
@@ -38,7 +36,6 @@ use Exception;
 /**
  * class RecurTest, testing selectComponents
  *
- * @author      Kjell-Inge Gustafsson <ical@kigkonsult.se>
  * @since  2.27.20 - 2019-05-20
  */
 class RecurYearTest extends RecurBaseTest
@@ -48,18 +45,18 @@ class RecurYearTest extends RecurBaseTest
      *
      * @throws Exception
      */
-    public function recurYearlyTest1Provider() {
-
-        $dataArr   = [];
+    public function recurYearlyTest1Provider()
+    {
+        $dataArr = [];
         $dataSetNo = 0;
-        $DATASET   = 'DATASET';
+        $DATASET = 'DATASET';
 
         $interval = 1;
-        $count    = 10;
-        for( $ix = 111; $ix <= 112; $ix++ ) {
-            $time    = microtime( true );
-            $start   = DateTimeFactory::factory( '20190101T0900', 'Europe/Stockholm' );
-            $year    = (int) $start->format( 'Y' );
+        $count = 10;
+        for ($ix = 111; $ix <= 112; $ix++) {
+            $time = microtime(true);
+            $start = DateTimeFactory::factory('20190101T0900', 'Europe/Stockholm');
+            $year = (int)$start->format('Y');
             $month   = (int) $start->format( 'm' );
             $day     = (int) $start->format( 'd' );
             $end     = ( clone $start )->modify( '20 years' );
@@ -304,17 +301,18 @@ class RecurYearTest extends RecurBaseTest
         $end,
         array $recur,
         array $expects,
-        $prepTime ) {
+        $prepTime
+    )
+    {
         $saveStartDate = clone $start;
 
-        if( ! isset( $recur[Vcalendar::INTERVAL] )) {
+        if (!isset($recur[Vcalendar::INTERVAL])) {
             $recur[Vcalendar::INTERVAL] = 1;
         }
 
-        if( '19-23l' == $case ) {
-            $result = array_flip( $expects );
-        }
-        else {
+        if ('19-23l' == $case) {
+            $result = array_flip($expects);
+        } else {
             $result = $this->recur2dateTest(
                 $case,
                 $start,
@@ -328,22 +326,28 @@ class RecurYearTest extends RecurBaseTest
         $recurDisp = str_replace( [PHP_EOL, ' ' ], '', var_export( $recur, true ));
         if( ! RecurFactory2::isRecurYearly1( $recur )) {
             echo $strCase . ' NOT isRecurYearly1 ' . $recurDisp . PHP_EOL;
-            $this->assertTrue( false );
+            $this->assertTrue(false);
             return;
         }
-        $time     = microtime( true );
-        $resultX  = RecurFactory2::recurYearly1( $recur, $start, clone $start, $end );
-        $execTime = microtime( true ) - $time;
-        echo $strCase . 'year smpl1 time:' . number_format( $execTime, 6 ) . ' : ' .
-            implode( ' - ', array_keys( $resultX ) ) . PHP_EOL; // test ###
+        $time = microtime(true);
+        $resultX = RecurFactory2::recurYearly1($recur, $start, clone $start, $end);
+        $execTime = microtime(true) - $time;
+        echo $strCase . 'year smpl1 time:' . number_format($execTime, 6) . ' : ' .
+            implode(' - ', array_keys($resultX)) . PHP_EOL; // test ###
         echo $recurDisp . PHP_EOL;                              // test ###
+        $endFormat = is_array($end)
+            ? implode('-', $end)
+            : $end->format('Ymd');
         $this->assertEquals(
-            array_keys( $result ),
-            array_keys( $resultX ),
-            sprintf( self::$ERRFMT, __FUNCTION__, $case,
-                $saveStartDate->format( 'Ymd' ),
-                $end->format( 'Ymd' ),
-                var_export( $recur, true )
+            array_keys($result),
+            array_keys($resultX),
+            sprintf(
+                self::$ERRFMT,
+                __FUNCTION__,
+                $case,
+                $saveStartDate->format('Ymd'),
+                $endFormat,
+                var_export($recur, true)
             )
         );
     }
@@ -353,15 +357,15 @@ class RecurYearTest extends RecurBaseTest
      *
      * @throws Exception
      */
-    public function recurYearlyTest2Provider() {
-
-        $dataArr   = [];
+    public function recurYearlyTest2Provider()
+    {
+        $dataArr = [];
         $dataSetNo = 0;
-        $DATASET   = 'DATASET';
+        $DATASET = 'DATASET';
 
         // yearly in june, third TU/WE/TH in month, forever
-        $start   = DateTimeFactory::factory( '20200101T090000', 'Europe/Stockholm');
-        $wDate   = clone $start;
+        $start = DateTimeFactory::factory('20200101T090000', 'Europe/Stockholm');
+        $wDate = clone $start;
         $dataArr[] = [
             '2001',
             $start,
@@ -421,7 +425,6 @@ class RecurYearTest extends RecurBaseTest
         array $recur,
         array $expects
     ) {
-
         $saveStartDate = clone $start;
 
         if( ! isset( $recur[Vcalendar::INTERVAL] )) {
