@@ -2,31 +2,31 @@
 /**
  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
- * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
- * Link      https://kigkonsult.se
- * Package   iCalcreator
- * Version   2.29.25
- * License   Subject matter of licence is the software iCalcreator.
- *           The above copyright, link, package and version notices,
- *           this licence notice and the invariant [rfc5545] PRODID result use
- *           as implemented and invoked in iCalcreator shall be included in
- *           all copies or substantial portions of the iCalcreator.
- *
- *           iCalcreator is free software: you can redistribute it and/or modify
- *           it under the terms of the GNU Lesser General Public License as published
- *           by the Free Software Foundation, either version 3 of the License,
- *           or (at your option) any later version.
- *
- *           iCalcreator is distributed in the hope that it will be useful,
- *           but WITHOUT ANY WARRANTY; without even the implied warranty of
- *           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *           GNU Lesser General Public License for more details.
- *
- *           You should have received a copy of the GNU Lesser General Public License
- *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
- *
  * This file is a part of iCalcreator.
+ *
+ * @author    Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
+ * @copyright 2007-2021 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      https://kigkonsult.se
+ * @license   Subject matter of licence is the software iCalcreator.
+ *            The above copyright, link, package and version notices,
+ *            this licence notice and the invariant [rfc5545] PRODID result use
+ *            as implemented and invoked in iCalcreator shall be included in
+ *            all copies or substantial portions of the iCalcreator.
+ *
+ *            iCalcreator is free software: you can redistribute it and/or modify
+ *            it under the terms of the GNU Lesser General Public License as
+ *            published by the Free Software Foundation, either version 3 of
+ *            the License, or (at your option) any later version.
+ *
+ *            iCalcreator is distributed in the hope that it will be useful,
+ *            but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *            GNU Lesser General Public License for more details.
+ *
+ *            You should have received a copy of the GNU Lesser General Public License
+ *            along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
  */
+declare(strict_types=1);
 namespace Kigkonsult\Icalcreator\Util;
 
 use DateTime;
@@ -55,8 +55,7 @@ use function var_export;
 /**
  * iCalcreator 'newer' recur support class
  *
- * @author Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
- * @since  2.29.25 - 2020-09-02
+ * @since  2.27.28 - 2020-09-10
  */
 class RecurFactory2
 {
@@ -101,47 +100,54 @@ class RecurFactory2
      *
      * @param array $recur
      * @throws LogicException
-     * @since  2.27.25 - 2020-09-01
+     * @since  2.27.26 - 2020-09-10
      */
     public static function assertRecur( array $recur )
     {
-        $recurDisp = var_export( $recur, true );
+        $recurDisp = var_export($recur, true);
         static $ERR1TXT = '#1 The FREQ rule part MUST be specified in the recurrence rule.';
-        if( ! isset( $recur[Vcalendar::FREQ] )) {
-            throw new LogicException( $ERR1TXT . $recurDisp );
+        if (!isset($recur[Vcalendar::FREQ])) {
+            throw new LogicException($ERR1TXT . $recurDisp);
         }
-        static $ERR2TXT = '#2 Unkown BYDAY day : ';
-        if( isset( $recur[Vcalendar::BYDAY] )) {
-            foreach( $recur[Vcalendar::BYDAY] as $BYDAYx => $BYDAYv ) {
-                if(((int) $BYDAYx === $BYDAYx ) && is_array( $BYDAYv )) {
-                    // multi ByDay recur
-                    foreach( $BYDAYv as $BYDAYx2 => $BYDAYv2 ) {
-                        if(( Vcalendar::DAY === $BYDAYx2 ) &&
-                            ! in_array( $BYDAYv2, RecurFactory::$DAYNAMES )) {
-                            throw new LogicException( $ERR2TXT . $recurDisp );
+        static $ERR2TXT = '#2 NO BYDAY days : ';
+        static $ERR3TXT = '#3 Unkown BYDAY day : ';
+        $cntDays = 0;
+        if (isset($recur[Vcalendar::BYDAY])) {
+            foreach ($recur[Vcalendar::BYDAY] as $BYDAYx => $BYDAYv) {
+                if (((int)$BYDAYx === $BYDAYx) && is_array($BYDAYv)) {
+                    foreach ($BYDAYv as $BYDAYx2 => $BYDAYv2) {
+                        if (Vcalendar::DAY === $BYDAYx2) {
+                            if (!in_array($BYDAYv2, RecurFactory::$DAYNAMES)) {
+                                throw new LogicException($ERR3TXT . $recurDisp);
+                            }
+                            $cntDays += 1;
                         }
                     } // end foreach
                     $dayN = $pos = false;
                     continue;
                 } // end if
-                // single ByDay recur
-                elseif(( Vcalendar::DAY === $BYDAYx ) &&
-                    ! in_array( $BYDAYv, RecurFactory::$DAYNAMES )) {
-                    throw new LogicException( $ERR2TXT . var_export( $recur, true ));
+                elseif ((Vcalendar::DAY === $BYDAYx)) {
+                    if (!in_array($BYDAYv, RecurFactory::$DAYNAMES)) {
+                        throw new LogicException($ERR3TXT . var_export($recur, true));
+                    }
+                    $cntDays += 1;
                 }
             } // end foreach
+            if (empty($cntDays)) {
+                throw new LogicException($ERR2TXT . var_export($recur, true));
+            }
         } // end if BYDAY
-        static $ERR3TXT =
+        static $ERR4TXT =
             '#3 The BYDAY rule part MUST NOT ' .
             'be specified with a numeric value ' .
             'when the FREQ rule part is not set to MONTHLY or YEARLY. ';
-        static $FREQ1 = [ Vcalendar::YEARLY, Vcalendar::MONTHLY ];
+        static $FREQ1 = [Vcalendar::YEARLY, Vcalendar::MONTHLY];
         if( isset( $recur[Vcalendar::BYDAY] ) &&
             ! in_array( $recur[Vcalendar::FREQ], $FREQ1 ) &&
             self::hasRecurByDaysWithRelativeWeekdays( $recur[Vcalendar::BYDAY] )) {
-            throw new LogicException( $ERR3TXT . $recurDisp );
+            throw new LogicException($ERR4TXT . $recurDisp);
         } // end if
-        static $ERR4TXT =
+        static $ERR5TXT =
             '#4 The BYDAY rule part MUST NOT ' .
             'be specified with a numeric value ' .
             'with the FREQ rule part set to YEARLY ' .
@@ -150,29 +156,29 @@ class RecurFactory2
             ( $recur[Vcalendar::FREQ] == Vcalendar::YEARLY ) &&
             isset( $recur[Vcalendar::BYWEEKNO] ) &&
             self::hasRecurByDaysWithRelativeWeekdays( $recur[Vcalendar::BYDAY] )) {
-            throw new LogicException( $ERR4TXT . $recurDisp );
+            throw new LogicException($ERR5TXT . $recurDisp);
         } // end if
-        static $ERR5TXT =
+        static $ERR6TXT =
             '#5 The BYMONTHDAY rule part MUST NOT be specified ' .
             'when the FREQ rule part is set to WEEKLY. ';
         if(( $recur[Vcalendar::FREQ] == Vcalendar::WEEKLY ) &&
             isset( $recur[Vcalendar::BYMONTHDAY] )) {
-            throw new LogicException( $ERR5TXT . $recurDisp );
-        } // end if
-        static $ERR6TXT =
-            '#6 The BYYEARDAY rule part MUST NOT be specified ' .
-            'when the FREQ rule part is set to DAILY, WEEKLY, or MONTHLY. ';
-        static $FREQ4 = [ Vcalendar::DAILY, Vcalendar::WEEKLY, Vcalendar::MONTHLY ];
-        if( isset( $recur[Vcalendar::BYYEARDAY] ) &&
-            in_array( $recur[Vcalendar::FREQ], $FREQ4 )) {
-            throw new LogicException( $ERR6TXT . $recurDisp );
+            throw new LogicException($ERR6TXT . $recurDisp);
         } // end if
         static $ERR7TXT =
+            '#6 The BYYEARDAY rule part MUST NOT be specified ' .
+            'when the FREQ rule part is set to DAILY, WEEKLY, or MONTHLY. ';
+        static $FREQ4 = [Vcalendar::DAILY, Vcalendar::WEEKLY, Vcalendar::MONTHLY];
+        if( isset( $recur[Vcalendar::BYYEARDAY] ) &&
+            in_array( $recur[Vcalendar::FREQ], $FREQ4 )) {
+            throw new LogicException($ERR7TXT . $recurDisp);
+        } // end if
+        static $ERR8TXT =
             '#7 The BYWEEKNO rule part MUST NOT be used ' .
             'when the FREQ rule part is set to anything other than YEARLY.';
         if( isset( $recur[Vcalendar::BYWEEKNO] ) &&
             ( $recur[Vcalendar::FREQ] != Vcalendar::YEARLY )) {
-            throw new LogicException( $ERR7TXT . $recurDisp );
+            throw new LogicException($ERR8TXT . $recurDisp);
         } // end if
     }
 
@@ -191,17 +197,17 @@ class RecurFactory2
      * @return bool
      * @since  2.27.22 - 2020-08-18
      */
-    public static function isRecurDaily1( array $recur )
+    public static function isRecurDaily1(array $recur): bool
     {
-        static $ACCEPT = [ Vcalendar::BYMONTHDAY, Vcalendar::WKST ];
-        if( Vcalendar::DAILY != $recur[Vcalendar::FREQ ] ) {
+        static $ACCEPT = [Vcalendar::BYMONTHDAY, Vcalendar::WKST];
+        if (Vcalendar::DAILY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        foreach( self::$RECURBYX as $byX ) {
-            if( in_array( $byX, $ACCEPT )) {
+        foreach (self::$RECURBYX as $byX) {
+            if (in_array($byX, $ACCEPT)) {
                 continue;
             }
-            if( isset( $recur[$byX])) {
+            if (isset($recur[$byX])) {
                 return false;
             }
         } // end foreach
@@ -232,16 +238,16 @@ class RecurFactory2
      * @return bool
      * @since  2.27.24 - 2020-08-27
      */
-    public static function isRecurDaily2( array $recur )
+    public static function isRecurDaily2(array $recur): bool
     {
-        if( Vcalendar::DAILY != $recur[Vcalendar::FREQ ] ) {
+        if (Vcalendar::DAILY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( isset( $recur[Vcalendar::BYSETPOS] ) &&
-            ( isset( $recur[Vcalendar::BYMONTH] ) ||
-                isset( $recur[Vcalendar::BYMONTHDAY] ))) {
-            unset( $recur[Vcalendar::BYSETPOS] );
-            return self::isRecurDaily1( $recur );
+        if (isset($recur[Vcalendar::BYSETPOS]) &&
+            (isset($recur[Vcalendar::BYMONTH]) ||
+                isset($recur[Vcalendar::BYMONTHDAY]))) {
+            unset($recur[Vcalendar::BYSETPOS]);
+            return self::isRecurDaily1($recur);
         }
         return false;
     }
@@ -256,16 +262,16 @@ class RecurFactory2
      * @return bool
      * @since  2.27.22 - 2020-08-18
      */
-    public static function isRecurWeekly1( array $recur )
+    public static function isRecurWeekly1(array $recur): bool
     {
-        if( Vcalendar::WEEKLY != $recur[Vcalendar::FREQ ] ) {
+        if (Vcalendar::WEEKLY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( isset( $recur[Vcalendar::BYDAY] )) {
+        if (isset($recur[Vcalendar::BYDAY])) {
             return false;
         }
-        foreach( self::$RECURBYX as $byX ) {
-            if( isset( $recur[$byX])) {
+        foreach (self::$RECURBYX as $byX) {
+            if (isset($recur[$byX])) {
                 return false;
             }
         }
@@ -286,15 +292,15 @@ class RecurFactory2
      * @return bool
      * @since  2.27.22 - 2020-08-18
      */
-    public static function isRecurWeekly2( array $recur )
+    public static function isRecurWeekly2(array $recur): bool
     {
-        if( Vcalendar::WEEKLY != $recur[Vcalendar::FREQ ] ) {
+        if (Vcalendar::WEEKLY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( ! isset( $recur[Vcalendar::BYDAY] )) {
+        if (!isset($recur[Vcalendar::BYDAY])) {
             return false;
         }
-        if( empty( self::getRecurByDaysWithNoRelativeWeekdays(
+        if (empty(self::getRecurByDaysWithNoRelativeWeekdays(
             $recur[Vcalendar::BYDAY]
         ))) {
             return false;
@@ -320,17 +326,17 @@ class RecurFactory2
      * @return bool
      * @since  2.27.22 - 2020-08-18
      */
-    public static function isRecurMonthly1( array $recur )
+    public static function isRecurMonthly1(array $recur): bool
     {
-        static $ACCEPT = [ Vcalendar::BYMONTHDAY, Vcalendar::BYSETPOS, Vcalendar::WKST ];
-        if( Vcalendar::MONTHLY != $recur[Vcalendar::FREQ ] ) {
+        static $ACCEPT = [Vcalendar::BYMONTHDAY, Vcalendar::BYSETPOS, Vcalendar::WKST];
+        if (Vcalendar::MONTHLY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( isset( $recur[Vcalendar::BYDAY] ) &&
-            self::hasRecurByDaysWithRelativeWeekdays( $recur[Vcalendar::BYDAY] )) {
+        if (isset($recur[Vcalendar::BYDAY]) &&
+            self::hasRecurByDaysWithRelativeWeekdays($recur[Vcalendar::BYDAY])) {
             return false;
         }
-        if( isset( $recur[Vcalendar::BYSETPOS] ) &&
+        if (isset($recur[Vcalendar::BYSETPOS]) &&
             ! isset( $recur[Vcalendar::BYMONTHDAY] )) {
             return false;
         }
@@ -358,17 +364,17 @@ class RecurFactory2
      * @return bool
      * @since  2.27.22 - 2020-08-18
      */
-    public static function isRecurMonthly2( array $recur )
+    public static function isRecurMonthly2(array $recur): bool
     {
-        static $ACCEPT = [ Vcalendar::BYSETPOS, Vcalendar::WKST ];
-        if( Vcalendar::MONTHLY != $recur[Vcalendar::FREQ ] ) {
+        static $ACCEPT = [Vcalendar::BYSETPOS, Vcalendar::WKST];
+        if (Vcalendar::MONTHLY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( ! isset( $recur[Vcalendar::BYDAY] )) {
+        if (!isset($recur[Vcalendar::BYDAY])) {
             return false;
         }
-        foreach( self::$RECURBYX as $byX ) {
-            if( in_array( $byX, $ACCEPT )) {
+        foreach (self::$RECURBYX as $byX) {
+            if (in_array($byX, $ACCEPT)) {
                 continue;
             }
             if( isset( $recur[$byX])) {
@@ -389,17 +395,17 @@ class RecurFactory2
      * @return bool
      * @since  2.27.22 - 2020-08-18
      */
-    public static function isRecurYearly1( array $recur )
+    public static function isRecurYearly1(array $recur): bool
     {
-        static $ACCEPT = [ Vcalendar::BYMONTHDAY, Vcalendar::WKST ];
-        if( Vcalendar::YEARLY != $recur[Vcalendar::FREQ ] ) {
+        static $ACCEPT = [Vcalendar::BYMONTHDAY, Vcalendar::WKST];
+        if (Vcalendar::YEARLY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( isset( $recur[Vcalendar::BYDAY] )) {
+        if (isset($recur[Vcalendar::BYDAY])) {
             return false;
         }
-        foreach( self::$RECURBYX as $byX ) {
-            if( in_array( $byX, $ACCEPT )) {
+        foreach (self::$RECURBYX as $byX) {
+            if (in_array($byX, $ACCEPT)) {
                 continue;
             }
             if( isset( $recur[$byX])) {
@@ -421,17 +427,17 @@ class RecurFactory2
      * @return bool
      * @since  2.29.24 - 2020-08-29
      */
-    public static function isRecurYearly2( array $recur )
+    public static function isRecurYearly2(array $recur): bool
     {
-        static $ACCEPT = [ Vcalendar::BYSETPOS, Vcalendar::WKST ];
-        if( Vcalendar::YEARLY != $recur[Vcalendar::FREQ ] ) {
+        static $ACCEPT = [Vcalendar::BYSETPOS, Vcalendar::WKST];
+        if (Vcalendar::YEARLY != $recur[Vcalendar::FREQ]) {
             return false;
         }
-        if( ! isset( $recur[Vcalendar::BYDAY] ) ||
-            ! isset( $recur[Vcalendar::BYMONTH] )) {
+        if (!isset($recur[Vcalendar::BYDAY]) ||
+            !isset($recur[Vcalendar::BYMONTH])) {
             return false;
         }
-        foreach( self::$RECURBYX as $byX ) {
+        foreach (self::$RECURBYX as $byX) {
             if( in_array( $byX, $ACCEPT )) {
                 continue;
             }
@@ -457,20 +463,20 @@ class RecurFactory2
      */
     private static function getRecurSimpleBase(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn
-    ) {
-        static $MOD  = ' years';
-        $wDate       = self::dateToDateTime( $wDateIn );
-        $wDateYmd    = $wDate->format( self::$YMD );
-        $fcnStart    = self::dateToDateTime( $fcnStartIn );
-        $fcnStartYmd = $fcnStart->format( self::$YMD );
-        if( empty( $fcnEndIn )) {
-            $base = ( $wDateYmd > $fcnStartYmd ) ? clone $wDate : clone $fcnStart;
-            $base->modify( RecurFactory::EXTENDYEAR . $MOD ); // max??
-        }
-        else {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn
+    ): array
+    {
+        static $MOD = ' years';
+        $wDate = self::dateToDateTime($wDateIn);
+        $wDateYmd = $wDate->format(self::$YMD);
+        $fcnStart = self::dateToDateTime($fcnStartIn);
+        $fcnStartYmd = $fcnStart->format(self::$YMD);
+        if (empty($fcnEndIn)) {
+            $base = ($wDateYmd > $fcnStartYmd) ? clone $wDate : clone $fcnStart;
+            $base->modify(RecurFactory::EXTENDYEAR . $MOD); // max??
+        } else {
             $base = self::dateToDateTime( $fcnEndIn );
         }
         $endYmd = $base->format( self::$YMD );
@@ -510,20 +516,21 @@ class RecurFactory2
      */
     public static function recurDaily1(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $plusXdays = sprintf( self::$FMTX, $recur[Vcalendar::INTERVAL] );
-        $count     = self::getCount( $recur );
+        $plusXdays = sprintf(self::$FMTX, $recur[Vcalendar::INTERVAL]);
+        $count = self::getCount($recur);
         $result = $byDayList = $byMonthList = $byMonthDayList = $monthDays = $bspList = [];
-        $hasByMonth     = $hasByMonthDays = false;
-        $byMonthList    = self::getRecurByMonth( $recur, $hasByMonth );
+        $hasByMonth = $hasByMonthDays = false;
+        $byMonthList = self::getRecurByMonth($recur, $hasByMonth);
         $byMonthDayList = self::getRecurByMonthDay( $recur, $hasByMonthDays );
         $byDayList = ( isset( $recur[Vcalendar::BYDAY] )) // number for day in week
             ? self::getRecurByDaysWithNoRelativeWeekdays( $recur[Vcalendar::BYDAY] )
@@ -595,20 +602,21 @@ class RecurFactory2
      */
     public static function recurDaily2(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $count       = self::getCount( $recur );
-        unset( $recur[Vcalendar::COUNT] );
-        self::hasSetByPos( $recur );
-        $bySetPos    = $recur[Vcalendar::BYSETPOS];
-        unset( $recur[Vcalendar::BYSETPOS] );
+        $count = self::getCount($recur);
+        unset($recur[Vcalendar::COUNT]);
+        self::hasSetByPos($recur);
+        $bySetPos = $recur[Vcalendar::BYSETPOS];
+        unset($recur[Vcalendar::BYSETPOS]);
         $year        = (int) $wDate->format( self::$UCY );
         $month       = (int) $wDate->format( self::$LCM );
         $wDate->setDate( $year, $month, 1 );
@@ -625,7 +633,7 @@ class RecurFactory2
         $currMonth = $month;
         $x         = 1;
         foreach( array_keys( $result1 ) as $Ymd ) {
-            $month = (int) substr( $Ymd, 4, 2 );
+            $month = (int)substr((string)$Ymd, 4, 2);
             if( $currMonth != $month ) {
                 self::bySetPosResultAppend($result, $x, $bspList, $recurLimits );
                 if(( $x >= $count ) || ( $endYmd < $Ymd )) {
@@ -656,20 +664,21 @@ class RecurFactory2
      */
     public static function recurWeekly1(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $result      = [];
-        $x           = 1;
-        $count       = self::getCount( $recur );
-        $hasByMonth  = false;
-        $byMonthList = self::getRecurByMonth( $recur, $hasByMonth );
+        $result = [];
+        $x = 1;
+        $count = self::getCount($recur);
+        $hasByMonth = false;
+        $byMonthList = self::getRecurByMonth($recur, $hasByMonth);
         $modifyX     = sprintf( self::$FMTX, ( $recur[Vcalendar::INTERVAL] * 7 ));
         while( $x < $count ) {
             $wDate   = $wDate->modify( $modifyX );
@@ -696,67 +705,67 @@ class RecurFactory2
      * Recur BYMONTH opt.
      * If missing endDate/UNTIL, stopDate is set to (const) EXTENDYEAR year from startdate (emergency break)
      *
-     * @param array $recur      pattern for recurrency (only value part, params ignored)
-     * @param mixed $wDateIn    component start date, string / array / (datetime) obj
+     * @param array $recur pattern for recurrency (only value part, params ignored)
+     * @param mixed $wDateIn component start date, string / array / (datetime) obj
      * @param mixed $fcnStartIn start date, string / array / (datetime) obj
-     * @param mixed $fcnEndIn   end date, string / array / (datetime) obj
+     * @param mixed $fcnEndIn end date, string / array / (datetime) obj
      * @return array            array([Ymd] => bool)
      * @throws Exception
-     * @since  2.27.16 - 2019-03-03
+     * @since  2.27.28 - 2029-09-10
      */
     public static function recurWeekly2(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
         static $MINUS1DAY = '-1 day';
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $result    = [];
-        $x         = 1;
-        $count     = self::getCount( $recur );
+        $result = [];
+        $x = 1;
+        $count = self::getCount($recur);
         $byDayList = self::getRecurByDaysWithNoRelativeWeekdays(
             $recur[Vcalendar::BYDAY] // number(s) for day in week
         );
-        $hasByMonth   = false;
-        $byMonthList  = self::getRecurByMonth( $recur, $hasByMonth );
-        $modify1      = sprintf( self::$FMTX, 1 );
-        $targetWeekNo = (int) $wDate->format( self::$UCW );
+        $hasByMonth = false;
+        $byMonthList = self::getRecurByMonth($recur, $hasByMonth);
+        $modify1 = sprintf(self::$FMTX, 1);
+        $targetWeekNo = (int)$wDate->format(self::$UCW);
         // go back to first day of week or first day in month
-        while(( 1 != $wDate->format( self::$LCW )) &&
-            ( 1 != $wDate->format( self::$LCJ ))) {
-            $wDate = $wDate->modify( $MINUS1DAY );
+        while ((1 != $wDate->format(self::$LCW)) &&
+            (1 != $wDate->format(self::$LCJ))) {
+            $wDate = $wDate->modify($MINUS1DAY);
         } // end while
         while( $x < $count ) {
             $currWeekNo = (int) $wDate->format( self::$UCW );
             $Ymd        = $wDate->format( self::$YMD );
-            switch( true ) {
-                case( $Ymd <= $fcnStartYmd ) :
-                    $wDate = $wDate->modify( $modify1 );
+            switch (true) {
+                case($Ymd <= $fcnStartYmd) :
+                    $wDate = $wDate->modify($modify1);
                     break;
-                case( $endYmd < $Ymd ) :
-                    break 2;
-                case( $currWeekNo == $targetWeekNo ) :
-                    if( self::inList( $wDate->format( self::$LCM ), $byMonthList )) {
-                        if( self::inList( $wDate->format( self::$LCW ), $byDayList )) {
+                case($endYmd < $Ymd) :
+                    break 2; // leave while !
+                case($currWeekNo == $targetWeekNo) :
+                    if (self::inList($wDate->format(self::$LCM), $byMonthList)) {
+                        if (self::inList($wDate->format(self::$LCW), $byDayList)) {
                             $result[$Ymd] = true;
+                            $x += 1;
                         }
                     }
-                    $wDate = $wDate->modify( $modify1 );
+                    $wDate = $wDate->modify($modify1);
                     break;
                 default :
                     // now is the first day of next week
                     if( 1 < $recur[Vcalendar::INTERVAL] ) {
-                        $modifyX =
-                            sprintf(
-                                self::$FMTX,
-                                ( 7 * ( $recur[Vcalendar::INTERVAL] - 1 ))
-                            );
-                        $wDate    = $wDate->modify( $modifyX );
+                        // advance interval weeks
+                        $dayNo = (7 * ($recur[Vcalendar::INTERVAL] - 1));
+                        $modifyX = sprintf(self::$FMTX, $dayNo);
+                        $wDate = $wDate->modify($modifyX);
                     }
                     $targetWeekNo = (int) $wDate->format( self::$UCW );
                     break;
@@ -785,38 +794,40 @@ class RecurFactory2
      */
     public static function recurMonthly1(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $hasBSP    = self::hasSetByPos( $recur );
-        $count     = self::getCount( $recur );
+        $hasBSP = self::hasSetByPos($recur);
+        $count = self::getCount($recur);
         $result = $byMonthList = $byMonthDayList = $monthDays = $byDayList = $bspList = [];
         $hasByMonthDays = $hasByMonth = $hasByDay = false;
-        $byMonthList    = self::getRecurByMonth( $recur, $hasByMonth );
-        $byMonthDayList = self::getRecurByMonthDay( $recur, $hasByMonthDays );
-        if( isset( $recur[Vcalendar::BYDAY] )) {
+        $byMonthList = self::getRecurByMonth($recur, $hasByMonth);
+        $byMonthDayList = self::getRecurByMonthDay($recur, $hasByMonthDays);
+        if (isset($recur[Vcalendar::BYDAY])) {
             $hasByDay = true;
             $byDayList = self::getRecurByDaysWithNoRelativeWeekdays(
                 $recur[Vcalendar::BYDAY] // number(s) for day in week
             );
         }
-        $year      = (int) $wDate->format( self::$UCY );
-        $month     = (int) $wDate->format( self::$LCM );
-        $currMonth = $daysInMonth = null;
-        if( $hasByMonthDays || $hasByDay ) {
-            if( $hasByMonthDays ) {
+        $year = (int)$wDate->format(self::$UCY);
+        $month = (int)$wDate->format(self::$LCM);
+        $recurLimits = [];
+        $currMonth = null;
+        if ($hasByMonthDays || $hasByDay) {
+            if ($hasByMonthDays) {
                 $monthDays = self::getMonthDaysFromByMonthDayList(
-                    (int)$wDate->format( self::$LCT ), // day numbers in month
+                    (int)$wDate->format(self::$LCT), // day numbers in month
                     $byMonthDayList
                 );
-                if( $hasBSP ) {
-                    $recurLimits = [ $count, $recur[Vcalendar::BYSETPOS], $wDateYmd, $endYmd ];
+                if ($hasBSP) {
+                    $recurLimits = [$count, $recur[Vcalendar::BYSETPOS], $wDateYmd, $endYmd];
                 }
             }
             $day       = 1;
@@ -852,14 +863,14 @@ class RecurFactory2
                         $byMonthDayList
                     );
                 }
-                if( $hasByDay ) {
-                    $day    = 1;
+                if ($hasByDay) {
+                    $day = 1;
                 }
             } // end if( $month != $currMonth )
             else {
                 $day += 1;
             }
-            if( ! checkdate((int) $month, (int) $day, (int) $year )) {
+            if (!checkdate($month, $day, $year)) {
                 $currMonth = null;
                 continue;
             }
@@ -919,20 +930,21 @@ class RecurFactory2
      */
     public static function recurMonthlyYearly3(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $isYearly    = isset( $recur[Vcalendar::YEARLY] );
-        $hasBSP      = self::hasSetByPos( $recur );
-        $count       = self::getCount( $recur );
-        $result      = $byMonthList = $byDayList = $bspList = [];
-        $year        = (int) $wDate->format( self::$UCY );
+        $isYearly = isset($recur[Vcalendar::YEARLY]);
+        $hasBSP = self::hasSetByPos($recur);
+        $count = self::getCount($recur);
+        $result = $byMonthList = $byDayList = $bspList = [];
+        $year = (int)$wDate->format(self::$UCY);
         $month       = (int) $wDate->format( self::$LCM );
         $hasByMonth  = false;
         $byMonthList = self::getRecurByMonth( $recur, $hasByMonth );
@@ -952,6 +964,7 @@ class RecurFactory2
             $year,
             $month
         );
+        $recurLimits = [];
         if( $hasBSP ) {
             $recurLimits = [ $count, $recur[Vcalendar::BYSETPOS], $wDateYmd, $endYmd ];
             $wDate->setDate( $year, $month, 1 ); //
@@ -963,17 +976,17 @@ class RecurFactory2
         $currYear  = $year;
         $x         = 1;
         while( $x < $count ) {
-            if( ! checkdate((int) $month, (int) $day, (int) $year )) {
+            if (!checkdate($month, $day, $year)) {
                 $currMonth = null;
-                if( $isYearly && ( 12 == $month )) {
+                if ($isYearly && (12 == $month)) {
                     $currYear = null;
                 }
             }
-            if(( $month != $currMonth ) || ( $isYearly && ( $year != $currYear ))) {
-                $day       = 1;
-                if( $isYearly && ( $year != $currYear )) {
-                    $wDate->setDate( $year, 1, $day )
-                        ->modify( $modifier );
+            if (($month != $currMonth) || ($isYearly && ($year != $currYear))) {
+                $day = 1;
+                if ($isYearly && ($year != $currYear)) {
+                    $wDate->setDate($year, 1, $day)
+                        ->modify($modifier);
                     $year = (int) $wDate->format( self::$UCY );
                     $month = 1;
                 }
@@ -1100,20 +1113,21 @@ class RecurFactory2
      */
     public static function recurYearly1(
         array $recur,
-        $wDateIn,
-        $fcnStartIn,
-        $fcnEndIn = false
-    ) {
-        list( $wDate, $wDateYmd, $fcnStartYmd, $endYmd ) =
-            self::getRecurSimpleBase( $recur, $wDateIn, $fcnStartIn, $fcnEndIn );
-        if( $wDateYmd > $endYmd ) {
+              $wDateIn,
+              $fcnStartIn,
+              $fcnEndIn = false
+    ): array
+    {
+        list($wDate, $wDateYmd, $fcnStartYmd, $endYmd) =
+            self::getRecurSimpleBase($recur, $wDateIn, $fcnStartIn, $fcnEndIn);
+        if ($wDateYmd > $endYmd) {
             return [];
         }
-        $result    = $byMonthList = $byWeeknoList = $byMonthDayList = $monthDaysList = [];
-        $x         = 1;
-        $count     = self::getCount( $recur );
+        $result = $byMonthList = $byWeeknoList = $byMonthDayList = $monthDaysList = [];
+        $x = 1;
+        $count = self::getCount($recur);
         $hasByMonthDays = $hasByMonth = false;
-        $byMonthList    = self::getRecurByMonth( $recur, $hasByMonth );
+        $byMonthList = self::getRecurByMonth($recur, $hasByMonth);
         $byMonthDayList = self::getRecurByMonthDay( $recur, $hasByMonthDays );
         $year      = $currYear = (int) $wDate->format( self::$UCY );
         $month     = (int) $wDate->format( self::$LCM );
@@ -1211,10 +1225,10 @@ class RecurFactory2
      * @param array $recur
      * @return int
      */
-    private static function getCount( array $recur )
+    private static function getCount(array $recur): int
     {
-        return ( isset( $recur[Vcalendar::COUNT] ))
-            ? (int) $recur[Vcalendar::COUNT]
+        return (isset($recur[Vcalendar::COUNT]))
+            ? (int)$recur[Vcalendar::COUNT]
             : PHP_INT_MAX;
     }
 
@@ -1226,12 +1240,12 @@ class RecurFactory2
      * @return bool
      * @since  2.27.16 - 2019-03-04
      */
-    private static function inList( $needle, array $byXxxList )
+    private static function inList($needle, array $byXxxList): bool
     {
-        if( empty( $byXxxList )) {
+        if (empty($byXxxList)) {
             return true;
         }
-        return in_array( $needle, $byXxxList );
+        return in_array($needle, $byXxxList);
     }
 
     /**
@@ -1240,16 +1254,16 @@ class RecurFactory2
      * @param array $recur
      * @return bool
      */
-    private static function hasSetByPos( array & $recur )
+    private static function hasSetByPos(array &$recur): bool
     {
-        if( ! isset( $recur[Vcalendar::BYSETPOS] )) {
+        if (!isset($recur[Vcalendar::BYSETPOS])) {
             return false;
         }
-        if( ! is_array( $recur[Vcalendar::BYSETPOS] )) {
+        if (!is_array($recur[Vcalendar::BYSETPOS])) {
             $recur[Vcalendar::BYSETPOS] =
-                explode( self::$COMMA, (string) $recur[Vcalendar::BYSETPOS] );
+                explode(self::$COMMA, (string)$recur[Vcalendar::BYSETPOS]);
         }
-        sort( $recur[Vcalendar::BYSETPOS] );
+        sort($recur[Vcalendar::BYSETPOS]);
         return true;
     }
 
@@ -1261,14 +1275,14 @@ class RecurFactory2
      * @return array
      * @since  2.29.11 - 2019-08-30
      */
-    private static function getRecurByMonth( array $recur, & $hasByMonth = false )
+    private static function getRecurByMonth(array $recur, &$hasByMonth = false): array
     {
         $byMonthList = [];
-        if( isset( $recur[Vcalendar::BYMONTH] )) {
-            $byMonthList = is_array( $recur[Vcalendar::BYMONTH] )
+        if (isset($recur[Vcalendar::BYMONTH])) {
+            $byMonthList = is_array($recur[Vcalendar::BYMONTH])
                 ? $recur[Vcalendar::BYMONTH]
-                : [ $recur[Vcalendar::BYMONTH] ];
-            sort( $byMonthList, SORT_NUMERIC );
+                : [$recur[Vcalendar::BYMONTH]];
+            sort($byMonthList, SORT_NUMERIC);
             $hasByMonth = true;
         }
         return $byMonthList;
@@ -1282,14 +1296,14 @@ class RecurFactory2
      * @return array
      * @since  2.29.11 - 2019-08-30
      */
-    private static function getRecurByMonthDay( array $recur, & $hasByMonthDays = false )
+    private static function getRecurByMonthDay(array $recur, &$hasByMonthDays = false): array
     {
         $byMonthDayList = [];
-        if( isset( $recur[Vcalendar::BYMONTHDAY] )) {
-            $byMonthDayList = is_array( $recur[Vcalendar::BYMONTHDAY] )
+        if (isset($recur[Vcalendar::BYMONTHDAY])) {
+            $byMonthDayList = is_array($recur[Vcalendar::BYMONTHDAY])
                 ? $recur[Vcalendar::BYMONTHDAY]
-                : [ $recur[Vcalendar::BYMONTHDAY] ];
-            sort( $byMonthDayList, SORT_NUMERIC );
+                : [$recur[Vcalendar::BYMONTHDAY]];
+            sort($byMonthDayList, SORT_NUMERIC);
             $hasByMonthDays = true;
         }
         return $byMonthDayList;
@@ -1306,17 +1320,18 @@ class RecurFactory2
      * @since  2.27.16 - 2019-03-06
      */
     public static function getMonthDaysFromByMonthDayList(
-        $daysInMonth,
+        int   $daysInMonth,
         array $byMonthDayList
-    ) {
+    ): array
+    {
         $list = [];
-        foreach( $byMonthDayList as $byMonthDay ) {
-            $list[] = ( 0 < $byMonthDay )
+        foreach ($byMonthDayList as $byMonthDay) {
+            $list[] = (0 < $byMonthDay)
                 ? $byMonthDay
-                : ( $daysInMonth + 1 + $byMonthDay );
+                : ($daysInMonth + 1 + $byMonthDay);
         }
-        $list = array_values( array_unique( $list ));
-        sort( $list, SORT_NUMERIC );
+        $list = array_values(array_unique($list));
+        sort($list, SORT_NUMERIC);
         return $list;
     }
 
@@ -1327,14 +1342,16 @@ class RecurFactory2
      * @return array
      * @since  2.27.16 - 2019-03-03
      */
-    private static function getRecurByDaysWithNoRelativeWeekdays( array $recurByDay )
+    private static function getRecurByDaysWithNoRelativeWeekdays(
+        array $recurByDay
+    ): array
     {
-        $dayArr = array_flip( RecurFactory::$DAYNAMES );
-        $list   = [];
-        foreach( $recurByDay as $BYDAYx => $BYDAYv ) {
-            if( ctype_digit((string) $BYDAYx ) && is_array( $BYDAYv )) {
-                foreach( $BYDAYv as $BYDAYx2 => $BYDAYv2 ) {
-                    if( Vcalendar::DAY == $BYDAYx2 ) {
+        $dayArr = array_flip(RecurFactory::$DAYNAMES);
+        $list = [];
+        foreach ($recurByDay as $BYDAYx => $BYDAYv) {
+            if (ctype_digit((string)$BYDAYx) && is_array($BYDAYv)) {
+                foreach ($BYDAYv as $BYDAYx2 => $BYDAYv2) {
+                    if (Vcalendar::DAY == $BYDAYx2) {
                         $list[] = $dayArr[$BYDAYv2];
                     }
                 }
@@ -1350,26 +1367,27 @@ class RecurFactory2
      * Return bool true if recur BYDAYs has relative weekday(s) ( ex '-1 TH' )
      *
      * @param array $recurByDay
-     * @return array
+     * @return bool
      * @since  2.27.16 - 2019-03-03
      */
-     private static function hasRecurByDaysWithRelativeWeekdays( array $recurByDay )
-     {
-         if( empty( $recurByDay )) {
-             return false;
-         }
-         foreach( $recurByDay as $BYDAYx => $BYDAYv ) {
-             if(((int) $BYDAYx === $BYDAYx ) && is_array( $BYDAYv )) {
-                 // multi ByDay recur
-                 foreach( $BYDAYv as $BYDAYx2 => $BYDAYv2 ) {
-                     if( Vcalendar::DAY === $BYDAYx2 ) {
-                         continue;
+    private static function hasRecurByDaysWithRelativeWeekdays(
+        array $recurByDay
+    ): bool
+    {
+        if (empty($recurByDay)) {
+            return false;
+        }
+        foreach ($recurByDay as $BYDAYx => $BYDAYv) {
+            if (((int)$BYDAYx === $BYDAYx) && is_array($BYDAYv)) {
+                // multi ByDay recur
+                foreach ($BYDAYv as $BYDAYx2 => $BYDAYv2) {
+                    if (Vcalendar::DAY === $BYDAYx2) {
+                        continue;
                      }
                      else {
                          return true;
                      }
                  } // end foreach
-                 continue;
              } // end if
              // single ByDay recur
              elseif( Vcalendar::DAY === $BYDAYx ) {
@@ -1391,16 +1409,20 @@ class RecurFactory2
      * @return array
      * @since  2.27.16 - 2019-03-03
      */
-    public static function getRecurByDaysInMonth( array $recurByDay, $year, $month )
+    public static function getRecurByDaysInMonth(
+        array $recurByDay,
+        int   $year,
+        int   $month
+    ): array
     {
         static $wFmt1 = '%d-%02d-%02d';
         static $wFmt2 = '+1 day';
-        $wDay  = 1;
-        $wDate = new DateTime( sprintf( $wFmt1, $year, $month, $wDay ));
+        $wDay = 1;
+        $wDate = new DateTime(sprintf($wFmt1, $year, $month, $wDay));
         // get days in month
-        $daysInMonth = (int) $wDate->format( self::$LCT );
+        $daysInMonth = (int)$wDate->format(self::$LCT);
         $monthDays = [];
-        $dayPos    = [];
+        $dayPos = [];
         // get monthDay as weekDay and occurence pos from start
         while( $wDay  <= $daysInMonth ) {
             $weekDayNo = $wDate->format( self::$LCW );
@@ -1438,7 +1460,6 @@ class RecurFactory2
                     );
                 }
                 $dayN = $pos = false;
-                continue;
             } // end if
             // single ByDay recur
             elseif( Vcalendar::DAY === $BYDAYx ) {
@@ -1462,22 +1483,23 @@ class RecurFactory2
     /**
      * Return (array) dayNo hits, found in monthDays
      *
-     * @param array    $monthDays with element dayN, posFromStart, posFromEnd
+     * @param array $monthDays with element dayN, posFromStart, posFromEnd
      * @param bool|int $pos
-     * @param string   $dayN      weekday name abbr
+     * @param string $dayN weekday name abbr
      * @return array    dayNo hits in month
      */
-    private static function getMonthDaysFromByDay( array $monthDays, $pos, $dayN ) {
+    private static function getMonthDaysFromByDay(array $monthDays, $pos, $dayN): array
+    {
         $list = [];
-        foreach( $monthDays as $dayNo => $dayData ) {
-            if( $dayN != $dayData[0] ) {
+        foreach ($monthDays as $dayNo => $dayData) {
+            if ($dayN != $dayData[0]) {
                 continue;
             }
-            if( empty( $pos )) {
+            if (empty($pos)) {
                 $list[] = $dayNo;
                 continue;
             }
-            if(( $dayData[1] == $pos ) ||  // positive, posFromStart
+            if (($dayData[1] == $pos) ||  // positive, posFromStart
                 ( $dayData[2] == $pos )) { // negative, posFromEnd
                 $list[] = $dayNo;
             }
@@ -1494,13 +1516,13 @@ class RecurFactory2
      * @throws InvalidArgumentException
      * @since  2.27.16 - 2019-03-03
      */
-    private static function dateToDateTime( $input )
+    private static function dateToDateTime($input): DateTime
     {
-        if( $input instanceof DateTime ) {
+        if ($input instanceof DateTime) {
             return clone $input;
         }
-        list( $dateStr, $timezonePart ) =
-            DateTimeFactory::splitIntoDateStrAndTimezone( $input );
+        list($dateStr, $timezonePart) =
+            DateTimeFactory::splitIntoDateStrAndTimezone($input);
         try {
             $output = DateTimeFactory::getDateTimeWithTimezoneFromString(
                 $dateStr,

@@ -1,32 +1,32 @@
 <?php
 /**
-  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
- *
- * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
- * Link      https://kigkonsult.se
- * Package   iCalcreator
- * Version   2.29.25
- * License   Subject matter of licence is the software iCalcreator.
- *           The above copyright, link, package and version notices,
- *           this licence notice and the invariant [rfc5545] PRODID result use
- *           as implemented and invoked in iCalcreator shall be included in
- *           all copies or substantial portions of the iCalcreator.
- *
- *           iCalcreator is free software: you can redistribute it and/or modify
- *           it under the terms of the GNU Lesser General Public License as published
- *           by the Free Software Foundation, either version 3 of the License,
- *           or (at your option) any later version.
- *
- *           iCalcreator is distributed in the hope that it will be useful,
- *           but WITHOUT ANY WARRANTY; without even the implied warranty of
- *           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *           GNU Lesser General Public License for more details.
- *
- *           You should have received a copy of the GNU Lesser General Public License
- *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
+ * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
  * This file is a part of iCalcreator.
-*/
+ *
+ * @author    Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
+ * @copyright 2007-2021 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      https://kigkonsult.se
+ * @license   Subject matter of licence is the software iCalcreator.
+ *            The above copyright, link, package and version notices,
+ *            this licence notice and the invariant [rfc5545] PRODID result use
+ *            as implemented and invoked in iCalcreator shall be included in
+ *            all copies or substantial portions of the iCalcreator.
+ *
+ *            iCalcreator is free software: you can redistribute it and/or modify
+ *            it under the terms of the GNU Lesser General Public License as
+ *            published by the Free Software Foundation, either version 3 of
+ *            the License, or (at your option) any later version.
+ *
+ *            iCalcreator is distributed in the hope that it will be useful,
+ *            but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *            GNU Lesser General Public License for more details.
+ *
+ *            You should have received a copy of the GNU Lesser General Public License
+ *            along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
+ */
+declare(strict_types=1);
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -63,7 +63,6 @@ use function sprintf;
  * END:DAYLIGHT
  * END:VTIMEZONE
  *
- * @author Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
  * @since  2.29.16 - 2020-01-25
  *
  * Contributors :
@@ -75,7 +74,6 @@ class VtimezonePopulateFactory
 {
     /*
     * @var string  for populate method (and descendents)
-    * @static
     */
     private static $ABBR    = 'abbr';
     private static $AT      = '@';
@@ -97,24 +95,24 @@ class VtimezonePopulateFactory
      * @return Vcalendar
      * @throws Exception
      * @throws InvalidArgumentException
-     * @static
      * @since  2.29.16 - 2020-01-25
      */
     public static function process(
         Vcalendar $calendar,
-        $timezone = null,
-        $xProp = [],
-        $start = null,
-        $end = null
-    ) {
-        $timezone   = self::getTimezone( $calendar, $timezone, $xProp );
+                  $timezone = null,
+                  $xProp = [],
+                  $start = null,
+                  $end = null
+    ): Vcalendar
+    {
+        $timezone = self::getTimezone($calendar, $timezone, $xProp);
         $foundTrans = [];
-        if( ! DateTimeZoneFactory::isUTCtimeZone( $timezone )) {
-            list( $start, $end ) =
-                self::ensureStartAndEnd( $calendar, $timezone, $start, $end );
-            $foundTrans          = self::findTransitions( $timezone, $start, $end );
+        if (!DateTimeZoneFactory::isUTCtimeZone($timezone)) {
+            list($start, $end) =
+                self::ensureStartAndEnd($calendar, $timezone, $start, $end);
+            $foundTrans = self::findTransitions($timezone, $start, $end);
         }
-        while( false !== $calendar->deleteComponent( Vcalendar::VTIMEZONE )) {
+        while (false !== $calendar->deleteComponent(Vcalendar::VTIMEZONE, false)) {
             continue;
         }
         $timezoneComp = $calendar->newVtimezone();
@@ -160,24 +158,24 @@ class VtimezonePopulateFactory
      * @param string    $timezone valid timezone acceptable by PHP5 DateTimeZone
      * @param array     $xProp    *[x-propName => x-propValue]
      * @return string
-     * @static
      * @since  2.29.22 - 2019-08-26
      */
     private static function getTimezone(
         Vcalendar $calendar,
-        $timezone = null,
-        $xProp = []
-    ) {
-        switch( true ) {
-            case ( ! empty( $timezone )) :
+                  $timezone = null,
+                  $xProp = []
+    ): string
+    {
+        switch (true) {
+            case (!empty($timezone)) :
                 break;
-            case Util::issetAndNotEmpty( $xProp, Vcalendar::X_WR_TIMEZONE ) :
+            case Util::issetAndNotEmpty($xProp, Vcalendar::X_WR_TIMEZONE) :
                 $timezone = $xProp[Vcalendar::X_WR_TIMEZONE];
                 break;
-            case Util::issetAndNotEmpty( $xProp, Vcalendar::X_LIC_LOCATION ) :
+            case Util::issetAndNotEmpty($xProp, Vcalendar::X_LIC_LOCATION) :
                 $timezone = $xProp[Vcalendar::X_LIC_LOCATION];
                 break;
-            case ( false !==
+            case (false !==
                 ( $xProp = $calendar->getXprop( Vcalendar::X_WR_TIMEZONE ))) :
                 $timezone = $xProp[1];
                 break;
@@ -206,24 +204,24 @@ class VtimezonePopulateFactory
      * @return array
      * @throws  InvalidArgumentException
      * @throws  Exception
-     * @static
      * @since  2.27.15 - 2019-03-21
      */
     private static function ensureStartAndEnd(
         Vcalendar $calendar,
-        $timezone,
-        $start = null,
-        $end = null
-    ) {
+                  $timezone,
+                  $start = null,
+                  $end = null
+    ): array
+    {
         static $NUMBEROFDAYSBEFORE = 365;
-        static $FMTBEFORE          = '-%d days';
-        static $NUMBEROFDAYSAFTER  = 548;
-        static $FMTAFTER           = '+%d days';
+        static $FMTBEFORE = '-%d days';
+        static $NUMBEROFDAYSAFTER = 548;
+        static $FMTAFTER = '+%d days';
         static $ERRMSG = 'Date are not in order: %d - %d';
-        switch( true ) {
-            case empty( $start ) :
+        switch (true) {
+            case empty($start) :
                 break;
-            case ( $start instanceof DateTimeInterface ) :
+            case ($start instanceof DateTimeInterface) :
                 $start = $start->getTimestamp();
                 break;
             default :
@@ -290,23 +288,28 @@ class VtimezonePopulateFactory
      * Return (prep'd) datetimezone transitions
      *
      * @param string $timezone
-     * @param int    $start
-     * @param int    $end
+     * @param int $start
+     * @param int $end
      * @return array
      * @throws InvalidArgumentException
      * @throws Exception
-     * @static
      * @since  2.27.15 - 2019-02-23
      */
-    private static function findTransitions( $timezone, $start, $end )
+    private static function findTransitions(
+        string $timezone,
+        int    $start,
+        int    $end
+    ): array
     {
-        static $Y       = 'Y';
-        $foundTrans     = [];
+        static $Y = 'Y';
+        $foundTrans = [];
         $prevOffsetFrom = 0;
-        $stdIx          = $dlghtIx = -1;
-        $backupTrans    = false;
-        $dateFromYmd    = DateTimeFactory::setDateTimeTimeZone(
-            DateTimeFactory::factory( self::$AT . $start ), $timezone )
+        $stdIx = $dlghtIx = -1;
+        $backupTrans = false;
+        $dateFromYmd = DateTimeFactory::setDateTimeTimeZone(
+            DateTimeFactory::factory(self::$AT . $start),
+            $timezone
+        )
             ->format( DateTimeFactory::$Ymd );
         $dateToYmd      = DateTimeFactory::setDateTimeTimeZone(
             DateTimeFactory::factory( self::$AT . $end ), $timezone )
@@ -379,17 +382,16 @@ class VtimezonePopulateFactory
      * @param array $foundTrans
      * @param array $trans
      * @return bool
-     * @static
      * @since  2.27.15 - 2019-02-23
      */
-    private static function matchTrans( array $foundTrans, array $trans )
+    private static function matchTrans(array $foundTrans, array $trans): bool
     {
         return
-            ((  isset( $foundTrans[Vcalendar::TZOFFSETFROM] )) &&
-                ( $foundTrans[self::$ABBR]   == $trans[self::$ABBR] ) &&
-                ( $foundTrans[Vcalendar::TZOFFSETFROM]
-                    == $trans[Vcalendar::TZOFFSETFROM] ) &&
-                ( $foundTrans[self::$OFFSET] == $trans[self::$OFFSET] )
+            ((isset($foundTrans[Vcalendar::TZOFFSETFROM])) &&
+                ($foundTrans[self::$ABBR] == $trans[self::$ABBR]) &&
+                ($foundTrans[Vcalendar::TZOFFSETFROM]
+                    == $trans[Vcalendar::TZOFFSETFROM]) &&
+                ($foundTrans[self::$OFFSET] == $trans[self::$OFFSET])
             );
     }
 
@@ -401,17 +403,16 @@ class VtimezonePopulateFactory
      * @return array
      * @throws InvalidArgumentException
      * @throws Exception
-     * @static
      * @since  2.27.15 - 2019-02-23
      */
-    private static function buildTrans( $backupTrans, $timezone )
+    private static function buildTrans($backupTrans, string $timezone): array
     {
         static $NOW = 'now';
-        if( is_array( $backupTrans )) {
+        if (is_array($backupTrans)) {
             // we use the last transition (i.e. before startdate) for the tz info
-            $prevDate = DateTimeFactory::factory( self::$AT . $backupTrans[self::$TS] );
+            $prevDate = DateTimeFactory::factory(self::$AT . $backupTrans[self::$TS]);
             // convert utc date to 'local' date
-            $prevDate->modify( $backupTrans[Vcalendar::TZOFFSETFROM] . self::$SECONDS );
+            $prevDate->modify($backupTrans[Vcalendar::TZOFFSETFROM] . self::$SECONDS);
             $backupTrans[self::$TIME] = $prevDate;
         } // end if( $backupTrans )
         else {

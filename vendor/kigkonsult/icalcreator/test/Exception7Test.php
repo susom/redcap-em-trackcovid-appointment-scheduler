@@ -2,37 +2,33 @@
 /**
  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
- * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
- * Link      https://kigkonsult.se
- * Package   iCalcreator
- * Version   2.29.25
- * License   Subject matter of licence is the software iCalcreator.
- *           The above copyright, link, package and version notices,
- *           this licence notice and the invariant [rfc5545] PRODID result use
- *           as implemented and invoked in iCalcreator shall be included in
- *           all copies or substantial portions of the iCalcreator.
- *
- *           iCalcreator is free software: you can redistribute it and/or modify
- *           it under the terms of the GNU Lesser General Public License as published
- *           by the Free Software Foundation, either version 3 of the License,
- *           or (at your option) any later version.
- *
- *           iCalcreator is distributed in the hope that it will be useful,
- *           but WITHOUT ANY WARRANTY; without even the implied warranty of
- *           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *           GNU Lesser General Public License for more details.
- *
- *           You should have received a copy of the GNU Lesser General Public License
- *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
- *
  * This file is a part of iCalcreator.
-*/
-
+ *
+ * @author    Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
+ * @copyright 2007-2021 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      https://kigkonsult.se
+ * @license   Subject matter of licence is the software iCalcreator.
+ *            The above copyright, link, package and version notices,
+ *            this licence notice and the invariant [rfc5545] PRODID result use
+ *            as implemented and invoked in iCalcreator shall be included in
+ *            all copies or substantial portions of the iCalcreator.
+ *
+ *            iCalcreator is free software: you can redistribute it and/or modify
+ *            it under the terms of the GNU Lesser General Public License as
+ *            published by the Free Software Foundation, either version 3 of
+ *            the License, or (at your option) any later version.
+ *
+ *            iCalcreator is distributed in the hope that it will be useful,
+ *            but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *            GNU Lesser General Public License for more details.
+ *
+ *            You should have received a copy of the GNU Lesser General Public License
+ *            along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
+ */
 namespace Kigkonsult\Icalcreator;
 
 use InvalidArgumentException;
-use Kigkonsult\Icalcreator\Util\RecurFactory;
-use Kigkonsult\Icalcreator\Util\RecurFactory2;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,7 +36,6 @@ use PHPUnit\Framework\TestCase;
  *
  * Testing RRULE exceptions
  *
- * @author      Kjell-Inge Gustafsson <ical@kigkonsult.se>
  * @since  2.29.25 - 2020-09-04
  */
 class Exception7Test extends TestCase
@@ -48,18 +43,18 @@ class Exception7Test extends TestCase
     /**
      * rruleExceptionsTest provider
      */
-    public function rruleExceptionsTestProvider() {
-
-        $dataArr   = [];
+    public function rruleExceptionsTestProvider()
+    {
+        $dataArr = [];
         $dataSetNo = 0;
-        $DATASET   = 'DATASET';
+        $DATASET = 'DATASET';
 
         // '#1 The FREQ rule part MUST be specified in the recurrence rule.';
         $dataArr[] = [
             11,
             [
-                Vcalendar::BYMONTH   => 11,
-                Vcalendar::BYDAY     => [
+                Vcalendar::BYMONTH => 11,
+                Vcalendar::BYDAY => [
                     [ Vcalendar::DAY => Vcalendar::TH ],
                 ],
                 Vcalendar::BYSETPOS  => 4,
@@ -179,18 +174,18 @@ class Exception7Test extends TestCase
     /**
      * @test
      * @dataProvider rruleExceptionsTestProvider
-     * @param int    $case
-     * @param array  $rrule
+     * @param int $case
+     * @param array $rrule
      */
-    public function rruleExceptionsTest(  $case, $rrule ) {
+    public function rruleExceptionsTest($case, $rrule)
+    {
         $calendar = new Vcalendar();
         $ok = false;
         try {
-            $calendar->newVevent()->setRrule( $rrule );
-        }
-        catch ( InvalidArgumentException $e ) {
+            $calendar->newVevent()->setRrule($rrule);
+        } catch (InvalidArgumentException $e) {
             $ok = true;
         }
-        $this->assertTrue( $ok, 'error in case #' . $case );
+        $this->assertTrue($ok, 'error in case #' . $case);
     }
 }

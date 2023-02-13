@@ -2,31 +2,31 @@
 /**
  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
- * copyright (c) 2007-2020 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
- * Link      https://kigkonsult.se
- * Package   iCalcreator
- * Version   2.29.25
- * License   Subject matter of licence is the software iCalcreator.
- *           The above copyright, link, package and version notices,
- *           this licence notice and the invariant [rfc5545] PRODID result use
- *           as implemented and invoked in iCalcreator shall be included in
- *           all copies or substantial portions of the iCalcreator.
- *
- *           iCalcreator is free software: you can redistribute it and/or modify
- *           it under the terms of the GNU Lesser General Public License as published
- *           by the Free Software Foundation, either version 3 of the License,
- *           or (at your option) any later version.
- *
- *           iCalcreator is distributed in the hope that it will be useful,
- *           but WITHOUT ANY WARRANTY; without even the implied warranty of
- *           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *           GNU Lesser General Public License for more details.
- *
- *           You should have received a copy of the GNU Lesser General Public License
- *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
- *
  * This file is a part of iCalcreator.
-*/
+ *
+ * @author    Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
+ * @copyright 2007-2021 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      https://kigkonsult.se
+ * @license   Subject matter of licence is the software iCalcreator.
+ *            The above copyright, link, package and version notices,
+ *            this licence notice and the invariant [rfc5545] PRODID result use
+ *            as implemented and invoked in iCalcreator shall be included in
+ *            all copies or substantial portions of the iCalcreator.
+ *
+ *            iCalcreator is free software: you can redistribute it and/or modify
+ *            it under the terms of the GNU Lesser General Public License as
+ *            published by the Free Software Foundation, either version 3 of
+ *            the License, or (at your option) any later version.
+ *
+ *            iCalcreator is distributed in the hope that it will be useful,
+ *            but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *            GNU Lesser General Public License for more details.
+ *
+ *            You should have received a copy of the GNU Lesser General Public License
+ *            along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
+ */
+declare(strict_types=1);
 
 namespace Kigkonsult\Icalcreator\Util;
 
@@ -52,6 +52,7 @@ use function in_array;
 use function is_array;
 use function is_null;
 use function is_string;
+use function ksort;
 use function mktime;
 use function sprintf;
 use function strcasecmp;
@@ -65,8 +66,7 @@ use function var_export;
 /**
  * iCalcreator recur support class
  *
- * @author Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
- * @since  2.29.25 - 2020-09-02
+ * @since  2.29.27 - 2020-09-19
  */
 class RecurFactory
 {
@@ -128,7 +128,7 @@ class RecurFactory
      * @param string $byDayB
      * @return int
      */
-    private static function recurBydaySort( $byDayA, $byDayB )
+    private static function recurBydaySort(string $byDayA, string $byDayB): int
     {
         static $days = [
             Vcalendar::SU => 0,
@@ -159,31 +159,35 @@ class RecurFactory
      *    the UNTIL rule part MUST always be specified as a date with UTC time.
      *  If specified as a DATE-TIME value, then it MUST be specified in a UTC time format."
      * @param string $recurProperty
-     * @param array  $recurData
-     * @param bool   $allowEmpty
+     * @param null|array $recurData
+     * @param bool $allowEmpty
      * @return string
      * @throws Exception
      * @throws InvalidArgumentException
      * @since 2.29.6 2019-06-23
      * @todo above
      */
-    public static function formatRecur( $recurProperty, $recurData, $allowEmpty )
+    public static function formatRecur(
+        string $recurProperty,
+               $recurData,
+        bool   $allowEmpty
+    ): string
     {
-        static $FMTFREQEQ        = 'FREQ=%s';
-        static $FMTDEFAULTEQ     = ';%s=%s';
-        static $FMTOTHEREQ       = ';%s=';
+        static $FMTFREQEQ = 'FREQ=%s';
+        static $FMTDEFAULTEQ = ';%s=%s';
+        static $FMTOTHEREQ = ';%s=';
         static $RECURBYDAYSORTER = null;
-        if( is_null( $RECURBYDAYSORTER )) {
-            $RECURBYDAYSORTER    = [ get_class(), 'recurBydaySort' ];
+        if (is_null($RECURBYDAYSORTER)) {
+            $RECURBYDAYSORTER = [get_class(), 'recurBydaySort'];
         }
-        if( empty( $recurData )) {
-            return null;
+        if (empty($recurData)) {
+            return Util::$SP0;
         }
-        $output = null;
+        $output = Util::$SP0;
         if( empty( $recurData[Util::$LCvalue] )) {
-            return ( $allowEmpty )
-                ? StringFactory::createElement( $recurProperty )
-                : null;
+            return ($allowEmpty)
+                ? StringFactory::createElement($recurProperty)
+                : Util::$SP0;
         }
         $isValueDate = ParameterFactory::isParamsValueSet( $recurData, Vcalendar::DATE );
         if( isset( $recurData[Util::$LCparams] )) {
@@ -219,16 +223,15 @@ class RecurFactory
                     $byday = [ Util::$SP0 ];
                     $bx    = 0;
                     foreach( $ruleValue as $bix => $bydayPart ) {
-                        if( ! empty( $byday[$bx] ) &&   // new day
-                            ! ctype_digit( substr( $byday[$bx], -1 ))) {
+                        if (!empty($byday[$bx]) &&   // new day
+                            !ctype_digit(substr($byday[$bx], -1))) {
                             $byday[++$bx] = Util::$SP0;
                         }
-                        if( ! is_array( $bydayPart )) {  // day without order number
-                            $byday[$bx] .= (string) $bydayPart;
-                        }
-                        else {                          // day with order number
-                            foreach( $bydayPart as $bix2 => $bydayPart2 ) {
-                                $byday[$bx] .= (string) $bydayPart2;
+                        if (!is_array($bydayPart)) {  // day without rel pos number
+                            $byday[$bx] .= (string)$bydayPart;
+                        } else {                          // day with rel pos number
+                            foreach ($bydayPart as $bix2 => $bydayPart2) {
+                                $byday[$bx] .= (string)$bydayPart2;
                             }
                         }
                     } // end foreach( $ruleValue as $bix => $bydayPart )
@@ -267,17 +270,17 @@ class RecurFactory
      * @return array
      * @since 2.27.3 - 2018-12-28
      */
-    public static function parseRexrule( $row )
+    public static function parseRexrule(string $row): array
     {
         static $EQ = '=';
-        $recur     = [];
-        $values    = explode( Util::$SEMIC, $row );
-        foreach( $values as $value2 ) {
-            if( empty( $value2 )) {
+        $recur = [];
+        $values = explode(Util::$SEMIC, $row);
+        foreach ($values as $value2) {
+            if (empty($value2)) {
                 continue;
             } // ;-char in end position ???
-            $value3    = explode( $EQ, $value2, 2 );
-            $ruleLabel = strtoupper( $value3[0] );
+            $value3 = explode($EQ, $value2, 2);
+            $ruleLabel = strtoupper($value3[0]);
             switch( $ruleLabel ) {
                 case Vcalendar::BYDAY:
                     $value4 = explode( Util::$COMMA, $value3[1] );
@@ -307,21 +310,21 @@ class RecurFactory
     }
 
     /*
-     * Return array, day occurence number (opt) and day name
+     * Return array, day rel pos number (opt) and day name abbr
      *
      * @param string $dayValueBase
      * @return array
      * @since  2.27.16 - 2019-03-03
      */
-    private static function updateDayNoAndDayName( $dayValueBase )
+    private static function updateDayNoAndDayName(string $dayValueBase): array
     {
         $output = [];
-        $dayno  = $dayName = false;
-        if(( ctype_alpha( substr( $dayValueBase, -1 ))) &&
-            ( ctype_alpha( substr( $dayValueBase, -2, 1 )))) {
-            $dayName = substr( $dayValueBase, -2, 2 );
-            if( 2 < strlen( $dayValueBase )) {
-                $dayno = (int) substr( $dayValueBase, 0, ( strlen( $dayValueBase ) - 2 ));
+        $dayno = $dayName = false;
+        if ((ctype_alpha(substr($dayValueBase, -1))) &&
+            (ctype_alpha(substr($dayValueBase, -2, 1)))) {
+            $dayName = substr($dayValueBase, -2, 2);
+            if (2 < strlen($dayValueBase)) {
+                $dayno = (int)substr($dayValueBase, 0, (strlen($dayValueBase) - 2));
             }
         }
         if( false !== $dayno ) {
@@ -347,27 +350,26 @@ class RecurFactory
      * @todo "The BYSECOND, BYMINUTE and BYHOUR rule parts MUST NOT be specified
      *        when the associated "DTSTART" property has a DATE value type."
      */
-    public static function setRexrule( $rexrule, array $params )
+    public static function setRexrule(array $rexrule, array $params): array
     {
-        static $ERR    = 'Invalid input date \'%s\'';
-        $input  = [];
-        if( empty( $rexrule )) {
+        static $ERR = 'Invalid input date \'%s\'';
+        $input = [];
+        if (empty($rexrule)) {
             return $input;
         }
-        $params      = [ Util::$LCparams => $params ];
-        $isValueDate = ParameterFactory::isParamsValueSet( $params, Vcalendar::DATE );
-        $paramTZid   = ParameterFactory::getParamTzid( $params );
-        $rexrule     = array_change_key_case( $rexrule, CASE_UPPER );
+        $params = [Util::$LCparams => $params];
+        $isValueDate = ParameterFactory::isParamsValueSet($params, Vcalendar::DATE);
+        $paramTZid = ParameterFactory::getParamTzid($params);
+        $rexrule = array_change_key_case($rexrule, CASE_UPPER);
         foreach( $rexrule as $ruleLabel => $ruleValue ) {
             switch( true ) {
                 case ( Vcalendar::UNTIL != $ruleLabel ) :
                     $input[$ruleLabel] = $ruleValue;
                     break;
                 case ( $ruleValue instanceof DateTimeInterface ) :
-                    $ruleValue = DateTimeFactory::cnvrtDateTimeInterface( $ruleValue );
                     $input[$ruleLabel] =
                         DateTimeFactory::setDateTimeTimeZone(
-                            $ruleValue,
+                            DateTimeFactory::toDateTime($ruleValue),
                             Vcalendar::UTC
                         );
                     ParameterFactory::ifExistRemove(
@@ -407,7 +409,6 @@ class RecurFactory
                     throw new InvalidArgumentException(
                         sprintf( $ERR, var_export( $ruleValue, true ))
                     );
-                    break;
             } // end switch
         } // end foreach( $rexrule as $ruleLabel => $ruleValue )
         $output = self::orderRRuleKeys( $input );
@@ -422,7 +423,7 @@ class RecurFactory
             RecurFactory2::assertRecur( $output );
         }
         catch( LogicException $e ) {
-            throw new InvalidArgumentException( $e->getMessage(), null, $e );
+            throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
         return [ Util::$LCvalue => $output ] + $params;
     }
@@ -432,7 +433,7 @@ class RecurFactory
      * @return array
      * @since  2.29.25 - 2020-09-02
      */
-    private static function orderRRuleKeys( array $input )
+    private static function orderRRuleKeys(array $input): array
     {
         static $RKEYS1 = [
             Vcalendar::FREQ,
@@ -481,7 +482,7 @@ class RecurFactory
                 continue;
             }
             if( is_string( $output[$rKey3] )) {
-                $temp = explode( UTIL::$COMMA, $output[$rKey3] );
+                $temp = explode(Util::$COMMA, $output[$rKey3]);
                 if( 1 == count( $temp )) {
                     $output[$rKey3] = reset( $temp );
                 }
@@ -500,43 +501,73 @@ class RecurFactory
 
     /**
      * Ensure RRULE BYDAY array and upper case.. .
-     * 
+     *
      * @param array $input
      * @param array $output
-     * @since  2.29.25 - 2020-09-04
+     * @since  2.29.27 - 2020-09-19
      */
     private static function orderRRuleBydayKey( array $input, array & $output )
     {
-        if( ! is_array( $input[Vcalendar::BYDAY] )) {
+        if (empty($input[Vcalendar::BYDAY])) {
+            // results in error
+            $output[Vcalendar::BYDAY] = [];
+            return;
+        }
+        if (!is_array($input[Vcalendar::BYDAY])) {
+            // single day
             $output[Vcalendar::BYDAY] = [
-                Vcalendar::DAY => strtoupper( $input[Vcalendar::BYDAY] ),
+                Vcalendar::DAY => strtoupper($input[Vcalendar::BYDAY]),
             ];
             return;
         }
-        foreach( $input[Vcalendar::BYDAY] as $BYDAYx => $BYDAYv ) {
-            switch( true ) {
-                case (( 0 == strcasecmp( Vcalendar::DAY, $BYDAYx )) ||
-                    is_string( $BYDAYv )) :
-                    $output[Vcalendar::BYDAY][Vcalendar::DAY] =
-                        strtoupper( $BYDAYv );
-                    break;
-                case is_array( $BYDAYv ) :
-                    foreach( $BYDAYv as $BYDAYx2 => $BYDAYv2 ) {
-                        if(( 0 == strcasecmp( Vcalendar::DAY, $BYDAYx2 )) ||
-                            is_string( $BYDAYv2 )) {
-                            $output[Vcalendar::BYDAY][$BYDAYx][Vcalendar::DAY] =
-                                strtoupper( $BYDAYv2 );
-                        }
-                        else {
-                            $output[Vcalendar::BYDAY][$BYDAYx][$BYDAYx2] = $BYDAYv2;
-                        }
-                    } // end foreach
-                    break;
-                default:
-                    $output[Vcalendar::BYDAY][$BYDAYx] = $BYDAYv;
-                    break;
-            } // end switch
+        $cntStr = $cntNum = 0;
+        foreach ($input[Vcalendar::BYDAY] as $BYDAYx => $BYDAYv) {
+            if (is_array($BYDAYv)) {
+                break;
+            }
+            if (is_string($BYDAYv) && ctype_alpha($BYDAYv)) {
+                $cntStr += 1;
+                continue;
+            }
+            if (empty($BYDAYv)) {
+                $input[Vcalendar::BYDAY] = [Util::$SP0];
+                $cntStr += 1;
+                continue;
+            }
+            $cntNum += 1;
         } // end foreach
+        if ((1 == $cntStr) || (1 < $cntNum)) { // single day OR invalid format...
+            $input[Vcalendar::BYDAY] = [$input[Vcalendar::BYDAY]];
+        } elseif (1 < $cntStr) { // split (single) days
+            $days = [];
+            foreach ($input[Vcalendar::BYDAY] as $BYDAYx => $BYDAYv) {
+                $days[] = [Vcalendar::DAY => $BYDAYv];
+            }
+            $input[Vcalendar::BYDAY] = $days;
+        }
+        foreach ($input[Vcalendar::BYDAY] as $BYDAYx => $BYDAYv) {
+            $nIx = 0;
+            foreach ($BYDAYv as $BYDAYx2 => $BYDAYv2) {
+                switch (true) {
+                    case (is_string($BYDAYx2) &&
+                        (0 == strcasecmp(Vcalendar::DAY, $BYDAYx2))) :
+                        // day abbr with key
+                        $output[Vcalendar::BYDAY][$BYDAYx][$BYDAYx2] = strtoupper($BYDAYv2);
+                        break;
+                    case (is_string($BYDAYv2) && ctype_alpha($BYDAYv2)) :
+                        // day abbr without key, set key
+                        $output[Vcalendar::BYDAY][$BYDAYx][Vcalendar::DAY] =
+                            strtoupper($BYDAYv2);
+                        break;
+                    default :
+                        // rel pos day number. force key from 0 (1++ results in error)
+                        $output[Vcalendar::BYDAY][$BYDAYx][$nIx++] = $BYDAYv2;
+                        break;
+                } // end switch
+            } // end foreach
+            ksort($output[Vcalendar::BYDAY][$BYDAYx], SORT_NATURAL);
+        } // end foreach
+        ksort($output[Vcalendar::BYDAY], SORT_NATURAL);
     }
 
     /**
@@ -1098,23 +1129,25 @@ class RecurFactory
     /**
      * Checking BYDAY (etc) hits, recur2date help function
      *
-     * @since  2.6.12 - 2011-01-03
-     * @param array $BYvalue
-     * @param int   $upValue
-     * @param int   $downValue
+     * @param int|array $BYvalue
+     * @param int $upValue
+     * @param int $downValue
      * @return bool
+     * @since  2.6.12 - 2011-01-03
      */
-    private static function recurBYcntcheck( $BYvalue, $upValue, $downValue )
+    private static function recurBYcntcheck(
+        $BYvalue,
+        int $upValue,
+        int $downValue
+    ): bool
     {
-        if( is_array( $BYvalue ) &&
-            ( in_array( $upValue, $BYvalue ) || in_array( $downValue, $BYvalue ))
+        if (is_array($BYvalue) &&
+            (in_array($upValue, $BYvalue) || in_array($downValue, $BYvalue))
         ) {
             return true;
-        }
-        elseif(( $BYvalue == $upValue ) || ( $BYvalue == $downValue )) {
+        } elseif (($BYvalue == $upValue) || ($BYvalue == $downValue)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -1123,15 +1156,15 @@ class RecurFactory
      * (re-)Calculate internal index, recur2date help function
      *
      * @param string $freq
-     * @param array  $date
-     * @param int    $wkst
-     * @return bool
+     * @param array $date
+     * @param int $wkst
+     * @return string
      * @since  2.26 - 2018-11-10
      */
-    private static function recurIntervalIx( $freq, $date, $wkst )
+    private static function recurIntervalIx(string $freq, array $date, int $wkst): string
     {
         /* create interval index */
-        switch( $freq ) {
+        switch ($freq) {
             case Vcalendar::YEARLY :
                 $intervalIx = $date[self::$LCYEAR];
                 break;
@@ -1155,7 +1188,7 @@ class RecurFactory
                     $date[self::$LCDAY];
                 break;
         } // end switch
-        return $intervalIx;
+        return (string)$intervalIx;
     }
 
     /**
@@ -1225,17 +1258,17 @@ class RecurFactory
      * @param int   $wkst
      * @return array
      */
-    private static function initDayCnts( array $wDate, array $recur, $wkst )
+    private static function initDayCnts(array $wDate, array $recur, int $wkst): array
     {
-        $dayCnts    = [];
+        $dayCnts = [];
         $yearDayCnt = [];
-        $yearDays   = 0;
-        foreach( self::$DAYNAMES as $dn ) {
+        $yearDays = 0;
+        foreach (self::$DAYNAMES as $dn) {
             $yearDayCnt[$dn] = 0;
         }
-        for( $m = 1; $m <= 12; $m++ ) { // count up and update up-counters
+        for ($m = 1; $m <= 12; $m++) { // count up and update up-counters
             $dayCnts[$m] = [];
-            $weekDayCnt  = [];
+            $weekDayCnt = [];
             foreach( self::$DAYNAMES as $dn ) {
                 $weekDayCnt[$dn] = 0;
             }
@@ -1317,7 +1350,7 @@ class RecurFactory
      * @throws Exception
      * @since  2.29.21 - 2020-01-31
      */
-    private static function reFormatDate( $inputDate )
+    private static function reFormatDate($inputDate): array
     {
         static $Y = 'Y';
         static $M = 'm';
@@ -1325,7 +1358,7 @@ class RecurFactory
         static $H = 'H';
         static $I = 'i';
         static $S = 'i';
-        if( is_array( $inputDate )) {
+        if (is_array($inputDate)) {
             return $inputDate;
         }
         if( ! $inputDate instanceof DateTime ) {
@@ -1352,10 +1385,17 @@ class RecurFactory
      * @param int $year
      * @return int
      */
-    private static function getWeekNumber( $hour, $min, $sec, $month, $day, $year )
+    private static function getWeekNumber(
+        int $hour,
+        int $min,
+        int $sec,
+        int $month,
+        int $day,
+        int $year
+    ): int
     {
-        static $UCW  = 'W'; // week number
-        return (int) date( $UCW, mktime( $hour, $min, $sec, $month, $day, $year ));
+        static $UCW = 'W'; // week number
+        return (int)date($UCW, mktime($hour, $min, $sec, $month, $day, $year));
     }
 
     /**
@@ -1369,10 +1409,17 @@ class RecurFactory
      * @param int $year
      * @return int
      */
-    private static function getDaysInMonth( $hour, $min, $sec, $month, $day, $year )
+    private static function getDaysInMonth(
+        int $hour,
+        int $min,
+        int $sec,
+        int $month,
+        int $day,
+        int $year
+    ): int
     {
-        static $LCT  = 't'; // number of days in month
-        return (int) date( $LCT, mktime( $hour, $min, $sec, $month, $day, $year ));
+        static $LCT = 't'; // number of days in month
+        return (int)date($LCT, mktime($hour, $min, $sec, $month, $day, $year));
     }
 
     /**
@@ -1386,12 +1433,19 @@ class RecurFactory
      * @param int $year
      * @return string
      */
-    private static function getDayInWeek( $hour, $min, $sec, $month, $day, $year )
+    private static function getDayInWeek(
+        int $hour,
+        int $min,
+        int $sec,
+        int $month,
+        int $day,
+        int $year
+    ): string
     {
-        static $LCW  = 'w'; // day of week number
-        $dayNo = (int) date(
+        static $LCW = 'w'; // day of week number
+        $dayNo = (int)date(
             $LCW,
-            mktime( $hour, $min, $sec, $month, $day, $year )
+            mktime($hour, $min, $sec, $month, $day, $year)
         );
         return self::$DAYNAMES[$dayNo];
     }

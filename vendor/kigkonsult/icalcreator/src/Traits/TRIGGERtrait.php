@@ -2,31 +2,31 @@
 /**
  * iCalcreator, the PHP class package managing iCal (rfc2445/rfc5445) calendar information.
  *
- * copyright (c) 2007-2019 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
- * Link      https://kigkonsult.se
- * Package   iCalcreator
- * Version   2.29.25
- * License   Subject matter of licence is the software iCalcreator.
- *           The above copyright, link, package and version notices,
- *           this licence notice and the invariant [rfc5545] PRODID result use
- *           as implemented and invoked in iCalcreator shall be included in
- *           all copies or substantial portions of the iCalcreator.
- *
- *           iCalcreator is free software: you can redistribute it and/or modify
- *           it under the terms of the GNU Lesser General Public License as published
- *           by the Free Software Foundation, either version 3 of the License,
- *           or (at your option) any later version.
- *
- *           iCalcreator is distributed in the hope that it will be useful,
- *           but WITHOUT ANY WARRANTY; without even the implied warranty of
- *           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- *           GNU Lesser General Public License for more details.
- *
- *           You should have received a copy of the GNU Lesser General Public License
- *           along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
- *
  * This file is a part of iCalcreator.
-*/
+ *
+ * @author    Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
+ * @copyright 2007-2021 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      https://kigkonsult.se
+ * @license   Subject matter of licence is the software iCalcreator.
+ *            The above copyright, link, package and version notices,
+ *            this licence notice and the invariant [rfc5545] PRODID result use
+ *            as implemented and invoked in iCalcreator shall be included in
+ *            all copies or substantial portions of the iCalcreator.
+ *
+ *            iCalcreator is free software: you can redistribute it and/or modify
+ *            it under the terms of the GNU Lesser General Public License as
+ *            published by the Free Software Foundation, either version 3 of
+ *            the License, or (at your option) any later version.
+ *
+ *            iCalcreator is distributed in the hope that it will be useful,
+ *            but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *            GNU Lesser General Public License for more details.
+ *
+ *            You should have received a copy of the GNU Lesser General Public License
+ *            along with iCalcreator. If not, see <https://www.gnu.org/licenses/>.
+ */
+declare(strict_types=1);
 
 namespace Kigkonsult\Icalcreator\Traits;
 
@@ -64,7 +64,6 @@ use function substr;
 /**
  * TRIGGER property functions
  *
- * @author Kjell-Inge Gustafsson, kigkonsult <ical@kigkonsult.se>
  * @since 2.29.16 2020-01-24
  */
 trait TRIGGERtrait
@@ -88,17 +87,17 @@ trait TRIGGERtrait
      * @throws Exception
      * @since  2.29.2 - 2019-06-27
      */
-    public function createTrigger()
+    public function createTrigger(): string
     {
-        if( empty( $this->trigger )) {
-            return null;
+        if (empty($this->trigger)) {
+            return Util::$SP0;
         }
-        if( empty( $this->trigger[Util::$LCvalue] )) {
-            return $this->getConfig( self::ALLOWEMPTY )
-                ? StringFactory::createElement( self::TRIGGER )
-                : null;
+        if (empty($this->trigger[Util::$LCvalue])) {
+            return $this->getConfig(self::ALLOWEMPTY)
+                ? StringFactory::createElement(self::TRIGGER)
+                : Util::$SP0;
         }
-        if( DateIntervalFactory::isDateIntervalArrayInvertSet(
+        if (DateIntervalFactory::isDateIntervalArrayInvertSet(
             $this->trigger[Util::$LCvalue]
         )) { // fix pre 7.0.5 bug
             try {
@@ -129,7 +128,7 @@ trait TRIGGERtrait
      * @return bool
      * @since  2.27.1 - 2018-12-15
      */
-    public function deleteTrigger()
+    public function deleteTrigger(): bool
     {
         $this->trigger = null;
         return true;
@@ -138,7 +137,7 @@ trait TRIGGERtrait
     /**
      * Get calendar component property trigger
      *
-     * @param bool   $inclParam
+     * @param null|bool $inclParam
      * @return bool|array
      * @throws Exception
      * @since 2.29.2 2019-06-27
@@ -175,8 +174,8 @@ trait TRIGGERtrait
     /**
      * Set calendar component property trigger
      *
-     * @param DateTimeInterface|DateInterval|string $value
-     * @param array $params
+     * @param null|DateTimeInterface|DateInterval|string $value
+     * @param null|array $params
      * @return static
      * @throws Exception
      * @throws InvalidArgumentException
@@ -191,50 +190,46 @@ trait TRIGGERtrait
      *        the "DUE" property or the "DTSTART" and "DURATION " properties
      *        MUST be present in the associated "VTODO" calendar component."
      */
-    public function setTrigger( $value = null, $params = [] )
+    public function setTrigger($value = null, $params = []): self
     {
-        if( empty( $value ) && self::isArrayOrEmpty( $params )) {
-            $this->assertEmptyValue( Util::$SP0, self::TRIGGER );
+        if (empty($value) && self::isArrayOrEmpty($params)) {
+            $this->assertEmptyValue(Util::$SP0, self::TRIGGER);
             $this->trigger = [
-                Util::$LCvalue  => Util::$SP0,
+                Util::$LCvalue => Util::$SP0,
                 Util::$LCparams => [],
             ];
             return $this;
         }
-        $isParamsDateTimeSet = self::isDurationParamValueDateTime( $params );
+        $isParamsDateTimeSet = self::isDurationParamValueDateTime($params);
         $params2 = [];
-        if( is_array( $params )) {
+        if (!empty($params) && is_array($params)) {
             $params2 = ParameterFactory::setParams(
                 $params,
-                [ Vcalendar::VALUE => Vcalendar::DURATION ]
+                [Vcalendar::VALUE => Vcalendar::DURATION]
             );
-            if( isset( $params2[Vcalendar::RELATED] )) {
+            if (isset($params2[Vcalendar::RELATED])) {
                 $params2[Vcalendar::RELATED] =
-                    strtoupper( $params2[Vcalendar::RELATED] );
+                    strtoupper($params2[Vcalendar::RELATED]);
             }
-        }
-        switch( true ) {
+        } // end if
+        switch (true) {
             // duration DateInterval
-            case ( ! $isParamsDateTimeSet && ( $value instanceof DateInterval )) :
-                return $this->setTriggerDateIntervalValue( $value, $params2 );
-                break;
+            case (!$isParamsDateTimeSet && ($value instanceof DateInterval)) :
+                return $this->setTriggerDateIntervalValue($value, $params2);
             // datetime DateTimeInterface
-            case ( $value instanceof DateTimeInterface ) :
-                $arg2[Vcalendar::VALUE] = Vcalendar::DATE_TIME; // force date-time...
+            case ($value instanceof DateTimeInterface) :
+                $params2[Vcalendar::VALUE] = Vcalendar::DATE_TIME; // force date-time...
                 return $this->setTriggerDateTimeValue(
-                    DateTimeFactory::cnvrtDateTimeInterface( $value ),
+                    DateTimeFactory::toDateTime($value),
                     $params2
                 );
-                break;
             // duration in a string
             case ( ! $isParamsDateTimeSet &&
                 DateIntervalFactory::isStringAndDuration( $value )) :
                 return $this->setTriggerStringDurationValue( $value, $params2 );
-                break;
             // date in a string
             case( $isParamsDateTimeSet && DateTimeFactory::isStringAndDate( $value )) :
                 return $this->setTriggerStringDateValue( $value, $params2 );
-                break;
         } // end switch
         throw new InvalidArgumentException(
             sprintf( self::$FMTERRPROPFMT, self::TRIGGER, var_export( $value, true ))
@@ -250,16 +245,15 @@ trait TRIGGERtrait
      * @throws Exception
      * @since  2.27.2 - 2019-01-04
      */
-    private function setTriggerDateIntervalValue( DateInterval $value, $params = [] )
+    private function setTriggerDateIntervalValue(DateInterval $value, $params = []): self
     {
         try {
-            $dateInterval = DateIntervalFactory::conformDateInterval( $value );
-        }
-        catch( Exception $e ) {
+            $dateInterval = DateIntervalFactory::conformDateInterval($value);
+        } catch (Exception $e) {
             throw $e;
         }
-        if( true != self::isDurationRelatedEnd( $params )) {
-            ParameterFactory::ifExistRemove( $params, self::RELATED ); // remove default
+        if (true != self::isDurationRelatedEnd($params)) {
+            ParameterFactory::ifExistRemove($params, self::RELATED); // remove default
         }
         ParameterFactory::ifExistRemove( $params, self::VALUE ); // remove default
         $this->trigger[Util::$LCvalue]  = (array) $dateInterval;  // fix pre 7.0.5 bug
@@ -270,18 +264,18 @@ trait TRIGGERtrait
     /**
      * Set trigger DateTime value
      *
-     * @param DateTime $value
-     * @param null|array   $params
+     * @param DateTime $dateTime
+     * @param null|array $params
      * @return static
      * @throws Exception
      * @since  2.29.2 - 2019-06-28
      */
-    private function setTriggerDateTimeValue( DateTime $value, $params = [] )
+    private function setTriggerDateTimeValue(DateTime $dateTime, $params = []): self
     {
-        ParameterFactory::ifExistRemove( $params, self::RELATED ); // n.a. for date-time
+        ParameterFactory::ifExistRemove($params, self::RELATED); // n.a. for date-time
         $this->trigger = [
-            Util::$LCvalue  =>
-                DateTimeFactory::setDateTimeTimeZone( $value, Vcalendar::UTC ),
+            Util::$LCvalue =>
+                DateTimeFactory::setDateTimeTimeZone($dateTime, Vcalendar::UTC),
             Util::$LCparams => $params
         ];
         return $this;
@@ -296,16 +290,16 @@ trait TRIGGERtrait
      * @throws Exception
      * @since  2.27.22 - 2020-08-22
      */
-    private function setTriggerStringDurationValue( $value, $params = [] )
+    private function setTriggerStringDurationValue(string $value, $params = []): self
     {
-        $before = ( Util::$MINUS == substr( $value, 0, 1 ));
-        if( DateIntervalFactory::$P != substr( $value, 0, 1 )) {
-            $value = substr( $value, 1 );
+        $before = (Util::$MINUS == substr($value, 0, 1));
+        if (DateIntervalFactory::$P != substr($value, 0, 1)) {
+            $value = substr($value, 1);
         }
         try {
-            $dateInterval1 = new DateInterval( $value );
-            $dateInterval1->invert = ( $before ) ? 1 : 0;
-            $dateInterval = DateIntervalFactory::conformDateInterval( $dateInterval1 );
+            $dateInterval1 = new DateInterval($value);
+            $dateInterval1->invert = ($before) ? 1 : 0;
+            $dateInterval = DateIntervalFactory::conformDateInterval($dateInterval1);
         }
         catch( Exception $e ) {
             throw $e;
@@ -330,17 +324,17 @@ trait TRIGGERtrait
      * @throws Exception
      * @since  2.29.2 - 2019-06-28
      */
-    private function setTriggerStringDateValue( $value, $params = [] )
+    private function setTriggerStringDateValue(string $value, $params = []): self
     {
-        list( $dateStr, $timezonePart ) =
-            DateTimeFactory::splitIntoDateStrAndTimezone( $value );
+        list($dateStr, $timezonePart) =
+            DateTimeFactory::splitIntoDateStrAndTimezone($value);
         $dateTime = DateTimeFactory::getDateTimeWithTimezoneFromString(
             $dateStr,
             $timezonePart,
             Vcalendar::UTC,
             true
         );
-        if( ! DateTimeZoneFactory::isUTCtimeZone( $dateTime->getTimezone()->getName())) {
+        if (!DateTimeZoneFactory::isUTCtimeZone($dateTime->getTimezone()->getName())) {
             $dateTime = DateTimeFactory::setDateTimeTimeZone(
                 $dateTime,
                 Vcalendar::UTC
@@ -361,9 +355,9 @@ trait TRIGGERtrait
      * @return bool
      * @since  2.27.2 - 2019-01-04
      */
-    private static function isArrayOrEmpty( $value )
+    private static function isArrayOrEmpty($value): bool
     {
-        return ( is_array( $value ) || empty( $value ));
+        return (is_array($value) || empty($value));
     }
 
     /**
@@ -371,12 +365,11 @@ trait TRIGGERtrait
      *
      * @param null|array $params
      * @return bool
-     * @static
      * @since  2.26.7 - 2018-12-01
      */
-    private static function isDurationRelatedEnd( $params )
+    private static function isDurationRelatedEnd($params): bool
     {
-        return Util::issetKeyAndEquals( $params, self::RELATED, self::END );
+        return Util::issetKeyAndEquals($params, self::RELATED, self::END);
     }
 
     /**
@@ -384,17 +377,16 @@ trait TRIGGERtrait
      *
      * @param null|array $params
      * @return bool
-     * @static
      * @since  2.26.14 - 2019-02-14
      */
-    private static function isDurationParamValueDateTime( $params )
+    private static function isDurationParamValueDateTime($params): bool
     {
-        if( ! is_array( $params )) {
+        if (!is_array($params)) {
             return false;
         }
-        $param = ParameterFactory::setParams( $params );
+        $param = ParameterFactory::setParams($params);
         return ParameterFactory::isParamsValueSet(
-            [ Util::$LCparams => $param ],
+            [Util::$LCparams => $param],
             self::DATE_TIME
         );
     }
