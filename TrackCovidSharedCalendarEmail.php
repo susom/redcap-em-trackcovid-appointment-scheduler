@@ -281,17 +281,8 @@ class TrackCovidSharedCalendarEmail extends Message
 
 
             $this->prepareCalendarData($param);
-            $email = new PHPMailer();
-            $email->SetFrom($this->getCalendarOrganizerEmail(), $this->getCalendarOrganizer()); //Name is optional
-            //$email->IsHTML(true);
-            $email->addCustomHeader('MIME-version', "1.0");
-            $email->ContentType = 'application/ics;';
-            /*$participants = '';
-            foreach ($this->getCalendarParticipants() as $name => $e){
-                $participants.= "ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN".$name.";X-NUM-GUESTS=0:MAILTO:".$e."\r\n";
-            }*/
-            // create a new calendar
-            $vcalendar = Vcalendar::factory([Vcalendar::UNIQUE_ID => mt_rand(),])
+
+            $vcalendar = Vcalendar::factory([Vcalendar::UNIQUE_ID => (string)(mt_rand()),])
 
                 // with calendaring info
                 ->setMethod(Vcalendar::REQUEST)
@@ -342,34 +333,6 @@ class TrackCovidSharedCalendarEmail extends Message
                         new DateTimezone("America/Los_Angeles")
                     )
                 )
-                // with recurrence rule
-                /* ->setRrule(
-                     [
-                         Vcalendar::FREQ  => Vcalendar::WEEKLY,
-                         Vcalendar::COUNT => 5,
-                     ]
-                 )*/
-                // and set another on a specific date
-                /* ->setRdate(
-                     [
-                         new DateTime(
-                             '20190609T090000',
-                             new DateTimezone( 'Europe/Stockholm' )
-                         ),
-                         new DateTime(
-                             '20190609T110000',
-                             new DateTimezone( 'Europe/Stockholm' )
-                         ),
-                     ],
-                     [ Vcalendar::VALUE => Vcalendar::PERIOD ]
-                 )
-                 // and revoke a recurrence date
-                 ->setExdate(
-                     new DateTime(
-                         '2019-05-12 09:00:00',
-                         new DateTimezone( 'Europe/Stockholm' )
-                     )
-                 )*/
                 // organizer, chair and some participants
                 ->setOrganizer(
                     $this->getCalendarOrganizerEmail(),
@@ -395,48 +358,14 @@ class TrackCovidSharedCalendarEmail extends Message
                     // and create the (string) calendar
                     ->createCalendar();
 
-            //attache it to the email for gmail clients.
-            if (!empty($vcalendarString)) {
-                // $email->addStringAttachment($vcalendarString,'ical2.ics','base64','text/calendar; charset=utf-8; method=REQUEST');
-                $email->addStringAttachment($vcalendarString, 'ical.ics', 'base64', 'application/ics');
 
-            }
+            $tempFile = sys_get_temp_dir() . "/invite.ics";
+            $fileHandle = fopen($tempFile, "w");
+            fwrite($fileHandle, $vcalendarString);
+            $this->setAttachment($tempFile, 'invite.ics');
+            fclose($fileHandle);
 
-            //$email->msgHTML($this->getBody());
-            //$email->addCustomHeader('Content-type',"text/calendar; charset=utf-8; method=REQUEST");
-
-
-            $email->Body = $this->getBody();
-            //for outlook add string to ICal when AltString is available.
-            $email->Ical = $vcalendarString;
-            $email->AltBody = $this->getBody();
-
-            $email->Subject = $this->getSubject();
-            $email->AddAddress($this->getTo());
-            $email->SetFrom($this->getCalendarOrganizerEmail(), $this->getCalendarOrganizer());
-            if (!$email->Send()) {
-                throw new \LogicException($email->ErrorInfo);
-            }
-        } catch (\LogicException $e) {
-            $e->getMessage();
-        } catch (\Exception $e) {
-            $e->getMessage();
-        }
-    }
-
-    public function send()
-    {
-        try {
-            $email = new PHPMailer();
-            $email->Body = $this->getBody();
-            $email->AltBody = $this->getBody();
-
-            $email->Subject = $this->getSubject();
-            $email->AddAddress($this->getTo());
-            $email->SetFrom($this->getCalendarOrganizerEmail(), $this->getCalendarOrganizer());
-            if (!$email->Send()) {
-                throw new \LogicException($email->ErrorInfo);
-            }
+            $result = $this->send();
         } catch (\LogicException $e) {
             $e->getMessage();
         } catch (\Exception $e) {
