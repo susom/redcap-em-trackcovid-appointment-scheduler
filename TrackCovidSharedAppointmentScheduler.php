@@ -209,8 +209,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             parent::__construct();
 
-            $proj = new \Project(116);
-            $irb= $proj->project['project_irb_number'];
+
             /**
              * so when you enable this it does not throw an error !!
              */
@@ -248,11 +247,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
                 // load locations to be used in the EM
                 $this->getLocationRecords();
+
+                if ($this->getProjectSetting('scheduler-login-em') != '') {
+                    $this->setSchedulerLoginEM(\ExternalModules\ExternalModules::getModuleInstance($this->getProjectSetting('scheduler-login-em')));
+                }
             }
 
-            if($this->getProjectSetting('scheduler-login-em') != ''){
-                $this->setSchedulerLoginEM(\ExternalModules\ExternalModules::getModuleInstance($this->getProjectSetting('scheduler-login-em')));
-            }
 
             /**
              * Initiate suffix if exists
@@ -300,7 +300,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $schedulerLoginEM = $this->getSchedulerLoginEM();
         $loginInstrument = $schedulerLoginEM->getProjectSetting('login-instrument');
         $url = REDCap::getSurveyLink($recordId, $loginInstrument, $this->getFirstEventId());
-        return $url ;
+        return $url;
     }
 
     private function sortRecordsByDate($records, $eventId)
@@ -389,7 +389,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $instance = $this->getEventIdInstance($eventId);
         if (!empty($instance)) {
             if ($instance['instance-logic-enabler'] != '') {
-                 return REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
+                return REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
             } else {
                 // if no logic defined for this instance then use default config
                 return $instance['default-instance-visibility'] == '1' ? true : false;
@@ -977,6 +977,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
+    public function redcap_module_link_check_display($project_id, $link, $record = null, $instrument = null, $instance = null, $page = null)
+    {
+
+        $link['url'] .= '&projectid=' . $project_id;
+        return $link;
+    }
 
     /**
      * @param $eventId
@@ -1923,8 +1929,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     {
         $this->schedulerLoginEM = $schedulerLoginEM;
     }
-
-
 
 
 }
