@@ -977,11 +977,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
-    public function redcap_module_link_check_display($project_id, $link)
-    {
-        $link['url'] .= '&projectid=' . $project_id;
-        return $link;
-    }
 
     /**
      * @param $eventId
