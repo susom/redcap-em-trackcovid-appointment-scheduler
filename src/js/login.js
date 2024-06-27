@@ -5,6 +5,7 @@ Form = {
 
         var body = $('body');
 
+
         $(".code_info").on('click', function () {
             $(".example_code").fadeIn("fast");
 

@@ -275,10 +275,8 @@ class TrackCovidSharedCalendarEmail extends Message
      * @param array $param
      * @return bool
      */
-    public function sendCalendarEmail($param)
-    {
+    public function sendCalendarEmail($param){
         try {
-
 
             $this->prepareCalendarData($param);
 
@@ -367,9 +365,9 @@ class TrackCovidSharedCalendarEmail extends Message
 
             $result = $this->send();
         } catch (\LogicException $e) {
-            $e->getMessage();
         } catch (\Exception $e) {
             $e->getMessage();
         }
     }
+
 }

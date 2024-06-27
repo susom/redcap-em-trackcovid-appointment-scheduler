@@ -20,10 +20,6 @@ class ComposerStaticInit88def548ab0c216f4d84156597339934
             'Psr\\Log\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'M' => 
-        array (
-            'Monolog\\' => 8,
-        ),
         'K' => 
         array (
             'Kigkonsult\\Icalcreator\\' => 23,
@@ -42,10 +38,6 @@ class ComposerStaticInit88def548ab0c216f4d84156597339934
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-        ),
-        'Monolog\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Kigkonsult\\Icalcreator\\' => 
         array (

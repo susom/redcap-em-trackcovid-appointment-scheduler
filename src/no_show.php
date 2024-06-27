@@ -34,7 +34,7 @@ try {
             $data['summary_notes'] = filter_var($_GET['notes'], FILTER_SANITIZE_STRING);
 
 
-            $data['visit_status'] = $data['reservation_participant_status'];
+            $data['reservation_visit_status'] = $data['reservation_participant_status'];
         } else {
             $data['reservation_slot_id'] = false;
             $data['reservation_participant_id'] = false;
@@ -42,8 +42,7 @@ try {
             $data['reservation_date'] = false;
             $data['reservation_participant_location'] = false;
             $data['reservation_participant_status'] = false;
-            $data['visit_status'] = false;
-            $data['reservation_site_affiliation'] = false;
+            $data['reservation_visit_status'] = false;
             $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primaryField],
                     $eventId) . '\n[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
 
@@ -53,6 +52,12 @@ try {
             if ($rescheduleCounter == '') {
                 $data['reservation_reschedule_counter'] = 0;
             }
+
+            //if this cancellation for baseline visit then use its date as med point for the window.
+            if ($module->getProject()->events['1']['events'][$eventId]['day_offset'] == 0) {
+                $data['reservation_baseline_cancellation_date'] = $module->getRecordReservationDateTime($data[$primaryField], $eventId);
+            }
+
         }
         $data['redcap_event_name'] = \REDCap::getEventNames(true, true, $eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
@@ -66,7 +71,7 @@ try {
             }
 
 
-            $reservation = $module->getSlot(filter_var($data[$primaryField], FILTER_SANITIZE_STRING), $eventId);
+            $slot = $module->getSlot($slotId, $eventId);
 
             $instance = $module->getEventInstance();
             $user = $module->getParticipant()->getUserInfo($data[$primaryField], $module->getFirstEventId());
@@ -80,8 +85,6 @@ try {
                     $body, $body
                 );
             } else {
-                $slot = $module->getSlot(filter_var($reservation['reservation_slot_id'], FILTER_SANITIZE_STRING),
-                    $module->getSlotEventIdFromReservationEventId($eventId));
                 $eventName = $module->getProject()->events[$eventId]['name'];
                 $body = '--CONFIRMATION-- ' . $eventName . ' has been skipped';
                 $module->sendEmail($user['email'],

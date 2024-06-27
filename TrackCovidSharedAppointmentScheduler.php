@@ -14,9 +14,8 @@ if (file_exists(__DIR__ . '../vendor/autoload.php')) {
     require __DIR__ . '/vendor/autoload.php';
 }
 
+use Stanford\ChartLogin\ChartLogin\ChartLogin;
 use Twilio\Rest\Client;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 /**
  * Constants where appointment  is located
@@ -32,7 +31,11 @@ define('CAMPUS_AND_VIRTUAL_TEXT', 'Redwood City Campus , or Virtual via Zoom Mee
 define('VIRTUAL_ONLY_TEXT', 'Virtual via Zoom Meeting.');
 define('CAMPUS_ONLY_TEXT', 'Redwood City Campus');
 
-
+/**
+ * COHORT
+ */
+define('COHOR_1', 1);
+define('COHOR_2', 2);
 /**
  * Constants for participation statuses
  */
@@ -87,6 +90,8 @@ define("LOCATION", "location");
 
 define("PARTICIPANT_STATUS", "reservation_participant_status");
 
+define('PT', 480);
+
 /**
  * Class TrackCovidSharedAppointmentScheduler
  * @package Stanford\TrackCovidSharedAppointmentScheduler
@@ -104,9 +109,11 @@ define("PARTICIPANT_STATUS", "reservation_participant_status");
  * @property int $recordId
  * @property \Project $project
  * @property boolean $baseLine
+ * @property boolean $bonusVisit
  * @property string $baseLineDate
+ * @property string $offsetDate
  * @property array $locationRecords
- * @property int $defaultAffiliation
+ * @property float $childEligibility
  * @property \Stanford\TrackCovidSharedAppointmentScheduler\Scheduler $scheduler
  */
 class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExternalModule
@@ -114,6 +121,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     use emLoggerTrait;
 
+    public static $timezones = [
+        300 => 'ET',
+        360 => 'CT',
+        420 => 'MT',
+        480 => 'PT',
+    ];
     /**
      * @var \TrackCovidSharedCalendarEmail|null
      */
@@ -177,10 +190,16 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public $locationRecords;
 
-    private $defaultAffiliation;
 
     private $scheduler;
 
+    private $bonusVisit = false;
+
+    private $childEligibility;
+
+    private $offsetDates;
+
+    private $schedulerLoginEM;
     /**
      * TrackCovidSharedAppointmentScheduler constructor.
      */
@@ -190,6 +209,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             parent::__construct();
 
+            $proj = new \Project(116);
+            $irb= $proj->project['project_irb_number'];
             /**
              * so when you enable this it does not throw an error !!
              */
@@ -229,6 +250,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 $this->getLocationRecords();
             }
 
+            if($this->getProjectSetting('scheduler-login-em') != ''){
+                $this->setSchedulerLoginEM(\ExternalModules\ExternalModules::getModuleInstance($this->getProjectSetting('scheduler-login-em')));
+            }
 
             /**
              * Initiate suffix if exists
@@ -244,7 +268,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             /**
              * Initiate Email Participant
              */
-            $this->setParticipant(new  \Stanford\TrackCovidSharedAppointmentScheduler\Participant());
+            $this->setParticipant(new  Participant());
 
             /**
              * Only call this class when event is provided.
@@ -269,62 +293,14 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
-    /**
-     * Get available time slots for specific date
-     * @param string $date
-     * @param int $event_id
-     * @return array
-     */
-//    public function getDateAvailableSlots($date, $event_id)
-//    {
-//        try {
-//            if (!empty($date)) {
-//
-//                /*
-//                 * TODO Check if date within allowed window
-//                 */
-//                $filter = "[start] > '" . date('Y-m-d', strtotime($date)) . "' AND " . "[start] < '" . date('Y-m-d',
-//                        strtotime($date . ' + 1 DAY')) . "' AND [slot_status] != '" . CANCELED . "'";
-//                $param = array(
-//                    'project_id' => $this->getProjectId(),
-//                    'filterLogic' => $filter,
-//                    'return_format' => 'array',
-//                    'events' => $event_id
-//                );
-//                $data = REDCap::getData($param);
-//                $x = $this->sortRecordsByDate($data, $event_id);
-//                return $x;
-//            } else {
-//                throw new \LogicException('Not a valid date, Aborting!');
-//            }
-//        } catch (\LogicException $e) {
-//            echo $e->getMessage();
-//        }
-//    }
 
-    /**
-     * @param int $event_id
-     * @return array
-     */
-    public function getTimeSlot($record_id, $event_id)
+    public function getLoginURL($recordId)
     {
-        try {
-            if ($event_id) {
-
-                $filter = "[record_id] = '" . $record_id . "'";
-                $param = array(
-                    'filterLogic' => $filter,
-                    'return_format' => 'array',
-                    'events' => REDCap::getEventNames(true, false, $event_id)
-                );
-                $record = REDCap::getData($param);
-                return $record[$record_id][$event_id];
-            } else {
-                throw new \LogicException('Not event id passed, Aborting!');
-            }
-        } catch (\LogicException $e) {
-            echo $e->getMessage();
-        }
+        /** @var ChartLogin $schedulerLoginEM */
+        $schedulerLoginEM = $this->getSchedulerLoginEM();
+        $loginInstrument = $schedulerLoginEM->getProjectSetting('login-instrument');
+        $url = REDCap::getSurveyLink($recordId, $loginInstrument, $this->getFirstEventId());
+        return $url ;
     }
 
     private function sortRecordsByDate($records, $eventId)
@@ -361,44 +337,36 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $month = null,
         $baseline = '',
         $offset = 0,
-        $affiliation = null
-    ) {
+        $affiliation = null,
+        $canceledBaseline = false,
+        $reservationEventId = ''
+    )
+    {
         try {
             if ($this->getScheduler()->getSlotsEventId()) {
 
                 $variable = 'start' . $this->getSuffix();
-                if ($month != '' && $year != '') {
-                    $start = "$year-$month-01";
-                    $end = date('Y-m-t', strtotime($start));
-                } elseif ($baseline) {
-                    $add = $offset * 60 * 60 * 24;
-                    $week = 604800;
-                    $start = date('Y-m-d', strtotime($baseline) + $add - $week);
-                    $end = date('Y-m-d', strtotime($baseline) + $add + $week);
-                } else {
-                    $start = date('Y-m-d', strtotime('+7 days'));
+                $instance = $this->getSchedulerInstanceViaReservationId($eventId);
+                list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline, $instance);
 
-                    # change logic to get the next 21 days instead o just the end of this month.
-                    $end = date('Y-m-d', strtotime('+30 days'));
+
+                $blockingDate = null;
+                if ($offset != -1 && $reservationEventId && $this->isEventBookingBlocked($reservationEventId)) {
+                    $blockingDate = $this->getBookingBlockDate($reservationEventId);
                 }
-
 
                 $records = $this->getScheduler()->getSlots();
                 foreach ($records as $record) {
+                    //check if booking is blocked for this record
+                    if ($blockingDate && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) >= strtotime($blockingDate)) {
+                        continue;
+                    }
+
                     if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
-                        if ($affiliation) {
-                            $locations = $this->getLocationRecords();
-                            $location = end($locations['SITE' . $record[$this->getScheduler()->getSlotsEventId()]['location']]);
-                            if ($location['site_affiliation'] == $affiliation) {
-                                $data[] = $record;
-                            }
-
-                        } else {
-                            $data[] = $record;
-                        }
-
+                        $data[] = $record;
                     }
                 }
+
                 return $this->sortRecordsByDate($data, $eventId);
             } else {
                 throw new \LogicException('Not event id passed, Aborting!');
@@ -407,6 +375,45 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             //error($e->getMessage());
             echo $e->getMessage();
         }
+    }
+
+    public function isWeekend($date)
+    {
+        $weekDay = date('w', strtotime($date));
+        return ($weekDay == 0 || $weekDay == 6);
+    }
+
+
+    public function verifyInstanceLogic($eventId, $recordId)
+    {
+        $instance = $this->getEventIdInstance($eventId);
+        if (!empty($instance)) {
+            if ($instance['instance-logic-enabler'] != '') {
+                 return REDCap::evaluateLogic($instance['instance-logic-enabler'], $this->getProjectId(), $recordId);
+            } else {
+                // if no logic defined for this instance then use default config
+                return $instance['default-instance-visibility'] == '1' ? true : false;
+            }
+        }
+
+        // by default if instance is not defined for scheduler the
+        return false;
+    }
+
+    /**
+     * @param $slot
+     * @param $userTimezone
+     * @return mixed
+     */
+    public function modifySlotBasedOnUserTimezone($slot, $userTimezone)
+    {
+        // differance between user timezone and PT
+        $diff = ($this->getPST() - $userTimezone) * 60;
+        $slot['start_orig'] = $slot['start'];
+        $slot['end_orig'] = $slot['end'];
+        $slot['start'] = date('Y-m-d H:i:s', (strtotime($slot['start']) + $diff));
+        $slot['end'] = date('Y-m-d H:i:s', (strtotime($slot['end']) + $diff));
+        return $slot;
     }
 
     /**
@@ -421,7 +428,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $filter = "[start$suffix] > '" . date('Y-m-d') . "' AND " . "[slot_status$suffix] != '" . CANCELED . "'";
             $param = array(
                 'project_id' => $this->getScheduler()->getProject()->project_id,
-                'filterLogic' => $filter,
+                #'filterLogic' => $filter,
                 'return_format' => 'array'
             );
             return REDCap::getData($param);
@@ -430,26 +437,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getBookedSlots($suffix)
-    {
-        try {
-            /*
-                 * TODO Check if date within allowed window
-                 */
-            $filter = "[start$suffix] > '" . date('Y-m-d') . "' AND " . "[slot_status$suffix] = '" . RESERVED . "'";
-            $param = array(
-                'project_id' => $this->getProjectId(),
-                'filterLogic' => $filter,
-                'return_format' => 'array'
-            );
-            return REDCap::getData($param);
-        } catch (\LogicException $e) {
-            echo $e->getMessage();
-        }
-    }
 
     /**
      * @return array
@@ -487,9 +474,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     /**
      * @param array $user
      */
-    public function notifyUser($user, $slot = null)
+    public function notifyUser($user, $reservationEventId, $slot = null)
     {
-        $instance = $this->getEventInstance();
+        $instance = $this->getEventIdInstance($reservationEventId);
         $this->calendarParams['calendarOrganizerEmail'] = ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL);
         $this->calendarParams['calendarOrganizer'] = ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME);
         $this->calendarParams['calendarDescription'] = $instance['calendar_body'];
@@ -505,26 +492,16 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $this->sendEmail($user['email'],
             ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
             ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
-            '--APPT CONFIRMATION-- ' . $user['newuniq'] . ' Please arrive' .
-            ' on ' . date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
-            ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
-            ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),
-            $this->replaceRecordLabels($instance['calendar_body'], $slot),
+//            '--APPT CONFIRMATION-- ' . $user['newuniq'] . ' Please arrive' .
+//            ' on ' . date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
+//            ' between ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime'])) .
+//            ' and ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime'])),
+            $instance['calendar_subject'],
+            $this->replaceREDCapCustomLabels($this->replaceRecordLabels($instance['calendar_body'], $slot), array(), $user['newuniq']),
             true
         );
 
-        if ($user['instructor']) {
-            $this->sendEmail($user['instructor'] . '@stanford.edu',
-                ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
-                ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
-                '--APPT CONFIRMATION-- ' . $user['email'] . ' scheduled an appointment at ' . date('m/d/Y',
-                    strtotime($this->calendarParams['calendarDate'])) . ' from ' . date('h:i A',
-                    strtotime($this->calendarParams['calendarStartTime'])) . ' to ' . date('h:i A',
-                    strtotime($this->calendarParams['calendarEndTime'])),
-                $instance['calendar_body'],
-                true
-            );
-        }
+
         if ($user['mobile'] && $this->getTwilioClient()) {
             $message = array(
                 'from' => '+' . $this->getProjectSetting('phone_number_country_code',
@@ -711,7 +688,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getNextRecordsId($eventId, $projectId)
     {
-        $sql = sprintf("SELECT max(cast(record as SIGNED)) as record_id from redcap_data WHERE project_id = '$projectId' AND event_id = '$eventId'");
+        $data_table = method_exists('\REDCap', 'getDataTable') ? \REDCap::getDataTable($projectId) : "redcap_data";
+
+        $sql = sprintf("SELECT max(cast(record as SIGNED)) as record_id from $data_table WHERE project_id = '$projectId' AND event_id = '$eventId'");
 
         $this->emLog("SQL Statement:", $sql);
         $result = db_query($sql);
@@ -831,6 +810,20 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return $instance['show_location_options'];
     }
 
+    /**
+     * @return int
+     */
+    public function getEventCohort($eventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+
+            if ($instance['reservation_event_id'] == $eventId) {
+                return $instance['assigned-cohort'];
+            }
+        }
+        return false;
+    }
 
     /**
      * @return int
@@ -879,6 +872,23 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     {
         $this->baseLine = $baseLine;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getOffsetDate()
+    {
+        return $this->offsetDates;
+    }
+
+    /**
+     * @param string $offsetDate
+     */
+    public function setOffsetDate(string $offsetDate): void
+    {
+        $this->offsetDates = $offsetDate;
+    }
+
 
     /**
      * @return string
@@ -1150,7 +1160,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 //        }
 
         // when manager hits user page. they must be logged in and have right permission on redcap.
-        if (defined('USERID') && isset($_GET['code']) && isset($_GET['zip']) && self::isUserHasManagePermission()) {
+
+        if (defined('USERID') && ((isset($_GET['code']) && isset($_GET['zip'])) || $recordID) && self::isUserHasManagePermission()) {
             if ($recordID) {
                 $param = array(
                     'project_id' => $this->getProjectId(),
@@ -1169,6 +1180,12 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 if (filter_var($_GET['code'], FILTER_SANITIZE_STRING) == $record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]) {
                     $this->setUserCookie('login', $this->generateUniqueCodeHash($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
                     return array('id' => $id, 'record' => $record);
+                }
+                if ($recordID && $this->getProjectSetting('validation-field') == $this->getProject()->table_pk) {
+                    if ($recordID == $id) {
+                        $this->setUserCookie('login', $this->generateUniqueCodeHash($id));
+                        return array('id' => $id, 'record' => $record);
+                    }
                 }
             }
         } else {
@@ -1244,39 +1261,72 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return array($month, $year);
     }
 
-
-    public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0)
+    public function getPST()
     {
-        if ($this->isBaseLine() || $this->getBaseLineDate()) {
+        return PT - (date('I') ? 60 : 0);
+    }
 
-            if ($this->getBaseLineDate()) {
-//                if ($offset > 0) {
-//                    $add = $offset * 60 * 60 * 24;
-//                    $week = 604800;
-//                    $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
-//                    $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
-//                } else {
-//                    $start = date('Y-m-d', strtotime('+7 days'));
-//
-//                    $end = date('Y-m-d', strtotime('+30 days'));
-//                }
+    public function getTimezoneAbbr($offset)
+    {
+        return TrackCovidSharedAppointmentScheduler::$timezones[$offset + (date('I') ? 60 : 0)];
+    }
 
-                $add = $offset * 60 * 60 * 24;
-                $week = 604800;
-                $start = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add - $week);
-                $end = date('Y-m-d', strtotime($this->getBaseLineDate()) + $add + $week);
+    private function getStartEndWindow($baseline, $offset, $canceledBaseline, $instance)
+    {
+        $windowSize = $instance['window-size'] ?: 20;
+        if ($this->getChildEligibility() == '1') {
+            $add = 60 * 60 * 24 * 2;
+        } elseif ($this->getChildEligibility() == '0.5') {
+            $add = 60 * 60 * 24 * 7;
+        }
+        if ($baseline) {
 
+            $add = $offset * 60 * 60 * 24;
+            $week = 604800;
+            if (!$canceledBaseline) {
+                $start = date('Y-m-d', strtotime($baseline) + $add);
             } else {
-                $start = date('Y-m-d', strtotime('+7 days'));
-
-                #based on Beatrice Huang request on 09-14-2020 we removed 7 days restriction.
-                #$start = date('Y-m-d');
-                $end = date('Y-m-d', strtotime('+30 days'));
+                $start = date('Y-m-d', strtotime($baseline));
             }
 
-            return '<button data-baseline="' . $this->getBaseLineDate() . '" data-affiliation="' . $this->getDefaultAffiliation() . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . $start . ' and ' . $end . ')</small>';
+
+            // is start in the past then make start within next 12 horus to give CRC time to prepare.
+            if (strtotime($start) < time() + 43200) {
+                $start = date('Y-m-d H:i:s', time() + $add);
+            }
+
+            $end = date('Y-m-d H:i:s', strtotime($start) + $windowSize * 24 * 60 * 60);
+
+
+            // final check if $end is lower than start add one week to end
+            if (strtotime($start) > strtotime($end)) {
+                $end = date('Y-m-d', strtotime($start) + $windowSize);
+            }
         } else {
-            return 'Please schedule Baseline Visit First to be able to schedule other visits!';
+
+            # allow participant to book up 12 pm after two days.
+            $start = date('Y-m-d  H:i:s', time() + $add);
+
+            #open till end of year days restriction.
+            $end = date('Y-m-d', strtotime('12/31'));
+        }
+        return array($start, $end);
+    }
+
+    public function getScheduleActionButton($month, $year, $url, $user, $eventId, $offset = 0, $canceledBaseline = false)
+    {
+        $instance = $this->getSchedulerInstanceViaReservationId($eventId);
+
+        if ($this->isBaseLine() || $this->getBaseLineDate() || $this->getOffsetDate()) {
+
+            $instance = $this->getSchedulerInstanceViaReservationId($eventId);
+
+            list($start, $end) = $this->getStartEndWindow(($this->getOffsetDate() ?: $this->getBaseLineDate()), $offset, $canceledBaseline, $instance);
+
+            return '<button data-baseline="' . ($this->getOffsetDate() ?: $this->getBaseLineDate()) . '" data-canceled-baseline="' . $canceledBaseline . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br><small>(Schedule between ' . date('Y-m-d', strtotime($start)) . ' and ' . date('Y-m-d', strtotime($end)) . ')</small>';
+        } else {
+            return '<button data-baseline="' . ($this->getOffsetDate() ?: $this->getBaseLineDate()) . '" data-canceled-baseline="' . $canceledBaseline . '"  data-month="' . $month . '"  data-year="' . $year . '" data-url="' . $url . '" data-record-id="' . $user['id'] . '" data-key="' . $eventId . '" data-offset="' . $offset . '" class="get-list btn btn-sm btn-success">Schedule</button><br>';
+
         }
 
     }
@@ -1288,7 +1338,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getSkipActionButton($user, $eventId)
     {
-        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $statuses = parseEnum($this->getProject()->metadata['reservation_visit_status']["element_enum"]);
         return '<br><button data-participant-id="' . $user['id'] . '" data-event-id="' . $eventId . '" data-status="' . $this->getSkippedIndex() . '"  class="skip-appointment btn btn-sm btn-warning">Skip</button>';
     }
 
@@ -1306,13 +1356,17 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     {
         if (strpos($body, '[location]') !== false) {
             $locations = $this->getLocationRecords();
-            $location = $locations['SITE' . $locationId];
-            $text = "<br>Title: " . $location[$this->getProjectSetting('testing-sites-event')]['title'];
-            $text .= "<br>Address: " . $location[$this->getProjectSetting('testing-sites-event')]['testing_site_address'];
-            $text .= "<br>Details: " . $location[$this->getProjectSetting('testing-sites-event')]['site_details'];
-            $text .= "<br>Google Map Link: <a href='" . $location[$this->getProjectSetting('testing-sites-event')]['map_link'] . "'>" . $location[$this->getProjectSetting('testing-sites-event')]['map_link'] . "</a>";
-            return str_replace('[location]', $text, $body);
+            $location = $locations['SITE_' . $locationId];
+//            $text = "<br>Title: " . $location[$this->getScheduler()->getTestingSitesEventId()]['title'];
+//            $text .= "<br>Address: " . $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'];
+//            $text .= "<br>Details: " . $location[$this->getScheduler()->getTestingSitesEventId()]['site_details'];
+//            if ($location[$this->getScheduler()->getTestingSitesEventId()]['map_link']) {
+//                $text .= "<br>Google Map Link: <a href='" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "'>" . $location[$this->getScheduler()->getTestingSitesEventId()]['map_link'] . "</a>";
+//
+//            }
+            return str_replace('[location]', $location[$this->getScheduler()->getTestingSitesEventId()]['testing_site_address'], $body);
         }
+        return $body;
     }
 
     public function getLocationRecords()
@@ -1322,14 +1376,13 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 'project_id' => $this->getScheduler()->getProject()->project_id,
                 'events' => [$this->getScheduler()->getTestingSitesEventId()]
             );
-
             $results = \REDCap::getData($param);
             $locations = array();
             //filter the locations based on what defined on config.json
             foreach ($results as $id => $result) {
-                if (in_array($id, $this->getScheduler()->getSites()?:[])) {
-                    $locations[$id] = $result;
-                }
+                // if (in_array($id, $this->getScheduler()->getSites())) {
+                $locations[$id] = $result;
+                // }
             }
             $this->locationRecords = $locations;
             return $this->locationRecords;
@@ -1347,7 +1400,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 if ($match == 'location') {
                     $text = $this->insertLocationInEmailBody($row['location'], $text);
                 } elseif ($match == 'start') {
-                    $text = str_replace($match, date('F jS, Y', strtotime($row[$match])), $text);
+                    $text = str_replace("[" . $match . "]", date('F jS, Y', strtotime($row[$match])), $text);
                 } else {
                     $text = str_replace("[" . $match . "]", $row[$match], $text);
                 }
@@ -1355,14 +1408,90 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         }
 
         if ($origin != $text) {
-            $text = str_replace("]", "", $text);
-            $text = str_replace("[", "", $text);
             return $text;
         } else {
             return $origin;
         }
     }
 
+    public function replaceREDCapCustomLabels($text, $row, $recordId)
+    {
+        $origin = $text;
+        preg_match_all("/\[(\w.*)\]/", $text, $matches);
+        foreach ($matches[0] as $match) {
+            $label = \Piping::replaceVariablesInLabel($match, $recordId, null, 1, $row, true, null, false);
+            if ($label) {
+                $text = str_replace($match, $label, $text);
+            }
+        }
+
+        if ($origin != $text) {
+            return $text;
+        } else {
+            return $origin;
+        }
+    }
+
+    public function getFormattedTimestamp($timestamp)
+    {
+        return date('m-d-Y', $timestamp);
+    }
+
+    public function buildWeeklyTotalsTable($weekDays)
+    {
+        $result = array();
+        $records = $this->getParticipant()->getAllReservedSlots($this->getProjectId(), array_keys($this->getProject()->events['1']['events']));
+        foreach ($records as $id => $events) {
+            foreach ($events as $eventId => $record) {
+                // make sure there is date to check for
+                if (empty($record['reservation_date'])) {
+                    continue;
+                }
+                $date = $this->getFormattedTimestamp(strtotime($record['reservation_date']));
+                if ($this->isDateInWeek($weekDays, $date)) {
+                    if (array_key_exists($record['reservation_participant_location'], $result)) {
+                        if (array_key_exists($date, $result[$record['reservation_participant_location']])) {
+                            $result[$record['reservation_participant_location']][$date]++;
+                        } else {
+                            $result[$record['reservation_participant_location']][$date] = 1;
+                        }
+                        $result[$record['reservation_participant_location']]['total']++;
+                    } else {
+                        $result[$record['reservation_participant_location']][$date] = 1;
+                        $result[$record['reservation_participant_location']]['total'] = 1;
+                    }
+
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function isDateInWeek($weekDays, $date)
+    {
+        return in_array($date, $weekDays);
+    }
+
+    public function getWeekdaysDates($index = 0)
+    {
+        $week = 604800;
+        $day = 60 * 60 * 24;
+        $result = array();
+        // get closest sunday as starting point
+        $lastSunday = strtotime('Last Sunday', time());
+        // if we are looking for different week from current one then adjust the starting sunday based on index
+        if ($index != 0) {
+
+            $delta = $week * $index;
+            $startSunday = $lastSunday + $delta;
+        } else {
+            $startSunday = $lastSunday;
+        }
+        for ($i = 1; $i <= 7; $i++) {
+            $result[] = $this->getFormattedTimestamp($startSunday + ($i * $day));
+        }
+        return $result;
+    }
 
     public function getRecordRescheduleCounter($recordId, $eventId)
     {
@@ -1424,10 +1553,51 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return false;
     }
 
+
     /**
      * @param array $instances
      * @param int $slotEventId
      * @return bool
+     */
+    public function getSchedulerInstanceViaReservationId($reservationEventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+
+            if ($instance['reservation_event_id'] == $reservationEventId) {
+                return $instance;
+            }
+
+        }
+        return false;
+    }
+
+    public function isEventBookingBlocked($eventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+            if ($instance['reservation_event_id'] == $eventId && $instance['block-booking']) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getBookingBlockDate($eventId)
+    {
+        $instances = $this->getInstances();
+        foreach ($instances as $instance) {
+            if ($instance['reservation_event_id'] == $eventId && $instance['block-booking']) {
+                return $instance['block-booking-date'];
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param array $instances
+     * @param int $slotEventId
+     * @return array
      */
     public function getReservationEventIdViaSlotEventIds($slotEventId)
     {
@@ -1452,22 +1622,16 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return $result;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultAffiliation()
-    {
-        return $this->defaultAffiliation;
-    }
 
-    /**
-     * @param int $defaultAffiliation
-     */
-    public function setDefaultAffiliation($defaultAffiliation)
+    public function getEventIdInstance($eventId)
     {
-        $this->defaultAffiliation = $defaultAffiliation;
+        foreach ($this->getInstances() as $instance) {
+            if ($instance['reservation_event_id'] == $eventId) {
+                return $instance;
+            }
+        }
+        return array();
     }
-
 
     public function getReservationEvents()
     {
@@ -1480,10 +1644,16 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getSkippedIndex()
     {
-        $statuses = parseEnum($this->getProject()->metadata['visit_status']["element_enum"]);
+        $statuses = parseEnum($this->getProject()->metadata['reservation_visit_status']["element_enum"]);
         return array_search('Skipped', $statuses);
     }
 
+    public function isAppointmentNoShow($status)
+    {
+        $statuses = parseEnum($this->getProject()->metadata['reservation_visit_status']["element_enum"]);
+        $s = array_search('No Show', $statuses);
+        return $status == $s;
+    }
 
     public function isAppointmentSkipped($status)
     {
@@ -1710,4 +1880,56 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     {
         $this->instances = $this->getSubSettings('instance', $this->getProjectId());;
     }
+
+    /**
+     * @return bool
+     */
+    public function isBonusVisit()
+    {
+        return $this->bonusVisit;
+    }
+
+    /**
+     * @param bool $bonusVisit
+     */
+    public function setBonusVisit($bonusVisit)
+    {
+        $this->bonusVisit = $bonusVisit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChildEligibility()
+    {
+        return $this->childEligibility;
+    }
+
+    /**
+     * @param mixed $childEligibility
+     */
+    public function setChildEligibility($childEligibility): void
+    {
+        $this->childEligibility = $childEligibility;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSchedulerLoginEM()
+    {
+        return $this->schedulerLoginEM;
+    }
+
+    /**
+     * @param mixed $schedulerLoginEM
+     */
+    public function setSchedulerLoginEM($schedulerLoginEM): void
+    {
+        $this->schedulerLoginEM = $schedulerLoginEM;
+    }
+
+
+
+
 }

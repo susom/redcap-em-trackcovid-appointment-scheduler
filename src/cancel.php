@@ -6,7 +6,7 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 
 try {
-    $primary = $module->getPrimaryRecordFieldName();
+    $primary = 'participant_id';
     $data[$primary] = $_GET[$primary];
     $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
     $slotId = filter_var($_GET['reservation_slot_id'], FILTER_SANITIZE_STRING);
@@ -19,7 +19,7 @@ try {
         $data['reservation_date'] = false;
         $data['reservation_participant_location'] = false;
         $data['reservation_participant_status'] = false;
-        $data['visit_status'] = false;
+        $data['reservation_visit_status'] = false;
         // get previous notes
         $data['summary_notes'] = $module->getRecordSummaryNotes($data[$primary],
                 $eventId) . '&#13;&#10;[' . date('Y-m-d H:i:s') . ']: Appointment was canceled';
@@ -37,7 +37,6 @@ try {
 
         $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)), 'overwrite');
-        $module->emError($response);
         if (empty($response['errors'])) {
 
             $slot = $module->getSlot($slotId, $module->getScheduler()->getSlotsEventId());

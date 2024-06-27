@@ -1,8 +1,8 @@
 <?php
 //
-//namespace Stanford\TrackCovidAppointmentScheduler;
+//namespace Stanford\WISEAppointmentScheduler;
 //
-///** @var \Stanford\TrackCovidAppointmentScheduler\TrackCovidAppointmentScheduler $module */
+///** @var \Stanford\WISEAppointmentScheduler\WISEAppointmentScheduler $module */
 //
 //if (isset($_GET['date'])) {
 //    /*

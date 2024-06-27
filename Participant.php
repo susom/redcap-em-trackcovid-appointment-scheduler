@@ -8,7 +8,7 @@ class Participant
 
     private $counter;
 
-    private $users;
+    public $users;
 
     /**
      * @param string $email
@@ -26,8 +26,9 @@ class Participant
 
         $range = "rd.value > '" . date('Y-m-d', strtotime($date)) . "' AND " . "rd.value < '" . date('Y-m-d',
                 strtotime($date . ' + 1 DAY')) . "'";
+        $data_table = method_exists('\REDCap', 'getDataTable') ? \REDCap::getDataTable($project_id) : "redcap_data";
 
-        $sql = sprintf("SELECT id from redcap_appointment_participant ra JOIN redcap_data rd ON ra.record_id = rd.record WHERE rd.project_id = $project_id AND event_id = $event_id AND $range AND ra.email = '$email'");
+        $sql = sprintf("SELECT id from redcap_appointment_participant ra JOIN $data_table rd ON ra.record_id = rd.record WHERE rd.project_id = $project_id AND event_id = $event_id AND $range AND ra.email = '$email'");
 
         $r = db_query($sql);
         $count = db_num_rows($r);
@@ -110,8 +111,8 @@ class Participant
 
             }
 
-            if ($slot['number_of_booked_slots']) {
-                $this->counter[$slotId]['counter'] = $slot['number_of_booked_slots'];
+            if ($slot['number_of_booked_slots'] || $slot['number_of_external_booked_slots']) {
+                $this->counter[$slotId]['counter'] = (int)$slot['number_of_booked_slots'] + (int)$slot['number_of_external_booked_slots'];
             }
             return $this->counter[$slotId];
 //
@@ -161,22 +162,21 @@ class Participant
     {
         try {
 
-            $filter = "[reservation_participant_status] ='" . RESERVED . "'";
+            $filter = "[reservation_date] >'" . date('Y-m-d', strtotime('-2 days')) . "'";
             if (!is_null($events)) {
                 $param = array(
                     'project_id' => $projectId,
-                    //'filterLogic' => $filter,
+                    'filterLogic' => $filter,
                     'return_format' => 'array',
                     'events' => $events
                 );
             } else {
                 $param = array(
                     'project_id' => $projectId,
-                    //'filterLogic' => $filter,
+                    'filterLogic' => $filter,
                     'return_format' => 'array'
                 );
             }
-
             $records = \REDCap::getData($param);
             return $records;
         } catch (\LogicException $e) {
@@ -268,18 +268,44 @@ class Participant
         return $result;
     }
 
+    public function getAllUsersInfo($eventId, $ids)
+    {
+        $param = array(
+            'return_format' => 'array',
+            'event_id' => $eventId,
+            'records' => $ids
+        );
+        return \REDCap::getData($param);
+    }
+
     public function getUserInfo($recordId, $eventId)
     {
-        if (!$this->users) {
-            $param = array(
-                'filterLogic' => $recordId,
-                'return_format' => 'array',
-                'event_id' => $eventId
-            );
-            $this->users = \REDCap::getData($param);
-            return $this->users[$recordId][$eventId];
-        } else {
-            return $this->users[$recordId][$eventId];
-        }
+        $param = array(
+            #'filterLogic' => $recordId,
+            'return_format' => 'array',
+            'event_id' => $eventId,
+            'records' => [$recordId]
+        );
+        $this->users = \REDCap::getData($param);
+        return $this->users[$recordId][$eventId];
+//        if (!$this->users) {
+//            if (!is_null($ids)) {
+//                $param = array(
+//                    'return_format' => 'array',
+//                    'event_id' => $eventId,
+//                    'records' => $ids
+//                );
+//            } else {
+//                $param = array(
+//                    'return_format' => 'array',
+//                    'event_id' => $eventId
+//                );
+//            }
+//
+//            return \REDCap::getData($param);
+//            //return $this->users[$recordId][$eventId];
+//        } else {
+//            return $this->users[$recordId][$eventId];
+//        }
     }
 }

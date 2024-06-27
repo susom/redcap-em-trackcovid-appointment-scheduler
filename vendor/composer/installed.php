@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'eb5b0b78121621fa2ecd8d83aedc84fe5e7ea83f',
+        'reference' => 'a40276c12cfcbc3b5adf887ec5f53ac0fccde2a4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'eb5b0b78121621fa2ecd8d83aedc84fe5e7ea83f',
+            'reference' => 'a40276c12cfcbc3b5adf887ec5f53ac0fccde2a4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -25,15 +25,6 @@
             'reference' => 'c62c46f5f5a10afeb1c5b93ae973fb4332d4c0ea',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kigkonsult/icalcreator',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'monolog/monolog' => array(
-            'pretty_version' => '1.27.1',
-            'version' => '1.27.1.0',
-            'reference' => '904713c5929655dc9b97288b69cfeedad610c9a1',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -54,12 +45,6 @@
             'install_path' => __DIR__ . '/../psr/log',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'psr/log-implementation' => array(
-            'dev_requirement' => false,
-            'provided' => array(
-                0 => '1.0.0',
-            ),
         ),
         'twilio/sdk' => array(
             'pretty_version' => '5.42.2',

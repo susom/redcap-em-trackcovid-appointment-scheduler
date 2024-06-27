@@ -9,8 +9,8 @@ use REDCap;
 
 try {
     $suffix = $module->getSuffix();
-    $primary = $module->getPrimaryRecordFieldName();
-    $data[$primary] = filter_var($_GET['record_id'], FILTER_SANITIZE_NUMBER_INT);
+    $primary = $module->getScheduler()->getProject()->table_pk;
+    $data[$primary] = filter_var($_GET['record_id'], FILTER_SANITIZE_STRING);
     $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
     if ($data[$primary] == '') {
         throw new \LogicException('Record ID is missing');
@@ -22,10 +22,15 @@ try {
         throw new \LogicException('You should not be here');
     } else {
         $data['slot_status' . $suffix] = CANCELED;
-        $data['redcap_event_name'] = $module->getUniqueEventName($eventId);
-        $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
+        $data['number_of_participants'] = 0;
+        #$data['redcap_event_name'] = $module->getScheduler()->getSlotsEventId();
+        $response = \REDCap::saveData($module->getScheduler()->getProject()->project_id, 'json', json_encode(array($data)));
         if (!empty($response['errors'])) {
-            throw new \LogicException(implode("\n", $response['errors']));
+            if (is_array($response['errors'])) {
+                throw new \Exception(implode(",", $response['errors']));
+            } else {
+                throw new \Exception($response['errors']);
+            }
         } else {
 
             $slot = $module->getSlot($data[$primary], $module->getScheduler()->getSlotsEventId());

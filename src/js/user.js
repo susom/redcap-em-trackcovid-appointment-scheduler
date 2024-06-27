@@ -2,14 +2,26 @@ User = {
     listURL: '',
     slotsEventId: '',
     cancelURL: '',
-    userListURL: '',
+    instancesListURL: '',
     loginURL: '',
     record: {},
     locations: [],
+    timezones: {
+        300: 'ET',
+        360: 'CT',
+        420: 'MT',
+        480: 'PT',
+    },
     currentOffset: null,
+    userTimezone: '',
     init: function () {
+
+
+        // calculate user timezone
+        this.calculateUserTimezone();
+
         //$("#appointments").dataTable();
-        User.loadUserVisits();
+        this.loadUserVisits();
 
 
         $(document).on("click", ".logout", function () {
@@ -22,11 +34,20 @@ User = {
 
             var locationId = $(this).data('location');
             // add SITE to record id
-            var location = User.locations['SITE' + locationId];
+            var location = User.locations['SITE_' + locationId];
             var text = ''
-            text += "<br><strong>Address:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
+            var link = '#'
+            if (location[User.locationsEventId]['map_link'] != '') {
+                link = location[User.locationsEventId]['map_link']
+            }
+            if (validURL(location[User.locationsEventId]['testing_site_address'])) {
+                link = location[User.locationsEventId]['testing_site_address']
+            }
+            text += "<br><strong>Address:</strong> <a target='_blank' href='" + link + "'>" + location[User.locationsEventId]['testing_site_address'] + "</a>";
             text += "<br><strong>Details:</strong> " + location[User.locationsEventId]['site_details'];
-            text += "<br><strong>Google Map Link:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['map_link'] + "</a>";
+            if (location[User.locationsEventId]['map_link'] != '') {
+                text += "<br><strong>Google Map Link:</strong> <a target='_blank' href='" + location[User.locationsEventId]['map_link'] + "'>" + location[User.locationsEventId]['map_link'] + "</a>";
+            }
             jQuery('#location-modal').find('.modal-title').html(location[User.locationsEventId]['title'] + " Information");
             jQuery('#location-modal').find('.modal-body').html(text);
             jQuery('#location-modal').css('top', '50%');
@@ -43,12 +64,12 @@ User = {
              */
             User.record.reservation_event_id = jQuery(this).data('key');
             User.record.participant_id = jQuery(this).data('record-id');
-
+            User.record.redcap_csrf_token = jQuery("#redcap_csrf_token").val();;
             // we need this to determine displaying the complete button or not.
             User.currentOffset = jQuery(this).data('offset');
             ;
             jQuery.ajax({
-                'url': User.listURL + "&event_id=" + User.slotsEventId + "&baseline=" + jQuery(this).data('baseline') + "&offset=" + jQuery(this).data('offset') + "&affiliation=" + jQuery(this).data('affiliation'),
+                'url': User.listURL + "&event_id=" + User.slotsEventId + "&user_timezone=" + User.userTimezone + "&baseline=" + jQuery(this).data('baseline') + "&offset=" + jQuery(this).data('offset') + "&canceled_baseline=" + jQuery(this).data('canceled-baseline') + "&reservation_event_id=" + jQuery(this).data('key') + "&record_id=" + jQuery(this).data('record-id'),
                 'type': 'GET',
                 'beforeSend': function () {
                     /**
@@ -62,7 +83,7 @@ User = {
 
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
-                            dom: '<"day-filter"><"location-filter"><lf<t>ip>',
+                            dom: '<"day-filter"><lf<t>ip>',
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
@@ -166,6 +187,11 @@ User = {
              * Capture date for Email calendar
              */
             User.record.calendarDate = jQuery(this).data('date');
+
+            /**
+             * get user timezoen
+             */
+            User.record.usertimezone = jQuery(this).data('user-timezone');
             data = User.record
             $.ajax({
                 url: User.submitURL,
@@ -214,7 +240,7 @@ User = {
                  * Get Manage modal to let user manage their saved appointments
                  */
                 jQuery.ajax({
-                    url: User.cancelURL + '&record_id=' + record_id + '&event_id=' + event_id + '&reservation_slot_id=' + slot_id,
+                    url: User.cancelURL + '&participant_id=' + record_id + '&event_id=' + event_id + '&reservation_slot_id=' + slot_id,
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
@@ -279,10 +305,34 @@ User = {
             $('#complete-modal').modal('show');
         });
 
+
+    },
+    calculateUserTimezone: function () {
+        var offset = new Date().getTimezoneOffset();
+
+        var diff = 0
+
+        var today = new Date()
+        // daylight save time!!
+        if (today.isDstObserved()) {
+            diff = 60
+            User.timezones = {
+                240: 'ET',
+                300: 'CT',
+                360: 'MT',
+                420: 'PT',
+            }
+        }
+        //offset = 300
+        // only if not PT
+        User.userTimezone = offset
+        $("#timezone").text('Time(' + User.timezones[offset] + ')')
+        $("#visits-timezone").text('Date(' + User.timezones[offset] + ')')
+
     },
     loadUserVisits: function () {
         jQuery.ajax({
-            'url': User.userListURL,
+            'url': User.instancesListURL + "&user_timezone=" + User.userTimezone,
             'type': 'GET',
             'beforeSend': function () {
                 /**
@@ -296,10 +346,14 @@ User = {
                     data: data.data,
                     pageLength: 50,
                     "bDestroy": true,
-                    "aaSorting": [[0, "asc"]],
+                    columnDefs: [{
+                        targets: 0,
+                        visible: false
+                    }],
+                    // "aaSorting": [[0, "asc"]],
                     initComplete: function () {
                         // we only need day and location filter.
-                        this.api().columns([1]).every(function (index) {
+                        this.api().columns([2]).every(function (index) {
                             // below function will add filter to remove previous/completed appointments
                             var column = this;
                             $('<input type="checkbox" id="previous-filter" name="old" checked/>')
@@ -332,6 +386,13 @@ User = {
                 $("#previous-filter").trigger('change')
             }
         });
+    },
+    pad: function (number, length) {
+        var str = "" + number
+        while (str.length < length) {
+            str = '0' + str
+        }
+        return str
     }
 }
 window.onload = function () {
@@ -363,6 +424,16 @@ function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return !!pattern.test(str);
+}
+
 $body = jQuery("body");
 
 jQuery(document).on({
@@ -373,3 +444,13 @@ jQuery(document).on({
         $body.removeClass("loading");
     }
 });
+
+Date.prototype.stdTimezoneOffset = function () {
+    var jan = new Date(this.getFullYear(), 0, 1);
+    var jul = new Date(this.getFullYear(), 6, 1);
+    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+}
+
+Date.prototype.isDstObserved = function () {
+    return this.getTimezoneOffset() < this.stdTimezoneOffset();
+}

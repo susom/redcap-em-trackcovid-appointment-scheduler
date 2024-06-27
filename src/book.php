@@ -3,11 +3,13 @@
 namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 use REDCap;
+
 /** @var \Stanford\TrackCovidSharedAppointmentScheduler\TrackCovidSharedAppointmentScheduler $module */
 
 
 try {
-    if ($user = $module->verifyCookie('login')) {
+    $recordId = filter_var($_POST['participant_id'], FILTER_SANITIZE_STRING);
+    if ($user = $module->verifyCookie('login', $recordId)) {
         /**
          * if survey booking with NOAUTH ignore login validation.
          */
@@ -24,16 +26,20 @@ try {
         } else {
             $data['reservation_participant_id'] = filter_var($_POST['participant_id'], FILTER_SANITIZE_STRING);
         }
-
         $reservationEventId = filter_var($_POST['reservation_event_id'], FILTER_VALIDATE_INT);
         $slot = $module->getSlot(filter_var($_POST['record_id'], FILTER_SANITIZE_STRING), $module->getScheduler()->getSlotsEventId());
 
+        $userTimezone = filter_var($_POST['usertimezone'], FILTER_SANITIZE_STRING);
+        $instance = $module->getSchedulerInstanceViaReservationId($reservationEventId);
+
+        if ($userTimezone != $module->getPST()) {
+            $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
+        }
 
         // check if any slot is available
         $counter = $module->getParticipant()->getSlotActualCountReservedSpots(filter_var($_POST['record_id'],
             FILTER_SANITIZE_STRING),
             $reservationEventId, '', $module->getProjectId(), $slot);
-
         if ((int)($slot['number_of_participants'] - $counter['counter']) <= 0) {
             throw new \Exception("All time slots are booked please try different time");
         }
@@ -45,21 +51,17 @@ try {
          * let mark it as complete so we can send the survey if needed.
          * Complete status has different naming convention based on the instrument name. so you need to get instrument name and append _complete to it.
          */
-        $labels = \REDCap::getValidFieldsByEvents($module->getProjectId(), array($reservationEventId));
-        $completed = preg_grep('/_complete$/', $labels);
-        $second = array_slice($completed, 1, 1);  // array("status" => 1)
-
-        $data[$second] = REDCAP_COMPLETE;
+        $reservation = end($module->getProject()->eventsForms[$reservationEventId]);
+        $data[$reservation . '_complete'] = REDCAP_COMPLETE;  // array("status" => 1)
 
         // the location is defined in the slot.
         $data['reservation_participant_location' . $module->getSuffix()] = $slot['location'];
 
         // find out what is the site affiliation.
         $locations = $module->getLocationRecords();
-        $location = end($locations['SITE' . $data['reservation_participant_location']]);
-        $data['reservation_site_affiliation'] = $location['site_affiliation'];
 
-        $data['reservation_datetime'] = $slot['start'];
+        // if user has different timezone. use start_orig from slot.
+        $data['reservation_datetime'] = $slot['start_orig'] ?? $slot['start'];
         $data['reservation_date'] = date('Y-m-d', strtotime($slot['start']));
         $data['reservation_created_at'] = date('Y-m-d H:i:s');
 
@@ -76,6 +78,7 @@ try {
             $data['reservation_reschedule_counter'] = $rescheduleCounter + 1;
         }
 
+
         $response = \REDCap::saveData($module->getProjectId(), 'json', json_encode(array($data)));
         if (empty($response['errors'])) {
 
@@ -83,15 +86,15 @@ try {
             $module->getScheduler()->updateSlotBookedSpots($slot);
 
             // add email and mobile to notify the user about
-            if ($user['record'][$module->getFirstEventId()]['email'] != '') {
-                $data['email'] = $user['record'][$module->getFirstEventId()]['email'];
+            if ($instance['receiver_email_field'] && $user['record'][$reservationEventId][$instance['receiver_email_field']]) {
+                $data['email'] = $user['record'][$reservationEventId][$instance['receiver_email_field']];
+            } elseif ($user['record'][$module->getFirstEventId()][$module->getProject()->project['survey_email_participant_field']] != '') {
+                $data['email'] = $user['record'][$module->getFirstEventId()][$module->getProject()->project['survey_email_participant_field']];
             }
 
-            if ($user['record'][$module->getFirstEventId()]['phone_number'] != '') {
-                $data['mobile'] = $user['record'][$module->getFirstEventId()]['phone_number'];
-            }
+            $data['mobile'] = $user['record'][$reservationEventId][$module->getProject()->project['survey_phone_participant_field']];
             $data['newuniq'] = $user['id'];
-            $return = $module->notifyUser($data, $slot);
+            $return = $module->notifyUser($data, $reservationEventId, $slot);
             echo json_encode(array(
                 'status' => 'ok',
                 'message' => 'Appointment saved successfully!' . (isset($return['error']) ? ' with following errors' . $return['message'] : ''),

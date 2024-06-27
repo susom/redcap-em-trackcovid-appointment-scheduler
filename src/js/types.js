@@ -10,6 +10,7 @@ const CAMPUS_ONLY = 2;
 const LIST_VIEW = 1;
 const CALENDAR_VIEW = 2;
 
+var index = 0;
 $body = jQuery("body");
 
 jQuery(document).on({
@@ -138,7 +139,6 @@ jQuery(document).on('click', '.cancel-appointment', function (e) {
 });
 
 
-
 /**
  * Show Form to complete for selected time
  */
@@ -161,6 +161,7 @@ jQuery(document).on('click', '.time-slot', function (e) {
         console.log(option)
         if (option === VIRTUAL_ONLY) {
             jQuery("#type-online").prop('checked', true);
+            g
         } else if (option === CAMPUS_ONLY) {
             jQuery("#type-campus").prop('checked', true);
         }
@@ -272,6 +273,7 @@ jQuery(document).on('click', '#submit-booking-form', function (e) {
     record.type = jQuery("input[name='type']:checked").val();
     record.project_id = $('#project_id').find(":selected").val();
     record.date = record.calendarDate;
+    record.redcap_csrf_token = jQuery("#redcap_csrf_token").val();;
 
     var url = jQuery("#book-submit-url").val();
     jQuery.ajax({
@@ -382,9 +384,12 @@ jQuery(document).on('click', '.booked-slots', function (e) {
             },
             complete: function () {
                 jQuery('#booked-slots').DataTable({
-                    dom: '<"day-filter"><"location-filter"><lf<t>ip>',
+                    dom: '<"day-filter"><lf<t>Bip>',
                     pageLength: 50,
-                    order: [[3, "asc"], [4, "asc"]],
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ],
+                    order: [[4, "asc"], [5, "asc"]],
                     columnDefs: [
                         {"type": "date", "targets": 3}
                     ],
@@ -488,6 +493,61 @@ jQuery(document).on('click', '.instance-description', function (e) {
         location.reload();
     }
 });
+jQuery(document).on('click', '.get-totals', function (e) {
+    index = $(this).data('index');
+    $(".weekly-totals").trigger('click');
+});
+
+
+/**
+ * Get Instance description
+ */
+jQuery(document).on('click', '.weekly-totals', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var url = jQuery("#manage-weekly-totals").val();
+    jQuery.ajax({
+        url: url,
+        type: 'GET',
+        data: {index: index},
+        datatype: 'json',
+        success: function (data) {
+            jQuery('#totals-container').html(data);
+            jQuery('#weekly-totals-table').DataTable({
+                dom: '<lf<t>Bip>',
+                pageLength: 50,
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                footerCallback: function (tfoot, data, start, end, display) {
+                    var api = this.api(), data;
+                    var colNumber = [1, 2, 3, 4, 5, 6, 7, 8];
+
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[, ₹]|(\.\d{2})/g, "") * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+                    for (i = 0; i < colNumber.length; i++) {
+                        var colNo = colNumber[i];
+                        var total2 = api
+                            .column(colNo, {page: 'current'})
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        $(api.column(colNo).footer()).html(total2);
+                    }
+                }
+            });
+        },
+        error: function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+        }
+    });
+});
 
 
 /**
@@ -516,7 +576,10 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
 
                 jQuery('#manage-calendars').DataTable(
                     {
-                        dom: '<"day-filter-slots"><"location-filter-slots"><lf<t>ip>',
+                        dom: '<"day-filter-slots"><lf<t>Bip>',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
                         pageLength: 50,
                         "aaSorting": [[4, "asc"], [5, "asc"]],
                         columnDefs: [
@@ -526,7 +589,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                             this.api().columns([1, 4]).every(function (index) {
 
                                 var column = this;
-                                if (index === 1 && column.data().any() === true) {
+                                if (index === 4 && column.data().any() === true) {
                                     var select = $('<select id="day-options-manager"><option value=""></option></select>')
                                         .appendTo($('.day-filter-slots'))
                                         .on('change', function () {
@@ -540,7 +603,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                                                 .draw();
                                         });
                                 }
-                                if (index === 4 && column.data().any() === true) {
+                                if (index === 1 && column.data().any() === true) {
                                     var select = $('<select id="location-options-manager"><option value=""></option></select>')
                                         .appendTo($('.location-filter-slots'))
                                         .on('change', function () {
@@ -564,7 +627,6 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
                                     // need to check the preferred location does exist in the list.
                                     var exists = false;
                                     $('#location-options-manager option').each(function () {
-
                                         if (this.value === getCookie('preferred-location')) {
                                             exists = true;
                                             return false;
@@ -601,6 +663,7 @@ jQuery(document).on('click', '.participants-no-show', function (e) {
     e.stopImmediatePropagation();
     var participation_id = jQuery(this).data('participant-id');
     var event_id = jQuery(this).data('event-id');
+    var reservation_slot_id = jQuery(this).data('reservation-slot-id');
     var url = jQuery('#participants-no-show-url').val();
     var status = jQuery(this).data('status');
     if (confirm("Are you sure you want to update the status of this reservation")) {
@@ -609,7 +672,7 @@ jQuery(document).on('click', '.participants-no-show', function (e) {
          * Get Manage modal to let user manage their saved appointments
          */
         jQuery.ajax({
-            url: url + '&participations_id=' + participation_id + "&event_id=" + event_id + "&reservation_participant_status=" + status,
+            url: url + '&participations_id=' + participation_id + "&event_id=" + event_id + "&reservation_participant_status=" + status + "&reservation_slot_id=" + reservation_slot_id,
             type: 'GET',
             datatype: 'json',
             success: function (data) {

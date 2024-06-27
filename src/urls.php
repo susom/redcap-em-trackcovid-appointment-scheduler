@@ -11,7 +11,6 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 <html>
 <?php
 if (!$module->getMainSurveyId()) {
-
 ?>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -25,7 +24,13 @@ if (!$module->getMainSurveyId()) {
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
 </html>
 <?php
 }
@@ -70,6 +75,10 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
        value="<?php echo $module->getUrl('src/manage_description.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>
+<input type="hidden" id="manage-weekly-totals"
+       value="<?php echo $module->getUrl('src/manage_weekly_totals.php', false,
+               true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
+       class="hidden"/>
 <input type="hidden" id="cancel-appointment-url"
        value="<?php echo $module->getUrl('src/cancel.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&' . PROJECTID . '=' . $module->getProjectId() . $noAuth ?>"
@@ -86,14 +95,18 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>
 
+<input id="redcap_csrf_token" type="hidden" name="redcap_csrf_token" value="<?php echo $module->getCSRFToken(); ?>"/>
 <input type="hidden" id="participants-no-show-url" value="<?php echo $module->getUrl('src/no_show.php', false,
         true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>
 <input type="hidden" id="event-id" value="" class="hidden"/>
 <input type="hidden" id="user-email" value="<?php echo $user_email ?>" class="hidden"/>
 <input type="hidden" id="complementary-suffix" value="<?php echo $module->getSuffix() ?>" class="hidden"/>
+<?php
+$temp = $module->getProjectSetting("survey-scheduler-header") ?: [];
+?>
 <input type="hidden" id="survey-scheduler-header"
-       value="<?php echo(isset($_GET['pid']) ? end($module->getProjectSetting("survey-scheduler-header")) : '') ?>"
+       value="<?php echo isset($_GET['pid']) ? end($temp) : '' ?>"
        class="hidden"/>
 
 <!-- trigger below instance after loading the page. -->

@@ -39,11 +39,9 @@ try {
                 ?>
                 <tr>
                     <td><?php echo $pointer ?></td>
-                    <td><?php echo $user['first_name'] . ' ' . $user['last_name'] ?></td>
-                    <td>
-                        <a href="mailto:<?php echo $user['email'] ?>"><?php echo $user['email'] ?></a>
-                    </td>
-                    <td><?php echo $user['phone_number'] ?></td>
+                    <td><?php echo $user['scheddemo'] ?></td>
+                    <td><?php echo $user['sparentemail'] ?></td>
+                    <td><?php echo $user['sparentcell'] ?></td>
                     <td><?php
                         if ($participant['reservation_participant_status' . $suffix] == RESERVED) {
                             ?>
