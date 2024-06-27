@@ -8,6 +8,7 @@ use REDCap;
 
 //JS and CSS with inputs URLs
 require_once 'urls.php';
+
 if ($module->getProjectSetting('not-login-redirect-page') == '') {
     ?>
     <link rel="stylesheet" href="<?php echo $module->getUrl('src/css/verification_form.css', true, true) ?>">
@@ -63,7 +64,7 @@ if ($module->getProjectSetting('not-login-redirect-page') == '') {
             z-index: 3;
         }
 
-        #trackcovid-background {
+        #WISE-background {
             float: none;
             margin: 0px auto;
             left: 8%;
@@ -96,7 +97,7 @@ if ($module->getProjectSetting('not-login-redirect-page') == '') {
         }
     </style>
     <div id="pagecontainer">
-        <div class="row col-10 center-block" id="trackcovid-background">
+        <div class="row col-10 center-block" id="WISE-background">
             <div class="row">
                 <div style="padding:10px 0 0;"><img id="survey_logo"
                                                     src="https://redcap.stanford.edu/surveys/index.php?pid=20184&amp;doc_id_hash=a825369bc1de8a7ce50ec7a5765c7fee0a79fc65&amp;__passthru=DataEntry%2Fimage_view.php&amp;s=DPXJ7FAJCX&amp;id=924268"
@@ -107,18 +108,18 @@ if ($module->getProjectSetting('not-login-redirect-page') == '') {
         </div>
 
         <div class="row">
-            <h1 id="title">TrackCOVID Login</h1>
+            <h1 id="title">WISE Login</h1>
         </div>
         <div id="new-form" class="container ">
             <!-- note for wrong cards  -->
-            <div class="alert alert-warning text-left" role="alert">
-                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i>Please Note!</h4>
-                <p>If you received a postcard with an erroneous ID number, please email <a
-                            href="mailto:signup@trackcovidbayarea.com">signup@trackcovidbayarea.com</a> including the
-                    mailing address where you received the postcard and we will email you back the correct ID. You can
-                    also call us at <a href="tel:+14153482943">415-348-2943</a>. We apologize for the inconvenience.
-                </p>
-            </div>
+            <!--            <div class="alert alert-warning text-left" role="alert">-->
+            <!--                <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i>Please Note!</h4>-->
+            <!--                <p>If you received a postcard with an erroneous ID number, please email <a-->
+            <!--                            href="mailto:signup@WISEbayarea.com">signup@WISEbayarea.com</a> including the-->
+            <!--                    mailing address where you received the postcard and we will email you back the correct ID. You can-->
+            <!--                    also call us at <a href="tel:+14153482943">415-348-2943</a>. We apologize for the inconvenience.-->
+            <!--                </p>-->
+            <!--            </div>-->
             <div id="errors" class="row col-10 offset-1 text-left alert alert-danger" style="display: none"></div>
             <section>
                 <h2 class="code_info">Enter your ID<br><span class="help_text">Where is my ID</span> <i

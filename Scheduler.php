@@ -48,6 +48,19 @@ class Scheduler
         } else {
             $slot['number_of_booked_slots'] = 1;
         }
+
+        /**
+         * if user is in different timezone then remove start and end fields.
+         */
+        if (isset($slot['start_orig'])) {
+            unset($slot['start_orig']);
+            unset($slot['start']);
+        }
+        if (isset($slot['end_orig'])) {
+            unset($slot['end_orig']);
+            unset($slot['end']);
+        }
+
         $response = \REDCap::saveData($this->getProject()->project_id, 'json', json_encode(array($slot)));
         if (!empty($response['errors'])) {
             if (is_array($response['errors'])) {

@@ -24,7 +24,7 @@
     "src/participants_list",
     "src/list",
     "src/user",
-    "src/user_list",
+    "src/instances_list",
     "src/verify",
     "src/login"
   ],
@@ -34,12 +34,6 @@
         "name": "Manager Page",
         "icon": "brick",
         "url": "src/manager.php",
-        "show-header-and-footer": false
-      },
-      {
-        "name": "User Page",
-        "icon": "brick",
-        "url": "src/user.php",
         "show-header-and-footer": false
       }
     ]
@@ -54,7 +48,7 @@
   ],
   "project-settings": [
     {
-      "key": "description",
+      "key": "description-0",
       "name": "<h6 style='text-align:center;color:red'><b>Appointment Scheduler</b></h6>This tool will allow users to book pre-defined time slots for different purposes. Office Hours/ Health tests/ Survey Followup.",
       "type": "descriptive"
     },
@@ -89,10 +83,62 @@
       "type": "textarea"
     },
     {
+      "key": "scheduler-login-em",
+      "name": "<b>Directory prefix for EM used for login.</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "description",
+      "name": "<hr>Not Logged users",
+      "type": "descriptive"
+    },
+    {
+      "key": "redirect-to-login-survey",
+      "name": "<b>If you want to redirect not Logged in User to a login Survey. (You MUST enable and configure 'Scheduler Login EM' for current project)</b>",
+      "required": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "login-instrument",
+      "name": "<b>Login Survey</b>",
+      "required": true,
+      "type": "form-list",
+      "branchingLogic": {
+        "field": "redirect-to-login-survey",
+        "value": "1"
+      }
+    },
+    {
+      "key": "login-instrument-event",
+      "name": "<b>Login Instrument Event</b>",
+      "required": true,
+      "type": "event-list",
+      "branchingLogic": {
+        "field": "redirect-to-login-survey",
+        "value": "1"
+      }
+    },
+    {
       "key": "not-login-redirect-page",
       "name": "<b>Please add content to be displayed to not login users. (You can use HTML for formatting) </b>",
       "required": false,
-      "type": "textarea"
+      "type": "textarea",
+      "branchingLogic": {
+        "field": "redirect-to-login-survey",
+        "value": "0"
+      }
+    },
+    {
+      "key": "description-1",
+      "name": "<hr>",
+      "type": "descriptive"
+    },
+    {
+      "key": "visit-summary-instrument",
+      "name": "<b>Select the instrument which will the manager page will link to.</b>",
+      "required": true,
+      "type": "form-list"
     },
     {
       "key": "manager-scheduler-url",
@@ -114,65 +160,51 @@
           "type": "textarea"
         },
         {
-          "key": "default_view",
-          "name": "<b>Select Default View</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "List",
-              "value": "1"
-            },
-            {
-              "name": "Calendar",
-              "value": "2"
-            }
-          ]
-        },
-        {
           "key": "reservation_event_id",
           "name": "<b>Appointment Reservation Event</b><br>Select the arm/event where each record corresponds to a reserved appointment slot.  This event must have the 'Reservation' form enabled",
           "required": true,
           "type": "event-list"
         },
         {
-          "key": "participant_identifier",
-          "name": "<b>Please select the field where the user identifier will be saved.(not implemented yet)</b>",
+          "key": "offset-date-field",
+          "name": "Select date field which will be as starting point to calculate booking window. If no date was selected the scheduler will use visit time from event with 0 offset days.<br/>",
           "required": false,
           "type": "field-list"
         },
         {
-          "key": "survey_section",
-          "name": "<h6 style='text-align:center;color:red'><b>Config for Scheduling Appointment after completing a survey</b></h6>",
-          "type": "descriptive"
+          "key": "offset-date-field-event",
+          "name": "If you picked a offset date you MUST pick date event.<br/>",
+          "required": false,
+          "type": "event-list"
         },
         {
-          "key": "instrument_id_for_complementary_appointment",
-          "name": "<b>Select Survey Instrument</b></br>Select Survey Instrument to be followed by Option to Book follow up appointment.",
+          "key": "window-size",
+          "name": "Window size to schedule an event. Based on event days offset. Default is 20 days.<br/>",
           "required": false,
-          "type": "form-list"
+          "type": "text"
         },
         {
-          "key": "survey-scheduler-header",
-          "name": "<b>Header for Survey Scheduler",
-          "required": false,
-          "type": "text",
-          "branchingLogic": {
-            "field": "instrument_id_for_complementary_appointment",
-            "op": "<>",
-            "value": ""
-          }
+          "key": "default-instance-visibility",
+          "name": "Select instance visibility if no logic available to determine instance visibility",
+          "required": true,
+          "type": "dropdown",
+          "default": "1",
+          "choices": [
+            {
+              "name": "Display",
+              "value": "1"
+            },
+            {
+              "name": "Hide",
+              "value": "0"
+            }
+          ]
         },
         {
-          "key": "survey_record_id_field",
-          "name": "<b>Please select survey instrument field that will be replaced with reservation button and will hold reservation ID after submitting the survey.</b>",
+          "key": "instance-logic-enabler",
+          "name": "<b>(OPTIONAL)</b> Add REDCap logic that determines to display scheduler instance.",
           "required": false,
-          "type": "field-list",
-          "branchingLogic": {
-            "field": "instrument_id_for_complementary_appointment",
-            "op": "<>",
-            "value": ""
-          }
+          "type": "textarea"
         },
         {
           "key": "title",
@@ -181,116 +213,16 @@
           "type": "textarea"
         },
         {
-          "key": "options_config",
-          "name": "<b>Options</b>",
-          "required": false,
-          "type": "descriptive"
-        },
-        {
-          "key": "enable-redcap-calendar",
-          "name": "<b>Integrate REDCap calendar</b> Show REDCap calendar records in Appointment scheduler. ",
-          "required": false,
-          "type": "checkbox"
-        },
-        {
-          "key": "show_location_options",
-          "name": "<b>Display Location Options</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "key": "show_attending_options",
-          "name": "<b>Display Attending Options</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "key": "show_attending_default",
-          "name": "<b>Select the Default Attending Option</b>",
-          "required": false,
-          "type": "dropdown",
-          "branchingLogic": {
-            "field": "show_attending_options",
-            "value": "0"
-          },
-          "choices": [
-            {
-              "name": "Virtual via Zoom Meeting",
-              "value": "1"
-            },
-            {
-              "name": "Redwood City Campus",
-              "value": "2"
-            }
-          ]
-        },
-        {
-          "key": "show_notes",
-          "name": "<b>Display Notes field on reservation form</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
-          "key": "note_textarea_label",
-          "name": "<b>Textarea Label</b><br>Label will be displayed above note textarea",
-          "required": false,
-          "type": "text",
-          "branchingLogic": {
-            "field": "show_notes",
-            "value": "1"
-          }
-        },
-        {
-          "key": "show_projects",
-          "name": "<b>Display Projects ID field on reservation form</b>",
-          "required": false,
-          "type": "dropdown",
-          "choices": [
-            {
-              "name": "Yes",
-              "value": "1"
-            },
-            {
-              "name": "No",
-              "value": "0"
-            }
-          ]
-        },
-        {
           "key": "emails_config",
           "name": "<b>Email`s Configuration</b>",
           "required": false,
           "type": "descriptive"
+        },
+        {
+          "key": "receiver_email_field",
+          "name": "<b>Specify REDCap field that will contain Participant email. </b>",
+          "required": false,
+          "type": "field-list"
         },
         {
           "key": "sender_email",
