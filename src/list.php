@@ -51,8 +51,7 @@ if (!empty($data)) {
 //        $counter = $module->getParticipant()->getSlotActualCountReservedSpots($slot['record_id'],
 //            $module->getReservationEvents(), $suffix, $module->getProjectId(), $slot);
 
-        $aa =$slot['number_of_participants' . $suffix] ;
-        $aa1 = $slot['number_of_booked_slots'];
+
         $available = (int)($slot['number_of_participants' . $suffix] - (int)($slot['number_of_booked_slots']));
 //        $module->emLog($slot['start' . $suffix] . ' available' . $available);
         if ($available <= 0) {
