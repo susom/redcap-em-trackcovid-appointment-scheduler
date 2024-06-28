@@ -112,7 +112,7 @@ class Participant
             }
 
             if ($slot['number_of_booked_slots'] || $slot['number_of_external_booked_slots']) {
-                $this->counter[$slotId]['counter'] = $slot['number_of_booked_slots'] + $slot['number_of_external_booked_slots'];
+                $this->counter[$slotId]['counter'] = (int)$slot['number_of_booked_slots'] + (int)$slot['number_of_external_booked_slots'];
             }
             return $this->counter[$slotId];
 //
