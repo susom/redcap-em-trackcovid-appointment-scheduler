@@ -55,15 +55,15 @@ try {
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
                                 <ul class="navbar-nav"><?php
-                                    $r = $module->getParticipant()->getUserInfo($user['id'],
-                                        $module->getFirstEventId());
-                                    if ($r['sparentfname']) {
+                                    $field = $module->getProjectSetting('name-field');
+                                    $value = $user['record'][$module->getFirstEventId()][$field];
+                                    if ($value) {
                                         ?>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="#">
                                                 <!--                                                <h5>-->
                                                 <?php //echo $r['schildfname'] . ' ' . $r['sparentlname'] ?><!--</h5>-->
-                                                <h5><?php echo $r['schildfname'] ?></h5>
+                                                <h5><?php echo $value ?></h5>
                                             </a>
                                         </li>
                                         <?php

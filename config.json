@@ -147,6 +147,12 @@
       "type": "text"
     },
     {
+      "key": "name-field",
+      "name": "<b>Select Name field:</b>",
+      "required": false,
+      "type": "field-list"
+    },
+    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,
