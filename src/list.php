@@ -87,6 +87,8 @@ if (!empty($data)) {
                     strtotime($slot['end_orig'])) . ' (PT)</small></strong>' : '');
 //        $row[] = '<h5 class="text-center">' . $available . '</h5>';;
         $row[] = $bookButton . $cancelButton;;
+        # add timestamp to fix the order for datatable.
+        $row[] = strtotime($slot['start' . $suffix]);
 
         $result['data'][] = $row;
     }

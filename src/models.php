@@ -28,6 +28,7 @@ if (!isset($module)) {
                         <th id="timezone">Time(PT)</th>
                         <!--                        <th>Available Slots</th>-->
                         <th>Action</th>
+                        <th></th>
                     </tr>
                     </thead>
                 </table>

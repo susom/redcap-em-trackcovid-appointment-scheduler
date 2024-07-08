@@ -87,7 +87,11 @@ User = {
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
-                            "aaSorting": [[0, "asc"]],
+                            "aaSorting": [[3, "asc"]],
+                            columnDefs: [{
+                                targets: 3,
+                                visible: false
+                            }],
                             initComplete: function () {
                                 // we only need day and location filter.
                                 this.api().columns([0, 1]).every(function (index) {
