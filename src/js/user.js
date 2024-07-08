@@ -50,7 +50,7 @@ User = {
             }
             jQuery('#location-modal').find('.modal-title').html(location[User.locationsEventId]['title'] + " Information");
             jQuery('#location-modal').find('.modal-body').html(text);
-            jQuery('#location-modal').css('top', '50%');
+            jQuery('#location-modal').css('top', '10%');
             $('#location-modal').modal('show');
         });
 

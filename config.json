@@ -146,6 +146,12 @@
       "type": "text"
     },
     {
+      "key": "project-logo-url",
+      "name": "<b>Upload your project logo to File Repository. Click on Share file. Finally, using browser inspector get the logo image URL and save it here.</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,

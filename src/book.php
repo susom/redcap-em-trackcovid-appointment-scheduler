@@ -51,11 +51,8 @@ try {
          * let mark it as complete so we can send the survey if needed.
          * Complete status has different naming convention based on the instrument name. so you need to get instrument name and append _complete to it.
          */
-        $labels = \REDCap::getValidFieldsByEvents($module->getProjectId(), array($reservationEventId));
-        $completed = preg_grep('/_complete$/', $labels);
-        $second = array_slice($completed, 1, 1);  // array("status" => 1)
-
-        $data[$second] = REDCAP_COMPLETE;
+        $reservation = end($module->getProject()->eventsForms[$reservationEventId]);
+        $data[$reservation . '_complete'] = REDCAP_COMPLETE;  // array("status" => 1)
 
         // the location is defined in the slot.
         $data['reservation_participant_location' . $module->getSuffix()] = $slot['location'];
@@ -96,8 +93,8 @@ try {
             // add email and mobile to notify the user about
             if ($instance['receiver_email_field'] && $user['record'][$reservationEventId][$instance['receiver_email_field']]) {
                 $data['email'] = $user['record'][$reservationEventId][$instance['receiver_email_field']];
-            } elseif ($user['record'][$module->getFirstEventId()]['sparentemail'] != '') {
-                $data['email'] = $user['record'][$module->getFirstEventId()]['sparentemail'];
+            } elseif ($user['record'][$module->getFirstEventId()][$module->getProject()->project['survey_email_participant_field']] != '') {
+                $data['email'] = $user['record'][$module->getFirstEventId()][$module->getProject()->project['survey_email_participant_field']];
             }
 
             if ($user['record'][$module->getFirstEventId()]['sparentcell'] != '') {

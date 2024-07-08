@@ -48,9 +48,8 @@ try {
                 <div class="row">
                     <div class="col-2">
                         <a href="#"><img
-                                    src="<?php echo $module->getUrl('src/images/wise_logo_new.png', true,
-                                        true) ?>"
-                                    alt="WISE" class="w-100 h-auto"></a>
+                                    src="<?php echo $module->getProjectSetting('project-logo-url') ?>"
+                                    alt="No logo provided" class="w-100 h-auto"></a>
                     </div>
                     <div class="col-9">
                         <nav class="navbar-expand-sm  navbar-light">

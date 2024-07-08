@@ -30,9 +30,8 @@ require_once 'urls.php';
         <div class="row">
             <div class="col-3">
                 <a href="http://www.stanford.edu"><img
-                            src="<?php echo $module->getUrl('src/images/wise_logo_new.png', true,
-                                true) ?>"
-                            alt="WISE" class="h-auto"></a>
+                            src="<?php echo $module->getProjectSetting('project-logo-url') ?>"
+                            alt="No logo provided" class="h-auto"></a>
             </div>
             <div class="col-9">
                 <nav class="navbar-expand-sm navbar-light">
