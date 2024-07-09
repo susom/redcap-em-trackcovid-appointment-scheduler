@@ -332,7 +332,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             if ($this->getScheduler()->getSlotsEventId()) {
 
                 $variable = 'start' . $this->getSuffix();
-                $instance = $this->getSchedulerInstanceViaReservationId($eventId);
+                $instance = $this->getSchedulerInstanceViaReservationId($reservationEventId);
                 list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline, $instance);
 
 
@@ -1293,8 +1293,13 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             # allow participant to book up 12 pm after two days.
             $start = date('Y-m-d  H:i:s', time() + $add);
 
-            #open till end of year days restriction.
-            $end = date('Y-m-d', strtotime('12/31'));
+            if($instance['window-size']){
+                $end = date('Y-m-d H:i:s', strtotime($start) + $windowSize * 24 * 60 * 60);
+            }else{
+                #open till end of year days restriction.
+                $end = date('Y-m-d', strtotime('12/31'));
+            }
+
         }
         return array($start, $end);
     }
