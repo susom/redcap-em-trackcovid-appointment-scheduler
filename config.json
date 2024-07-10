@@ -2,6 +2,7 @@
   "name": "WISE Shared Appointment Scheduler",
   "namespace": "Stanford\\WISESharedAppointmentScheduler",
   "description": "Allow users to Schedule Appointments",
+  "framework-version": 12,
   "authors": [
     {
       "name": "Ihab Zeedia",
@@ -13,12 +14,6 @@
       "email": "jmschult@stanford.edu",
       "institution": "Stanford University"
     }
-  ],
-  "permissions": [
-    "redcap_every_page_before_render",
-    "redcap_survey_complete",
-    "redcap_module_link_check_display",
-    "redcap_survey_page_top"
   ],
   "no-auth-pages": [
     "src/slots",
@@ -86,6 +81,12 @@
       "name": "<b>Json object with a list of allowed testing sites.</b>",
       "required": true,
       "type": "textarea"
+    },
+    {
+      "key": "scheduler-login-em",
+      "name": "<b>Directory prefix for EM used for login.</b>",
+      "required": false,
+      "type": "text"
     },
     {
       "key": "description",

@@ -15,8 +15,6 @@ if (file_exists(__DIR__ . '../vendor/autoload.php')) {
 }
 
 use Twilio\Rest\Client;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 /**
  * Constants where appointment  is located
@@ -200,6 +198,7 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
     private $offsetDates;
 
+    private $schedulerLoginEM;
     /**
      * WISESharedAppointmentScheduler constructor.
      */
@@ -212,41 +211,12 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
             /**
              * so when you enable this it does not throw an error !!
              */
-            if ($_GET && ($_GET['projectid'] != null || $_GET['pid'] != null)) {
-
-                $projectId = ($_GET['projectid'] != null ? filter_var($_GET['projectid'],
-                    FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
-                $this->setProjectId($projectId);
-                /**
-                 * This call must be done after parent constructor is called
-                 */
-                $this->setInstances();
-
-                // Initiate Twilio Client
-                $sid = $this->getProjectSetting('twilio_sid', $this->getProjectId());
-                $token = $this->getProjectSetting('twilio_token', $this->getProjectId());
-                if ($sid != '' && $token != '') {
-                    $this->setTwilioClient(new Client($sid, $token));
-                }
-
-                $this->setProject(new \Project($this->getProjectId()));
-
-                //when loaded for first time cache user name and is super user
-                if (defined('USERID')) {
-                    $this->setCachedUsername(USERID);
-                }
-                if (defined('SUPER_USER')) {
-                    $this->setCachedIsSuperUser(SUPER_USER);
-                }
-
-
-                // set the scheduler project object and allowed testing sites.
-                $this->setScheduler(new Scheduler(new \Project($this->getProjectSetting('slots-project')), json_decode($this->getProjectSetting('allowed-testing-sites'), true), $this->getProjectSetting('slots-project-event-id'), $this->getProjectSetting('slots-project-testing-sites-event-id')));
-
-
-                // load locations to be used in the EM
-                $this->getLocationRecords();
-            }
+//            if ($_GET && ((isset($_GET['projectid']) AND $_GET['projectid'] != null) || (isset($_GET['pid']) AND  $_GET['pid'] != null))) {
+//
+//                // set the scheduler project object and allowed testing sites.
+//                $this->setScheduler(new Scheduler(new \Project($this->getProjectSetting('slots-project')), json_decode($this->getProjectSetting('allowed-testing-sites'), true), $this->getProjectSetting('slots-project-event-id'), $this->getProjectSetting('slots-project-testing-sites-event-id')));
+//
+//            }
 
 
             /**
@@ -288,6 +258,18 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         }
     }
 
+
+    public function getLoginURL($recordId)
+    {
+        /** @var ChartLogin $schedulerLoginEM */
+        $schedulerLoginEM = $this->getSchedulerLoginEM();
+        if(is_null($schedulerLoginEM)){
+            return '';
+        }
+        $loginInstrument = $schedulerLoginEM->getProjectSetting('login-instrument');
+        $url = REDCap::getSurveyLink($recordId, $loginInstrument, $this->getFirstEventId());
+        return $url;
+    }
 
     private function sortRecordsByDate($records, $eventId)
     {
@@ -1067,30 +1049,6 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     }
 
 
-    public function setCachedUsername($username)
-    {
-        if (!$_SESSION['APPOINTMENT_SCHEDULER_USERNAME']) {
-            $_SESSION['APPOINTMENT_SCHEDULER_USERNAME'] = $username;
-        }
-    }
-
-    public function setCachedIsSuperUser($bool)
-    {
-        if (!$_SESSION['APPOINTMENT_SCHEDULER_IS_SUPER_USER']) {
-            $_SESSION['APPOINTMENT_SCHEDULER_IS_SUPER_USER'] = $bool;
-        }
-    }
-
-    public function getCachedUsername()
-    {
-        return $_SESSION['APPOINTMENT_SCHEDULER_USERNAME'];
-    }
-
-    public function getCachedIsSuperUser()
-    {
-        return $_SESSION['APPOINTMENT_SCHEDULER_IS_SUPER_USER'];
-    }
-
     public function isSlotInPast($slot, $suffix)
     {
         /**
@@ -1653,6 +1611,9 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      */
     public function getScheduler()
     {
+        if(!$this->scheduler){
+            $this->setScheduler(new Scheduler(new \Project($this->getProjectSetting('slots-project')), json_decode($this->getProjectSetting('allowed-testing-sites'), true), $this->getProjectSetting('slots-project-event-id'), $this->getProjectSetting('slots-project-testing-sites-event-id')));
+        }
         return $this->scheduler;
     }
 
@@ -1666,10 +1627,32 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
 
     /**
+     * @return int
+     */
+    public function getRecordId()
+    {
+        return $this->recordId;
+    }
+
+    /**
+     * @param int $recordId
+     */
+    public function setRecordId()
+    {
+        $temp = func_get_args();
+        $recordId = $temp[0];
+        $this->recordId = $recordId;
+    }
+
+    /**
      * @return \Project
      */
     public function getProject()
     {
+        if(!$this->project){
+            global $Proj;
+            $this->setProject($Proj);
+        }
         return $this->project;
     }
 
@@ -1686,6 +1669,12 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      */
     public function getProjectId()
     {
+        if(!$this->projectId){
+            $projectId = ($_GET['projectid'] != null ? filter_var($_GET['projectid'],
+                    FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
+            $this->setProjectId($projectId);
+
+        }
         return $this->projectId;
     }
 
@@ -1703,6 +1692,13 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      */
     public function getTwilioClient()
     {
+        if(!$this->twilioClient){
+            $sid = $this->getProjectSetting('twilio_sid', $this->getProjectId());
+            $token = $this->getProjectSetting('twilio_token', $this->getProjectId());
+            if ($sid != '' && $token != '') {
+                $this->setTwilioClient(new Client($sid, $token));
+            }
+        }
         return $this->twilioClient;
     }
 
@@ -1840,6 +1836,9 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
      */
     public function getInstances()
     {
+        if(!$this->instances){
+            $this->setInstances();
+        }
         return $this->instances;
     }
 
@@ -1881,6 +1880,26 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
     public function setChildEligibility($childEligibility): void
     {
         $this->childEligibility = $childEligibility;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSchedulerLoginEM()
+    {
+        if (!$this->schedulerLoginEM AND $this->getProjectSetting('scheduler-login-em') != '') {
+                    $this->setSchedulerLoginEM(\ExternalModules\ExternalModules::getModuleInstance($this->getProjectSetting('scheduler-login-em')));
+        }
+        return $this->schedulerLoginEM;
+    }
+
+    /**
+     * @param mixed $schedulerLoginEM
+     */
+    public function setSchedulerLoginEM($schedulerLoginEM): void
+    {
+
+        $this->schedulerLoginEM = $schedulerLoginEM;
     }
 
 
