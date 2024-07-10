@@ -147,6 +147,12 @@
       "type": "text"
     },
     {
+      "key": "project-logo-url",
+      "name": "<b>Here are the steps to upload your logo:<ul><li>Upload your logo to your project file repository.</li><li>Click on Share button</li><li>Click on View page button</li><li>Right click on the image and click open image in new tab</li><li>Copy image URL</li></ul></b>",
+      "required": false,
+      "type": "text"
+    },
+    {
       "key": "name-field",
       "name": "<b>Select Name field:</b>",
       "required": false,
