@@ -95,7 +95,7 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
        value="<?php echo $module->getUrl('src/participants_list.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>
-
+<input id="redcap_csrf_token" type="hidden" name="redcap_csrf_token" value="<?php echo $module->getCSRFToken(); ?>"/>
 <input type="hidden" id="participants-no-show-url" value="<?php echo $module->getUrl('src/no_show.php', false,
         true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>

@@ -64,7 +64,7 @@ User = {
              */
             User.record.reservation_event_id = jQuery(this).data('key');
             User.record.participant_id = jQuery(this).data('record-id');
-
+            User.record.redcap_csrf_token = jQuery("#redcap_csrf_token").val();;
             // we need this to determine displaying the complete button or not.
             User.currentOffset = jQuery(this).data('offset');
             ;

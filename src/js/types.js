@@ -273,6 +273,7 @@ jQuery(document).on('click', '#submit-booking-form', function (e) {
     record.type = jQuery("input[name='type']:checked").val();
     record.project_id = $('#project_id').find(":selected").val();
     record.date = record.calendarDate;
+    record.redcap_csrf_token = jQuery("#redcap_csrf_token").val();;
 
     var url = jQuery("#book-submit-url").val();
     jQuery.ajax({
