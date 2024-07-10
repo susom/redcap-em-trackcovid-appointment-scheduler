@@ -50,7 +50,7 @@ User = {
             }
             jQuery('#location-modal').find('.modal-title').html(location[User.locationsEventId]['title'] + " Information");
             jQuery('#location-modal').find('.modal-body').html(text);
-            jQuery('#location-modal').css('top', '50%');
+            jQuery('#location-modal').css('top', '10%');
             $('#location-modal').modal('show');
         });
 
@@ -87,7 +87,11 @@ User = {
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
-                            "aaSorting": [[0, "asc"]],
+                            "aaSorting": [[3, "asc"]],
+                            columnDefs: [{
+                                targets: 3,
+                                visible: false
+                            }],
                             initComplete: function () {
                                 // we only need day and location filter.
                                 this.api().columns([0, 1]).every(function (index) {
