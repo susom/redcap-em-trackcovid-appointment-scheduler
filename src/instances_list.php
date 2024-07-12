@@ -21,6 +21,11 @@ try {
             $instance = $module->getSchedulerInstanceViaReservationId($eventId);
             //reset offset date
             $module->setOffsetDate('');
+
+            if ($instance['offset-date-field'] && $user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]) {
+                        $module->setOffsetDate($user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]);
+            }
+
             if (empty($module->getSchedulerInstanceViaReservationId($eventId))) {
                 continue;
             }
