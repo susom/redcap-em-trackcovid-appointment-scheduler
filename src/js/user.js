@@ -81,7 +81,7 @@ User = {
                     $('#list-result').DataTable().clear().destroy()
                     if (data != '') {
 
-                        $('#generic-modal').find('.modal-title').html("Appointments");
+                        $('#generic-modal').find('.modal-title').html("Remaining Appointments");
                         $('#list-result').DataTable({
                             dom: '<"day-filter"><lf<t>ip>',
                             data: data.data,
@@ -151,7 +151,7 @@ User = {
                         });
                         $('#generic-modal').modal('show');
                     } else {
-                        $('#generic-modal').find('.modal-title').html("Appointments");
+                        $('#generic-modal').find('.modal-title').html("Remaining Appointments");
                         $('#list-result').DataTable({
                             dom: 'Bfrtip',
                             data: data.data,
