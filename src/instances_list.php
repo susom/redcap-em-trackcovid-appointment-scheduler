@@ -108,7 +108,7 @@ try {
                         $slot = $module->modifySlotBasedOnUserTimezone($slot, $userTimezone);
                     }
 
-                    $time = date('D m/d/Y h:i A', strtotime($slot['start'])) . ' - ' . date('H:i',
+                    $time = date('D m/d/Y h:i A', strtotime($slot['start'])) . ' - ' . date('h:i A',
                             strtotime($slot['end'])) . ($userTimezone != $module->getPST() ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
                                 strtotime($slot['end_orig'])) . ' (PT)</small></strong>' : '');
                     $locations = $module->getDefinedLocations();
