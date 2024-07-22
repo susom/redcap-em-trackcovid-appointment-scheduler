@@ -68,9 +68,9 @@ small {
     content: 'Days Filter:';
 }
 
-.previous-filter:before {
-    content: 'Hide Previous Appointments:';
-}
+/*.previous-filter:before {*/
+/*    content: 'Hide Previous Appointments:';*/
+/*}*/
 
 .navbar-nav {
     margin-top: 4%;
