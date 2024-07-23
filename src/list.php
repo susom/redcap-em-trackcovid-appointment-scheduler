@@ -81,12 +81,14 @@ if (!empty($data)) {
 
         $row = array();
         $row[] = date('m/d/Y', strtotime($slot['start' . $suffix]));
-//        $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
+        $row[] = $module->getLocationLabel($slot['location' . $suffix]);;
         $row[] = date('h:i A', strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A',
                 strtotime($slot['end' . $suffix])) . ($userTimezone != $module->getPST() ? '<br><strong><small>' . date('h:i A', strtotime($slot['start_orig'])) . ' - ' . date('h:i A',
                     strtotime($slot['end_orig'])) . ' (PT)</small></strong>' : '');
 //        $row[] = '<h5 class="text-center">' . $available . '</h5>';;
         $row[] = $bookButton . $cancelButton;;
+        # add timestamp to fix the order for datatable.
+        $row[] = strtotime($slot['start' . $suffix]);
 
         $result['data'][] = $row;
     }

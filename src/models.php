@@ -24,10 +24,11 @@ if (!isset($module)) {
                     <thead>
                     <tr>
                         <th>Date</th>
-                        <!--                        <th>Location</th>-->
+                        <th>Location</th>
                         <th id="timezone">Time(PT)</th>
                         <!--                        <th>Available Slots</th>-->
                         <th>Action</th>
+                        <th></th>
                     </tr>
                     </thead>
                 </table>

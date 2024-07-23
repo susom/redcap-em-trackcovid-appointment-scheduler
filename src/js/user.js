@@ -78,18 +78,18 @@ User = {
                     jQuery('.slots-container').html('');
                 },
                 'success': function (data) {
-                    $('#list-result').DataTable().clear().destroy()
+                    $('#list-result').DataTable().clear()
                     if (data != '') {
 
                         $('#generic-modal').find('.modal-title').html("Appointments");
                         $('#list-result').DataTable({
-                            dom: '<"day-filter"><lf<t>ip>',
+                            dom: '<"day-filter"><"location-filter"><lf<t>ip>',
                             data: data.data,
                             pageLength: 50,
                             "bDestroy": true,
-                            "aaSorting": [[3, "asc"]],
+                            "aaSorting": [[4, "asc"]],
                             columnDefs: [{
-                                targets: 3,
+                                targets: 4,
                                 visible: false
                             }],
                             initComplete: function () {
@@ -120,8 +120,6 @@ User = {
                                                     $(this).val()
                                                 );
 
-                                                // set preferred location so it will be selected next time.
-                                                setCookie('preferred-location', val, 365);
                                                 column
                                                     .search(val ? '^' + val + '$' : '', true, false)
                                                     .draw();
@@ -132,20 +130,6 @@ User = {
                                         select.append('<option value="' + d + '">' + d + '</option>')
                                     });
 
-                                    // if preferred location is saved then select that
-                                    if (getCookie('preferred-location') != null) {
-                                        // need to check the preferred location does exist in the list.
-                                        var exists = false;
-                                        $('#location-options option').each(function () {
-                                            if (this.value == getCookie('preferred-location')) {
-                                                exists = true;
-                                                return false;
-                                            }
-                                        });
-                                        if (exists === true) {
-                                            $("#location-options").val(getCookie('preferred-location')).trigger('change');
-                                        }
-                                    }
                                 });
                             }
                         });
