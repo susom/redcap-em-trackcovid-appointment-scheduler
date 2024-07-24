@@ -47,12 +47,12 @@ try {
         <div id="brandbar">
             <div class="container">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-6">
                         <a href="#"><img
                                     src="<?php echo $module->getProjectSetting('project-logo-url') ?>"
                                     alt="No logo provided" class="w-100 h-auto"></a>
                     </div>
-                    <div class="col-9">
+                    <div class="col-6">
                         <nav class="navbar-expand-sm  navbar-light">
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
