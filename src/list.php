@@ -76,7 +76,7 @@ if (!empty($data)) {
                                         data-modal-title="' . date('M/d/Y',
                 strtotime($slot['start' . $suffix])) . ' ' . date('h:i A',
                 strtotime($slot['start' . $suffix])) . ' - ' . date('h:i A', strtotime($slot['end' . $suffix])) . '"
-                                        class="time-slot btn btn-block btn-success">Book
+                                        class="time-slot btn btn-block btn-success">Schedule
                                 </button>';
 
         $row = array();
