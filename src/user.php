@@ -49,7 +49,7 @@ try {
                     <div class="col-6">
                         <a href="#"><img
                                     src="<?php echo $module->getProjectSetting('project-logo-url') ?>"
-                                    alt="No logo provided" class="w-100 h-auto"></a>
+                                    alt="No logo provided" class="w-25 h-auto"></a>
                     </div>
                     <div class="col-6">
                         <nav class="navbar-expand-sm  navbar-light">
@@ -179,7 +179,7 @@ try {
         }
     }
 
-    require_once 'models.php';
+    require_once 'modals.php';
     ?>
     <div class="loader"><!-- Place at bottom of page --></div>
     <?php

@@ -293,6 +293,37 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return $result;
     }
 
+
+    /**
+     * Get available time slots for specific date
+     * @param string $date
+     * @param int $event_id
+     * @return array
+     */
+    public function getDateAvailableSlots($days, $event_id)
+    {
+        try {
+            $result = array();
+        $records = $this->getParticipant()->getAllReservedSlots($this->getProjectId(), array_keys($this->getProject()->events['1']['events']));
+        foreach ($records as $id => $events) {
+            foreach ($events as $eventId => $record) {
+                // make sure there is date to check for
+                if (empty($record['reservation_date'])) {
+                    continue;
+                }
+                    $date = $this->getFormattedTimestamp(strtotime($record['reservation_date']));
+                    if ($this->isDateInWeek($days, $date)) {
+                        $slot = $this->getScheduler()->getSlot($record['reservation_slot_id']);
+                        $result[$record['reservation_slot_id']] = $slot;
+                    }
+                }
+            }
+            return $result;
+        } catch (\LogicException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     /**
      * @param $eventId
      * @param null $month
@@ -307,7 +338,8 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         $offset = 0,
         $affiliation = null,
         $canceledBaseline = false,
-        $reservationEventId = ''
+        $reservationEventId = '',
+        $summary = false
     )
     {
         try {
@@ -315,7 +347,18 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
 
                 $variable = 'start' . $this->getSuffix();
                 $instance = $this->getSchedulerInstanceViaReservationId($reservationEventId);
-                list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline, $instance);
+                if ($month != '' && $year != '' && $summary) {
+                    $start = "$year-$month-01";
+                    $end = date('Y-m-t', strtotime($start));
+                } elseif($summary){
+                    // for summary if no month provided use current month and year.
+                    $month = date('m');
+                    $year = date('Y');
+                   $start = "$year-$month-01";
+                   $end = date('Y-m-t', strtotime($start));
+                } else{
+                    list($start, $end) = $this->getStartEndWindow($baseline, $offset, $canceledBaseline, $instance);
+                }
 
 
                 $blockingDate = null;
@@ -1383,7 +1426,12 @@ class WISESharedAppointmentScheduler extends \ExternalModules\AbstractExternalMo
         return date('m-d-Y', $timestamp);
     }
 
-    public function buildWeeklyTotalsTable($weekDays)
+    /**
+     * get count of reserved appointment in range of dates usually a week.
+     * @param $weekDays
+     * @return array
+     */
+    public function buildWeeklyTotalsTableCount($weekDays)
     {
         $result = array();
         $records = $this->getParticipant()->getAllReservedSlots($this->getProjectId(), array_keys($this->getProject()->events['1']['events']));

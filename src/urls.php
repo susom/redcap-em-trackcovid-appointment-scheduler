@@ -80,6 +80,13 @@ if (!defined('USERID') || USERID == '[survey respondent]') {
        value="<?php echo $module->getUrl('src/manage_weekly_totals.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
        class="hidden"/>
+<input type="hidden" id="manage-monthly-overview"
+       value="<?php echo $module->getUrl('src/manage_monthly_overview.php', false,
+               true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&pid=' . $module->getProjectId() . $noAuth ?>"
+       class="hidden"/>
+<input type="hidden" id="summary-url" value="<?php echo $module->getUrl('src/summary.php', false,
+        true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&' . PROJECTID . '=' . $module->getProjectId() . $noAuth ?>"
+       class="hidden"/>
 <input type="hidden" id="cancel-appointment-url"
        value="<?php echo $module->getUrl('src/cancel.php', false,
                true) . '&' . COMPLEMENTARY_SUFFIX . '=' . $module->getSuffix() . '&' . PROJECTID . '=' . $module->getProjectId() . $noAuth ?>"

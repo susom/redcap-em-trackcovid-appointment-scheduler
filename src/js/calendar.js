@@ -1,4 +1,13 @@
 var dateToday = new Date();
+
+// populate monthly view when load is complete.
+
+// A $( document ).ready() block.
+$( document ).ready(function() {
+    console.log( "ready!" );
+    populateMonthSummary(jQuery("#event-id").val())
+});
+
 /**
  * Show list of all available time slots
  */

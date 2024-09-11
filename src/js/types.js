@@ -369,14 +369,7 @@ jQuery(document).on('click', '.booked-slots', function (e) {
             data: {event_id: jQuery(this).data('event-id')},
             datatype: 'json',
             success: function (data) {
-                if (jQuery('#generic-modal').length) {
-                    jQuery('#generic-modal').find('.modal-title').html('Manage Instructors Calendar');
-                    jQuery('#generic-modal').find('.modal-body').html(data);
-                    jQuery('#generic-modal').modal('show');
-                    jQuery('#generic-modal').modal('show');
-                } else {
-                    jQuery('#booked-container').html(data);
-                }
+                jQuery('#booked-container').html(data);
 
             },
             error: function (request, error) {
@@ -473,14 +466,7 @@ jQuery(document).on('click', '.instance-description', function (e) {
             data: {event_id: jQuery(this).data('event-id')},
             datatype: 'json',
             success: function (data) {
-                if (jQuery('#generic-modal').length) {
-                    jQuery('#generic-modal').find('.modal-title').html('Manage Instance Description');
-                    jQuery('#generic-modal').find('.modal-body').html(data);
-                    jQuery('#generic-modal').modal('show');
-                    jQuery('#generic-modal').modal('show');
-                } else {
-                    jQuery('#instance-description-container').html(data);
-                }
+                jQuery('#instance-description-container').html(data);
             },
             error: function (request, error) {
                 alert("Request: " + JSON.stringify(request));
@@ -564,14 +550,7 @@ jQuery(document).on('click', '.manage-calendars', function (e) {
             type: 'GET',
             datatype: 'json',
             success: function (data) {
-                if (jQuery('#generic-modal').length) {
-                    jQuery('#generic-modal').find('.modal-title').html('Manage Instructors Calendar');
-                    jQuery('#generic-modal').find('.modal-body').html(data);
-                    jQuery('#generic-modal').modal('show');
-                    jQuery('#generic-modal').modal('show');
-                } else {
-                    jQuery('#manager-container').html(data);
-                }
+                jQuery('#manager-container').html(data);
 
 
                 jQuery('#manage-calendars').DataTable(
@@ -747,3 +726,49 @@ function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+
+function populateMonthSummary(key, year, month) {
+    setTimeout(function () {
+        var url = jQuery("#summary-url").val();
+        if (month == undefined) {
+            month = ''
+        }
+        if (year == undefined) {
+            year = ''
+        }
+        jQuery.ajax({
+            'url': url + '&event_id=' + key + '&month=' + month + '&year=' + year,
+            'type': 'GET',
+            'success': function (response) {
+                response = JSON.parse(response);
+                jQuery(".ui-datepicker-calendar td").each(function (index, item) {
+
+                    var day = jQuery(this).text();
+
+                    if (response[day] != undefined) {
+                        /**
+                         * if date has open time slots
+                         */
+                        if (response[day].available != undefined) {
+                            if (response[day].availableText != undefined) {
+                                jQuery(this).find("a").attr('data-content', response[day].availableText);
+                            }
+                            if (response[day].REDCapAvailableText != undefined) {
+                                var $a = jQuery(this).find("a");
+                                jQuery(this).append(response[day].REDCapAvailableText)
+                                //jQuery(this).find("a").insertAfter(response[day].REDCapAvailableText);
+                            }
+                        } else {
+                            jQuery(this).find("a").attr('data-content', "All slots are booked for this date");
+                        }
+                        jQuery(this).find("a").toggleClass('changed');
+                    }
+                });
+            },
+            'error': function (request, error) {
+                alert("Request: " + JSON.stringify(request));
+            }
+        });
+
+    }, 0)
+}

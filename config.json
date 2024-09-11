@@ -18,6 +18,7 @@
   "no-auth-pages": [
     "src/slots",
     "src/book",
+    "src/summary",
     "src/manage_calendars",
     "src/cancel",
     "src/update_slot",

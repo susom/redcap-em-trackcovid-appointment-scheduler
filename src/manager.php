@@ -79,7 +79,8 @@ require_once 'urls.php';
                                 <a class="manage-calendars nav-link" href="#">Manage Time Slots</a>
                                 <a class="booked-slots nav-link" href="#">Manage Booked Slots</a>
                                 <a class="instance-description nav-link" href="#">Manage Instance Description</a>
-                                <a class="weekly-totals nav-link" data-index="0" href="#">Weekly Totals</a>
+<!--                                <a class="weekly-totals nav-link" data-index="0" href="#">Weekly Totals</a>-->
+                                <a class="monthly-overview nav-link" data-index="0" href="#">Monthly Overview</a>
                             </div>
                         </li>
                         <?php
@@ -108,9 +109,13 @@ require_once 'urls.php';
             <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
                aria-controls="description" aria-selected="false">Manage Description</a>
         </li>
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" id="totals-tab" data-toggle="tab" href="#totals" role="tab"-->
+<!--               aria-controls="totals" aria-selected="false">Weekly Totals</a>-->
+<!--        </li>-->
         <li class="nav-item">
-            <a class="nav-link" id="totals-tab" data-toggle="tab" href="#totals" role="tab"
-               aria-controls="totals" aria-selected="false">Weekly Totals</a>
+            <a class="nav-link" id="overview-tab" data-toggle="tab" href="#monthly-overview" role="tab"
+               aria-controls="monthly-overview" aria-selected="false">Monthly Overview</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -126,6 +131,13 @@ require_once 'urls.php';
         </div>
         <div class="tab-pane fade card card-body" id="totals" role="tabpanel" aria-labelledby="totals-tab">
             <div id="totals-container"></div>
+        </div>
+        <div class="tab-pane fade card card-body" id="monthly-overview" role="tabpanel" aria-labelledby="overview-tab">
+            <div id="overview-container">
+                <?php
+                    include_once('manage_monthly_overview.php');
+                ?>
+            </div>
         </div>
     </div>
 

@@ -14,7 +14,7 @@ try {
     }
 
     $weekDays = $module->getWeekdaysDates(filter_var($_GET['index'], FILTER_SANITIZE_NUMBER_INT));
-    $totals = $module->buildWeeklyTotalsTable($weekDays);
+    $totals = $module->buildWeeklyTotalsTableCount($weekDays);
 
     $locations = $module->getDefinedLocations();
     ?>
