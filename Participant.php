@@ -10,6 +10,7 @@ class Participant
 
     public $users;
 
+    private $reservedSlots = [];
     /**
      * @param string $email
      * @param string $date
@@ -184,6 +185,24 @@ class Participant
         }
     }
 
+
+    public function getDateReservedSlots($projectId, $date, $name_field, $firstEventId, $events = null)
+    {
+         if(empty($this->reservedSlots)){
+             $records = $this->getAllReservedSlots($projectId, $events);
+             foreach ($records as $id => $record) {
+                 $name = $record[$firstEventId][$name_field];
+                 $reservedSlot = array_pop($record);
+                 // manually add participant name.
+                 $reservedSlot[$name_field] = $name;
+                 $day = date('Y-m-d', strtotime($reservedSlot['reservation_datetime']));
+                 $this->reservedSlots[$day][$id] = $reservedSlot;
+             }
+
+         }
+
+         return $this->reservedSlots[$date];
+    }
     /**
      * @param int $record_id
      * @return bool|\mysqli_result

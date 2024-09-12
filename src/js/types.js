@@ -753,13 +753,9 @@ function populateMonthSummary(key, year, month) {
                             if (response[day].availableText != undefined) {
                                 jQuery(this).find("a").attr('data-content', response[day].availableText);
                             }
-                            if (response[day].REDCapAvailableText != undefined) {
-                                var $a = jQuery(this).find("a");
-                                jQuery(this).append(response[day].REDCapAvailableText)
-                                //jQuery(this).find("a").insertAfter(response[day].REDCapAvailableText);
-                            }
+
                         } else {
-                            jQuery(this).find("a").attr('data-content', "All slots are booked for this date");
+                            jQuery(this).find("a").attr('data-content', "");
                         }
                         jQuery(this).find("a").toggleClass('changed');
                     }

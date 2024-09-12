@@ -19,7 +19,7 @@ jQuery(".date-picker-2").datepicker({
     onSelect: function (dateText, elem) {
         var url = jQuery("#slots-url").val();
         var event_id = jQuery("#event-id").val();
-        console.log(dateText)
+
         jQuery.ajax({
             'url': url + "&date=" + dateText + "&event_id=" + event_id,
             'type': 'GET',

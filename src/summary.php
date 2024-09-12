@@ -22,6 +22,9 @@ if (isset($_GET['month']) && isset($_GET['year'])) {
     }
 }
 $days = array();
+$eventIds[] = $module->getFirstEventId();
+$name_field = $module->getProjectSetting('name-field');
+$records = $module->getParticipant()->getAllReservedSlots($module->getProjectId(), $eventIds);
 //process scheduler calendar
 foreach ($data as $slot) {
     $slot = array_pop($slot);
@@ -30,20 +33,50 @@ foreach ($data as $slot) {
      */
     $day = (int)date('d', strtotime($slot['start']));
 
+    // get the date so we can pull reserved slots for that date.
+    $date = date('Y-m-d', strtotime($slot['start']));
+
+    // skip day if already processed.
+    if(!empty($days[$day])) {
+        continue;
+    }
+
+    $reserved = $module->getParticipant()->getDateReservedSlots($module->getProjectId(), $date, $name_field, $module->getFirstEventId(), $eventIds);
+
+
     /**
      * if we have available slots on that day
      */
-    if ($slot['booked'] == '') {
+    if (!empty($reserved)) {
         $days[$day]['available']++;
-        /**
-         * no need to show more than three available slots
-         */
-        if ($days[$day]['available'] <= 3) {
-            $days[$day]['availableText'] .= 'REDCap Appt ' . date('H:i',
-                    strtotime($slot['start'])) . ' - ' . date('H:i', strtotime($slot['end'])) . ' ';
+
+        // sort by reservation datetime
+        usort($reserved, function($a, $b) {
+            return strtotime($a['reservation_datetime']) <=> strtotime($b['reservation_datetime']);
+        });
+
+        foreach ($reserved as $reservedSlot) {
+
+
+
+            $name = $reservedSlot[$name_field];
+            if($days[$day]['availableText']){
+                $days[$day]['availableText'] .= ', '. $name . ': ' . date('h:i A', strtotime($reservedSlot['reservation_datetime'])) ;
+            }else{
+                $days[$day]['availableText'] = $name . ': ' . date('h:i A', strtotime($reservedSlot['reservation_datetime']));
+                $days[$day]['fullDateText'] = date('Y-m-d', strtotime($reservedSlot['reservation_datetime']));
+
+            }
         }
+//        /**
+//         * no need to show more than three available slots
+//         */
+//        if ($days[$day]['available'] <= 3) {
+//            $days[$day]['availableText'] .= 'REDCap Appt ' . date('H:i',
+//                    strtotime($slot['start'])) . ' - ' . date('H:i', strtotime($slot['end'])) . ' ';
+//        }
     } else {
-        $days[$day]['booked']++;
+        $days[$day]['booked'] = 0;
     }
 
     /**
