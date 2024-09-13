@@ -203,6 +203,16 @@ class Participant
 
          return $this->reservedSlots[$date];
     }
+
+    // order reserved slots using reserved datetime. 
+    public function orderReservedSlots($reserved)
+    {
+        usort($reserved, function ($a, $b) {
+            return strtotime($a['reservation_datetime']) <=> strtotime($b['reservation_datetime']);
+        });
+        return $reserved;
+    }
+
     /**
      * @param int $record_id
      * @return bool|\mysqli_result

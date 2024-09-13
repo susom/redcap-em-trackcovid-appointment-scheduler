@@ -51,9 +51,8 @@ foreach ($data as $slot) {
         $days[$day]['available']++;
 
         // sort by reservation datetime
-        usort($reserved, function($a, $b) {
-            return strtotime($a['reservation_datetime']) <=> strtotime($b['reservation_datetime']);
-        });
+        $reserved = $module->getParticipant()->orderReservedSlots($reserved);
+
 
         foreach ($reserved as $reservedSlot) {
 
@@ -96,4 +95,4 @@ if (!empty($_GET['pid']) && $module->getProjectSetting('enable-redcap-calendar')
         $days[$day]['REDCapAvailableText'] .= '<a class="ui-state-default redcap-default" style="min-height: unset" href="javascript:;" onclick="popupCal(' . $row['cal_id'] . ', 600)">' . $row['event_time'] . ' ' . $row['notes'] . '</a>';
     }
 }
-echo \GuzzleHttp\json_encode($days);
+echo json_encode($days);
