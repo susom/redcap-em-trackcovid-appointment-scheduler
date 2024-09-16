@@ -78,7 +78,7 @@
     },
     {
       "key": "allowed-testing-sites",
-      "name": "<b>Json object with a list of allowed testing sites.</b>",
+      "name": "<b>Json object with a list of allowed locations.</b>",
       "required": true,
       "type": "textarea"
     },
@@ -154,7 +154,7 @@
     },
     {
       "key": "name-field",
-      "name": "<b>Select Name field:</b>",
+      "name": "<b>Select Name field(Name will be displayed on Participant Scheduler page and manager page):</b>",
       "required": false,
       "type": "field-list"
     },
@@ -172,6 +172,12 @@
           "type": "textarea"
         },
         {
+          "key": "instance_locations",
+          "name": "<b>Add a JSON object of locations allowed for this event. The object must be a subset of the allowed locations listed above.</b><br/>",
+          "required": false,
+          "type": "textarea"
+        },
+        {
           "key": "reservation_event_id",
           "name": "<b>Appointment Reservation Event</b><br>Select the arm/event where each record corresponds to a reserved appointment slot.  This event must have the 'Reservation' form enabled",
           "required": true,
@@ -179,7 +185,7 @@
         },
         {
           "key": "offset-date-field",
-          "name": "Select date field which will be as starting point to calculate booking window. If no date was selected the scheduler will use visit time from event with 0 offset days.<br/>",
+          "name": "Select the date field that will serve as the starting point to calculate the booking window. If no date is selected, the scheduler will use the visit time from the event with 0 offset days.<br/>",
           "required": false,
           "type": "field-list"
         },

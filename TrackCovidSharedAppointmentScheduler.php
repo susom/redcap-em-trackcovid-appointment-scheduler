@@ -321,6 +321,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 if ($offset != -1 && $reservationEventId && $this->isEventBookingBlocked($reservationEventId)) {
                     $blockingDate = $this->getBookingBlockDate($reservationEventId);
                 }
+                // get instance locations if availabe. 
+                $instance_locations = json_decode($instance?$instance['instance_locations']:[], true);
 
                 $records = $this->getScheduler()->getSlots();
                 foreach ($records as $record) {
@@ -328,6 +330,14 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                     if ($blockingDate && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) >= strtotime($blockingDate)) {
                         continue;
                     }
+
+                    // if locations are restricted for this instance make sure the slot is in the right location.
+                    if(!empty($instance_locations)){
+                        if(!array_key_exists($record[$this->getScheduler()->getSlotsEventId()]['location'], $instance_locations)){
+                            continue;
+                        }
+                    }
+
 
                     if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
                         $data[] = $record;
@@ -1148,7 +1158,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             }
             $records = REDCap::getData($param);
             foreach ($records as $id => $record) {
-                $hash = $this->generateUniqueCodeHash(filter_var($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')], FILTER_SANITIZE_STRING));
+                $hash = $this->generateUniqueCodeHash(htmlentities($record[$this->getFirstEventId()][$this->getProjectSetting('validation-field')]));
                 // this to check if participant withdraw from the ths study.
                 $withdraw = $record[$id][$this->getFirstEventId()]['calc_inactive'];
                 if ($hash == $_COOKIE[$name]) {
