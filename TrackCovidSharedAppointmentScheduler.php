@@ -321,7 +321,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 if ($offset != -1 && $reservationEventId && $this->isEventBookingBlocked($reservationEventId)) {
                     $blockingDate = $this->getBookingBlockDate($reservationEventId);
                 }
-                // get instance locations if availabe. 
+                // get instance locations if availabe.
                 $instance_locations = json_decode($instance?$instance['instance_locations']:[], true);
 
                 $records = $this->getScheduler()->getSlots();
