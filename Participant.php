@@ -204,7 +204,7 @@ class Participant
          return $this->reservedSlots[$date];
     }
 
-    // order reserved slots using reserved datetime. 
+    // order reserved slots using reserved datetime.
     public function orderReservedSlots($reserved)
     {
         usort($reserved, function ($a, $b) {
