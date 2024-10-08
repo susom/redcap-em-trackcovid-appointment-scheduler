@@ -24,14 +24,17 @@ try {
             if (empty($module->getSchedulerInstanceViaReservationId($eventId))) {
                 continue;
             }
-            if ($event['day_offset'] == 0) {
+
+            $offset = $instance['offset-days'] != ''?$instance['offset-days']:$event['day_offset'];
+
+            if ($offset == 0) {
                 $module->setBaseLine(true);
             } else {
                 $module->setBaseLine(false);
             }
 
 
-            list($month, $year) = $module->getEventMonthYear($event['day_offset']);
+            list($month, $year) = $module->getEventMonthYear($offset);
 
 //            // for regular user skip the bonus visits. but not for coordinator
 //            if ($event['day_offset'] >= 200 && $regularUser && $user['record'][$eventId]['reservation_datetime'] == '') {
@@ -86,14 +89,14 @@ try {
                         }
 
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
-                            $event['day_offset'], $canceledBaseline);
+                            $offset, $canceledBaseline);
 
                         $module->setBaseLineDate('');
                         //} elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status']) || $user['record'][$eventId]['reservation_reschedule_counter'] != '') {
                     } else {
                         //when some forms in this event are filled but nothing related to reservation.
                         $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId,
-                            $event['day_offset'], $canceledBaseline);
+                            $offset, $canceledBaseline);
                     }
 
                 } else {
@@ -138,7 +141,7 @@ try {
 //                            $action = 'This appointment is skipped';
 //                            $noSkip = true;
                     } elseif ($module->isAppointmentNoShow($user['record'][$eventId]['reservation_visit_status'])) {
-                        $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+                        $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $offset);
                     }
                     //}
 
@@ -157,7 +160,7 @@ try {
                     }
                 }
 
-                $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $event['day_offset']);
+                $action = $module->getScheduleActionButton($month, $year, $url, $user, $eventId, $offset);
 
 
             }
@@ -167,7 +170,7 @@ try {
                 $action .= $module->getSkipActionButton($user, $eventId);
             }
 
-            $row[] = $event['day_offset'];
+            $row[] = $offset;
             //$row[] = $event['descrip'];
             $row[] = $module->getProject()->eventInfo[$eventId]['custom_event_label'];
             $row[] = $status;

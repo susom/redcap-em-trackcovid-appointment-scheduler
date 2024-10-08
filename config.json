@@ -184,6 +184,12 @@
           "type": "event-list"
         },
         {
+          "key": "offset-days",
+          "name": "You can specify number of offset days. If not defined EM will use Event offset days.<br/>",
+          "required": false,
+          "type": "text"
+        },
+        {
           "key": "offset-date-field",
           "name": "Select the date field that will serve as the starting point to calculate the booking window. If no date is selected, the scheduler will use the visit time from the event with 0 offset days.<br/>",
           "required": false,

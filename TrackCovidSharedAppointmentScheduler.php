@@ -1228,6 +1228,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     private function getStartEndWindow($baseline, $offset, $canceledBaseline, $instance)
     {
         $windowSize = $instance['window-size'] ?: 20;
+
+        if($offset){
+            $add = $offset * 60 * 60 * 24;
+        }
+
         if ($this->getChildEligibility() == '1') {
             $add = 60 * 60 * 24 * 2;
         } elseif ($this->getChildEligibility() == '0.5') {
@@ -1263,6 +1268,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
             #open till end of year days restriction.
             $end = date('Y-m-d', strtotime('12/31'));
+            // if start date is after end then make sure end date is at the end of start year.
+            if($start > $end){
+                $nextyear = mktime(0, 0, 0, date("m"), date("d"), date("Y")+1);
+                $end = date('Y-m-d',  strtotime($nextyear) + strtotime($start));
+            }
         }
         return array($start, $end);
     }
