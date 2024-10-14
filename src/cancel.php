@@ -7,10 +7,10 @@ namespace Stanford\TrackCovidSharedAppointmentScheduler;
 
 try {
     $primary = 'participant_id';
-    $data[$primary] = $_GET[$primary];
+    $data[\REDCap::getRecordIdField()] = $_GET[$primary];
     $eventId = filter_var($_GET['event_id'], FILTER_SANITIZE_NUMBER_INT);
     $slotId = filter_var($_GET['reservation_slot_id'], FILTER_SANITIZE_STRING);
-    if ($data[$primary] == '') {
+    if ($data[\REDCap::getRecordIdField()] == '') {
         throw new \LogicException('Participation ID is missing');
     } else {
         $data['reservation_slot_id'] = false;
