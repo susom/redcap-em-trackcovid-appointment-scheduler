@@ -1103,8 +1103,15 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function setUserCookie($name, $value, $time = 86406)
     {
+        $this->deleteUserCookie('login');
         #day
         setcookie($name, $value, time() + $time);
+    }
+
+    public function deleteUserCookie($name)
+    {
+        #day
+        setcookie($name, '', -1, '/');
     }
 
     public function verifyCookie($name, $recordID = false)
