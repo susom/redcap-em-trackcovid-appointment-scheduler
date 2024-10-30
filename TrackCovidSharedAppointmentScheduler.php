@@ -1926,7 +1926,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getParticipantName($id)
     {
-        $eventId  = $this->getProjectSetting('name-event');
+        $eventId  = $this->getProjectSetting('name-event')?:$this->getFirstEventId();
         $field = $this->getProjectSetting('name-field');
         $param = array(
             'project_id' => $this->getProjectId(),
