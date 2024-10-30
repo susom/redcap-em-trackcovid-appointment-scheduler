@@ -57,8 +57,8 @@ try {
                             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
 
                                 <ul class="navbar-nav"><?php
-                                    $field = $module->getProjectSetting('name-field');
-                                    $value = $user['record'][$module->getFirstEventId()][$field];
+
+                                    $value = $module->getParticipantName($user['id']);
                                     if ($value) {
                                         ?>
                                         <li class="nav-item active">

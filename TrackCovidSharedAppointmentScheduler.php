@@ -1924,4 +1924,17 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     }
 
 
+    public function getParticipantName($id)
+    {
+        $eventId  = $this->getProjectSetting('name-event');
+        $field = $this->getProjectSetting('name-field');
+        $param = array(
+            'project_id' => $this->getProjectId(),
+            'events' => [$eventId],
+            'recocrds' => [$id]
+        );
+        $data = REDCap::getData($param);
+        return $data[$id][$eventId][$field];
+    }
+
 }

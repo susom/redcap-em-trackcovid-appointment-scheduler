@@ -159,6 +159,12 @@
       "type": "field-list"
     },
     {
+      "key": "name-event",
+      "name": "<b>Select The Name field event:</b>",
+      "required": false,
+      "type": "event-list"
+    },
+    {
       "key": "instance",
       "name": "<b>Configure Appointment Scheduler Instance</b>",
       "required": true,

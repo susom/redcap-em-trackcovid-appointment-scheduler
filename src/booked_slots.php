@@ -98,9 +98,7 @@ try {
                                 <?php //echo $user['phone_number'] ?><!--</div>-->
                                 <div class="row">
                                     <?php
-                                    $field = $module->getProjectSetting('name-field');
-                                    $value = $user[$field];
-                                    echo $value;
+                                    echo $module->getParticipantName($id);
                                     ?></div>
                             </td>
                             <td><?php echo $module->getProject()->events[1]['events'][$eventId]['descrip'] ?></td>
