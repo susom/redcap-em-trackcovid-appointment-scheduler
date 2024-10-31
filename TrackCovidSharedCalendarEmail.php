@@ -363,7 +363,7 @@ class TrackCovidSharedCalendarEmail extends Message
             $this->setAttachment($tempFile, 'invite.ics');
             fclose($fileHandle);
 
-            $result = $this->send();
+            return $this->send();
         } catch (\LogicException $e) {
         } catch (\Exception $e) {
             $e->getMessage();

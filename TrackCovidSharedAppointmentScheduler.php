@@ -546,7 +546,8 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         $this->emailClient->setBody($body);
         $this->emailClient->setUrlString("<a href='" . $this->getSchedulerURL() . "'>View Appointment Scheduler</a>");
         if ($calendar) {
-            $this->emailClient->sendCalendarEmail($this->calendarParams);
+            $result = $this->emailClient->sendCalendarEmail($this->calendarParams);
+            $this->emLog("Email result: " . $result ? 1 : 0);
         } else {
             $this->emailClient->send();
         }
@@ -1935,6 +1936,21 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         );
         $data = REDCap::getData($param);
         return $data[$id][$eventId][$field];
+    }
+
+    public function getFirstEventId($pid = null){
+		$pid = $this->requireProjectId($pid);
+		$results = $this->query("
+			select event_id
+			from redcap_events_arms a
+			join redcap_events_metadata m
+				on a.arm_id = m.arm_id
+			where a.project_id = ?
+			order by day_offset
+		", [$pid]);
+
+		$row = $results->fetch_assoc();
+		return $row['event_id'];
     }
 
 }
