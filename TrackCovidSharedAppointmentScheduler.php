@@ -1946,7 +1946,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 			join redcap_events_metadata m
 				on a.arm_id = m.arm_id
 			where a.project_id = ?
-			order by day_offset
+			order by arm_num, day_offset, descrip
 		", [$pid]);
 
 		$row = $results->fetch_assoc();
