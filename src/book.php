@@ -94,7 +94,13 @@ try {
 
             $data['mobile'] = $user['record'][$reservationEventId][$module->getProject()->project['survey_phone_participant_field']];
             $data['newuniq'] = $user['id'];
-            $return = $module->notifyUser($data, $reservationEventId, $slot);
+            $module->notifyUser($data, $reservationEventId, $slot);
+
+            # send a notification to CRC about the booked an appointment
+            if ($instance['send-email-to-crc']) {
+                $module->notifyCRCs($data, $reservationEventId, $slot);
+            }
+
             echo json_encode(array(
                 'status' => 'ok',
                 'message' => 'Appointment saved successfully!' . (isset($return['error']) ? ' with following errors' . $return['message'] : ''),

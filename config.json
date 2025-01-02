@@ -204,12 +204,23 @@
         {
           "key": "offset-date-field-event",
           "name": "If you picked a offset date you MUST pick date event.<br/>",
-          "required": false,
-          "type": "event-list"
+          "required": true,
+          "type": "event-list",
+          "branchingLogic": {
+            "field": "offset-date-field",
+            "op": "<>",
+            "value": ""
+          }
         },
         {
           "key": "window-size",
           "name": "Window size to schedule an event. Based on event days offset. Default is 20 days.<br/>",
+          "required": false,
+          "type": "text"
+        },
+        {
+          "key": "hours-lock",
+          "name": "<b>Number of hours before time slots are locked for participants.</b><br/>",
           "required": false,
           "type": "text"
         },
@@ -274,41 +285,47 @@
         },
         {
           "key": "calendar_body",
-          "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i>",
+          "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender not approved to send PHI data)</span>",
           "required": false,
           "type": "textarea"
+        },
+        {
+          "key": "send-email-to-crc",
+          "name": "<b>Configure an email of booked appointments to be sent to CRCs</b>",
+          "required": false,
+          "type": "checkbox"
+        },
+        {
+          "key": "crc-email-list",
+          "name": "<b>Comma separated list of CRCs emails</b>",
+          "required": true,
+          "type": "textarea",
+          "branchingLogic": {
+            "field": "send-email-to-crc",
+            "value": "1"
+          }
+        },
+        {
+          "key": "crc-email-subject",
+          "name": "<b>CRC Email Subject</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender not approved to send PHI data)</span>",
+          "required": true,
+          "type": "text",
+          "branchingLogic": {
+            "field": "send-email-to-crc",
+            "value": "1"
+          }
+        },
+        {
+          "key": "crc-email-body",
+          "name": "<b>CRC Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender not approved to send PHI data)</span>",
+          "required": true,
+          "type": "textarea",
+          "branchingLogic": {
+            "field": "send-email-to-crc",
+            "value": "1"
+          }
         }
       ]
-    },
-    {
-      "key": "twilio_config",
-      "name": "<b>Twilio Config</b>",
-      "required": false,
-      "type": "descriptive"
-    },
-    {
-      "key": "phone_number_country_code",
-      "name": "<b>Country Phone code</b>",
-      "required": false,
-      "type": "text"
-    },
-    {
-      "key": "twilio_sender_number",
-      "name": "<b>Twilio Phone number to send from(Numbers only)</b>",
-      "required": false,
-      "type": "text"
-    },
-    {
-      "key": "twilio_sid",
-      "name": "<b>Twilio SID(You can find it in your Twilio dashboard)</b>",
-      "required": false,
-      "type": "text"
-    },
-    {
-      "key": "twilio_token",
-      "name": "<b>Twilio Token(You can find it in your Twilio dashboard)</b>",
-      "required": false,
-      "type": "text"
     },
     {
       "key": "enable-project-debug-logging",

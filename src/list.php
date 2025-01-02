@@ -17,7 +17,7 @@ $affiliation = filter_var($_GET['affiliation'], FILTER_VALIDATE_INT);
 $canceledBaseline = filter_var($_GET['canceled_baseline'], FILTER_VALIDATE_INT);
 $user = $module->verifyCookie('login', $id);
 
-$data = $module->getMonthSlots($eventId, null, null, $baseline, $offset, $affiliation, $canceledBaseline, $reservationEventId);
+$data = $module->getEventSlots($eventId, null, null, $baseline, $offset, $affiliation, $canceledBaseline, $reservationEventId);
 $result = array();
 $result['data'] = array();
 

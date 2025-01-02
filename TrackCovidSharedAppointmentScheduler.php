@@ -15,7 +15,6 @@ if (file_exists(__DIR__ . '../vendor/autoload.php')) {
 }
 
 use Stanford\ChartLogin\ChartLogin\ChartLogin;
-use Twilio\Rest\Client;
 
 // Test action
 /**
@@ -97,7 +96,6 @@ define('PT', 480);
  * Class TrackCovidSharedAppointmentScheduler
  * @package Stanford\TrackCovidSharedAppointmentScheduler
  * @property \TrackCovidSharedCalendarEmail $emailClient
- * @property Client $twilioClient
  * @property  array $instances
  * @property int $eventId
  * @property array $eventInstance
@@ -133,10 +131,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      */
     private $emailClient = null;
 
-    /**
-     * @var Client|null
-     */
-    private $twilioClient = null;
 
     /**
      * @var array of all instances in the project
@@ -201,6 +195,11 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     private $offsetDates;
 
     private $schedulerLoginEM;
+
+    private $hoursLock = 0;
+
+    private $lockTime = 0;
+
     /**
      * TrackCovidSharedAppointmentScheduler constructor.
      */
@@ -214,7 +213,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             /**
              * so when you enable this it does not throw an error !!
              */
-            if ($_GET && ((isset($_GET['projectid']) AND $_GET['projectid'] != null) || (isset($_GET['pid']) AND  $_GET['pid'] != null))) {
+            if ($_GET && ((isset($_GET['projectid']) and $_GET['projectid'] != null) || (isset($_GET['pid']) and $_GET['pid'] != null))) {
 
                 if ($this->getProjectSetting('scheduler-login-em') != '') {
                     $this->setSchedulerLoginEM(\ExternalModules\ExternalModules::getModuleInstance($this->getProjectSetting('scheduler-login-em')));
@@ -299,7 +298,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      * @param null $year
      * @return mixed
      */
-    public function getMonthSlots(
+    public function getEventSlots(
         $eventId,
         $year = null,
         $month = null,
@@ -323,7 +322,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                     $blockingDate = $this->getBookingBlockDate($reservationEventId);
                 }
                 // get instance locations if availabe.
-                $instance_locations = json_decode($instance?$instance['instance_locations']:[], true);
+                $instance_locations = json_decode($instance ? $instance['instance_locations'] : [], true);
 
                 $records = $this->getScheduler()->getSlots();
                 foreach ($records as $record) {
@@ -333,14 +332,14 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                     }
 
                     // if locations are restricted for this instance make sure the slot is in the right location.
-                    if(!empty($instance_locations)){
-                        if(!array_key_exists($record[$this->getScheduler()->getSlotsEventId()]['location'], $instance_locations)){
+                    if (!empty($instance_locations)) {
+                        if (!array_key_exists($record[$this->getScheduler()->getSlotsEventId()]['location'], $instance_locations)) {
                             continue;
                         }
                     }
 
 
-                    if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
+                    if (strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > $this->getLockTime($reservationEventId) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) > strtotime($start) && strtotime($record[$this->getScheduler()->getSlotsEventId()][$variable]) < strtotime($end) && $record[$this->getScheduler()->getSlotsEventId()]['slot_status'] != CANCELED) {
                         $data[] = $record;
                     }
                 }
@@ -467,7 +466,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
                 strtotime($this->calendarParams['calendarDate'])) . ' between ' . date('h:i A',
                 strtotime($this->calendarParams['calendarStartTime'])) . ' and ' . date('h:i A',
                 strtotime($this->calendarParams['calendarEndTime']));
-        $this->sendEmail($user['email'],
+        return $this->sendEmail($user['email'],
             ($instance['sender_email'] != '' ? $instance['sender_email'] : DEFAULT_EMAIL),
             ($instance['sender_name'] != '' ? $instance['sender_name'] : DEFAULT_NAME),
 //            '--APPT CONFIRMATION-- ' . $user['newuniq'] . ' Please arrive' .
@@ -479,52 +478,36 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             true
         );
 
-
-        if ($user['mobile'] && $this->getTwilioClient()) {
-            $message = array(
-                'from' => '+' . $this->getProjectSetting('phone_number_country_code',
-                        $this->getProjectId()) . $this->getProjectSetting('twilio_sender_number',
-                        $this->getProjectId()),
-                'body' => "-- APPT CONFIRMATION --\nPlease arrive on " .
-                    date('m/d/Y', strtotime($this->calendarParams['calendarDate'])) .
-                    ' at ' . date('h:i A', strtotime($this->calendarParams['calendarStartTime']))
-                //. ' to ' . date('h:i A', strtotime($this->calendarParams['calendarEndTime']))
-            );
-            return $this->sendTextMessage($user, $message);
-        }
     }
 
-    /**
-     * @param $user
-     * @param $message
-     * @throws \Twilio\Exceptions\TwilioException
-     */
-    private function sendTextMessage($user, $message)
+    public function notifyCRCs($user, $reservationEventId, $slot = null)
     {
-        try {
-            $result = $this->twilioClient->messages->create(
-                $user['mobile'],
-                $message
-            );
-            /**
-             * log sent message.
-             */
-            if ($result->errorCode == null) {
-                $this->log('Text message sent to ' . $result->to, array(
-                    'user_id' => UI_ID,
-                    'from' => $result->from,
-                    'to' => $result->to,
-                    'body' => $result->body,
-                    'time' => time()
-                ));
-            } elseif ($result->errorCode) {
-                throw new \Twilio\Exceptions\TwilioException('Cant send message');
+        $instance = $this->getEventIdInstance($reservationEventId);
+        $this->calendarParams['calendarOrganizerEmail'] = DEFAULT_EMAIL;
+        $this->calendarParams['calendarOrganizer'] = DEFAULT_NAME;
+        $this->calendarParams['calendarDescription'] = $this->replaceREDCapCustomLabels($this->replaceRecordLabels($instance['crc-email-body'], $slot), array(), $user['newuniq']);
+        $this->calendarParams['calendarLocation'] = $user['reservation_participant_location'];
+        $this->calendarParams['calendarDate'] = preg_replace("([^0-9/])", "", $_POST['calendarDate']);
+        $this->calendarParams['calendarStartTime'] = preg_replace("([^0-9/])", "", $_POST['calendarStartTime']);
+        $this->calendarParams['calendarEndTime'] = preg_replace("([^0-9/])", "", $_POST['calendarEndTime']);
+        $this->calendarParams['calendarParticipants'] = array($user['name'] => $user['email']);
+        $this->calendarParams['calendarSubject'] = $this->replaceREDCapCustomLabels($this->replaceRecordLabels($instance['crc-email-subject'], $slot), array(), $user['newuniq']);
+
+        $crc_emails = explode(',', $instance['crc-email-list']);
+        foreach ($crc_emails as $email) {
+            $email = trim($email);
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->sendEmail($email,
+                    DEFAULT_EMAIL,
+                    DEFAULT_NAME,
+                    $this->calendarParams['calendarSubject'],
+                    $this->calendarParams['calendarDescription'],
+                    true
+                );
+            }else{
+                $this->emError('EMAIL NOT VALID: ' . $email);
             }
-            return array('status' => 'success', 'message' => 'Message sent successfully');
-        } catch (\LogicException $e) {
-            return array('status' => 'error', 'message' => $e->getMessage());
-        } catch (\Twilio\Exceptions\TwilioException $e) {
-            return array('status' => 'error', 'message' => $e->getMessage());
+
         }
     }
 
@@ -550,9 +533,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             $result = $this->emailClient->sendCalendarEmail($this->calendarParams);
             $this->emLog("Email result: " . $result ? 1 : 0);
         } else {
-            $this->emailClient->send();
+            $result = $this->emailClient->send();
         }
-
+        return $result;
     }
 
     /**
@@ -1238,7 +1221,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     {
         $windowSize = $instance['window-size'] ?: 20;
 
-        if($offset){
+        if ($offset) {
             $add = $offset * 60 * 60 * 24;
         }
 
@@ -1278,9 +1261,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             #open till end of year days restriction.
             $end = date('Y-m-d', strtotime('12/31'));
             // if start date is after end then make sure end date is at the end of start year.
-            if($start > $end){
-                $nextyear = mktime(0, 0, 0, date("m"), date("d"), date("Y")+1);
-                $end = date('Y-m-d',  strtotime($nextyear) + strtotime($start));
+            if ($start > $end) {
+                $nextyear = mktime(0, 0, 0, date("m"), date("d"), date("Y") + 1);
+                $end = date('Y-m-d', strtotime($nextyear) + strtotime($start));
             }
         }
         return array($start, $end);
@@ -1638,7 +1621,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      */
     public function getScheduler()
     {
-        if(!$this->scheduler){
+        if (!$this->scheduler) {
             $this->setScheduler(new Scheduler(new \Project($this->getProjectSetting('slots-project')), json_decode($this->getProjectSetting('allowed-testing-sites'), true), $this->getProjectSetting('slots-project-event-id'), $this->getProjectSetting('slots-project-testing-sites-event-id')));
         }
         return $this->scheduler;
@@ -1676,7 +1659,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      */
     public function getProject()
     {
-        if(!$this->project){
+        if (!$this->project) {
             global $Proj;
             $this->setProject($Proj);
         }
@@ -1696,9 +1679,9 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      */
     public function getProjectId()
     {
-        if(!$this->projectId){
+        if (!$this->projectId) {
             $projectId = ($_GET['projectid'] != null ? filter_var($_GET['projectid'],
-                    FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
+                FILTER_SANITIZE_NUMBER_INT) : filter_var($_GET['pid'], FILTER_SANITIZE_NUMBER_INT));
             $this->setProjectId($projectId);
 
         }
@@ -1711,30 +1694,6 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
     public function setProjectId($projectId)
     {
         $this->projectId = $projectId;
-    }
-
-
-    /**
-     * @return Client
-     */
-    public function getTwilioClient()
-    {
-        if(!$this->twilioClient){
-            $sid = $this->getProjectSetting('twilio_sid', $this->getProjectId());
-            $token = $this->getProjectSetting('twilio_token', $this->getProjectId());
-            if ($sid != '' && $token != '') {
-                $this->setTwilioClient(new Client($sid, $token));
-            }
-        }
-        return $this->twilioClient;
-    }
-
-    /**
-     * @param Client $twilioClient
-     */
-    public function setTwilioClient($twilioClient)
-    {
-        $this->twilioClient = $twilioClient;
     }
 
     /**
@@ -1863,7 +1822,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
      */
     public function getInstances()
     {
-        if(!$this->instances){
+        if (!$this->instances) {
             $this->setInstances();
         }
         return $this->instances;
@@ -1928,7 +1887,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
     public function getParticipantName($id)
     {
-        $eventId  = $this->getProjectSetting('name-event')?:$this->getFirstEventId();
+        $eventId = $this->getProjectSetting('name-event') ?: $this->getFirstEventId();
         $field = $this->getProjectSetting('name-field');
         $param = array(
             'project_id' => $this->getProjectId(),
@@ -1939,9 +1898,10 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
         return $data[$id][$eventId][$field];
     }
 
-    public function getFirstEventId($pid = null){
-		$pid = $this->requireProjectId($pid);
-		$results = $this->query("
+    public function getFirstEventId($pid = null)
+    {
+        $pid = $this->requireProjectId($pid);
+        $results = $this->query("
 			select event_id
 			from redcap_events_arms a
 			join redcap_events_metadata m
@@ -1950,8 +1910,49 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 			order by arm_num, day_offset, descrip
 		", [$pid]);
 
-		$row = $results->fetch_assoc();
-		return $row['event_id'];
+        $row = $results->fetch_assoc();
+        return $row['event_id'];
     }
+
+
+    /**
+     * @return null
+     */
+    public function getHoursLock($reservationEventId)
+    {
+        if(!$this->hoursLock){
+            $instance = $this->getSchedulerInstanceViaReservationId($reservationEventId);
+            $this->setHoursLock($instance['hours-lock']?:0);
+        }
+        return $this->hoursLock;
+    }
+
+    /**
+     * @param null $hoursLock
+     */
+    public function setHoursLock($hoursLock): void
+    {
+        $this->hoursLock = $hoursLock;
+    }
+
+    /**
+     * @return null
+     */
+    public function getLockTime($reservationEventId)
+    {
+        if(!$this->lockTime){
+            $this->setLockTime((int)(time() + $this->getHoursLock($reservationEventId) * 60 * 60));
+        }
+        return $this->lockTime;
+    }
+
+    /**
+     * @param null $lockTime
+     */
+    public function setLockTime($lockTime): void
+    {
+        $this->lockTime = $lockTime;
+    }
+
 
 }

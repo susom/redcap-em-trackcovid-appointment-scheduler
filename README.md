@@ -64,12 +64,6 @@ If you are using Appointment Scheduler to follow up with survey participants. Yo
     11. Type sender name. 
     12. Type Calendar Email subject.
     13. Type Calendar Email body.
-    
-2. If you want to send mobile text messages for reservation confirmation you can define Twilio configuration(configured only once for all instances).
-    1. Phone number country code(just numbers without leading zeros).
-    2. Phone number. 
-    3. Twilio SID.
-    4. Twilio token. 
 
 
 
