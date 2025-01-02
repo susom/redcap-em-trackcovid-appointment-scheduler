@@ -285,7 +285,7 @@
         },
         {
           "key": "calendar_body",
-          "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender not approved to send PHI data)</span>",
+          "name": "<b>Calendar Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender is not approved to send PHI data)</span>",
           "required": false,
           "type": "textarea"
         },
@@ -307,7 +307,7 @@
         },
         {
           "key": "crc-email-subject",
-          "name": "<b>CRC Email Subject</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender not approved to send PHI data)</span>",
+          "name": "<b>CRC Email Subject</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender is not approved to send PHI data)</span>",
           "required": true,
           "type": "text",
           "branchingLogic": {
@@ -317,7 +317,7 @@
         },
         {
           "key": "crc-email-body",
-          "name": "<b>CRC Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender not approved to send PHI data)</span>",
+          "name": "<b>CRC Email Body</b><i>you can use smart variables for Example: [start], [testing_sites_arm_3][country]</i><br><span class='text-lg badge badge-lg badge-danger'>NO PHI DATA(Email`s Sender is not approved to send PHI data)</span>",
           "required": true,
           "type": "textarea",
           "branchingLogic": {
