@@ -65,6 +65,11 @@ try {
             if (isset($user['record'][$eventId])) {
                 $slot = $module->getReservationArray($user['record'][$eventId]);
 
+                // if there is an offset date field defined then use that to determine the offset instead of the event day offset. this is to handle cases where appointments were rescheduled and we want to show the appointment based on the new date not the original event date.
+                if ($instance['offset-date-field'] && $user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]) {
+                    $module->setOffsetDate($user['record'][$instance['offset-date-field-event']][$instance['offset-date-field']]);
+                }
+
                 // capture edge case for imported reservation records with no slot id.
                 if (empty($slot) && $user['record'][$eventId]['reservation_datetime'] != '') {
                     $slot['start'] = $user['record'][$eventId]['reservation_datetime'];

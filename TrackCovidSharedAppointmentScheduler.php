@@ -1275,6 +1275,10 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
 
         if ($this->isBaseLine() || $this->getBaseLineDate() || $this->getOffsetDate()) {
 
+            // if offset date is set then ignore the offset to start the window from the offset date because the offset date is the date that participant should have been scheduled.
+            if($this->getOffsetDate()){
+                $offset = 0;
+            }
             $instance = $this->getSchedulerInstanceViaReservationId($eventId);
 
             list($start, $end) = $this->getStartEndWindow(($this->getOffsetDate() ?: $this->getBaseLineDate()), $offset, $canceledBaseline, $instance);
