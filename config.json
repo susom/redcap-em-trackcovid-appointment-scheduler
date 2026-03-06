@@ -15,6 +15,9 @@
       "institution": "Stanford University"
     }
   ],
+  "no-csrf-pages": [
+    "src/book"
+  ],
   "no-auth-pages": [
     "src/slots",
     "src/book",
