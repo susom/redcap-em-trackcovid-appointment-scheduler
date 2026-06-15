@@ -255,7 +255,7 @@ class TrackCovidSharedAppointmentScheduler extends \ExternalModules\AbstractExte
             }
 
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             echo $e->getMessage();
         }
     }
